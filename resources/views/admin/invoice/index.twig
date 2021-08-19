@@ -1,0 +1,142 @@
+{% extends 'admin.main.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <form>
+                    <header class="card-header">
+                        <h2 class="card-title">Filtros</h2>
+                    </header>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="invoice-id"># Fatura</label>
+                                    <input type="text" name="invoice_id" id="invoice-id" class="form-control" value="{{ filters.invoice_id }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="type">Tipo</label>
+                                    <select name="type" id="type" class="form-control">
+                                        <option value="all">Todos</option>
+                                        {% for type in listTypes %}
+                                            <option value="{{ type.value }}" {% if is_numeric(filters.type) and filters.type == type.value %} selected="selected" {% endif %}>{{ type.description }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="status">Status</label>
+                                    <select name="status" id="status" class="form-control">
+                                        <option value="all">Todos</option>
+                                        {% for status in listStatus %}
+                                            <option value="{{ status.value }}" {% if is_numeric(filters.status) and filters.status == status.value %} selected="selected" {% endif %}>{{ status.description }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="cpf">CPF</label>
+                                    <input type="text" id="cpf" name="cpf" class="form-control cpf" value="{{ filters.cpf }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Data de Criação</label>
+                                    <div class="input-daterange input-group">
+                                        <input type="date" class="form-control" name="start_created_at" value="{{ filters.start_created_at }}">
+                                        <span class="input-group-addon">até</span>
+                                        <input type="date" class="form-control" name="end_created_at" value="{{ filters.end_created_at }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Data de Pagamento</label>
+                                    <div class="input-daterange input-group">
+                                        <input type="date" class="form-control" name="start_payment_at" value="{{ filters.start_payment_at }}">
+                                        <span class="input-group-addon">até</span>
+                                        <input type="date" class="form-control" name="end_payment_at" value="{{ filters.end_payment_at }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="card-footer text-center">
+                        <a href="{{ route('invoices') }}" class="btn btn-sm btn-default">Limpar Filtros</a>
+                        <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                    </footer>
+                </form>
+            </section>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <header class="card-header">
+                    <h2 class="card-title">Faturas</h2>
+                </header>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center"># Fatura</th>
+                                <th>Cliente</th>
+                                <th>Descrição</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Tipo</th>
+                                <th class="text-right">Valor (R$)</th>
+                                <th class="text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for invoice in invoices %}
+                                <tr>
+                                    <td class="text-center">{{ invoice.id }}</td>
+                                    <td>{{ invoice.customer.profile.name }} {{ invoice.customer.profile.last_name }}</td>
+                                    <td>{{ invoice.description }}</td>
+                                    <td class="text-center">{{ invoice.status_description }}</td>
+                                    <td class="text-center">{{ invoice.type_description }}</td>
+                                    <td class="text-right">R$ {{ invoice.value | number_format(2, ',', '.') }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ route('invoice.show', invoice.id) }}" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="left" title="Detalhes">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="7" class="text-center">Nenhum registro encontrado</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5"><b>Total de Faturas: {{ invoices.count() }}</b></td>
+                                <td colspan="6">Valor total: <b>R$ {{ invoices.sum('value') | number_format(2, ',', '.') }}</b></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <div class="col-md-12 col-sm-12 col-md-12 col-lg-12">
+                        {{ invoices.appends(app.request.except('page')).links | raw }}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <script type="text/javascript" src="/general/components/jquery-mask-plugin/src/jquery.mask.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('.cpf').mask('000.000.000-00');
+        });
+    </script>
+{% endblock footer %}

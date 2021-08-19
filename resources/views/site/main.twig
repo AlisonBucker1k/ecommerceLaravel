@@ -1,0 +1,289 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Oh, Yes!</title>
+        <meta name="keywords" content="OhYes!" />
+        <meta name="description" content="OhYes!">
+        <meta name="author" content="imoth.com.br">
+        <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800%7CShadows+Into+Light%7CPlayfair+Display:400" rel="stylesheet" type="text/css">
+
+        <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+        <link rel="stylesheet" href="/assets/vendor/animate/animate.min.css">
+        <link rel="stylesheet" href="/assets/vendor/simple-line-icons/css/simple-line-icons.min.css">
+        <link rel="stylesheet" href="/assets/vendor/owl.carousel/assets/owl.carousel.min.css">
+        <link rel="stylesheet" href="/assets/vendor/owl.carousel/assets/owl.theme.default.min.css">
+        <link rel="stylesheet" href="/assets/vendor/magnific-popup/magnific-popup.min.css">
+        <link rel="stylesheet" href="/assets/vendor/bootstrap-star-rating/css/star-rating.min.css">
+        <link rel="stylesheet" href="/assets/vendor/bootstrap-star-rating/themes/krajee-fas/theme.min.css">
+        <link rel="stylesheet" href="/assets/css/theme.css">
+        <link rel="stylesheet" href="/assets/css/theme-elements.css">
+        <link rel="stylesheet" href="/assets/css/theme-blog.css">
+        <link rel="stylesheet" href="/assets/css/theme-shop.css">
+        <link rel="stylesheet" href="/assets/vendor/rs-plugin/css/settings.css">
+        <link rel="stylesheet" href="/assets/vendor/rs-plugin/css/layers.css">
+        <link rel="stylesheet" href="/assets/vendor/rs-plugin/css/navigation.css">
+        <link rel="stylesheet" href="/assets/vendor/circle-flip-slideshow/css/component.css">
+        <link rel="stylesheet" href="/assets/css/skins/default.css">
+        <link rel="stylesheet" href="/assets/css/custom.css">
+        <link rel="stylesheet" href="/general/components/toastr/toastr.min.css">
+
+        <script src="/assets/vendor/modernizr/modernizr.min.js"></script>
+
+        {% block header %}{% endblock header %}
+    </head>
+    <body>
+        <div class="loading-overlay">
+            <div class="bounce-loader">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
+        </div>
+        <div class="body">
+            <header id="header" data-plugin-options="{'stickyEnabled': true, 'stickyEnableOnBoxed': true, 'stickyEnableOnMobile': true, 'stickyStartAt': 135, 'stickySetTop': '-135px', 'stickyChangeLogo': true}">
+                <div class="header-body border-color-primary border-bottom-0 box-shadow-none" data-sticky-header-style="{'minResolution': 0}" data-sticky-header-style-active="{'background-color': '#f7f7f7'}" data-sticky-header-style-deactive="{'background-color': '#FFF'}">
+                    <div class="header-top header-top-borders bg-nude">
+                        <div class="container h-100">
+                            <div class="header-row h-100">
+                                <div class="header-column justify-content-start">
+                                    <div class="header-row">
+                                        <nav class="header-nav-top">
+                                            <ul class="nav nav-pills">
+                                                <li class="nav-item nav-item-anim-icon">
+                                                    <a class="nav-link" href="{{ route('contact') }}"><i class="fas fa-angle-right"></i> Fale Conosco</a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                                <div class="header-column justify-content-end">
+                                    <div class="header-row">
+                                        <nav class="header-nav-top">
+                                            <ul class="nav nav-pills">
+                                                {% if auth_check() %}
+                                                    <li class="nav-item nav-item-borders py-2 dropdown">
+                                                        <a class="" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <i class="fas fa-user text-4 text-color-primary"></i> {{ auth_user().profile.fullName }} <i class="fas fa-chevron-down"></i>
+                                                        </a>
+
+                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile-drop">
+                                                            <a class="nav-link" href="{{ route('panel.profile') }}">Meus Dados</a>
+                                                            <a class="nav-link" href="{{ route('panel.addresses') }}">Endereços</a>
+                                                            <a class="nav-link" href="{{ route('panel.orders') }}">Minhas Compras</a>
+                                                            <a class="nav-link" href="{{ route('customer.logout') }}">Sair</a>
+                                                        </div>
+                                                    </li>
+                                                {% else %}
+                                                    <li class="nav-item nav-item-borders py-2">
+                                                        <a href="{{ route('customer.register') }}">Cadastrar</a>
+                                                    </li>
+                                                    <li class="nav-item nav-item-borders py-2">
+                                                        <a href="{{ route('login') }}"><i class="fas fa-sign-in-alt text-4 text-color-primary" style="top: 1px;"></i> Logar</a>
+                                                    </li>
+                                                {% endif %}
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="header-container container">
+                        <div class="header-row py-2">
+                            <div class="header-column">
+                                <div class="header-row">
+                                    <div class="header-logo">
+                                        <a href="{{ route('home') }}">
+                                            <img alt="Porto" width="auto" height="54" data-sticky-width="auto" data-sticky-height="40" data-sticky-top="84" src="/assets/img/logo.png">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="header-column justify-content-end">
+                                <div class="header-row">
+                                    <div class="header-nav-features">
+                                        <div class="header-nav-feature header-nav-features-cart header-nav-features-cart-big d-inline-flex ml-2" data-sticky-header-style="{'minResolution': 991}" data-sticky-header-style-active="{'top': '78px'}" data-sticky-header-style-deactive="{'top': '0'}">
+                                            <a href="javascript:void(0)" class="search-open mr-3 mt-1">
+                                                <i class="fa fa-search"></i>
+                                            </a>
+                                            <a href="{{ route('cart') }}">
+                                                <img src="/assets/img/icons/icon-cart-big.svg" height="34" alt="" class="header-nav-top-icon-img">
+                                                <span class="cart-info">
+                                                    <span class="cart-qty">{{ totalCartQuantity }}</span>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="header-nav-bar mb-3 px-3 px-lg-0">
+                            <div class="header-row">
+                                <div class="header-column">
+                                    <div class="header-row justify-content-end">
+                                        <div class="header-nav header-nav-links justify-content-start" data-sticky-header-style="{'minResolution': 991}" data-sticky-header-style-active="{'margin-left': '150px'}" data-sticky-header-style-deactive="{'margin-left': '0'}">
+                                            <div class="header-nav-main header-nav-main-square header-nav-main-dropdown-no-borders header-nav-main-dropdown-arrow header-nav-main-effect-3 header-nav-main-sub-effect-1">
+                                                <nav class="collapse">
+                                                    <div class="search-inline" style="margin-top: -11px">
+                                                        <form action="{{ route('products') }}">
+                                                            <input type="text" class="form-control" name="product_name" placeholder="Buscar produto..." value="{{ input_get('product_name') }}">
+                                                            <button type="submit">
+                                                                <i class="fa fa-search"></i>
+                                                            </button>
+                                                            <a href="javascript:void(0)" class="search-close">
+                                                                <i class="fa fa-times"></i>
+                                                            </a>
+                                                        </form>
+                                                    </div>
+                                                    <ul class="nav nav-pills" id="mainNav">
+                                                        <li class="dropdown">
+                                                            <a class="" href="{{ route('home') }}">
+                                                                Home
+                                                            </a>
+                                                        </li>
+                                                        {% for category in categoriesWithProduct %}
+                                                            <li class="dropdown">
+                                                                <a class="dropdown-item dropdown-toggle active" href="{{ route('products', category.slug) }}">
+                                                                    {{ category.name }}
+                                                                </a>
+                                                                {% if category.subcategories|length > 0 %}
+                                                                    <ul class="dropdown-menu">
+                                                                        {% for subcategory in category.subcategories %}
+                                                                            <li class="dropdown-submenu">
+                                                                                <a class="dropdown-item" href="{{ route('products', [category.slug, subcategory.slug]) }}">{{ subcategory.name }}</a>
+                                                                            </li>
+                                                                        {% endfor %}
+                                                                    </ul>
+                                                                {% endif %}
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </nav>
+                                            </div>
+                                            <button class="btn header-btn-collapse-nav" data-toggle="collapse" data-target=".header-nav-main nav">
+                                                <i class="fas fa-bars"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div role="main" class="main">
+                {% include 'site.breadcrumb' %}
+                {% block content %}{% endblock content %}
+            </div>
+            <footer id="footer">
+                <div class="container mt-4 pt-2 pb-5">
+                    <div class="row py-4">
+
+                        <div class="col-md-4 col-lg-4">
+                            <h5 class="text-4 text-color-light mb-3 mt-4 mt-lg-0">SOBRE</h5>
+                            <p class="mb-1">
+                                Oh, Yes -  Artigos Íntimos - Loja Online <br>
+                                Telefone: 27 9 8169-0236 <br>
+                                Email: ohyesloja<i class="fas fa-at"></i>hotmail.com
+                            </p>
+                            <div class="mt-1">
+                                <ul class="footer-social-icons social-icons social-icons-clean social-icons-big social-icons-opacity-light social-icons-icon-light mt-0 mt-lg-3">
+                                    <li class="social-icons-facebook"><a href="http://www.facebook.com/" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                    <li class="social-icons-twitter"><a href="http://www.twitter.com/" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                                    <li class="social-icons-linkedin"><a href="http://www.linkedin.com/" target="_blank" title="Linkedin"><i class="fab fa-linkedin-in"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <img src="/assets/img/pagseguro.png" width="300px" alt="Payment icons" class="img-fluid mt-4 mt-lg-2">
+                            <strong class="text-light d-block text-center">
+                                100% Seguro
+                            </strong>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="mt-2">
+                                <img src="/assets/img/payment-icon.png" alt="Payment icons" class="img-fluid mt-4 mt-lg-2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row footer-top-light-border mt-4 pt-4">
+                        <div class="col-12 text-center">
+                            <p class="text-2 mt-1">© 2019. {{ config('app.company.name') }}, CNPJ {{ config('app.company.cnpj') }} - Todos os direitos reservados.</p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+        <script type="text/javascript" src="/assets/vendor/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="/assets/vendor/jquery.appear/jquery.appear.min.js"></script>
+        <script type="text/javascript" src="/assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+        <script type="text/javascript" src="/assets/vendor/jquery.cookie/jquery.cookie.min.js"></script>
+        <script type="text/javascript" src="/assets/vendor/popper/umd/popper.min.js"></script>
+        <script type="text/javascript" src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/assets/vendor/common/common.min.js"></script>
+        <script type="text/javascript" src="/assets/vendor/jquery.lazyload/jquery.lazyload.min.js"></script>
+        <script type="text/javascript" src="/assets/vendor/isotope/jquery.isotope.min.js"></script>
+        <script type="text/javascript" src="/assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+        <script type="text/javascript" src="/assets/vendor/vide/jquery.vide.min.js"></script>
+        <script type="text/javascript" src="/assets/vendor/vivus/vivus.min.js"></script>
+        <script type="text/javascript" src="/assets/js/theme.js"></script>
+        <script type="text/javascript" src="/assets/vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+        <script type="text/javascript" src="/assets/vendor/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+        <script type="text/javascript" src="/assets/vendor/circle-flip-slideshow/js/jquery.flipshow.min.js"></script>
+        <script type="text/javascript" src="/assets/js/views/view.home.js"></script>
+        <script type="text/javascript" src="/assets/js/custom.js"></script>
+        <script type="text/javascript" src="/assets/js/theme.init.js"></script>
+        <script type="text/javascript" src="/general/components/toastr/toastr.min.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                toastr.options = {
+                    closeButton: true,
+                    progressBar: true,
+                    showMethod: 'slideDown',
+                    timeOut: 10000
+                };
+
+                {% for error in errors.all() %}
+                    toastr.error('{{ error | raw }}');
+                {% endfor %}
+
+                {% if session_has('success') %}
+                    toastr.success('{{ session_get('success') | raw }}');
+                {% endif %}
+
+                {% if session_has('warning') %}
+                    toastr.warning('{{ session_get('warning') | raw }}');
+                {% endif %}
+            });
+        </script>
+
+        <script type="text/javascript">
+            var sp = document.querySelector('.search-open');
+            var searchbar = document.querySelector('.search-inline');
+            var shclose = document.querySelector('.search-close');
+
+            function changeClass() {
+                searchbar.classList.add('search-visible');
+            }
+
+            function closesearch() {
+                searchbar.classList.remove('search-visible');
+            }
+
+            sp.addEventListener('click', changeClass);
+            shclose.addEventListener('click', closesearch);
+        </script>
+
+        {% block footer %}{% endblock footer %}
+    </body>
+</html>

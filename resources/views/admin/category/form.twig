@@ -1,0 +1,97 @@
+{% extends 'admin.main.twig' %}
+{% block content %}
+    <!-- start: page -->
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <header class="card-header">
+                    <h2 class="card-title">{{ title }}</h2>
+                </header>
+                <div class="card-body">
+                    <form class="form-horizontal form-bordered" method="post">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">Nome</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" name="name" value="{{ old('name', category.name) }}" required="required">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">Status</label>
+                            <div class="col-lg-6">
+                                <select class="form-control" name="status" required="required">
+                                    <option value="">Selecione</option>
+                                    {% for status in listStatus %}
+                                        <option value="{{ status.value }}" {% if is_numeric(old('status', category.status)) and old('status', category.status) == status.value %}selected="selected"{% endif %}>{{ status.description }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="offset-lg-3 col-lg-6">
+                                <input type="submit" class="btn btn-primary" value="Salvar">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    {% if category is not null %}
+        <div class="row">
+            <div class="col">
+                <section class="card">
+                    <header class="card-header">
+                        <a href="{{ route('subcategory.create') }}?category={{ category.id }}" class="btn btn-primary btn-sm pull-right">Nova Subcategoria</a>
+                        <h2 class="card-title">Subcategorias</h2>
+                    </header>
+                    <div class="card-body">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for subcategory in subcategories %}
+                                <tr>
+                                    <td>{{ subcategory.id }}</td>
+                                    <td><i class="{{ subcategory.icon }}"></i> {{ subcategory.name }}</td>
+                                    <td>{{ subcategory.status_description }}</td>
+                                    <td>
+                                        <a href="{{ route('subcategory.edit', subcategory.slug) }}?category={{ subcategory.category_id }}" class="btn btn-info btn-sm">Editar</a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="6">Nenhuma Subcategoria encontrado.</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <!-- Pagination -->
+                        <div class="col-md-12 col-xs-12 col-sm-12">
+                            {{ subcategories.appends(app.request.except('page')).links | raw }}
+                        </div>
+                        <!-- Pagination End -->
+                    </div>
+                </section>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+{% block footer %}
+    <script>
+        function clearIconName(valor) {
+            var name = valor.replace(/.*"(.*)".*/g, '$1');
+            document.getElementById('icon').value=name;
+        }
+    </script>
+{% endblock footer %}
+
+

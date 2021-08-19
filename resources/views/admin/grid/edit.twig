@@ -1,0 +1,148 @@
+{% extends 'admin.main.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <form class="form-horizontal form-bordered" method="post" action="{{ route('grid.update', grid.id) }}">
+                    <header class="card-header">
+                        <h2 class="card-title">{{ title }}</h2>
+                    </header>
+                    <div class="card-body">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="_method" value="PUT">
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">Nome</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" name="name" value="{{ old('name', grid.description) }}" required="required">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">Status</label>
+                            <div class="col-lg-6">
+                                <select class="form-control" name="status" required="required">
+                                    <option value="">Selecione</option>
+                                    {% for status in listStatus %}
+                                        <option value="{{ status.value }}" {% if is_numeric(old('status', grid.status)) and old('status', grid.status) == status.value %}selected="selected"{% endif %}>{{ status.description }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="card-footer text-center">
+                        <input type="submit" class="btn btn-sm btn-primary" value="Salvar">
+                    </footer>
+                </form>
+            </section>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <header class="card-header">
+                    <form method="post" action="{{ route('variation.store', grid.id) }}">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="text" name="description" placeholder="Nova variação" class="form-control" value="{{ old('description') }}">
+                                <input type="hidden" name="grid_id" value="{{ grid.id }}">
+                                <div class="input-group-btn input-group-append">
+                                    <button type="submit" class="btn btn-success">Adicionar Variação</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </header>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Variação</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for variation in variations %}
+                                <tr>
+                                    <td>{{ variation.description }}</td>
+                                    <td class="text-center">{{ variation.status_description }}</td>
+                                    <td class="text-center">
+                                        <span data-toggle="tooltip" data-placement="left" title="Editar">
+                                            <a href="#variation{{ variation.id }}" data-toggle="modal" class="btn btn-primary btn-sm">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                        </span>
+                                        <div class="modal fade" id="variation{{ variation.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <form method="post" action="{{ route('variation.update', [grid.id, variation.id]) }}" class="form-horizontal">
+                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                <input type="hidden" name="_method" value="PUT">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title pull-left" id="myModalLabel">Editar Variação</h4>
+                                                            <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-3 control-label">Nome</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" value="{{ old('description', variation.description) }}" placeholder="" name="description" required="required" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-3 control-label">Status</label>
+                                                                    <div class="col-sm-9">
+                                                                        <select name="status" required="required" class="form-control">
+                                                                            <option value="">Selecione</option>
+                                                                            {% for variationStatus in listVariationStatus %}
+                                                                                <option value="{{ variationStatus.value }}" {% if is_numeric(old('status', variation.status)) and old('status', variation.status) == variationStatus.value %}selected="selected"{% endif %}>{{ variationStatus.description }}</option>
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancelar</button>
+                                                            <button type="submit" class="btn btn-sm btn-success">Salvar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <form action="{{ route('variation.remove', [grid.id, variation.id]) }}" method="post" onsubmit="return confirm('Deseja realmente remover?');" class="d-inline">
+                                            {{ csrf_field() }}
+                                            <button type="submit" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="left" title="Remover">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="3" class="text-center">Nenhum registro encontrado</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="col-md-12 col-xs-12 col-sm-12">
+                        {{ subCategories.appends(app.request.except('page')).links | raw }}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <script type="text/javascript">
+        function clearIconName(valor) {
+            var name = valor.replace(/.*"(.*)".*/g, '$1');
+            document.getElementById('icon').value = name;
+        }
+    </script>
+{% endblock footer %}

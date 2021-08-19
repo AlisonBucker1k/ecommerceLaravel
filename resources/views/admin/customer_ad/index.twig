@@ -1,0 +1,110 @@
+{% extends 'admin.main.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <header class="card-header">
+                    <h2 class="card-title">Filtros</h2>
+                </header>
+                <div class="card-body">
+                    <form>
+                        <div class="row mb-4">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>ID</label>
+                                    <input type="text" name="id" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select name="status" class="form-control">
+                                        <option value="all">Todos</option>
+                                        {% for status in listStatus %}
+                                            <option value="{{ status.value }}" {% if is_numeric(filters.status) and filters.status == status.value %}selected="selected"{% endif %}>{{ status.description }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Tipo</label>
+                                    <select class="form-control" name="type">
+                                        <option value="">Todos</option>
+                                        {% for type in listTypes %}
+                                            <option value="{{ type.value }}" {% if filters.type == type.value %}selected="selected"{% endif %}>{{ type.description }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Condição</label>
+                                    <select class="form-control" name="condition">
+                                        <option value="">Todos</option>
+                                        {% for condition in listConditions %}
+                                            <option value="{{ condition.value }}" {% if filters.condition == condition.value %}selected="selected"{% endif %}>{{ condition.description }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary">Buscar</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- start: page -->
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <header class="card-header">
+                    <h2 class="card-title">Anúncios</h2>
+                </header>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Anúncio</th>
+                                <th>Tipo</th>
+                                <th>Condição</th>
+                                <th>Status</th>
+                                <th>Valor</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ad in ads %}
+                                <tr>
+                                    <td>{{ ad.id }}</td>
+                                    <td>{{ ad.name }}</td>
+                                    <td>{{ ad.type_description }}</td>
+                                    <td>{{ ad.condition_description }}</td>
+                                    <td>{{ ad.status_description }}</td>
+                                    <td>R$ {{ currencyFloat2Brl(ad.value) }}</td>
+                                    <td>
+                                        <a href="{{ route('ad.edit', ad.slug) }}" class="btn btn-info btn-sm">Detalhes</a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="6">Nenhum anúncio encontrado.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <!-- Pagination -->
+                    <div class="col-md-12 col-xs-12 col-sm-12">
+                        {{ ads.appends(app.request.except('page')).links | raw }}
+                    </div>
+                    <!-- Pagination End -->
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}

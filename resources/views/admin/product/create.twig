@@ -1,0 +1,427 @@
+{% extends 'admin.main.twig' %}
+{% block content %}
+    <form class="form-horizontal form-bordered" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <div class="row">
+            <div class="col-sm-8 col-md-12 col-lg-8">
+                <section class="card">
+                    <header class="card-header">
+                        <h2 class="card-title">Informações do Produto</h2>
+                    </header>
+                    <div class="card-body">
+                        <div class="info-produto">
+                            <div class="row">
+                                <div class="col-12 mb-2">
+                                    <div class="form-group percent label-produto-titulo">
+                                        <label class="control-label pull-left" for="id_nome">
+                                            Nome do produto
+                                        </label>
+                                        <input class="form-control" id="id_nome" maxlength="255" name="name" type="text" value="{{ old('name') }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 mb-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Variação?</label>
+                                        <select class="form-control" id="has-grid-variation" name="has_grid_variation" required="">
+                                            <option value="0">Não</option>
+                                            <option value="1" {% if old('has_grid_variation') == 1 %} selected="selected" {% endif %}>Sim</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 mb-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Destaque?</label>
+                                        <select class="form-control" name="highlighted">
+                                            <option value="1">Sim</option>
+                                            <option value="0" {% if old('highlighted') == 0 %} selected="selected" {% endif %}>Não</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Quantidade em estoque</label>
+                                        <input class="form-control" min="0" name="stock_quantity" type="number" value="{{ old('stock_quantity') }}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 mb-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Status</label>
+                                        <select class="form-control" name="status" required="required">
+                                            {% for status in listStatus %}
+                                                <option value="{{ status.value }}" {% if old('status') == status.value %} selected="selected" {% endif %}>{{ status.description }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="withVariation" class="d-none mb-2">
+                                <div class="alert alert-info">
+                                    O preço do produto com variações é definido em cada variação adicionada.
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Variações do produto</label><br>
+                                    {% for grid in grids %}
+                                        <label style="padding:3px;">
+                                            <input type="checkbox" value="{{ grid.id }}" name="grids[{{ grid.id }}]" {% if grid.id == old('grids.' ~ grid.id) %}checked="checked"{% endif %}> {{ grid.description }}
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div id="withoutVariation">
+                                <div class="row">
+                                    <div class="col-xl-3 col-lg-6 mb-2">
+                                        <div class="form-group">
+                                            <label class="control-label">Preço de venda</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text input-group-append">R$</span>
+                                                <input class="money form-control input-group-append" id="value" name="value" type="text" value="{{ old('value') }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-lg-6 mb-2">
+                                        <div class="form-group">
+                                            <label class="control-label">Preço de custo</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text input-group-append">R$</span>
+                                                <input class="money form-control input-group-append" name="cost_value" type="text" value="{{ old('cost_value') }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-12 mb-2">
+                                        <div class="form-group">
+                                            <label class="control-label">Valor/Desconto Promocional</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text input-group-append">R$</span>
+                                                <input class="money form-control input-group-append" id="promotion-value" name="promotion_value" type="text" value="{{ old('promotion_value') }}" {% if old('value') == '' %}readonly{% endif %}>
+                                                <span class="input-group-text input-group-append input-group-prepend">ou</span>
+                                                <input class="form-control input-group-prepend" id="discount-percent" name="discount_percent" type="number" min="0" step="1" max="100" value="{{ old('discount_percent') }}" {% if old('value') == '' %}readonly{% endif %}>
+                                                <span class="input-group-text input-group-append">%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-xl-3 mb-2 warning">
+                                        <div class="form-group has-warning">
+                                            <label class="control-label">Peso</label>
+                                            <div class="input-group">
+                                                <input class="form-control weight input-group-prepend" name="weight" type="text" value="{{ old('weight') }}">
+                                                <span class="input-group-text input-group-append">g</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-xl-3 mb-2">
+                                        <div class="form-group has-warning">
+                                            <label class="control-label">Altura</label>
+                                            <div class="input-group">
+                                                <input class="form-control size input-group-prepend" name="height" type="text" value="{{ old('height') }}">
+                                                <span class="input-group-text input-group-append">cm</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-xl-3 mb-2">
+                                        <div class="form-group has-warning">
+                                            <label class="control-label">Largura</label>
+                                            <div class="input-group">
+                                                <input class="form-control size input-group-prepend" name="width" type="text" value="{{ old('width') }}">
+                                                <span class="input-group-text input-group-append">cm</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-xl-3 mb-2 warning">
+                                        <div class="form-group has-warning">
+                                            <label class="control-label">Profundidade</label>
+                                            <div class="input-group">
+                                                <input class="form-control size input-group-prepend" name="length" type="text" value="{{ old('length') }}">
+                                                <span class="input-group-text input-group-append">cm</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6 col-xl-4 mb-2">
+                                    <div class="form-group">
+                                        <label class="control-label">
+                                            Categoria
+                                        </label>
+                                        <select class="form-control category" name="category_id">
+                                            <option value="">Selecione</option>
+                                            {% for category in categories %}
+                                                <option value="{{ category.id }}" {% if category.id == old('category_id') %}selected="selected"{% endif %}>{{ category.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-xl-4 mb-2">
+                                    <div class="form-group">
+                                        <label class="control-label">
+                                            Subcategoria
+                                        </label>
+                                        <select class="subcategory form-control" name="subcategory_id" {% if subcategories|length == 0 %}readonly="readonly"{% endif %}>
+                                            <option label="{% if subcategories|length == 0 %}Selecione uma categoria{% else %}Selecione{% endif %}"></option>
+                                            {% for subcategory in subcategories %}
+                                                <option value="{{ subcategory.id }}" {% if subcategory.id == old('subcategory_id') %}selected="selected"{% endif %}>{{ subcategory.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-xl-4 mb-2" id="selecao-categoria">
+                                    <div class="form-group">
+                                        <label class="control-label">
+                                            URL do vídeo do produto no Youtube
+                                        </label>
+                                        <div class="input-group">
+                                            <span class="input-group-text input-group-prepend">
+                                                <i class="fab fa-youtube"></i>
+                                            </span>
+                                            <input class="form-control input-group-prepend input-group-append" id="youtubeUrl" name="youtube_url" type="url" value="{{ old('youtube_url') }}">
+                                            <div class="input-group-btn input-group-append">
+                                                <a href="#" class="btn btn-primary d-none pull-right" id="openYoutube" target="_blank">
+                                                    <span class="fa fa-eye"></span> Ver
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label id_descricao_completa">Descrição completa</label>
+                                <textarea class="form-control" id="ckeditor" name="description">{{ old('description') }}</textarea>
+                            </div>
+                            <div id="btnSave">
+                                <input type="submit" value="Cadastrar" class="btn btn-success">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="col-sm-4 col-md-12 col-lg-4">
+                <section class="card">
+                    <header class="card-header">
+                        <h2 class="card-title">Fotos do Produto</h2>
+                    </header>
+                    <div class="card-body">
+                        <div class="wrapper-dropzone">
+                            <div class="image-widget sortable ui-sortable">
+                                <div class="inner">
+                                    <img src="/assets/img/no-img.jpg" class="img-fluid">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="inner thumb">
+                                        <img src="/assets/img/no-img.jpg" class="img-fluid">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="inner thumb">
+                                        <img src="/assets/img/no-img.jpg" class="img-fluid">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="inner thumb">
+                                        <img src="/assets/img/no-img.jpg" class="img-fluid">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="inner thumb">
+                                        <img src="/assets/img/no-img.jpg" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="image-upload-widget well well-sm mt-4">
+                                Tamanho recomendado: <strong>600x600px</strong>
+                                <input type="file" name="images[]" multiple="multiple" style="">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </form>
+{% endblock content %}
+{% block header %}
+    <style>
+        .mt-4 {
+            margin-top:20px;
+        }
+
+        .inner {
+            text-align: center;
+            background-color: #fff;
+            border:1px solid #eee;
+        }
+
+        .inner img{
+            max-height: 240px;
+            margin: 0 auto;
+        }
+
+        .image-upload-widget {
+            background-color: #FFE;
+        }
+
+        .thumb {
+            margin-top: 20px;
+        }
+    </style>
+{% endblock header %}
+{% block footer %}
+    <script src="/general/components/ckeditor/ckeditor.js"></script>
+    <script>
+        $(function(){
+            CKEDITOR.replace('ckeditor');
+
+            $('.size').mask('000000000000000', {reverse: true});
+            $('.weight').mask('000000000000000.000', {reverse: true});
+            $('.money').mask('#.##0,00', {reverse: true, placeholder: '00,00'});
+
+            $('#has-grid-variation').change(function(){
+                const value = $(this).val();
+                checkVariation(value);
+            });
+
+            const hasGridVariation = $('#has-grid-variation').val();
+            checkVariation(hasGridVariation);
+
+            function checkVariation(value)
+            {
+                if (value == 0) {
+                    $('#btnSave input').val('Salvar Produto');
+                    $('#withVariation').addClass('d-none');
+                    $('#withoutVariation').removeClass('d-none');
+                } else {
+                    $('#btnSave input').val('Continuar Cadastro');
+                    $('#withVariation').removeClass('d-none');
+                    $('#withoutVariation').addClass('d-none');
+                }
+            }
+
+            $('#youtubeUrl').keyup(function(){
+                const value = $(this).val();
+                if (value !== '') {
+                    $('#openYoutube').attr('href', value).removeClass('d-none');
+                } else {
+                    $('#openYoutube').addClass('d-none');
+                }
+            });
+
+            $('select.category').change(function() {
+                var category = $(this).val();
+                if (category == '') {
+                    $('select.subcategory').attr('readonly', 'readonly').html($('<option>').attr('label', 'Selecione uma categoria'));
+
+                    return false;
+                }
+
+                $('select.subcategory').attr('readonly', 'readonly').html($('<option>').attr('label', 'Aguarde..'));
+                $.ajax({
+                    url: '{{ route('category.subcategories') }}',
+                    data: {category_id: category},
+                    dataType: 'json',
+                    success: function(data) {
+                        total = data.length;
+                        $('select.subcategory').removeAttr('readonly').html($('<option>').attr('label', 'Selecione'));
+                        for (var i = 0; i < total; i++) {
+                            var subcategory = data[i];
+                            $('select.subcategory').append(
+                                $('<option>').val(subcategory.id).text(subcategory.name)
+                            );
+                        }
+                    }
+                })
+            });
+
+            function float2Real(value){
+                var integer = null, decimal = null, c = null, j = null;
+                var aux = new Array();
+                value = ""+value;
+                c = value.indexOf(".",0);
+                if(c > 0){
+                    integer = value.substring(0,c);
+                    decimal = value.substring(c+1,value.length);
+                }else{
+                    integer = value;
+                }
+
+                for (j = integer.length, c = 0; j > 0; j-=3, c++){
+                    aux[c]=integer.substring(j-3,j);
+                }
+
+                integer = "";
+                for(c = aux.length-1; c >= 0; c--){
+                    integer += aux[c]+'.';
+                }
+
+                integer = integer.substring(0,integer.length-1);
+
+                decimal = parseInt(decimal);
+                if(isNaN(decimal)){
+                    decimal = "00";
+                }else{
+                    decimal = ""+decimal;
+                    if(decimal.length === 1){
+                        decimal = decimal + '0';
+                    }
+                }
+
+                value = integer + "," + decimal;
+
+                return value;
+            }
+
+            function real2Float(value) {
+                value = value.replace(".","");
+                value = value.replace(",",".");
+
+                return value;
+            }
+
+            function calculateDiscount(promotionValue = null, discountPercent = null) {
+                let value = real2Float($('#value').val());
+                if ($('#promotion-value').val() == null && $('#discount-percent').val() == null) {
+                    return false;
+                }
+
+                if (promotionValue == null && discountPercent == null) {
+                    promotionValue = $('#promotion-value').val();
+                    discountPercent = $('#discount-percent').val();
+                }
+
+                if (promotionValue != null) {
+                    promotionValue = real2Float(promotionValue)
+                }
+
+                if (discountPercent != null && discountPercent != '') {
+                    $('#promotion-value').val(float2Real(value - ((value/100) * discountPercent)));
+                } else if (promotionValue != null && promotionValue != '') {
+                    $('#discount-percent').val((100 - (promotionValue/value) * 100));
+                }
+            }
+
+            $('#value').keyup(function(){
+                let value = $(this).val();
+                if (value == '') {
+                    $('#promotion-value, #discount-percent').attr('readonly', 'readonly');
+                } else {
+                    $('#promotion-value, #discount-percent').removeAttr('readonly');
+                }
+
+                calculateDiscount();
+            });
+
+            $('#promotion-value').keyup(function() {
+                calculateDiscount($(this).val());
+            });
+
+            $('#discount-percent').keyup(function() {
+                calculateDiscount(null, $(this).val());
+            });
+        });
+    </script>
+{% endblock footer %}

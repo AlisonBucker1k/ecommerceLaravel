@@ -1,0 +1,192 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Painel {{ config('app.name') }}</title>
+        <link rel="shortcut icon" href="/assets/img/favicon.png">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="/general/components/bootstrap/dist/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="/general/components/animate.css/animate.min.css">
+        <link rel="stylesheet" href="/general/components/font-awesome/web-fonts-with-css/css/fontawesome-all.min.css" type="text/css">
+        <link rel="stylesheet" href="/general/components/jquery-ui/themes/base/jquery-ui.min.css"/>
+        <link rel="stylesheet" href="/assets/css/theme.css?v={{ "now"|date("YmdHis") }}"/>
+        <link rel="stylesheet" href="/assets/css/skins/default.css?v={{ "now"|date("YmdHis") }}"/>
+        <link rel="stylesheet" href="/assets/css/custom.css?v={{ "now"|date("YmdHis") }}"/>
+        <link rel="stylesheet" href="/general/components/toastr/toastr.min.css">
+
+        <script src="/assets/lib/modernizr/modernizr.js"></script>
+
+        {% block header %}{% endblock header %}
+    </head>
+    <body>
+        <section class="body">
+            <header class="header">
+                <div class="logo-container">
+                    <a href="/" class="logo">
+                        <img src="/assets/img/logo.png" height="35"/>
+                    </a>
+                    <div class="d-md-none toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
+                        <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <span class="separator"></span>
+                    <div id="userbox" class="userbox">
+                        <a href="#" data-toggle="dropdown">
+                            <div class="profile-info" data-lock-name="{{ auth_user().name }}" data-lock-email="{{ auth_user().email }}">
+                                <span class="name">{{ auth_user().name }}</span>
+                            </div>
+                            <i class="fa custom-caret"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <ul class="list-unstyled mb-2">
+                                <li class="divider"></li>
+                                <li>
+                                    <a role="menuitem" tabindex="-1" href="{{ route('account.edit') }}">
+                                        <i class="fa fa-user"></i> Meus Dados
+                                    </a>
+                                </li>
+                                <li>
+                                    <a role="menuitem" tabindex="-1" href="{{ route('password.edit') }}">
+                                        <i class="fa fa-lock"></i> Alterar Senha
+                                    </a>
+                                </li>
+                                <li>
+                                    <a role="menuitem" tabindex="-1" href="{{ route('logout') }}">
+                                        <i class="fa fa-power-off"></i> Sair
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="inner-wrapper">
+                <aside id="sidebar-left" class="sidebar-left">
+                    <div class="nano">
+                        <div class="nano-content">
+                            <nav id="menu" class="nav-main" role="navigation">
+                                <ul class="nav nav-main">
+                                    <li>
+                                        <a class="nav-link" href="{{ route('dashboard') }}">
+                                            <i class="fa fa-home" aria-hidden="true"></i>
+                                            <span>Dashboard</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link" href="{{ route('customers') }}">
+                                            <i class="fa fa-user" aria-hidden="true"></i>
+                                            <span>Clientes</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link" href="{{ route('users') }}">
+                                            <i class="fa fa-users" aria-hidden="true"></i>
+                                            <span>Usuários</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-parent">
+                                        <a class="nav-link" href="#">
+                                            <i class="fa fa-gift" aria-hidden="true"></i>
+                                            <span>Produtos</span>
+                                        </a>
+                                        <ul class="nav nav-children">
+                                            <li>
+                                                <a class="nav-link" href="{{ route('products.list') }}">
+                                                    Produtos
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="nav-link" href="{{ route('categories.list') }}">
+                                                    Categorias
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="nav-link" href="{{ route('subcategories.list') }}">
+                                                    Subcategorias
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="nav-link" href="{{ route('grids.list') }}">
+                                                    Grades
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="nav-link" href="{{ route('stocks.list') }}">
+                                                    Relatório de Estoque
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link" href="{{ route('orders.list') }}">
+                                            <i class="fa fa-box-open" aria-hidden="true"></i>
+                                            <span>Pedidos</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link" href="{{ route('invoices') }}">
+                                            <i class="fa fa-file" aria-hidden="true"></i>
+                                            <span>Faturas</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <script type="text/javascript">
+                            if (typeof localStorage !== 'undefined') {
+                                if (localStorage.getItem('sidebar-left-position') !== null) {
+                                    var initialPosition = localStorage.getItem('sidebar-left-position'),
+                                        sidebarLeft = document.querySelector('#sidebar-left .nano-content');
+
+                                    sidebarLeft.scrollTop = initialPosition;
+                                }
+                            }
+                        </script>
+                    </div>
+                </aside>
+                <section role="main" class="content-body">
+                    {% include 'admin.breadcrumb' %}
+                    {% block content %}{% endblock content %}
+                </section>
+            </div>
+        </section>
+
+        <script type="text/javascript" src="/general/components/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="/assets/lib/popper/umd/popper.min.js"></script>
+        <script type="text/javascript" src="/assets/lib/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+        <script type="text/javascript" src="/general/components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/general/components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+        <script type="text/javascript" src="/general/components/nanoscroller/bin/javascripts/jquery.nanoscroller.min.js"></script>
+        <script type="text/javascript" src="/general/components/jquery-ui/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="/assets/lib/common/common.js"></script>
+        <script type="text/javascript" src="/assets/js/theme.js"></script>
+        <script type="text/javascript" src="/general/components/toastr/toastr.min.js"></script>
+        <script type="text/javascript" src="/general/components/jquery-mask-plugin/dist/jquery.mask.js"></script>
+        <script type="text/javascript" src="/assets/js/custom.js"></script>
+        <script type="text/javascript" src="/assets/js/theme.init.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                toastr.options = {
+                    closeButton: true,
+                    progressBar: true,
+                    showMethod: 'slideDown',
+                    timeOut: 10000
+                };
+
+                {% for error in errors.all() %}
+                    toastr.error('{{ error | raw }}');
+                {% endfor %}
+
+                {% if session_has('success') %}
+                    toastr.success('{{ session_get('success') | raw }}');
+                {% endif %}
+            });
+        </script>
+
+        {% block footer %}{% endblock footer %}
+    </body>
+</html>

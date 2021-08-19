@@ -1,0 +1,95 @@
+{% extends 'admin.main.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <form>
+                    <header class="card-header">
+                        <h2 class="card-title">Filtros</h2>
+                    </header>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6 mb-2">
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select name="status" class="form-control">
+                                        <option value="">Todos</option>
+                                        {% for status in listStatus %}
+                                            <option value="{{ status.value }}" {% if is_numeric(input_get('status')) and input_get('status') == status.value %}selected="selected"{% endif %}>{{ status.description }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 mb-2">
+                                <div class="form-group">
+                                    <label>Categoria</label>
+                                    <select name="category_id" class="form-control">
+                                        <option value="">Todos</option>
+                                        {% for category in categories %}
+                                            <option value="{{ category.id }}" {% if is_numeric(input_get('category_id')) and input_get('category_id') == category.id %}selected="selected"{% endif %}>{{ category.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="card-footer text-center">
+                        <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                    </footer>
+                </form>
+            </section>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <header class="card-header">
+                    <a href="{{ route('subcategory.create') }}" class="btn btn-primary btn-sm pull-right"><i class="fa fa-plus"></i> Subcategoria</a>
+                    <h2 class="card-title">Subcategorias</h2>
+                </header>
+                <div class="card-body table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center"># Subcategoria</th>
+                                <th>Nome</th>
+                                <th>Categoria</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for subcategory in subcategories %}
+                                <tr>
+                                    <td class="text-center">{{ subcategory.id }}</td>
+                                    <td>{{ subcategory.name }}</td>
+                                    <td>{{ subcategory.category.name }}</td>
+                                    <td class="text-center">{{ subcategory.status_description }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ route('subcategory.edit', subcategory.slug) }}" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="left" title="Editar">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <form action="{{ route('subcategory.remove', subcategory.slug) }}" method="post" onsubmit="return confirm('Deseja realmente remover?');" class="d-inline">
+                                            {{ csrf_field() }}
+                                            <button type="submit" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="left" title="Remover">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="6" class="text-center">Nenhum registro encontrado</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="col-md-12 col-xs-12 col-sm-12">
+                        {{ subcategories.appends(app.request.except('page')).links | raw }}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}

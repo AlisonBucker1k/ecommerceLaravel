@@ -1,0 +1,103 @@
+{% extends 'admin.main.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <form method="get">
+                    <header class="card-header">
+                        <h2 class="card-title">Filtros</h2>
+                    </header>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-6 col-lg-3">
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select name="status" class="form-control">
+                                        <option value="all">Todos</option>
+                                        {% for status in listStatus %}
+                                            <option value="{{ status.value }}" {% if is_numeric(filters.status) and filters.status == status.value %}selected="selected"{% endif %}>{{ status.description }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <div class="form-group">
+                                    <label>Nome</label>
+                                    <input type="text" name="name" class="form-control" value="{{ filters.name }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <div class="form-group">
+                                    <label>E-mail</label>
+                                    <input type="email" name="email" class="form-control" value="{{ filters.email }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <div class="form-group">
+                                    <label>CPF</label>
+                                    <input type="text" name="cpf" id="cpf" class="form-control" value="{{ filters.cpf }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="card-footer text-center">
+                        <a href="{{ route('customers') }}" class="btn btn-sm btn-default">Limpar Filtros</a>
+                        <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                    </footer>
+                </form>
+            </section>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <header class="card-header">
+                    <h2 class="card-title">Clientes</h2>
+                </header>
+                <div class="card-body table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>E-mail</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for customer in customers %}
+                                <tr>
+                                    <td>{{ customer.name }} {{ customer.last_name }}</td>
+                                    <td>{{ customer.email }}</td>
+                                    <td class="text-center">{{ customer.status_description }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ route('customer.edit', customer.slug) }}" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="left" title="Editar">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="4" class="text-center">Nenhum registro encontrado</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="col-md-12 col-xs-12 col-sm-12">
+                        {{ customers.appends(app.request.except('page')).links | raw }}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <script type="text/javascript" src="/general/components/jquery-mask-plugin/src/jquery.mask.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('#cpf').mask('000.000.000-00');
+        });
+    </script>
+{% endblock footer %}

@@ -1,0 +1,91 @@
+{% extends 'admin.main.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <a href="{{ route('users.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Usuário</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <form>
+                    <header class="card-header">
+                        <h2 class="card-title">Filtros</h2>
+                    </header>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Nome</label>
+                                    <input type="text" name="name" class="form-control" value="{{ input_get('name') }}">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>E-mail</label>
+                                    <input type="email" name="email" class="form-control" value="{{ input_get('email') }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="card-footer text-center">
+                        <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                    </footer>
+                </form>
+            </section>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <header class="card-header">
+                    <h2 class="card-title">Usuários</h2>
+                </header>
+                <div class="card-body table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>E-mail</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                                <tr>
+                                    <td>{{ user.name }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td class="text-center">{{ user.status_description }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ route('user.edit', user.id) }}" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="Editar">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+
+                                        {% if user.status == statusActive %}
+                                            <a href="{{ route('user.disable', user.id) }}" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="left" title="Desativar">
+                                                <i class="fa fa-ban"></i>
+                                            </a>
+                                        {% else %}
+                                            <a href="{{ route('user.active', user.id) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="left" title="Ativar">
+                                                <i class="fa fa-check"></i>
+                                            </a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="4" class="text-center">Nenhum registro encontrado</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="col-md-12 col-xs-12 col-sm-12">
+                        {{ users.appends(app.request.except('page')).links | raw }}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}

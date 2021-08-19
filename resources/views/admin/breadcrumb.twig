@@ -1,0 +1,22 @@
+{% if breadcrumb != '' %}
+    <header class="page-header page-header-left-breadcrumb">
+        <div class="right-wrapper">
+            <ol class="breadcrumbs">
+                <li>
+                    <a href="{{ route('dashboard') }}">
+                        <i class="fa fa-home"></i>
+                    </a>
+                </li>
+                {% for key, page in breadcrumb %}
+                    <li>
+                        {% if page != url().current() %}
+                            <a href="{{ page }}">{{ key|capitalize }}</a>
+                        {% else %}
+                            <a class="active">{{ key|capitalize }}</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ol>
+        </div>
+    </header>
+{% endif %}

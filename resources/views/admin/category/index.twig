@@ -1,0 +1,88 @@
+{% extends 'admin.main.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <form>
+                    <header class="card-header">
+                        <h2 class="card-title">Filtros</h2>
+                    </header>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Nome</label>
+                                    <input type="text" class="form-control" name="name" value="{{ input_get('name') }}">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select name="status" class="form-control">
+                                        <option value="all">Todos</option>
+                                        {% for status in listStatus %}
+                                            <option value="{{ status.value }}" {% if is_numeric(input_get('status')) and input_get('status') == status.value %}selected="selected"{% endif %}>{{ status.description }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="card-footer text-center">
+                        <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                    </footer>
+                </form>
+            </section>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <header class="card-header">
+                    <a href="{{ route('category.create') }}" class="btn btn-primary btn-sm pull-right"><i class="fa fa-plus"></i> Categoria</a>
+                    <h2 class="card-title">Categorias</h2>
+                </header>
+                <div class="card-body table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center"># Categoria</th>
+                                <th>Nome</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for category in categories %}
+                                <tr>
+                                    <td class="text-center">{{ category.id }}</td>
+                                    <td>{{ category.name }}</td>
+                                    <td class="text-center">{{ category.status_description }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ route('category.edit', category.slug) }}" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="left" title="Editar">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <form action="{{ route('category.remove', category.slug) }}" method="post" onsubmit="return confirm('Deseja realmente remover?');" class="d-inline">
+                                            {{ csrf_field() }}
+                                            <button type="submit" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="left" title="Remover">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="4" class="text-center">Nenhum registro encontrado</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="col-md-12 col-xs-12 col-sm-12">
+                        {{ categories.appends(app.request.except('page')).links | raw }}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}

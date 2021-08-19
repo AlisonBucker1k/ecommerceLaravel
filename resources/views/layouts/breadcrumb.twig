@@ -1,0 +1,18 @@
+<!-- Small Breadcrumb -->
+<div class="small-breadcrumb">
+    <div class="container">
+        <div class=" breadcrumb-link">
+            <ul>
+                {% for key, page in breadcrumb %}
+                    <li>
+                        {% if page != url().current() %}
+                            <a href="{{ page }}">{{ key|capitalize }}</a>
+                        {% else %}
+                            <a class="active">{{ key|capitalize }}</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

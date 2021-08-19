@@ -1,0 +1,82 @@
+{% extends 'site.main.twig' %}
+
+{% block content %}
+	<section class="page-header page-header-modern page-header-background page-header-background-md parallax mt-0" data-plugin-parallax data-plugin-options="{'speed': 1.2}" data-image-src="/assets/img/banner-contact.jpg">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+					<h1><strong>Ficou com alguma dúvida?</strong></h1>
+					<span class="sub-title">Entre em contato conosco!</span>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div class="container">
+		<div class="row py-4">
+			<div class="col-lg-7 appear-animation" data-appear-animation="fadeIn" data-appear-animation-delay="650">
+				<div class="offset-anchor" id="contact-sent"></div>
+				<form id="contactFormAdvanced" action="" method="POST">
+					<input type="hidden" name="_token" value="{{ csrf_token() }}">
+					<input type="hidden" value="true" name="emailSent" id="emailSent">
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label class="required font-weight-bold text-dark text-2">Nome Completo</label>
+							<input type="text" value="{{ old('name') }}" maxlength="100" class="form-control" name="name" id="name" required>
+						</div>
+						<div class="form-group col-md-6">
+							<label class="required font-weight-bold text-dark text-2">Email</label>
+							<input type="email" value="{{ old('email') }}" maxlength="100" class="form-control" name="email" id="email" required>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-12">
+							<label class="font-weight-bold text-dark text-2">Assunto</label>
+							<select class="form-control" name="mail_subject" id="subject" required>
+								<option value="">Selecione</option>
+								<option {% if old('mail_subject') == 'Suporte' %}selected="selected"{% endif %}>Suporte</option>
+								<option {% if old('mail_subject') == 'Financeiro' %}selected="selected"{% endif %}>Financeiro</option>
+								<option {% if old('mail_subject') == 'Reclamação' %}selected="selected"{% endif %}>Reclamação</option>
+								<option {% if old('mail_subject') == 'Sugestão' %}selected="selected"{% endif %}>Sugestão</option>
+								<option {% if old('mail_subject') == 'Outros' %}selected="selected"{% endif %}>Outros</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-12 mb-4">
+							<label class="required font-weight-bold text-dark text-2">Mensagem</label>
+							<textarea maxlength="5000" rows="6" class="form-control" name="message" id="message" required>{{ old('message') }}</textarea>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-12">
+							<hr>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-12 mb-5">
+							<input type="submit" id="contactFormSubmit" value="Enviar mensagem" class="btn btn-primary btn-modern pull-right" data-loading-text="Loading...">
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="col-lg-5">
+				<div class="appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="800">
+					<h4 class="text-primary pt-5">Nosso <strong>Endereço</strong></h4>
+					<ul class="list list-icons list-icons-style-3 mt-2">
+						<li><i class="fas fa-map-marker-alt top-6"></i> <strong>Endereço:</strong> Rua Aleixo Netto, 545 lojas 4 e 6 - Mini Gallery <br>
+                            Praia do Canto - Vitória ES <br>
+                            CEP: 29.055-260</li>
+                        <li><i class="fas fa-phone top-6"></i> <strong>Telefone:</strong> (27) 98169-0236</li>
+						<li><i class="fas fa-envelope top-6"></i> <strong>Email:</strong> ohyesloja<i class="fas fa-at"></i>hotmail.com</li>
+					</ul>
+					<h4 class="text-primary pt-5">Horário de <strong>Funcionamento</strong></h4>
+					<ul class="list list-icons list-dark mt-2">
+						<li><i class="far fa-clock top-6"></i> Segunda - Sexta - 09:00 às 19:00</li>
+						<li><i class="far fa-clock top-6"></i> Sabádos - 09:00 às 13:00</li>
+						<li><i class="far fa-clock top-6"></i> Domingos - Fechados</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock content %}

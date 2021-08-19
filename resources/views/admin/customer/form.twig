@@ -1,0 +1,178 @@
+{% extends 'admin.main.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <form class="form-horizontal form-bordered" method="post" enctype="multipart/form-data">
+                    <header class="card-header">
+                        <h2 class="card-title">{{ title }}</h2>
+                    </header>
+                    <div class="card-body">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">E-mail</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" name="email" value="{{ old('email', customer.email) }}" autocomplete="off" required="required">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">Nome Completo</label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" name="name" value="{{ old('name', customer.profile.name) }}" autocomplete="off" required="required" placeholder="Nome">
+                            </div>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" name="last_name" value="{{ old('last_name', customer.profile.last_name) }}" autocomplete="off" required="required" placeholder="Sobrenome">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">CPF</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" name="cpf" id="cpf" value="{{ old('cpf', customer.profile.cpf) }}" autocomplete="off" required="required">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">Telefone</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" name="phone" value="{{ old('phone', customer.profile.phone) }}" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">Celular</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" name="cellphone" value="{{ old('cellphone', customer.profile.cellphone) }}" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="card-footer text-center">
+                        <a href="#modalPassword" data-toggle="modal" class="btn btn-sm btn-default">Editar Senha</a>
+                        <input type="submit" class="btn btn-sm btn-success" value="Salvar">
+                    </footer>
+                </form>
+            </section>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <header class="card-header">
+                    <h2 class="card-title">Endereços</h2>
+                </header>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center"># Endereço</th>
+                                <th class="text-center">CEP</th>
+                                <th>Endereço</th>
+                                <th class="text-center">Principal</th>
+                                <th class="text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for address in addresses %}
+                                <tr>
+                                    <td class="text-center">{{ address.id }}</td>
+                                    <td class="text-center">{{ address.postal_code }}</td>
+                                    <td>{{ address.street }}, {{ address.number }}, {{ address.district }}, {{ address.state }}, {{ address.country }}</td>
+                                    <td class="text-center">{{ address.main_description }}</td>
+                                    <td class="text-center">{{ address.status_description }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="5" class="text-center">Nenhum registro encontrado</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="col-md-12 col-xs-12 col-sm-12">
+                        {{ customers.appends(app.request.except('page')).links | raw }}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <header class="card-header">
+                    <h2 class="card-title">Pedidos</h2>
+                </header>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center"># Pedido</th>
+                                <th class="text-center">Status</th>
+                                <th>Endereço</th>
+                                <th class="text-right">Frete</th>
+                                <th class="text-right">Valor</th>
+                                <th class="text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                                <tr>
+                                    <td class="text-center">{{ order.id }}</td>
+                                    <td class="text-center">{{ order.status_description }}</td>
+                                    <td>{{ order.address.street }}, {{ order.address.number }}, {{ order.address.district }}, {{ order.address.state }}, {{ order.address.country }}</td>
+                                    <td class="text-right">
+                                        {% if order.shipping_value > 0 %}
+                                            R$ {{ order.shipping_value | number_format(2, ',', '.') }}
+                                        {% else %}
+                                            Grátis
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-right">R$ {{ order.value | number_format(2, ',', '.') }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ route('order.show', order.id) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="left" title="Detalhes">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="6" class="text-center">Nenhum registro encontrado</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="col-md-12 col-xs-12 col-sm-12">
+                        {{ customers.appends(app.request.except('page')).links | raw }}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="modal" tabindex="-1" role="dialog" id="modalPassword">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form method="post">
+                    <input type="hidden" value="{{ csrf_token() }}" name="_token">
+                    <div class="modal-header mb-4">
+                        <h5 class="modal-title">Atualizar Senha</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-4 control-label text-lg-right pt-2">Senha</label>
+                        <div class="col-lg-7">
+                            <input type="password" class="form-control" name="password" value="" autocomplete="off" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-4 control-label text-lg-right pt-2">Confirmar Senha</label>
+                        <div class="col-lg-7">
+                            <input type="password" class="form-control" name="password_confirmation" value="" autocomplete="off" required="required">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-sm btn-success">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

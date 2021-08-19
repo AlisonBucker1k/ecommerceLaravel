@@ -1,0 +1,124 @@
+{% extends 'admin.main.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <form>
+                    <header class="card-header">
+                        <h2 class="card-title">Filtros</h2>
+                    </header>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-4 mb-2">
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select name="status" class="form-control">
+                                        <option value="">Todos</option>
+                                        {% for status in listStatus %}
+                                            <option value="{{ status.value }}" {% if is_numeric(input_get('status')) and input_get('status') == status.value %}selected="selected"{% endif %}>{{ status.description }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mb-2">
+                                <div class="form-group">
+                                    <label># Pedido</label>
+                                    <input type="text" class="form-control" id="order_id" name="order_id" value="{{ input_get('order_id') }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mb-2">
+                                <div class="form-group">
+                                    <label>CPF</label>
+                                    <input type="text" class="form-control cpf" id="cpf" name="cpf" value="{{ input_get('cpf') }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-12 mb-2">
+                                <div class="form-group">
+                                    <label>Data de Criação</label>
+                                    <div class="input-daterange input-group">
+                                        <input type="date" class="form-control date" name="start_created_at" value="{{ input_get('start_created_at') }}" autocomplete="off">
+                                        <span class="input-group-addon">até</span>
+                                        <input type="date" class="form-control date" name="end_created_at" value="{{ input_get('end_created_at') }}" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="card-footer text-center">
+                        <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                    </footer>
+                </form>
+            </section>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <header class="card-header">
+                    <h2 class="card-title">Pedidos</h2>
+                </header>
+                <div class="card-body table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center"># Pedido</th>
+                                <th>Cliente</th>
+                                <th>CEP</th>
+                                <th>Status</th>
+                                <th class="text-right">Frete</th>
+                                <th class="text-right">Valor</th>
+                                <th class="text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                                <tr class="odd gradeX">
+                                    <td class="text-center">{{ order.id }}</td>
+                                    <td>
+                                        <a href="{{ route('customer.edit', order.customer.slug) }}" target="_blank">
+                                            {{ order.customer.profile.name }} {{ order.customer.profile.last_name }} <br/>
+                                            {{ order.customer.profile.cpf }}
+                                        </a>
+                                    </td>
+                                    <td>{{ order.customer.mainAddress.postal_code | default('-') }}</td>
+                                    <td>
+                                        {{ order.status_description }}
+                                        {% if order.sent_at is not null %}
+                                            <br/> <small>Enviado em {{ dateSql2Br(order.sent_at) }}</small>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-right">
+                                        {% if order.shipping_value > 0 %}
+                                            R$ {{ order.shipping_value | number_format(2, ',', '.') }}
+                                        {% else %}
+                                            Grátis
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-right">R$ {{ order.value | number_format(2, ',', '.') }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ route('order.show', order.id) }}" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="left" title="Detalhes"><i class="fa fa-eye"></i></a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr class="odd gradeX">
+                                    <td colspan="7" class="text-center">Nenhum registro encontrado</td>
+                                </tr>
+                            {% endfor%}
+                        </tbody>
+                    </table>
+                    <div class="col-md-12 col-xs-12 col-sm-12">
+                        {{ orders.appends(app.request.except('page')).links | raw }}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block footer %}
+    <script type="text/javascript" src="/general/components/jquery-mask-plugin/dist/jquery.mask.js"></script>
+    <script type="text/javascript">
+        $('.cpf').mask('000.000.000-00');
+    </script>
+{% endblock footer %}

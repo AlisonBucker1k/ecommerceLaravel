@@ -1,0 +1,134 @@
+{% extends 'admin.main.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <form>
+                    <header class="card-header">
+                        <h2 class="card-title">Filtros</h2>
+                    </header>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Nome</label>
+                                    <input type="text" name="name" class="form-control" value="{{ input_get('name') }}">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select name="status" class="form-control">
+                                        <option value="all">Todos</option>
+                                        {% for status in listStatus %}
+                                            <option value="{{ status.value }}" {% if is_numeric(input_get('status')) and input_get('status') == status.value %}selected="selected"{% endif %}>{{ status.description }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Categoria</label>
+                                    <select name="category_id" class="form-control">
+                                        <option value="">Todos</option>
+                                        {% for category in categories %}
+                                            <option value="{{ category.id }}" {% if is_numeric(input_get('category_id')) and input_get('category_id') == category.id %}selected="selected"{% endif %}>{{ category.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Subcategoria</label>
+                                    <select name="subcategory_id" class="form-control">
+                                        <option value="">Todos</option>
+                                        {% for subcategory in subcategories %}
+                                            <option value="{{ subcategory.id }}" {% if is_numeric(input_get('subcategory_id')) and input_get('subcategory_id') == subcategory.id %}selected="selected"{% endif %}>{{ subcategory.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="card-footer text-center">
+                        <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                    </footer>
+                </form>
+            </section>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <header class="card-header">
+                    <a href="{{ route('product.create') }}" class="btn btn-primary btn-sm pull-right"><i class="fa fa-plus"></i> Produto</a>
+                    <h2 class="card-title">Produtos</h2>
+                </header>
+                <div class="card-body table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th colspan="2">Produto</th>
+                                <th>Categoria</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-right">Preço de Venda</th>
+                                <th class="text-right">Preço de Custo</th>
+                                <th class="text-right">Preço Promocional</th>
+                                <th class="text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in products %}
+                                <tr>
+                                    <td style="width: 100px;">
+                                        <img style="max-width: 100%;" src="{% if product.mainImage != '' %}{{ product.mainImage.file }}{% else %}/assets/img/no-image.jpg{% endif %}" class="img-responsive">
+                                    </td>
+                                    <td>
+                                        <strong>{{ product.name }}</strong><br>
+                                        Tipo: {{ product.type_description }}
+                                    </td>
+                                    <td>{{ product.category.name | default('-') }}</td>
+                                    <td class="text-center">{{ product.status_description }}</td>
+                                    <td class="text-right">
+                                        {% if product.mainVariation %}
+                                            R$ {{ product.mainVariation.value_formated }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-right">
+                                        {% if product.mainVariation %}
+                                            R$ {{ product.mainVariation.cost_value_formated }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-right">
+                                        {% if product.mainVariation %}
+                                            R$ {{ product.mainVariation.promotion_value_formated }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-center" style="vertical-align: middle;">
+                                        <a href="{{ route('product.edit', product.slug) }}" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="left" title="Editar">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="8" class="text-center">Nenhum produto encontrado</td>
+                                </tr>
+                            {% endfor%}
+                        </tbody>
+                    </table>
+                    <div class="col-md-12 col-xs-12 col-sm-12">
+                        {{ products.appends(app.request.except('page')).links | raw }}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}

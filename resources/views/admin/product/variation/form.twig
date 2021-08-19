@@ -1,0 +1,120 @@
+{% if error != '' %}
+    <div class="alert alert-danger">
+        {{ error }}
+    </div>
+{% else %}
+    <div id="messageVariation"></div>
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+    <div class="row mb-2">
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label class="control-label">Preço de venda</label>
+                <div class="input-group">
+                    <span class="input-group-text input-group-prepend">R$</span>
+                    <input class="money form-control input-group-append" id="value" name="value" type="text" required="required" value="{{ variation.value }}">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label class="control-label">Preço de custo</label>
+                <div class="input-group">
+                    <span class="input-group-text input-group-prepend">R$</span>
+                    <input class="money form-control input-group-append" id="costValue" name="cost_value" type="text" value="{{ variation.cost_value }}">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="control-label">Valor/Desconto Promocional</label>
+                <div class="input-group">
+                    <span class="input-group-text input-group-append">R$</span>
+                    <input class="money form-control input-group-append" id="promotion-value" name="promotion_value" type="text" value="{{ variation.promotion_value }}" {% if variation.value == '' %}readonly{% endif %}>
+                    <span class="input-group-text input-group-append input-group-prepend">ou</span>
+                    <input class="form-control input-group-prepend" id="discount-percent" name="discount_percent" type="number" min="0" step="1" max="100" value="{{ variation.discount_percent }}" {% if variation.value == '' %}readonly{% endif %}>
+                    <span class="input-group-text input-group-append">%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label class="control-label">Estoque</label>
+                <input class="form-control" min="0" name="stock_quantity" id="stockQuantity" type="number" required="required" value="{{ variation.stock_quantity }}">
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label class="control-label">Destaque?</label>
+                <select class="form-control" name="highlighted" id="highlighted">
+                    <option value="1" {% if variation.highlighted == 1 %}selected="selected"{% endif %}>Sim</option>
+                    <option value="0" {% if variation.highlighted == 0 %}selected="selected"{% endif %}>Não</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label class="control-label">Status</label>
+                <select class="form-control" name="status" id="status">
+                    {% for status in listStatus %}
+                        <option value="{{ status.value }}" {% if variation.status == status.value %}selected="selected"{% endif %}>{{ status.description }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-sm-3 warning">
+            <div class="form-group has-warning">
+                <label class="control-label">Peso</label>
+                <div class="input-group">
+                    <input class="form-control weight input-group-prepend" name="weight" type="text" id="weight" value="{{ variation.weight }}">
+                    <span class="input-group-text input-group-append">g</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group has-warning">
+                <label class="control-label">Altura</label>
+                <div class="input-group">
+                    <input class="form-control size input-group-prepend" name="height" type="text" id="height" value="{{ variation.height }}">
+                    <span class="input-group-text input-group-append">cm</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group has-warning">
+                <label class="control-label">Largura</label>
+                <div class="input-group">
+                    <input class="form-control size input-group-prepend" name="width" type="text" id="width" value="{{ variation.width }}">
+                    <span class="input-group-text input-group-append">cm</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3 warning">
+            <div class="form-group has-warning">
+                <label class="control-label">Comprimento</label>
+                <div class="input-group">
+                    <input class="form-control size input-group-prepend" name="length" type="text" id="" value="{{ variation.length }}">
+                    <span class="input-group-text input-group-append">cm</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-2">
+        {% for grid in product.grids %}
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="control-label">{{ grid.grid.description }}</label>
+                    <select name="variations[{{ grid.id }}]" class="form-control select-grids" data-id="{{ grid.id }}" id="grid{{ grid.id }}" required="required">
+                        <option value="">Selecione</option>
+                        {% for gridVariation in grid.grid.variations %}
+                            <option value="{{ gridVariation.id }}" {% if productVariationItem.productVariationExists(variation.id, grid.id, gridVariation.id) %}selected="selected"{% endif %}>{{ gridVariation.description }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}

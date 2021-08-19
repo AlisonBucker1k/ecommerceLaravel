@@ -1,0 +1,84 @@
+{% extends 'admin.main.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <form>
+                    <header class="card-header">
+                        <h2 class="card-title">Filtros</h2>
+                    </header>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="products">Produtos</label>
+                                    <select name="product" id="products" class="form-control">
+                                        <option value="">Selecione</option>
+                                        {% for product in products %}
+                                            <option value="{{ product.id }}" {% if is_numeric(input_get('product')) and input_get('product') == product.id %}selected="selected"{% endif %}>{{ product.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="card-footer text-center">
+                        <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                    </footer>
+                </form>
+            </section>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <header class="card-header">
+                    <a href="{{ route('product.create') }}" class="btn btn-primary btn-sm pull-right"><i class="fa fa-plus"></i> Produto</a>
+                    <h2 class="card-title">Produtos</h2>
+                </header>
+                <div class="card-body table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th colspan="2">Produto</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Quantidade em estoque</th>
+                                <th class="text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for productVariation in productVariations %}
+                                <tr>
+                                    <td width="100px">
+                                        <img style="max-width: 100%;" src="{{ productVariation.image }}" class="img-responsive">
+                                    </td>
+                                    <td>
+                                        <strong>{{ productVariation.product.name }}</strong><br>
+                                        {% for item in productVariation.items %}
+                                            {{ item.productGrid.grid.description }}: {{ item.gridVariation.description }}<br>
+                                        {% endfor %}
+                                    </td>
+                                    <td class="text-center">{{productVariation.status_description}}</td>
+                                    <td class="text-center">{{ productVariation.stock_quantity }}</td>
+                                    <td class="text-center" style="vertical-align: middle;">
+                                        <a href="{{ route('product.edit', productVariation.product.slug) }}" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="left" title="Editar">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="4" class="text-center">Nenhum produto encontrado</td>
+                                </tr>
+                            {% endfor%}
+                        </tbody>
+                    </table>
+                    <div class="col-md-12 col-xs-12 col-sm-12">
+                        {{ productVariations.appends(app.request.except('page')).links | raw }}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}

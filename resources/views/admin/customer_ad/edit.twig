@@ -1,0 +1,276 @@
+{% extends 'admin.main.twig' %}
+{% block content %}
+    <!-- start: page -->
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <header class="card-header">
+                    <h2 class="card-title">{{ title }}</h2>
+                </header>
+                <div class="card-body">
+                    {% if customer_ad.status == pendingStatus %}
+                        <div class="alert alert-info">
+                            Esse anúncio aguarda aprovação.
+                        </div>
+                    {% endif %}
+                    <form class="form-horizontal form-bordered" id="formCustomerAd" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">Inserido por</label>
+                            <div class="col-lg-6 pt-2">
+                                <a href="{{ route('customer.edit', customer_ad.customer.slug) }}" target="_blank">{{ customer_ad.customer.profile.name }} {{ customer_ad.customer.profile.last_name }}</a>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">Plano</label>
+                            <div class="col-lg-6 pt-2">
+                                {{ customer_ad.plan.name }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">Status</label>
+                            <div class="col-lg-6 pt-2">
+                                {{ customer_ad.status_description }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">Nome</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" name="name" value="{{ old('name', customer_ad.name) }}" autocomplete="off" required="required">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">Valor</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" name="price" value="{{ old('price', currencyFloat2Brl(customer_ad.value)) }}" autocomplete="off" required="required">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">E-mail</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" name="email" value="{{ old('email', customer_ad.email) }}" autocomplete="off" required="required">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">Paravras Chaves</label>
+                            <div class="col-lg-6">
+                                <textarea class="form-control" name="keywords" id="tags" autocomplete="off" required="required">{{ old('keywords', customer_ad.keywords) }}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">Tipo</label>
+                            <div class="col-lg-6">
+                                <select class="form-control" name="type">
+                                    {% for type in listTypes %}
+                                        <option value="{{ type.value }}" {% if type.value == old('type', customer_ad.type) %}selected="selected"{% endif %}>
+                                            {{ type.description }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">Categoria</label>
+                            <div class="col-lg-6">
+                                <select class="category form-control" name="category_id">
+                                    <option label="Selecione"></option>
+                                    {% for category in categories %}
+                                        <option value="{{ category.id }}" {% if category.id == old('category_id', customer_ad.category_id) %}selected="selected"{% endif %}>{{ category.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">Subcategoria</label>
+                            <div class="col-lg-6">
+                                <select class="form-control subcategory" name="subcategory_id" {% if subcategories|length == 0 %}readonly="readonly"{% endif %}>
+                                    <option label="{% if subcategories|length == 0 %}Selecione uma categoria{% else %}Selecione{% endif %}"></option>
+                                    {% for subcategory in subcategories %}
+                                        <option value="{{ subcategory.id }}" {% if subcategory.id == old('subcategory_id', customer_ad.subcategory_id) %}selected="selected"{% endif %}>{{ subcategory.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">Condição</label>
+                            <div class="col-lg-6">
+                                <select class="form-control" name="condition">
+                                    {% for condition in listConditions %}
+                                        <option value="{{ condition.value }}" {% if condition.value == old('condition', customer_ad.condition) %}selected="selected"{% endif %}>
+                                            {{ condition.description }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">Celular</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" name="cellphone" value="{{ old('cellphone', customer_ad.cellphone) }}" autocomplete="off" required="required">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">CEP</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" id="cep" name="cep" value="{{ old('postal_code', customer_ad.postal_code) }}" autocomplete="off" required="required">
+                                <div id="loading" class="d-none">
+                                    <span class="fa fa-spinner fa-spin"></span> Aguarde..
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">País</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" name="country" disabled value="{{ old('country', customer_ad.country) }}" autocomplete="off" required="required">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">Estado</label>
+                            <div class="col-lg-6">
+                                <input type="text" maxlength="2" class="form-control" id="state" name="state" value="{{ old('state', customer_ad.state) }}" autocomplete="off" required="required">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">Cidade</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" id="city" name="city" value="{{ old('city', customer_ad.city) }}" autocomplete="off" required="required">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">Bairro</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" id="district" name="district" value="{{ old('district', customer_ad.district) }}" autocomplete="off" required="required">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">Descrição</label>
+                            <div class="col-lg-6">
+                                <textarea rows="5" class="form-control" name="description">{{ old('description', customer_ad.description) }}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2">Fotos</label>
+                            <div class="col-lg-6">
+                                <div class="row">
+                                    {% for image in customer_ad.images %}
+                                        <div class="col-sm-4">
+                                            <img src="{{ image.file }}" class="img-fluid">
+                                        </div>
+                                    {% else %}
+                                        <div class="col-sm-12">
+                                            Nenhuma foto cadastrada.
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="offset-lg-3 col-lg-6">
+                                <input type="submit" class="btn btn-primary" value="Salvar">
+                                {% if customer_ad.status == pendingStatus or customer_ad.status == disapprovedStatus %}
+                                    <input type="button" data-id="1" class="btn-approved btn btn-success" value="Aprovar Anúncio">
+                                {% endif %}
+                                {% if customer_ad.status == pendingStatus or customer_ad.status == activeStatus %}
+                                    <input type="button" data-id="0" class="btn-approved btn btn-danger" value="Reprovar Anúncio">
+                                {% endif %}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}
+{% block header %}
+    <link href="/general/plugins/tagsinput/jquery.tagsinput.min.css" rel="stylesheet">
+{% endblock header %}
+{% block footer %}
+    <script src="/general/plugins/tagsinput/jquery.tagsinput.min.js"></script>
+    <script src="/general/components/jquery-mask-plugin/src/jquery.mask.js"></script>
+    <script>
+        $(function() {
+            $('#cep').mask('00000-000');
+            $('.cellphone').mask('(00) 00000-0000', {placeholder: "(00) 00000-0000"});
+            $('.money').mask('#.##0,00', {reverse: true, placeholder: '00,00'});
+
+            $('#tags').tagsInput({
+                'width': '100%',
+                'defaultText': 'Tag',
+                'delimiter': [',',';', '.'],
+                'maxChars': 20,
+                'onAddTag': function(data) {
+                    var totalTags = $('#tags_tagsinput .tag').size();
+                    console.log(totalTags);
+                    if (totalTags > 5) {
+                        toastr.error('Permitido somente 5 palavras chaves por anúncio.');
+
+                        $('#tags').removeTag(data);
+                    }
+                }
+            });
+
+            $('#cep').blur(function() {
+                $('#address').addClass('d-none');
+
+                let cep = $(this).val();
+                if (cep == '') {
+                    toastr.error('Informe o CEP para identificarmos a localização do anúncio.');
+
+                    return false;
+                }
+
+                $('#loading').removeClass('d-none');
+
+                $.ajax({
+                    url: '{{ route('address.find') }}',
+                    data: {cep: cep},
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#loading').addClass('d-none');
+                        if (data.error) {
+                            toastr.error(data.message);
+
+                            return false;
+                        }
+
+                        $('#district').val(data.bairro);
+                        $('#city').val(data.localidade);
+                        $('#state').val(data.uf);
+                    }
+                });
+            });
+
+            $('select.category').change(function() {
+                var category = $(this).val();
+                if (category == '') {
+                    $('select.subcategory').attr('readonly', 'readonly').html($('<option>').attr('label', 'Selecione uma categoria'));
+
+                    return false;
+                }
+
+                $('select.subcategory').attr('readonly', 'readonly').html($('<option>').attr('label', 'Aguarde..'));
+                $.ajax({
+                    url: '{{ route('ad.subcategories') }}',
+                    data: {category_id: category},
+                    dataType: 'json',
+                    success: function(data) {
+                        total = data.length;
+                        $('select.subcategory').removeAttr('readonly').html($('<option>').attr('label', 'Selecione'));
+                        for (var i = 0; i < total; i++) {
+                            var subcategory = data[i];
+                            $('select.subcategory').append(
+                                $('<option>').val(subcategory.id).text(subcategory.name)
+                            );
+                        }
+                    }
+                })
+            });
+
+            $('.btn-approved').click(function() {
+                let id = $(this).data('id');
+                $('#formCustomerAd').prepend($('<input>').val(id).attr({'name': 'approved', 'type': 'hidden'}));
+                $('#formCustomerAd').submit();
+            });
+        });
+    </script>
+{% endblock %}

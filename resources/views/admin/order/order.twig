@@ -1,0 +1,202 @@
+{% extends 'admin.main.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <div class="card-body">
+                    <div class="invoice">
+                        <header class="clearfix">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="col-6 pl-0" style="float: left;">
+                                        <h2 class="h2 mt-0 mb-3 text-dark font-weight-bold" style="line-height: 26px;">Pedido #{{ order.id }}</h2>
+                                    </div>
+                                    <div class="col-6 pr-0" style="float: right;">
+                                        <div class="text-right"><span class="badge badge-pill badge-dark" style="font-size: 15px;">{{ order.status_description }}</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </header>
+                        <div class="bill-info">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="bill-to">
+                                        <p class="h5 mb-1 text-dark font-weight-semibold">Cliente</p>
+                                        <div>
+                                            <a href="{{ route('customer.edit', order.customer.slug) }}" target="_blank">{{ order.customer.profile.name }} {{ order.customer.profile.last_name }}</a>
+                                            <br/>
+                                            CPF: {{ order.customer.profile.cpf }}
+                                            <br/>
+                                            Telefone: {{ order.customer.profile.phone | default('Não informado') }}
+                                            <br/>
+                                            Celular: {{ order.customer.profile.cellphone | default('Não informado')  }}
+                                            <br/>
+                                            Fatura: <a href="{{ route('invoice.show', order.invoice.id) }}" target="_blank">Clique aqui para ver os detalhes</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="bill-data text-right">
+                                        <p class="mb-0">
+                                            <span class="text-dark">Data de Criação:</span>
+                                            <span class="ml-1">{{ dateSql2Br(order.created_at) }}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <table class="shop_table cart table table-bordered table-hover table-responsive-sm">
+                                        <thead>
+                                            <tr>
+                                                <th class="product-name" colspan="2">Produto</th>
+                                                <th class="product-price text-right">Valor</th>
+                                                <th class="product-quantity text-center">Quatidade</th>
+                                                <th class="product-subtotal text-right">Subtotal</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for orderProduct in order.products %}
+                                                <tr class="cart_table_item">
+                                                    <td class="product-thumbnail" style="width: 100px;">
+                                                        <img alt="" class="img-fluid" src="{{ orderProduct.image }}">
+                                                    </td>
+                                                    <td class="product-name">
+                                                        <strong>{{ orderProduct.name }}</strong>
+                                                        <br/>
+                                                        {% for item in orderProduct.items %}
+                                                            {{ item.grid_description }}: {{ item.grid_variation_description }}<br/>
+                                                        {% endfor %}
+                                                    </td>
+                                                    <td class="product-price text-right">
+                                                        <span class="amount">R$ {{ orderProduct.final_value_formated }}</span>
+                                                        {% if orderProduct.discount_percent > 0 %}
+                                                            <br/>
+                                                            <del>
+                                                                <small>
+                                                                    <span class="amount">R$ {{ orderProduct.value_formated }}</span>
+                                                                </small>
+                                                            </del>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="product-quantity text-center">
+                                                        {{ orderProduct.quantity }}
+                                                    </td>
+                                                    <td class="product-subtotal text-right">
+                                                        <span class="amount">R$ {{ orderProduct.subtotal_value_formated }}</span>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+
+                                            <tr>
+                                                <td colspan="4" class="text-right font-weight-bold">Subtotal</td>
+                                                <td class="text-right font-weight-bold">R$ {{ order.products_total_value_formated }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="text-right font-weight-bold">Frete</td>
+                                                <td class="text-right font-weight-bold">
+                                                    {% if order.shipping_value > 0 %}
+                                                        + R$ {{ order.shipping_value_formated }}
+                                                    {% else %}
+                                                        Grátis
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="text-right font-weight-bold">Total</td>
+                                                <td class="text-right font-weight-bold">R$ {{ order.value_formated }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            {% if order.status != statusPending %}
+                                <div>
+                                    <h3 class="text-uppercase">Histórico do Pedido</h3>
+                                    <table class="table table-bordered table-hover table-responsive-sm invoice-items">
+                                        <thead>
+                                            <tr class="text-dark">
+                                                <th class="text-center">Data</th>
+                                                <th class="text-center">Código</th>
+                                                <th class="text-center">Status</th>
+                                                <th class="text-center">Usuário</th>
+                                                <th class="text-center">Descrição</th>
+                                                <th class="text-center">Arquivo</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for history in order.histories %}
+                                                <tr>
+                                                    <td class="text-center">{{ dateSql2Br(history.created_at) }}</td>
+                                                    <td class="text-center">{{ history.code }}</td>
+                                                    <td class="text-center">{{ history.status_description }}</td>
+                                                    <td class="text-center">{{ history.user.email }}</td>
+                                                    <td class="text-center">{{ history.description }}</td>
+                                                    <td class="text-center">
+                                                        {% if history.file != '' %}
+                                                            <a href="{{ history.file }}" target="_blank" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="left" title="Download">
+                                                                <i class="fa fa-cloud-download-alt"></i>
+                                                            </a>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="6" class="text-center">Nenhum registro encontrado</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    <div class="text-right">
+                                        <a href="#modalHistory" data-toggle="modal" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Histórico</a>
+                                    </div>
+                                </div>
+                                <div class="modal" tabindex="-1" role="dialog" id="modalHistory">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <form action="{{ route('order.history.store', order.id) }}" method="POST" enctype="multipart/form-data">
+                                                <input type="hidden" value="{{ csrf_token() }}" name="_token">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Novo Hitórico</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <label for="status">Status</label>
+                                                        <select class="form-control" id="status" name="status" required>
+                                                            <option value="">Selecione</option>
+                                                            {% for status in listStatus %}
+                                                                <option value="{{ status.value }}" {% if is_numeric(filters.status) and filters.status == status.value %}selected="selected"{% endif %}>{{ status.description }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="code">Código</label>
+                                                        <input class="form-control" id="code" name="code" type="text">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="file">Arquivo</label>
+                                                        <input class="form-control" id="file" name="file" type="file">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="description">Descrição</label>
+                                                        <textarea class="form-control" cols="30" id="description" name="description" rows="5"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-sm btn-default" data-dismiss="modal" type="button">Fechar</button>
+                                                    <button class="btn btn-sm btn-success" type="submit">Salvar</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,96 @@
+<!doctype html>
+<html class="fixed">
+    <head>
+        <meta charset="UTF-8">
+        <title>Área Restrita</title>
+        <link rel="shortcut icon" href="/assets/img/favicon.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="/general/components/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/general/components/animate.css/animate.min.css">
+        <link rel="stylesheet" href="/general/components/font-awesome/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="/general/components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css" />
+        <link rel="stylesheet" href="/assets/css/theme.css" />
+        <link rel="stylesheet" href="/assets/css/skins/default.css" />
+        <link rel="stylesheet" href="/assets/css/custom.css">
+        <link rel="stylesheet" href="/general/components/toastr/toastr.min.css">
+
+        <script src="/assets/lib/modernizr/modernizr.js"></script>
+    </head>
+    <body>
+        <section class="body-sign">
+            <div class="center-sign">
+                <div class="text-center mb-4">
+                    <a href="/" class="logo">
+                        <img src="/assets/img/logo.png" height="44"/>
+                    </a>
+                </div>
+                <div class="panel card-sign">
+                    <div class="card-body">
+                        <form action="/login" method="post">
+                            {{ csrf_field() }}
+                            <div class="form-group mb-3">
+                                <label>E-mail</label>
+                                <div class="input-group input-group-icon">
+                                    <input name="email" type="text" class="form-control form-control-lg" value="{{ input_old('email') }}"/>
+                                    <span class="input-group-addon">
+                                        <span class="icon icon-lg">
+                                            <i class="fa fa-user"></i>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <div class="clearfix">
+                                    <label class="float-left">Senha</label>
+                                </div>
+                                <div class="input-group input-group-icon">
+                                    <input name="password" type="password" class="form-control form-control-lg"/>
+                                    <span class="input-group-addon">
+                                        <span class="icon icon-lg">
+                                            <i class="fa fa-lock"></i>
+                                        </span>
+                                    </span>
+                                </div>
+                                <a href="{{ route('password.request') }}" class="mt-1 pull-right">Esqueci minha senha</a>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <label class="pt-3">
+                                        <input type="checkbox" name="remember"> Lembrar minha senha
+                                    </label>
+                                </div>
+                                <div class="col-sm-4 text-right">
+                                    <button type="submit" class="btn btn-primary mt-2">Acessar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <p class="text-center text-muted mt-3 mb-3">&copy; <a href="http://imoth.com.br" target="_blank">iMoth</a>. Todos os direitos reservados.</p>
+            </div>
+        </section>
+
+        <script type="text/javascript" src="/general/components/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="/assets/lib/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+        <script type="text/javascript" src="/general/components/toastr/toastr.min.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                toastr.options = {
+                    closeButton: true,
+                    progressBar: true,
+                    showMethod: 'slideDown'
+                };
+
+                {% for error in errors.all() %}
+                    toastr.error('{{ error | raw }}');
+                {% endfor %}
+
+                {% if session_has('success') %}
+                    toastr.success('{{ session_get('success') | raw }}');
+                {% endif %}
+            });
+        </script>
+    </body>
+</html>

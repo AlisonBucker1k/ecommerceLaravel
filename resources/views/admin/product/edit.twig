@@ -1,0 +1,845 @@
+{% set defaultImage = '/assets/img/no-image.jpg' %}
+{% extends 'admin.main.twig' %}
+{% block content %}
+    <form class="form-horizontal form-bordered" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="has_grid_variation" value="{{ product.has_grid_variation }}">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        {% if product.has_grid_variation and product.variations|length <= 0 %}
+            <div class="alert alert-warning">
+                Para o produto ficar disponível é necessário cadastrar as variações na grade. <a href="#grids">Clique aqui</a> para cadastrar.
+            </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-sm-8 col-md-12 col-lg-8">
+                <section class="card">
+                    <header class="card-header">
+                        <h2 class="card-title">Informações do Produto</h2>
+                    </header>
+                    <div class="card-body">
+                        <div class="info-produto">
+                            <div class="row mb-2">
+                                <div class="col-sm-12">
+                                    <div class="form-group percent label-produto-titulo">
+                                        <label class="control-label pull-left" for="id_nome">
+                                            Nome do produto
+                                        </label>
+                                        <input class="form-control" id="id_nome" maxlength="255" name="name" type="text" value="{{ old('name', product.name) }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-lg-4 mb-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Possui Variação?</label>
+                                        <select class="form-control" id="has-grid-variation" disabled="disabled">
+                                            <option value="0">Não</option>
+                                            <option value="1" {% if old('has_grid_variation', product.has_grid_variation) == 1 %} selected="selected" {% endif %}>Sim</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 mb-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Destaque?</label>
+                                        <select class="form-control" name="highlighted">
+                                            <option value="1">Sim</option>
+                                            <option value="0" {% if old('highlighted', product.highlighted) == 0 %} selected="selected" {% endif %}>Não</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Estoque</label>
+                                        <input class="form-control" min="0" name="stock_quantity" type="number" value="{{ old('stock_quantity', product.mainVariation.stock_quantity) }}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 mb-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Status</label>
+                                        <select class="form-control" name="status" required="required">
+                                            {% for status in listStatus %}
+                                                <option value="{{ status.value }}" {% if old('status', product.status) == status.value %} selected="selected" {% endif %}>{{ status.description }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if product.has_grid_variation == 0 %}
+                                <div id="withoutVariation">
+                                    <div class="row form-group">
+                                        <div class="col-xl-3 col-lg-6 mb-2">
+                                            <div class="form-group">
+                                                <label class="control-label">Preço de venda</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text input-group-append">R$</span>
+                                                    <input class="money form-control input-group-append" name="value" id="value" type="text" value="{{ old('value', product.mainVariation.value) }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-lg-6 mb-2">
+                                            <div class="form-group">
+                                                <label class="control-label">Preço de custo</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text input-group-append">R$</span>
+                                                    <input class="money form-control input-group-append" name="cost_value" type="text" value="{{ old('cost_value', product.mainVariation.cost_value) }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-12 mb-2">
+                                            <div class="form-group">
+                                                <label class="control-label">Valor/Desconto Promocional</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text input-group-append">R$</span>
+                                                    <input class="money form-control input-group-append" id="promotion-value" name="promotion_value" type="text" value="{{ old('promotion_value', product.mainVariation.promotion_value) }}" {% if old('value', product.mainVariation.value) == '' %}readonly{% endif %}>
+                                                    <span class="input-group-text input-group-append input-group-prepend">ou</span>
+                                                    <input class="form-control input-group-prepend" id="discount-percent" name="discount_percent" type="number" min="0" step="1" max="100" value="{{ old('discount_percent', product.mainVariation.discount_percent) }}" {% if old('value', product.mainVariation.value) == '' %}readonly{% endif %}>
+                                                    <span class="input-group-text input-group-append">%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-lg-6 col-xl-3 mb-2 warning">
+                                            <div class="form-group has-warning">
+                                                <label class="control-label">Peso</label>
+                                                <div class="input-group">
+                                                    <input class="form-control weight input-group-prepend" name="weight" type="text" value="{{ old('weight', product.mainVariation.weight) }}">
+                                                    <span class="input-group-text input-group-append">g</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-xl-3 mb-2">
+                                            <div class="form-group has-warning">
+                                                <label class="control-label">Altura</label>
+                                                <div class="input-group">
+                                                    <input class="form-control size input-group-prepend" name="height" type="text" value="{{ old('height', product.mainVariation.height) }}">
+                                                    <span class="input-group-text input-group-append">cm</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-xl-3 mb-2">
+                                            <div class="form-group has-warning">
+                                                <label class="control-label">Largura</label>
+                                                <div class="input-group">
+                                                    <input class="form-control size input-group-prepend" name="width" type="text" value="{{ old('width', product.mainVariation.width) }}">
+                                                    <span class="input-group-text input-group-append">cm</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-xl-3 mb-2 warning">
+                                            <div class="form-group has-warning">
+                                                <label class="control-label">Profundidade</label>
+                                                <div class="input-group">
+                                                    <input class="form-control size input-group-prepend" name="length" type="text" value="{{ old('length', product.mainVariation.length) }}">
+                                                    <span class="input-group-text input-group-append">cm</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            <div class="row">
+                                <div class="col-lg-6 mb-2">
+                                    <div class="form-group">
+                                        <label class="control-label">
+                                            Categoria
+                                        </label>
+                                        <select class="form-control category" name="category_id">
+                                            <option value="">Selecione</option>
+                                            {% for category in categories %}
+                                                <option value="{{ category.id }}" {% if category.id == old('category_id', product.category_id) %}selected="selected"{% endif %}>{{ category.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 mb-2">
+                                    <div class="form-group">
+                                        <label class="control-label">
+                                            Subcategoria
+                                        </label>
+                                        <select class="subcategory form-control" name="subcategory_id" {% if subcategories|length == 0 %}readonly="readonly"{% endif %}>
+                                            <option label="{% if subcategories|length == 0 %}Selecione uma categoria{% else %}Selecione{% endif %}"></option>
+                                            {% for subcategory in subcategories %}
+                                                <option value="{{ subcategory.id }}" {% if subcategory.id == old('subcategory_id', product.subcategory_id) %}selected="selected"{% endif %}>{{ subcategory.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 mb-2" id="selecao-categoria">
+                                    <div class="form-group">
+                                        <label class="control-label">
+                                            URL do vídeo do produto no Youtube
+                                        </label>
+                                        <div class="input-group">
+                                            <span class="input-group-text input-group-prepend">
+                                                <i class="fab fa-youtube"></i>
+                                            </span>
+                                            <input class="form-control input-group-prepend input-group-append" id="youtubeUrl" name="youtube_url" type="url" value="{{ old('youtube_url', product.youtube_url) }}">
+                                            <div class="input-group-btn input-group-append">
+                                                <a href="#" class="btn btn-primary d-none pull-right" id="openYoutube" target="_blank">
+                                                    <span class="fa fa-eye"></span> Ver
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label id_descricao_completa">Descrição completa</label>
+                                <textarea class="form-control" id="ckeditor" name="description">{{ old('description', product.description) | raw }}</textarea>
+                            </div>
+                            <div id="btnSave">
+                                <input type="submit" value="Salvar Alterações" class="btn btn-success">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="col-sm-4 col-md-12 col-lg-4">
+                <section class="card">
+                    <header class="card-header">
+                        <h2 class="card-title">Fotos do Produto</h2>
+                    </header>
+                    <div class="card-body">
+                        <div class="wrapper-dropzone">
+                            <div class="image-widget sortable ui-sortable">
+                                <div class="inner">
+                                    <img src="{% if product.mainImage.file != '' %}{{ product.mainImage.file }}{% else %}/assets/img/no-img.jpg{% endif %}" class="img-fluid">
+                                </div>
+                            </div>
+                            <div class="row">
+                                {% for image in product.images %}
+                                    <div class="col-sm-3">
+                                        <div class="inner thumb text-center">
+                                            <a href="{{ route('product.image.remove', [product.slug, image.id]) }}" onclick="return confirm('Deseja realmente remover essa imagem?');" class="btn btn-danger btn-sm remove-image">
+                                                <span class="fa fa-times"></span>
+                                            </a>
+                                            <a href="{{ route('product.image.main', [product.slug, image.id]) }}" {% if image.main %}disabled="" {% endif %} class="btn {% if image.main %}btn-warning{% else %}btn-default{% endif %} btn-sm define-main">
+                                                <span class="fa fa-star"></span>
+                                            </a>
+
+                                            <img src="{{ image.file }}" class="img-fluid">
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                {% if product.images|length < 4 %}
+                                    {% for i in 1 ..(4-product.images|length) %}
+                                        <div class="col-sm-3">
+                                            <div class="inner thumb">
+                                                <img src="/assets/img/no-img.jpg" class="img-fluid">
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="image-upload-widget well well-sm mt-4">
+                                Tamanho recomendado: <strong>600x600px</strong>
+                                <input type="file" name="images[]" multiple="multiple" style="">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </form>
+
+    {% if product.has_grid_variation %}
+        <section class="card mt-4" id="grids">
+            <header class="card-header">
+                <h2 class="card-title">Variações do Produto</h2>
+            </header>
+            <div class="card-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Foto</th>
+                        {% for grid in product.grids %}
+                            <th>{{ grid.grid.description }}</th>
+                        {% endfor %}
+                        <th>Preço de Venda</th>
+                        <th>Preço de Custo</th>
+                        <th>Preço Promocional</th>
+                        <th>Percentual de Desconto</th>
+                        <th>Estoque</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody id="variations">
+                        <tr class="d-none" id="variationBase">
+                            <td width="60" class="td-img">
+                                <a href="#modalLinkImage" data-toggle="modal" class="linkImageToVariation">
+                                    <img src="{{ defaultImage }}" data-id="" class="img-fluid img">
+                                </a>
+                            </td>
+                            {% for grid in product.grids %}
+                                <td class="td-grid-{{ grid.id }}"></td>
+                            {% endfor %}
+                            <td class="text-right td-value"></td>
+                            <td class="text-right td-cost-value"></td>
+                            <td class="text-right td-promotion-value"></td>
+                            <td class="text-right td-discount-percent"></td>
+                            <td class="text-right td-stock-quantity"></td>
+                            <td class="td-status"></td>
+                            <td>
+                                <button data-target="#modalVariation" data-id="" data-toggle="modal" class="btn btn-info btn-sm editVariation">
+                                    <span class="fa fa-edit"></span>
+                                </button>
+
+                                <button data-target="#modalRemove" data-id="" data-toggle="modal" class="btn btn-danger btn-sm removeVariation">
+                                    <span class="fa fa-times"></span>
+                                </button>
+
+                                <button data-id="" class="btn btn-sm defineMain">
+                                    <span class="fa fa-star"></span>
+                                </button>
+                            </td>
+                        </tr>
+                        {% for variation in product.variations %}
+                            {% set image = variation.variationImage() %}
+                            <tr id="variation{{ variation.id }}">
+                                <td width="60" class="td-img">
+                                    <a href="#modalLinkImage" data-toggle="modal" data-image-id="{{ image.id }}" data-id="{{ variation.id }}" class="linkImageToVariation">
+                                        <img src="{% if image.file != '' %}{{ image.file }}{% else %}{{ defaultImage }}{% endif %}" class="img-fluid img">
+                                    </a>
+                                </td>
+                                {% for item in variation.items %}
+                                    <td class="td-grid-{{ item.product_grid_id }}">{{ item.gridVariation.description }}</td>
+                                {% endfor %}
+                                <td class="text-right td-value">R$ {{ variation.value_formated }}</td>
+                                <td class="text-right td-cost-value">
+                                    {% if variation.cost_value > 0 %}
+                                        R$ {{ variation.cost_value_formated }}
+                                    {% endif %}
+                                </td>
+                                <td class="text-right td-promotion-value">
+                                    {% if variation.promotion_value > 0 %}
+                                        R$ {{ variation.promotion_value_formated }}
+                                    {% endif %}
+                                </td>
+                                <td class="text-right td-discount-percent">
+                                    {{ variation.discount_percent }}%
+                                </td>
+                                <td class="text-right td-stock-quantity">{{ variation.stock_quantity }}</td>
+                                <td class="td-status">{{ variation.status_description }}</td>
+                                <td>
+                                    <button data-target="#modalVariation" data-id="{{ variation.id }}" data-toggle="modal" class="btn btn-info btn-sm editVariation">
+                                        <span class="fa fa-edit"></span>
+                                    </button>
+
+                                    <button data-target="#modalRemove" data-id="{{ variation.id }}" data-toggle="modal" class="btn btn-danger btn-sm removeVariation">
+                                        <span class="fa fa-times"></span>
+                                    </button>
+
+                                    <button data-id="{{ variation.id }}" data-main="{{ variation.main }}" {% if variation.main == 1 %} disabled="" title="Variação principal" {% endif %} data-toggle="modal" class="btn {% if variation.main == 1 %}btn-warning{% endif %} btn-sm defineMain">
+                                        <span class="fa fa-star"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                {% if product.variations|length <= 0 %}
+                    <p>
+                    <h4>Ainda não há variações adicionadas para este produto.</h4>
+                    Para adicionar uma nova opção de produto, utilize o botão abaixo.
+                    <hr>
+                    </p>
+                {% endif %}
+                <div class="text-left">
+                    <a href="#modalVariation" data-id="" data-toggle="modal" class="btn btn-primary" id="addVariation">Nova Variação</a>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modalVariation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <form method="post" id="formVariation" class="form-horizontal">
+                        <input type="hidden" name="variation_id" id="variationId">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body"></div>
+                                <div class="modal-footer d-none">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                        Cancelar
+                                    </button>
+                                    <button type="submit" class="btn btn-success">
+                                        <span class="fa fa-spin fa-spinner fa-fw d-none" id="loadingBtn"></span>
+                                        Salvar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal fade" id="modalRemove" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Remover Variação</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <strong>Deseja realmente remover essa variação?</strong><hr>
+                                <div class="alert alert-warning">
+                                    <span class="fa fa-warning fa-fw"></span> Essa operação não pode ser desfeita.
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                    Não
+                                </button>
+                                <button type="submit" class="btn btn-success" id="btnRemove">
+                                    <span class="fa fa-spin fa-spinner fa-fw d-none" id="loadingRemove"></span>
+                                    Sim
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="modalLinkImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Vincular Foto</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row" id="images" data-variation-id="">
+                                    {% for image in product.images %}
+                                        <div class="col-sm-4">
+                                            <button class="btn linkImage active" id="image{{ image.id }}" data-id="{{ image.id }}">
+                                                <img src="{{ image.file }}" class="img-fluid">
+                                            </button>
+                                        </div>
+                                    {% else %}
+                                        Nenhuma foto foi cadastrada ainda.
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+{% endblock content %}
+{% block header %}
+    <style>
+        .mt-4 {
+            margin-top:20px;
+        }
+
+        .inner {
+            text-align: center;
+            background-color: #fff;
+            border:1px solid #eee;
+        }
+
+        .inner .define-main {
+            margin: 5px;
+            position: absolute;
+            left: 10px;
+            bottom: 0;
+        }
+
+        .inner .remove-image {
+            margin: 5px;
+            position: absolute;
+            right: 10px;
+            bottom: 0;
+        }
+
+        .inner img{
+            max-height: 240px;
+            margin: 0 auto;
+        }
+
+        .thumb {
+            margin-top: 20px;
+        }
+
+        .image-upload-widget {
+            background-color: #FFE;
+        }
+
+        .linkImage {
+            padding:5px;
+        }
+    </style>
+{% endblock header %}
+{% block footer %}
+    <script src="/general/components/ckeditor/ckeditor.js"></script>
+    <script>
+        $(function(){
+            CKEDITOR.replace('ckeditor');
+
+            $('.size').mask('000000000000000', {reverse: true});
+            $('.weight').mask('000000000000000.000', {reverse: true});
+            $('.money').mask('#.##0,00', {reverse: true, placeholder: '00,00'});
+
+            $('#youtubeUrl').keyup(function(){
+                const value = $(this).val();
+                if (value !== '') {
+                    $('#openYoutube').attr('href', value).removeClass('d-none');
+                } else {
+                    $('#openYoutube').addClass('d-none');
+                }
+            });
+
+            function handleErrors(data)
+            {
+                let responseJson = data.responseJSON;
+                if (typeof responseJson.errors !== 'object' && responseJson.message !== undefined) {
+                    toastr.error(responseJson.message);
+
+                    return;
+                }
+
+                let errors = responseJson.errors;
+                for (let field in errors) {
+                    toastr.error(errors[field][0]);
+                }
+            }
+
+            function openFormVariation(variationId = '')
+            {
+                const currentVariationId = $('#variationId').val();
+                if ($('#modalVariation .modal-body').text() != '' && currentVariationId == variationId) {
+                    return false;
+                }
+
+                let url = '{{ route('variation.create', product.slug) }}';
+                let title = 'Adicionar Variação';
+                if (variationId !== '') {
+                    url = '/products/{{ product.slug }}/variations/' + variationId + '/edit';
+                    title = 'Alterar Variação';
+                }
+
+                $('#modalVariation .modal-title').text(title);
+
+                $('#variationId').val(variationId);
+                $('#modalVariation .modal-body').html('Aguarde..');
+                $('#modalVariation .modal-footer').addClass('d-none');
+
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function(data) {
+                        $('#modalVariation .modal-body').html(data);
+                        $('#modalVariation .modal-footer').removeClass('d-none');
+                    }
+                });
+            }
+
+            $('#addVariation').click(function(){
+                openFormVariation();
+            });
+
+            $('#variations').on('click', '.editVariation', function(){
+                const id = $(this).data('id');
+                openFormVariation(id);
+            });
+
+            $('#formVariation').submit(function(e){
+                const variationId = $('#variationId').val();
+                var url = '{{ route('variation.create', product.slug) }}';
+                if (variationId !== '') {
+                    url = '/products/{{ product.slug }}/variations/' + variationId + '/edit';
+                }
+
+                $('#loadingBtn').removeClass('d-none').parents('button').attr('disabled','disabled');
+
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    dataType: 'json',
+                    data: $(this).serialize(),
+                    error: function(data, textStatus, errorThrown) {
+                        $('#loadingBtn').addClass('d-none').parents('button').removeAttr('disabled');
+
+                        handleErrors(data);
+                    },
+                    success: function(data) {
+                        $('#loadingBtn').addClass('d-none').parents('button').removeAttr('disabled');
+
+                        if (variationId == '') {
+                            $('#variations').append(
+                                $('#variationBase').clone().attr('id', 'variation' + data.variation_id).removeClass('d-none')
+                            );
+
+                            $('#variation' + data.variation_id + ' .editVariation').attr('data-id', data.variation_id);
+                            $('#variation' + data.variation_id + ' .removeVariation').attr('data-id', data.variation_id);
+                            $('#variation' + data.variation_id + ' .defineMain').attr('data-id', data.variation_id);
+                            $('#variation' + data.variation_id + ' .linkImageToVariation').attr({'data-id': data.variation_id, 'data-image-id': null});
+                        }
+
+                        var value = $('#value').val();
+                        var costValue = $('#costValue').val();
+                        var promotionValue = $('#promotion-value').val();
+
+                        if (value == '') {
+                            value = '-';
+                        } else {
+                            value = 'R$ ' + value;
+                        }
+
+                        if (promotionValue == '') {
+                            promotionValue = '-';
+                        } else {
+                            promotionValue = 'R$ ' + promotionValue;
+                        }
+
+                        if (costValue == '') {
+                            costValue = '-';
+                        } else {
+                            costValue = 'R$ ' + costValue;
+                        }
+
+                        $('#variation' + data.variation_id + ' .td-value').text(value);
+                        $('#variation' + data.variation_id + ' .td-cost-value').text(costValue);
+                        $('#variation' + data.variation_id + ' .td-promotion-value').text(promotionValue);
+                        $('#variation' + data.variation_id + ' .td-discount-percent').text($('#discount-percent').val() + '%');
+                        $('#variation' + data.variation_id + ' .td-stock-quantity').text($('#stockQuantity').val());
+                        $('#variation' + data.variation_id + ' .td-status').text($('#status option:selected').text());
+                        $('.select-grids').each(function(){
+                            let gridId = $(this).data('id');
+                            $('#variation' + data.variation_id + ' .td-grid-' + gridId).text($(this).children('option:selected').text());
+                        });
+
+                        $('#modalVariation').modal('toggle');
+                        if (variationId == '') {
+                            $('#formVariation input, #formVariation select').not($('#formVariation input[name=_token]')).val('');
+                        }
+                    }
+                });
+
+                e.preventDefault();
+                return false;
+            });
+
+            $('#variations').on('click', '.defineMain', function() {
+                const variationId = $(this).data('id');
+                const self = $(this);
+                $(this).children('span').hide();
+                $(this).append(
+                    $('<span>').addClass('fa fa-spin fa-spinner fa-fw')
+                );
+                $.ajax({
+                    url: '/products/{{ product.slug }}/variations/' + variationId + '/main',
+                    dataType: 'json',
+                    error: function(data, textStatus, errorThrown) {
+                        self.children('.fa-spin').remove();
+                        self.children('span').show();
+
+                        handleErrors(data);
+                    },
+                    success: function(data) {
+                        self.children('.fa-spin').remove();
+                        self.children('span').show();
+
+                        $('.defineMain').removeAttr('disabled').removeClass('btn-warning');
+                        self.addClass('btn-warning').attr('disabled','disabled');
+                    }
+                });
+            });
+
+            $('#variations').on('click', '.removeVariation', function(){
+                const variationId = $(this).data('id');
+                $('#btnRemove').data('id', variationId);
+            });
+
+            $('#btnRemove').click(function(){
+                const variationId = $(this).data('id');
+                $('#loadingRemove').removeClass('d-none').parents('button').attr('disabled','disabled');
+
+                $.ajax({
+                    url: '/products/{{ product.slug }}/variations/' + variationId + '/remove',
+                    dataType: 'json',
+                    error: function(data, textStatus, errorThrown) {
+                        $('#loadingRemove').addClass('d-none').parents('button').removeAttr('disabled');
+
+                        handleErrors(data);
+                    },
+                    success: function(data) {
+                        $('#loadingRemove').addClass('d-none').parents('button').removeAttr('disabled');
+
+                        $('#variation' + variationId).remove();
+                        $('#modalRemove').modal('toggle');
+                    }
+                });
+            });
+
+            $('#variations').on('click', '.linkImageToVariation', function() {
+                const variationId = $(this).data('id');
+                const imageId = $(this).attr('data-image-id');
+
+                $('#images').attr('data-variation-id', variationId);
+                $('.linkImage').removeClass('btn-success');
+                $('#image' + imageId).addClass('btn-success').removeAttr('disabled', 'disabled');
+            });
+
+            $('.linkImage').click(function(){
+                const variationId = $('#images').attr('data-variation-id');
+                const img = $(this).children('img').attr('src');
+                var imageId = $(this).data('id');
+                var url = '/products/{{ product.slug }}/variations/' + variationId + '/link-image';
+                var unlinkImage = false;
+                if ($(this).hasClass('btn-success')) {
+                    unlinkImage = true;
+                    url = '/products/{{ product.slug }}/variations/' + variationId + '/unlink-image';
+                    $('.linkImage').removeClass('btn-success');
+                } else {
+                    $('.linkImage').removeClass('btn-success');
+                }
+
+                $('#modalLinkImage').modal('toggle');
+                $.ajax({
+                    url: url,
+                    dataType: 'json',
+                    type: 'POST',
+                    data: {
+                        _token: $('input[name=_token]').val(),
+                        image_id: imageId
+                    },
+                    error: function(data, textStatus, errorThrown) {
+                        handleErrors(data);
+                    },
+                    success: function(data) {
+                        if (unlinkImage) {
+                            $('#variation' + variationId + ' .linkImageToVariation').attr('data-image-id', null);
+                            $('#variation' + variationId + ' .linkImageToVariation img').attr({'src': '{{ defaultImage }}'});
+                        } else {
+                            $('#variation' + variationId + ' .linkImageToVariation').attr('data-image-id', imageId);
+                            $('#variation' + variationId + ' .linkImageToVariation img').attr({'src': img});
+                        }
+                    }
+                })
+            });
+
+            $('select.category').change(function() {
+                var category = $(this).val();
+                if (category == '') {
+                    $('select.subcategory').attr('readonly', 'readonly').html($('<option>').attr('label', 'Selecione uma categoria'));
+
+                    return false;
+                }
+
+                $('select.subcategory').attr('readonly', 'readonly').html($('<option>').attr('label', 'Aguarde..'));
+                $.ajax({
+                    url: '{{ route('category.subcategories') }}',
+                    data: {category_id: category},
+                    dataType: 'json',
+                    success: function(data) {
+                        total = data.length;
+                        $('select.subcategory').removeAttr('readonly').html($('<option>').attr('label', 'Selecione'));
+                        for (var i = 0; i < total; i++) {
+                            var subcategory = data[i];
+                            $('select.subcategory').append(
+                                $('<option>').val(subcategory.id).text(subcategory.name)
+                            );
+                        }
+                    }
+                })
+            });
+
+            function float2Real(value){
+                var integer = null, decimal = null, c = null, j = null;
+                var aux = new Array();
+                value = ""+value;
+                c = value.indexOf(".",0);
+                if(c > 0){
+                    integer = value.substring(0,c);
+                    decimal = value.substring(c+1,value.length);
+                }else{
+                    integer = value;
+                }
+
+                for (j = integer.length, c = 0; j > 0; j-=3, c++){
+                    aux[c]=integer.substring(j-3,j);
+                }
+
+                integer = "";
+                for(c = aux.length-1; c >= 0; c--){
+                    integer += aux[c]+'.';
+                }
+
+                integer = integer.substring(0,integer.length-1);
+
+                decimal = parseInt(decimal);
+                if(isNaN(decimal)){
+                    decimal = "00";
+                }else{
+                    decimal = ""+decimal;
+                    if(decimal.length === 1){
+                        decimal = decimal + '0';
+                    }
+                }
+
+                value = integer + "," + decimal;
+
+                return value;
+            }
+
+            function real2Float(value) {
+                value = value.replace(".","");
+                value = value.replace(",",".");
+
+                return value;
+            }
+
+            function calculateDiscount(promotionValue = null, discountPercent = null) {
+                let value = real2Float($('#value').val());
+                if ($('#promotion-value').val() == null && $('#discount-percent').val() == null) {
+                    return false;
+                }
+
+                if (promotionValue == null && discountPercent == null) {
+                    promotionValue = $('#promotion-value').val();
+                    discountPercent = $('#discount-percent').val();
+                }
+
+                if (promotionValue != null) {
+                    promotionValue = real2Float(promotionValue)
+                }
+
+                if (discountPercent != null && discountPercent != '') {
+                    $('#promotion-value').val(float2Real(value - ((value/100) * discountPercent)));
+                } else if (promotionValue != null && promotionValue != '') {
+                    $('#discount-percent').val((100 - (promotionValue/value) * 100));
+                }
+            }
+
+            $(document).on('keyup', '#value', function(){
+                let value = $(this).val();
+                if (value == '') {
+                    $('#promotion-value, #discount-percent').attr('readonly', 'readonly');
+                } else {
+                    $('#promotion-value, #discount-percent').removeAttr('readonly');
+                }
+
+                calculateDiscount();
+            });
+
+            $(document).on('keyup', '#promotion-value', function() {
+                calculateDiscount($(this).val());
+            });
+
+            $(document).on('keyup', '#discount-percent', function() {
+                calculateDiscount(null, $(this).val());
+            });
+        });
+    </script>
+{% endblock footer %}
