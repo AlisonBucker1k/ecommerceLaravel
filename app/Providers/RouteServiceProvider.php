@@ -23,8 +23,6 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
         parent::boot();
     }
 
@@ -57,22 +55,18 @@ class RouteServiceProvider extends ServiceProvider
                     ->middleware('web')
                     ->namespace($this->namespace . '\Admin')
                     ->group(base_path('routes/admin.php'));
-
                 break;
             case 'api.' . $domain:
                 Route::prefix('api')
                     ->middleware('api')
                     ->namespace($this->namespace)
                     ->group(base_path('routes/api.php'));
-
                 break;
-
             default:
                 Route::domain(config('app.domain'))
                     ->middleware('web')
                     ->namespace($this->namespace . '\Site')
                     ->group(base_path('routes/site.php'));
-
                 break;
         }
     }
