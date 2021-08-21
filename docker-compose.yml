@@ -1,14 +1,14 @@
-version: "2"
+version: '2'
 
 services:
   php:
     build:
       context: .
-      dockerfile: opt/docker/php-fpm/Dockerfile
+      dockerfile: docker/php-fpm/Dockerfile
     working_dir: /var/www
     volumes:
       - ./:/var/www
-      - ./opt/docker/php-fpm/php.ini:/etc/php/7.1/fpm/conf.d/custom.ini
+      - ./docker/php-fpm/php.ini:/etc/php/7.1/fpm/conf.d/custom.ini
     links:
       - database
     networks:
@@ -31,7 +31,7 @@ services:
   database:
     image: mysql:5.7
     volumes:
-      - ./opt/docker/mysql/my.cnf:/etc/mysql/conf.d/docker.cnf
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/docker.cnf
     environment:
       MYSQL_ROOT_PASSWORD: useladame
       MYSQL_DATABASE: useladame
@@ -45,7 +45,7 @@ services:
     working_dir: /var/www
     volumes:
       - ./:/var/www
-      - ./opt/docker/nginx/sites-available/:/etc/nginx/conf.d/
+      - ./docker/nginx/sites-available/:/etc/nginx/conf.d/
     ports:
       - "80:80"
     links:
