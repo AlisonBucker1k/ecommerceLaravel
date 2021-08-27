@@ -16,3 +16,10 @@
 Comando: `php artisan migrate --seed`
 
 ou `php artisan migrate` e depois `php artisan db:seed`
+
+#### Rotas
+> Admin: `./routes/admin.php`
+
+> API: `./routes/api.php`
+
+> Site: `./routes/site.php`
