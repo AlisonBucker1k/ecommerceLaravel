@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9667889e090cc0178161afa1eb6eb050",
+    "content-hash": "668506e89eb300f0f58735749844247f",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.191.0",
+            "version": "3.191.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "15e97fe060decf30fa103be091b113adcc578c5d"
+                "reference": "c003e59f8976f6fe045c27f6afc5d5004317f39b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/15e97fe060decf30fa103be091b113adcc578c5d",
-                "reference": "15e97fe060decf30fa103be091b113adcc578c5d",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/c003e59f8976f6fe045c27f6afc5d5004317f39b",
+                "reference": "c003e59f8976f6fe045c27f6afc5d5004317f39b",
                 "shasum": ""
             },
             "require": {
@@ -92,9 +92,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.191.0"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.191.5"
             },
-            "time": "2021-08-19T18:15:49+00:00"
+            "time": "2021-08-26T18:16:35+00:00"
         },
         {
             "name": "bensampo/laravel-enum",
@@ -1949,16 +1949,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.51.1",
+            "version": "2.52.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "8619c299d1e0d4b344e1f98ca07a1ce2cfbf1922"
+                "reference": "369c0e2737c56a0f39c946dd261855255a6fccbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/8619c299d1e0d4b344e1f98ca07a1ce2cfbf1922",
-                "reference": "8619c299d1e0d4b344e1f98ca07a1ce2cfbf1922",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/369c0e2737c56a0f39c946dd261855255a6fccbe",
+                "reference": "369c0e2737c56a0f39c946dd261855255a6fccbe",
                 "shasum": ""
             },
             "require": {
@@ -2039,7 +2039,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-07-28T13:16:28+00:00"
+            "time": "2021-08-14T19:10:52+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -7333,8 +7333,8 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.1.3"
+        "php": "^7.4.9"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }

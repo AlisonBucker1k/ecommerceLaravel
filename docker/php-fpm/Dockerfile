@@ -1,6 +1,6 @@
-FROM phpdockerio/php73-fpm:latest
+FROM phpdockerio/php74-fpm:latest
 
 # Install selected extensions and other stuff
 RUN apt-get update \
-    && apt-get -y --no-install-recommends install php-memcached php7.3-mysql php7.3-pgsql php7.3-curl php-redis php7.3-sqlite3 php7.3-bcmath php7.3-bz2 php7.3-enchant php7.3-gd php7.3-gmp php7.3-imap php7.3-intl php7.3-mbstring php7.3-pspell php7.3-soap php-ssh2 php7.3-tidy php7.3-xsl php-yaml php-xdebug php-zmq \
+    && apt-get -y --no-install-recommends install php-memcached php7.4-mysql php7.4-pgsql php7.4-curl php-redis php7.4-sqlite3 php7.4-bcmath php7.4-bz2 php7.4-enchant php7.4-gd php7.4-gmp php7.4-imap php7.4-intl php7.4-mbstring php7.4-pspell php7.4-soap php-ssh2 php7.4-tidy php7.4-xsl php-yaml php-xdebug php-zmq \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
