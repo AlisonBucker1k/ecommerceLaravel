@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-
 use App\Enums\CustomerStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequest as Request;
@@ -23,8 +22,6 @@ class AuthController extends Controller
 
     public function login(Request $request, Auth $auth): Redirection
     {
-        $remember = ($request->has('remember')) ? true : false;
-
         $cookieRedirect = Cookie::get('redirectTo');
         if (!empty($cookieRedirect)) {
             $this->redirectTo = $cookieRedirect;
@@ -36,7 +33,7 @@ class AuthController extends Controller
             'status' => CustomerStatus::ACTIVE
         ];
 
-        $authorized = $auth->guard($this->guard)->attempt($data, $remember);
+        $authorized = $auth->guard($this->guard)->attempt($data, $request->has('remember'));
         if (!$authorized) {
             return back()->withErrors('E-mail ou senha incorretos.')->withInput($request->except('pass'));
         }
