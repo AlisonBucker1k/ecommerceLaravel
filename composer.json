@@ -12,6 +12,7 @@
         "aws/aws-sdk-php": "~3.0",
         "bensampo/laravel-enum": "^1.19",
         "canducci/zipcode": "^2.0",
+        "doctrine/dbal": "^3.1",
         "fideloper/proxy": "^4.0",
         "flyingluscas/correios-php": "^2.3",
         "geekcom/validator-docs": "1.*",
@@ -47,7 +48,8 @@
         },
         "classmap": [
             "database/seeds",
-            "database/factories"
+            "database/factories",
+            "database/migrations"
         ],
         "files": [
             "app/Http/helpers.php"

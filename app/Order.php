@@ -125,6 +125,7 @@ class Order extends Model
         $this->shipping_description = $result['description'];
         $this->shipping_value = $result['value'];
         $this->shipping_deadline = $result['deadline'];
+        $this->shipping_code = null;
         $this->status = OrderStatus::PENDING;
         $this->save();
 

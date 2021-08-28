@@ -33,6 +33,8 @@
                                             Celular: {{ order.customer.profile.cellphone | default('Não informado')  }}
                                             <br/>
                                             Fatura: <a href="{{ route('invoice.show', order.invoice.id) }}" target="_blank">Clique aqui para ver os detalhes</a>
+                                            <br/>
+                                            Código de Rastreio: {{ order.shipping_code | default('-')  }}
                                         </div>
                                     </div>
                                 </div>
