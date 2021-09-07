@@ -38,6 +38,6 @@ class OrderController extends Controller
     {
         $order->updateShippingCode($request->shipping_code);
 
-        return redirect()->route('order.show', $order->id);
+        return back()->withSuccess('Código de rastreio alterado com sucesso!');
     }
 }
