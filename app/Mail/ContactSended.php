@@ -2,24 +2,18 @@
 
 namespace App\Mail;
 
-use App\User;
 use Illuminate\Bus\Queueable;
+use Illuminate\Http\Request;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Http\Request;
 
 class ContactSended extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $user;
-
     protected $name;
-
     protected $email;
-
     protected $mail_subject;
-
     protected $message;
 
     /**
@@ -42,7 +36,8 @@ class ContactSended extends Mailable
      */
     public function build()
     {
-        return $this->subject('Vocë recebeu um contato com o assunto: ' . $this->mail_subject)
+        return $this
+            ->subject('Vocë recebeu um contato com o assunto: ' . $this->mail_subject)
             ->markdown('emails.contact.email')
             ->with([
                 'name' => $this->name,
