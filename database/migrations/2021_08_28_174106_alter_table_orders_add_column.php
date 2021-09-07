@@ -14,7 +14,7 @@ class AlterTableOrdersAddColumn extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->string('shipping_code')->default(null);
+            $table->string('shipping_code')->nullable()->default(null);
         });
     }
 
