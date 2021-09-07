@@ -174,6 +174,6 @@ class Order extends Model
     public function updateShippingCode($newShippingCode)
     {
         $this->shipping_code = $newShippingCode;
-        $this->save();
+        $this->update();
     }
 }
