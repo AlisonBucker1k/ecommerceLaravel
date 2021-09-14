@@ -7,6 +7,7 @@ use App\Enums\OrderStatus;
 use App\Enums\UploadPath;
 use App\General\Upload;
 use App\Mail\OrderSended;
+use App\Mail\OrderStatusUpdate;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Mail;
 
@@ -51,10 +52,11 @@ class OrderHistory extends Model
         $this->description = $attributes->description;
         $this->user_id = $userId;
 
+        Mail::send(new OrderStatusUpdate($order, $this->status));
+
         switch ($this->status) {
             case OrderHistoryStatus::SENT:
                 $order->updateStatus(OrderStatus::SENT);
-                Mail::send(new OrderSended($order));
                 break;
             case OrderHistoryStatus::DELIVERED:
                 $order->updateStatus(OrderStatus::DELIVERED);

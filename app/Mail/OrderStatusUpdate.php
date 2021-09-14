@@ -2,25 +2,28 @@
 
 namespace App\Mail;
 
+use App\Enums\OrderHistoryStatus;
 use App\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class OrderSended extends Mailable
+class OrderStatusUpdate extends Mailable
 {
     use Queueable, SerializesModels;
 
     protected $name;
     protected $email;
+    protected $status;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Order $order)
+    public function __construct(Order $order, $status)
     {
+        $this->status = OrderHistoryStatus::getDescription($status);
         $this->name = $order->customer->profile->name;
         $this->email = $order->customer->email;
     }
@@ -34,12 +37,13 @@ class OrderSended extends Mailable
     {
         return $this
             ->to($this->email)
-            ->subject('Sua encomenda está a caminho!')
-            ->markdown('emails.order_status.order_sent')
+            ->subject('Pedido atualizado!')
+            ->markdown('emails.order_status.status_updated')
             ->with([
                 'name' => $this->name,
+                'status' => $this->status,
                 'baseUrl' => config('app.url'),
-                'orderUrl' => config('app.url') . '/orders'
+                'orderUrl' => config('ap,p.url') . '/orders',
             ]);
     }
 }

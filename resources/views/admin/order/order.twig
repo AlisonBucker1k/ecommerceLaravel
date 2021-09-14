@@ -20,7 +20,7 @@
                         </header>
                         <div class="bill-info">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-5">
                                     <div class="bill-to">
                                         <p class="h5 mb-1 text-dark font-weight-semibold">Cliente</p>
                                         <div>
@@ -33,10 +33,18 @@
                                             Celular: {{ order.customer.profile.cellphone | default('Não informado')  }}
                                             <br/>
                                             Fatura: <a href="{{ route('invoice.show', order.invoice.id) }}" target="_blank">Clique aqui para ver os detalhes</a>
+                                            <br/>
+                                            Código de Rastreio:
+                                            <span class="badge badge-pill badge-dark">
+                                                {{ order.shipping_code | default('Não informado') }}
+                                            </span>
+                                            <a href="#modalEditShippingCode" data-toggle="modal">
+                                                <i class="fa fa-edit"></i> Editar
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-8">
+                                <div class="col-md-7">
                                     <div class="bill-data text-right">
                                         <p class="mb-0">
                                             <span class="text-dark">Data de Criação:</span>
@@ -148,6 +156,31 @@
                                     </table>
                                     <div class="text-right">
                                         <a href="#modalHistory" data-toggle="modal" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Histórico</a>
+                                    </div>
+                                </div>
+                                <div class="modal" tabindex="-1" role="dialog" id="modalEditShippingCode">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <form action="{{ route('order.updateShippingCode', order.id) }}" method="POST" enctype="multipart/form-data">
+                                                <input type="hidden" value="{{ csrf_token() }}" name="_token">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Editar Código de Rastreio</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <label for="code">Código</label>
+                                                        <input class="form-control" id="code" name="shipping_code" type="text" value="{{ order.shipping_code }}">
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-sm btn-default" data-dismiss="modal" type="button">Fechar</button>
+                                                    <button class="btn btn-sm btn-success" type="submit">Salvar</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="modal" tabindex="-1" role="dialog" id="modalHistory">

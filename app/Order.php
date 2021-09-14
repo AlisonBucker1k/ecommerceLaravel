@@ -5,13 +5,48 @@ namespace App;
 use App\Enums\OrderHistoryStatus;
 use App\Enums\OrderStatus;
 use App\General\Shipping;
-use App\Mail\OrderSended;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Mail;
 use Exception;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class Order extends Model
 {
+    public static function getOrders(Request $request)
+    {
+        $query = self::query();
+        self::filters($query, $request);
+
+        return $query;
+    }
+
+    public static function filters(Builder $query, Request $request)
+    {
+        $filters = [];
+
+        if (!empty($request->order_id)) {
+            $query->whereId($request->order_id);
+        }
+
+        if (is_numeric($request->status)) {
+            $query->whereStatus($request->status);
+        }
+
+        if (!empty($request->cpf)) {
+            $customerProfile = CustomerProfile::query()->where('cpf', $request->cpf)->first();
+            $query->where('customer_id', $customerProfile->customer_id ?? 0);
+        }
+
+        if (!empty($request->start_created_at) && !empty($request->end_created_at)) {
+            $query
+                ->whereDate('created_at', '>=', $request->start_created_at, 'and')
+                ->whereDate('created_at', '<=', $request->end_created_at)
+                ->get();
+        }
+
+        return $filters;
+    }
+
     public function getValueFormatedAttribute()
     {
         return currencyFloat2Brl($this->value);
@@ -125,6 +160,7 @@ class Order extends Model
         $this->shipping_description = $result['description'];
         $this->shipping_value = $result['value'];
         $this->shipping_deadline = $result['deadline'];
+        $this->shipping_code = null;
         $this->status = OrderStatus::PENDING;
         $this->save();
 
@@ -133,5 +169,11 @@ class Order extends Model
 
         $invoice = new Invoice();
         $invoice->createOrderInvoice($customerId, $totalValue, $this->id);
+    }
+
+    public function updateShippingCode($newShippingCode)
+    {
+        $this->shipping_code = $newShippingCode;
+        $this->update();
     }
 }
