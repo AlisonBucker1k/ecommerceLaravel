@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\NorthIntegration\Integration;
+namespace Payments;
 
 use Exception;
 
