@@ -39,14 +39,13 @@ class AuthController extends Controller
             'status' => CustomerStatus::ACTIVE
         ];
 
-        $remember = ($request->has('remember')) ? true : false;
-        $authorized = $auth->guard($this->guard)->attempt($data, $remember);
+        $authorized = $auth->guard($this->guard)->attempt($data, $request->has('remember'));
         if (!$authorized) {
             return back()->withErrors('E-mail ou senha incorretos.')->withInput($request->except('pass'));
         }
 
         $hasEmailConfirmation = config('app.has_email_confirmation');
-        if ($hasEmailConfirmation == true) {
+        if ($hasEmailConfirmation) {
             $customer = auth()->user();
             if (empty($customer->email_verified_at)) {
                 $auth->guard($this->guard)->logout();
