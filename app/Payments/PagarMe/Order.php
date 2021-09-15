@@ -2,23 +2,23 @@
 
 namespace Payments\PagarMe;
 
-use PagarMe\PagarMeIntegration;
+use Payments\AbstractIntegration;
 
-class Order extends PagarMeIntegration
+class Order extends AbstractIntegration
 {
-    private $items;
-    private $customer;
-    private $billingAddress;
-    private $shipping;
-    private $payments;
-    private $code;
-    private $sessionId;
-    private $iP;
-    private $location;
-    private $device;
-    private $params; // TODO private or protected?
+    protected $items;
+    protected $customer;
+    protected $billingAddress;
+    protected $shipping;
+    protected $payments;
+    protected $code;
+    protected $sessionId;
+    protected $iP;
+    protected $location;
+    protected $device;
+    protected $params;
 
-    public function createOrder($params)
+    public function create($params)
     {
         $this->validate();
     }
