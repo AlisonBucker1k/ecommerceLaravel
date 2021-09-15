@@ -66,12 +66,11 @@ abstract class AbstractIntegration
 
     protected function getParams()
     {
-        $params = $this->params;
-        if (!empty($params)) {
-            return '?_=&' . implode('&', $this->params);
+        if (empty($this->params)) {
+            return null;
         }
 
-        return null;
+        return '?_=&' . implode('&', $this->params);        
     }
 
     protected function execute($path)
