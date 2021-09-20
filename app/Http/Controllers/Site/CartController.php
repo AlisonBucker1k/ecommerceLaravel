@@ -161,6 +161,7 @@ class CartController extends Controller
         try {
             $customer = auth()->user();
 
+            // TODO usar classe /Payments/PagarMe/Order/CreateOrder
             $order = new Order();
             $order->createOrder($customer, $addressId, $shippingId);
 
