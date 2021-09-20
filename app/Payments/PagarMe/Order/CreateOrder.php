@@ -1,24 +1,12 @@
 <?php
 
-namespace Payments\PagarMe;
+namespace Payments\PagarMe\Order;
 
 use Exception;
 use PagarMe\Client;
-use PagarMe\PagarMe;
 
-class Order extends PagarMe
+class CreateOrder extends Order
 {
-    protected $items;
-    protected $customer;
-    protected $billingAddress;
-    protected $shipping;
-    protected $payments;
-    protected $code;
-    protected $sessionId;
-    protected $ip;
-    protected $location;
-    protected $device;
-
     public function create($params)
     {
         $this->validate();
@@ -138,19 +126,7 @@ class Order extends PagarMe
 
         $this->device = $this->params->device;
         if (empty($this->device)) {
-            throw new Exception('Informe o dispositivo.'); // TODO qual dispositivo?
+            throw new Exception('Informe o dispositivo.'); // TODO qual dispositivo? -> talvez seja o sistema AntiFraude
         }
-    }
-
-    // TODO testar estorno
-    public function refound($transactionId)
-    {
-        $client = new Client(config('app.pagar_me_api_token'));
-
-        return $client
-            ->transactions()
-            ->refund([
-                'id' => $transactionId,
-            ]);
     }
 }
