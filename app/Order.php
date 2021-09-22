@@ -6,6 +6,7 @@ use App\Enums\OrderHistoryStatus;
 use App\Enums\OrderStatus;
 use App\General\Shipping;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
