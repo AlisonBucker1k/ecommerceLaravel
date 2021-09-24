@@ -1,0 +1,283 @@
+{% extends 'site.main.twig' %}
+
+{% block content %}
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<form method="get" action="{{ route('cart.confirm') }}">
+					<div class="featured-boxes">
+						<div class="row">
+							<div class="col">
+								<div class="featured-box featured-box-primary text-left mt-2">
+									<div class="box-content">
+										<table class="shop_table cart table table-bordered" style="width: 100%;">
+											<thead>
+												<tr>
+													<th class="product-name" colspan="2">Produto</th>
+													<th class="product-price text-right">Valor</th>
+													<th class="product-quantity text-center">Quatidade</th>
+													<th class="product-subtotal text-right">Subtotal</th>
+												</tr>
+											</thead>
+											<tbody>
+												{% for cartProduct in cart.cartProducts %}
+													{% set stockQuantity = cartProduct.variation.stock_quantity %}
+													<tr class="cart_table_item">
+														<td class="product-thumbnail" width="100">
+															<img alt="" class="img-fluid" src="{{ cartProduct.variation.image }}">
+														</td>
+														<td class="product-name">
+															<a href="{{ route('product.show', [cartProduct.product.slug, cartProduct.variation.id]) }}" target="_blank">
+																{{ cartProduct.product.name }}
+															</a>
+															<br>
+															{% for item in cartProduct.variation.items %}
+																{{ item.productGrid.grid.description }}: {{ item.gridVariation.description }}<br>
+															{% endfor %}
+														</td>
+														{% if stockQuantity <= 0 %}
+															<td colspan="3">
+																<div class="alert alert-info alert-sm">
+																	Produto indisponível.
+																	<a href="{{ route('cart.product.remove', cartProduct.id) }}">Deseja remover do carrinho?</a>
+																</div>
+															</td>
+														{% else %}
+															<td class="product-price text-right">
+																<span class="amount">R$ {{ cartProduct.variation.final_price_formated }}</span>
+																{% if cartProduct.variation.discount_percent > 0 %}
+																	<br>
+																	<del>
+																		<small>
+																			<span class="amount">R$ {{ cartProduct.variation.value_formated }}</span>
+																		</small>
+																	</del>
+																{% endif %}
+															</td>
+															<td class="product-quantity text-center" width="150">
+                                                                <span id="loading-product" class="fa fa-spin fa-spinner d-none"></span>
+																<div id="changeProductQuantity" class="input-group input-group-sm">
+																	<select class="form-control form-control-sm changeProductQuantity" data-id="{{ cartProduct.id }}">
+																		{% set quantityMaxProducts = (stockQuantity < 5) ? stockQuantity : 5 %}
+																		{% for i in range(1, quantityMaxProducts) %}
+																			<option value="{{ i }}" {% if i == cartProduct.quantity %} selected="selected" {% endif %}>{{ i }}</option>
+																		{% endfor %}
+																	</select>
+																	<div class="input-group-btn input-group-append">
+																		<a title="Remover esse produto" class="btn" href="{{ route('cart.product.remove', cartProduct.id) }}">
+																			<i class="fas fa-times text-danger"></i>
+																		</a>
+																	</div>
+																</div>
+															</td>
+															<td class="product-subtotal text-right">
+																<span class="amount">R$ {{ cartProduct.subtotal_value_formated }}</span>
+															</td>
+														{% endif %}
+													</tr>
+												{% else %}
+													<tr>
+														<td colspan="5" class="text-center">Nenhum produto no carrinho</td>
+													</tr>
+												{% endfor %}
+
+												<tr>
+													<td colspan="4" class="text-right font-weight-bold">Total</td>
+													<td class="text-right font-weight-bold">R$ {{ cart.total_value_formated }}</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="">
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="featured-box text-left mt-3 mt-lg-4">
+									<div class="box-content">
+										<h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3">Calcular Frete</h4>
+										<div class="form-row">
+											<div class="form-group col">
+												<label class="font-weight-bold text-dark">CEP</label>
+												<input type="text" name="cep" id="cep" value="{{ old('cep') }}" class="form-control cep">
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="form-group col-8">
+												<div id="shipping-options" class="d-none"></div>
+											</div>
+											<div class="form-group col-4 text-right">
+												<button id="btn-calculate-freight" class="btn btn-xl btn-light pr-4 pl-4 text-2 font-weight-semibold text-uppercase">Calcular</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-lg-6">
+								<div class="featured-box text-left mt-3 mt-lg-4">
+									<div class="box-content">
+										<h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3">Resumo do Pedido</h4>
+										<table class="cart-totals" style="width: 100%;">
+											<tbody>
+												<tr>
+													<th>
+														<strong class="text-dark">Subtotal</strong>
+													</th>
+													<td>
+														<strong class="text-dark">
+															<span class="amount" id="subtotal-value" data-value="{{ cart.total_value }}">R$ {{ cart.total_value_formated }}</span>
+														</strong>
+													</td>
+												</tr>
+												<tr>
+													<th>Frete</th>
+													<td id="shipping-value">-</td>
+												</tr>
+												<tr>
+													<th>
+														<strong class="text-dark">Total</strong>
+													</th>
+													<td>
+														<strong class="text-dark">
+															<span id="total-value">-</span>
+														</strong>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<div class="text-left">
+								<a href="{{ route('home') }}" id="btn-create-order" class="btn btn-default btn-modern text-uppercase">
+									<i class="fas fa-angle-left ml-1"></i> Continuar Comprando
+								</a>
+							</div>
+						</div>
+						<div class="col">
+							<div class="text-right">
+								<button type="submit" id="btn-create-order" class="btn btn-primary btn-modern text-uppercase">
+									Checkout <i class="fas fa-angle-right ml-1"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock content %}
+
+{% block footer %}
+	<script type="text/javascript" src="/general/components/jquery-mask-plugin/dist/jquery.mask.js"></script>
+	<script type="text/javascript">
+		$('.cep').mask('00000-000');
+
+		localeSettings = {
+			minimumFractionDigits: 2,
+			style: 'currency',
+			currency: 'BRL'
+		};
+
+		$(document).on('change', '.form-check-input', function () {
+			let value = parseFloat($(this).attr('data-value'));
+			let subtotal = parseFloat('{{ cart.total_value }}');
+			let totalValue = value + subtotal;
+			let shippingValue = 'Grátis';
+			if (value > 0) {
+				shippingValue = value.toLocaleString('pt-BR', localeSettings);
+			}
+
+			$('#shipping-value').html(shippingValue);
+			$('#total-value').html(totalValue.toLocaleString('pt-BR', localeSettings));
+		});
+
+		$('.changeProductQuantity').change(function () {
+			let cartProductId = $(this).attr('data-id');
+			let quantity = $(this).val();
+
+			$.ajax({
+				type: 'post',
+				url: '{{ route('cart.edit') }}',
+				dataType: 'json',
+                beforeSend: function(){
+				   $('#loading-product').removeClass('d-none');
+				   $('#changeProductQuantity').addClass('d-none');
+                },
+				data: {
+					cart_product_id: cartProductId,
+					quantity: quantity,
+					_token: '{{ csrf_token() }}'
+				},
+				success: function() {
+					window.location.reload();
+				}
+			});
+		});
+
+		$('#btn-calculate-freight').click(function () {
+			let cep = $('#cep').val();
+			$('#freight-value').html('-');
+
+			$.ajax({
+				type: 'get',
+				url: '/carrinho/calculate-freight',
+				dataType: 'json',
+				data: { cep: cep },
+				beforeSend: function () {
+					$('#btn-calculate-freight').html('<i class="fa fa-spinner fa-spin"></i> Aguarde').attr('disabled', 'disabled');
+				},
+				success: function (data) {
+					$('#btn-calculate-freight').html('Calcular').removeAttr('disabled');
+
+					if (data.error === true) {
+						toastr.error(data.message);
+						$('#shipping-value').html('-');
+						$('#total-value').html('-');
+						$('#shipping-options').addClass('d-none');
+
+						return false;
+					}
+
+					$('#shipping-options').removeClass('d-none').html('');
+
+					for (let shippingType in data) {
+						let dataShipping = data[shippingType];
+						let value = dataShipping.value;
+						var brlValue = 'Grátis';
+						if (value > 0) {
+							brlValue = value.toLocaleString('pt-BR', localeSettings);
+						}
+
+						if (dataShipping.warning != undefined && data.warning != '') {
+							toastr.warning(data.warning);
+						}
+
+						$('#shipping-options').append(
+							$('<div>').addClass('form-check').append(
+								$('<input>').addClass('form-check-input').attr({
+									'type': 'radio',
+									'name': 'shipping_type',
+									'id': 'type' + shippingType,
+									'data-value': dataShipping.value
+								}).val(dataShipping.id),
+
+								$('<label>')
+									.addClass('form-check-label')
+									.attr({'for': 'type' + shippingType})
+									.html(dataShipping.description + ' - <strong>' + brlValue + '</strong> - Prazo: ' + dataShipping.deadline + ' dias úteis')
+							)
+						);
+					}
+				}
+			});
+		});
+	</script>
+{% endblock footer %}

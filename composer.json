@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.4.9",
+        "php": "^7.4|^8.0",
         "aws/aws-sdk-php": "~3.0",
         "bensampo/laravel-enum": "^1.19",
         "canducci/zipcode": "^2.0",

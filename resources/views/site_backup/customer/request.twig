@@ -1,0 +1,53 @@
+{% extends 'site.main.twig' %}
+
+{% block content %}
+    <section class="page-header page-header-classic">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <ul class="breadcrumb">
+                        <li><a href="{{ route('home') }}">Inicial</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col p-static">
+                    <h1 data-title-border>Recuperar Senha</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="featured-boxes">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <div class="featured-box featured-box-primary text-left mt-5">
+                                <div class="box-content">
+                                    <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3">Preencha o campo abaixo</h4>
+                                    <div class="signin-form-container">
+                                        {% if session('status')  %}
+                                            <div class="alert alert-success" role="alert">
+                                                {{ session('status') }}
+                                            </div>
+                                        {% endif  %}
+
+                                        <form method="post" action="{{ route('customer.password.email') }}" name="reset-form">
+                                            {{ csrf_field() }}
+                                            <div class="form-group">
+                                                <label for="email">E-mail</label>
+                                                <input type="text" class="form-control margin-bottom-20" name="email" value="{{ old('email') }}">
+                                            </div>
+                                            <button class="btn btn-lg btn-block btn-primary btn-modern">Recuperar Senha</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
