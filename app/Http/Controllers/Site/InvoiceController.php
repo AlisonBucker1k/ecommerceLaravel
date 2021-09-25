@@ -9,13 +9,6 @@ use Exception;
 
 class InvoiceController extends Controller
 {
-    private $invoice;
-
-    public function __construct()
-    {
-        $this->invoice = new Invoice();
-    }
-
     public function show(Invoice $invoice)
     {
         return view('site.panel.customer.invoice', compact('invoice'));
@@ -45,4 +38,6 @@ class InvoiceController extends Controller
 
         return redirect()->away($url);
     }
+
+    // TODO criar método de pagamento com pagar.me
 }

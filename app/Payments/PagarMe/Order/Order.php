@@ -2,10 +2,16 @@
 
 namespace Payments\PagarMe\Order;
 
+use App\Customer;
 use PagarMe\PagarMe;
 
 class Order extends PagarMe
 {
+    public function __construct(Customer $customer)
+    {
+        $this->customer = $customer;
+    }
+    
     protected $items;
     protected $customer;
     protected $billingAddress;

@@ -81,6 +81,42 @@ class CreateOrder extends Order
         return $transaction;
     }
 
+    public function comoEraAntes()
+    {
+        $customerId = $customer->id;
+        $cart = Cart::getCart($customerId);
+        if ($cart->totalProducts() <= 0) {
+            throw new Exception('Adicione um produto no carrinho efetuar a compra');
+        }
+
+        $address = Address::query()->where(['customer_id' => $customerId, 'id' => $addressId])->first();
+
+        $shipping = new Shipping();
+        $result = $shipping->calculate($cart, $address->postal_code, $shippingId);
+        if (empty($result)) {
+            throw new Exception('Não foi possível calcular o frete, tente novamente mais tarde.');
+        }
+
+        $totalValue = $result['value'] + $cart->totalValue();
+
+        $this->customer_id = $customerId;
+        $this->address_id = $addressId;
+        $this->value = $totalValue;
+        $this->shipping_id = $shippingId;
+        $this->shipping_description = $result['description'];
+        $this->shipping_value = $result['value'];
+        $this->shipping_deadline = $result['deadline'];
+        $this->shipping_code = null;
+        $this->status = OrderStatus::PENDING;
+        $this->save();
+
+        $orderProduct = new OrderProduct();
+        $orderProduct->addOrderProducts($cart, $this->id);
+
+        $invoice = new Invoice();
+        $invoice->createOrderInvoice($customerId, $totalValue, $this->id);
+    }
+
     // TODO testar validação
     private function validate(): void
     {
