@@ -231,9 +231,9 @@
                                             <!-- Single Product Start -->
                                             <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
                                                 <div class="thumb">
-                                                    <a href="single-product.html" class="image">
-                                                        <img class="first-image" src="assets/images/products/medium-size/1.jpg" alt="Product" />
-                                                        <img class="second-image" src="assets/images/products/medium-size/5.jpg" alt="Product" />
+                                                    <a href="/produto/ut-adipisci-sed-suscit-libero/20" class="image">
+                                                        <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
+                                                        <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
                                                     </a>
                                                     <div class="actions">
                                                         <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
@@ -243,7 +243,7 @@
                                                 </div>
                                                 <div class="content">
                                                     <h4 class="sub-title"><a href="single-product.html">Studio Design</a></h4>
-                                                    <h5 class="title"><a href="single-product.html">Brother Hoddies in Grey</a></h5>
+                                                    <h5 class="title"><a href="produto/ut-adipisci-sed-suscipit-libero/20">Brother Hoddies in Grey</a></h5>
                                                     <span class="ratings">
 															<span class="rating-wrap">
 																<span class="star" style="width: 100%"></span>
@@ -263,8 +263,8 @@
                                             <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="400">
                                                 <div class="thumb">
                                                     <a href="single-product.html" class="image">
-                                                        <img class="first-image" src="assets/images/products/medium-size/2.jpg" alt="Product" />
-                                                        <img class="second-image" src="assets/images/products/medium-size/3.jpg" alt="Product" />
+                                                        <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
+                                                        <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
                                                     </a>
                                                     <div class="actions">
                                                         <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
@@ -300,8 +300,8 @@
                                             <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="400">
                                                 <div class="thumb">
                                                     <a href="single-product.html" class="image">
-                                                        <img class="first-image" src="assets/images/products/medium-size/4.jpg" alt="Product" />
-                                                        <img class="second-image" src="assets/images/products/medium-size/10.jpg" alt="Product" />
+                                                        <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
+                                                        <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
                                                     </a>
                                                     <span class="badges">
 															<span class="sale">New</span>
@@ -334,8 +334,8 @@
                                             <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="500">
                                                 <div class="thumb">
                                                     <a href="single-product.html" class="image">
-                                                        <img class="first-image" src="assets/images/products/medium-size/5.jpg" alt="Product" />
-                                                        <img class="second-image" src="assets/images/products/medium-size/6.jpg" alt="Product" />
+                                                        <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
+                                                        <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
                                                     </a>
                                                     <span class="badges">
 															<span class="sale">Sold</span>
@@ -374,8 +374,8 @@
                                             <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="500">
                                                 <div class="thumb">
                                                     <a href="single-product.html" class="image">
-                                                        <img class="first-image" src="assets/images/products/medium-size/7.jpg" alt="Product" />
-                                                        <img class="second-image" src="assets/images/products/medium-size/9.jpg" alt="Product" />
+                                                        <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
+                                                        <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
                                                     </a>
                                                     <div class="actions">
                                                         <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
@@ -404,8 +404,8 @@
                                             <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="600">
                                                 <div class="thumb">
                                                     <a href="single-product.html" class="image">
-                                                        <img class="first-image" src="assets/images/products/medium-size/10.jpg" alt="Product" />
-                                                        <img class="second-image" src="assets/images/products/medium-size/4.jpg" alt="Product" />
+                                                        <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
+                                                        <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
                                                     </a>
                                                     <div class="actions">
                                                         <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
@@ -441,8 +441,8 @@
                                             <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="600">
                                                 <div class="thumb">
                                                     <a href="single-product.html" class="image">
-                                                        <img class="first-image" src="assets/images/products/medium-size/11.jpg" alt="Product" />
-                                                        <img class="second-image" src="assets/images/products/medium-size/10.jpg" alt="Product" />
+                                                        <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
+                                                        <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
                                                     </a>
                                                     <div class="actions">
                                                         <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
@@ -472,8 +472,8 @@
                                             <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="700">
                                                 <div class="thumb">
                                                     <a href="single-product.html" class="image">
-                                                        <img class="first-image" src="assets/images/products/medium-size/3.jpg" alt="Product" />
-                                                        <img class="second-image" src="assets/images/products/medium-size/5.jpg" alt="Product" />
+                                                        <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
+                                                        <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
                                                     </a>
                                                     <div class="actions">
                                                         <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
@@ -508,8 +508,8 @@
                                             <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="700">
                                                 <div class="thumb">
                                                     <a href="single-product.html" class="image">
-                                                        <img class="first-image" src="assets/images/products/medium-size/7.jpg" alt="Product" />
-                                                        <img class="second-image" src="assets/images/products/medium-size/9.jpg" alt="Product" />
+                                                        <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
+                                                        <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
                                                     </a>
                                                     <div class="actions">
                                                         <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
@@ -538,8 +538,8 @@
                                             <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="800">
                                                 <div class="thumb">
                                                     <a href="single-product.html" class="image">
-                                                        <img class="first-image" src="assets/images/products/medium-size/10.jpg" alt="Product" />
-                                                        <img class="second-image" src="assets/images/products/medium-size/4.jpg" alt="Product" />
+                                                        <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
+                                                        <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
                                                     </a>
                                                     <div class="actions">
                                                         <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
@@ -593,8 +593,8 @@
                                             <div class="product product-border-left mb-10">
                                                 <div class="thumb">
                                                     <a href="single-product.html" class="image">
-                                                        <img class="first-image" src="assets/images/products/medium-size/2.jpg" alt="Product" />
-                                                        <img class="second-image" src="assets/images/products/medium-size/3.jpg" alt="Product" />
+                                                        <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
+                                                        <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
                                                     </a>
                                                     <div class="actions">
                                                         <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
@@ -624,8 +624,8 @@
                                             <div class="product product-border-left mb-10">
                                                 <div class="thumb">
                                                     <a href="single-product.html" class="image">
-                                                        <img class="first-image" src="assets/images/products/medium-size/1.jpg" alt="Product" />
-                                                        <img class="second-image" src="assets/images/products/medium-size/5.jpg" alt="Product" />
+                                                       <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
+                                                        <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
                                                     </a>
                                                     <div class="actions">
                                                         <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
@@ -661,8 +661,8 @@
                                             <div class="product product-border-left mb-10">
                                                 <div class="thumb">
                                                     <a href="single-product.html" class="image">
-                                                        <img class="first-image" src="assets/images/products/medium-size/11.jpg" alt="Product" />
-                                                        <img class="second-image" src="assets/images/products/medium-size/10.jpg" alt="Product" />
+                                                       <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
+                                                        <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
                                                     </a>
                                                     <div class="actions">
                                                         <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
@@ -692,8 +692,8 @@
                                             <div class="product product-border-left mb-10">
                                                 <div class="thumb">
                                                     <a href="single-product.html" class="image">
-                                                        <img class="first-image" src="assets/images/products/medium-size/3.jpg" alt="Product" />
-                                                        <img class="second-image" src="assets/images/products/medium-size/5.jpg" alt="Product" />
+                                                        <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
+                                                        <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
                                                     </a>
                                                     <div class="actions">
                                                         <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
@@ -728,8 +728,8 @@
                                             <div class="product product-border-left mb-10">
                                                 <div class="thumb">
                                                     <a href="single-product.html" class="image">
-                                                        <img class="first-image" src="assets/images/products/medium-size/4.jpg" alt="Product" />
-                                                        <img class="second-image" src="assets/images/products/medium-size/10.jpg" alt="Product" />
+                                                       <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
+                                                        <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
                                                     </a>
                                                     <span class="badges">
 															<span class="sale">New</span>
@@ -762,8 +762,8 @@
                                             <div class="product product-border-left mb-10">
                                                 <div class="thumb">
                                                     <a href="single-product.html" class="image">
-                                                        <img class="first-image" src="assets/images/products/medium-size/5.jpg" alt="Product" />
-                                                        <img class="second-image" src="assets/images/products/medium-size/6.jpg" alt="Product" />
+                                                       <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
+                                                        <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
                                                     </a>
                                                     <span class="badges">
 															<span class="sale">Sold</span>
@@ -802,8 +802,8 @@
                                             <div class="product product-border-left mb-10">
                                                 <div class="thumb">
                                                     <a href="single-product.html" class="image">
-                                                        <img class="first-image" src="assets/images/products/medium-size/7.jpg" alt="Product" />
-                                                        <img class="second-image" src="assets/images/products/medium-size/9.jpg" alt="Product" />
+                                                        <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
+                                                        <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
                                                     </a>
                                                     <div class="actions">
                                                         <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
@@ -832,8 +832,8 @@
                                             <div class="product product-border-left mb-10">
                                                 <div class="thumb">
                                                     <a href="single-product.html" class="image">
-                                                        <img class="first-image" src="assets/images/products/medium-size/10.jpg" alt="Product" />
-                                                        <img class="second-image" src="assets/images/products/medium-size/4.jpg" alt="Product" />
+                                                        <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
+                                                        <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
                                                     </a>
                                                     <div class="actions">
                                                         <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
@@ -884,270 +884,22 @@
     <!-- Product Section End -->
 
     <!-- Banner Fullwidth Start -->
-    <div class="section">
+    {{-- <div class="section">
         <div class="container">
             <div class="row">
                 <div class="col-12" data-aos="fade-up" data-aos-delay="300">
                     <div class="banner">
                         <div class="banner-image">
-                            <a href="shop-grid.html"><img src="assets/images/banner/big-banner.jpg" alt="Banner"></a>
+                            <a href="shop-grid.html"><img src="{{asset('useLadame/images/banner/big-banner.jpg')}}" alt="Banner"></a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- Banner Fullwidth End -->
 
-    <!-- Product Deal Section Start -->
-    <div class="section section-padding mt-0 overflow-hidden">
-        <div class="container">
-            <!-- Section Title & Tab Start -->
-            <div class="row">
-                <!-- Tab Start -->
-                <div class="col-12">
-                    <div class="section-title-produt-tab-wrapper">
-                        <div class="section-title m-0" data-aos="fade-right" data-aos-delay="300">
-                            <h1 class="title">Daily Deals</h1>
-                        </div>
-                        <ul class="product-tab-nav nav mt-n3" data-aos="fade-left" data-aos-delay="300">
-                            <li class="nav-item"><a class="nav-link active mt-3" data-bs-toggle="tab" href="#product-deal-all">New Arrivals</a></li>
-                            <li class="nav-item"><a class="nav-link mt-3" data-bs-toggle="tab" href="#product-deal-clothings">Best Sellers</a></li>
-                            <li class="nav-item"><a class="nav-link mt-3" data-bs-toggle="tab" href="#product-deal-all">Sale Items</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- Tab End -->
-            </div>
-            <!-- Section Title & Tab End -->
-
-            <!-- Products Tab Start -->
-            <div class="row">
-                <div class="col">
-                    <div class="tab-content position-relative">
-                        <div class="tab-pane fade show active" id="product-deal-all">
-                            <div class="product-deal-carousel">
-                                <div class="swiper-container">
-                                    <div class="swiper-wrapper">
-                                        <!-- Product Start -->
-                                        <div class="swiper-slide product-wrapper" data-aos="fade-right" data-aos-delay="600">
-
-                                            <!-- Single Product Deal Start -->
-                                            <div class="product single-deal-product product-border-left">
-                                                <div class="thumb">
-                                                    <a href="single-product-sale.html" class="image">
-                                                        <img src="assets/images/products/medium-size/1.jpg" alt="Product" />
-                                                    </a>
-                                                    <span class="badges">
-															<span class="sale">-30%</span>
-                                                    </span>
-                                                </div>
-                                                <div class="content">
-                                                    <p class="inner-desc">Hurry Up! Offer Ends In:</p>
-                                                    <div class="countdown-area">
-                                                        <div class="countdown-wrapper d-flex" data-countdown="2022/12/24"></div>
-                                                    </div>
-                                                    <h4 class="sub-title"><a href="single-product-sale.html">Studio Design</a></h4>
-                                                    <h5 class="title"><a href="single-product-sale.html">Enjoy The Rest T-Shirt</a></h5>
-                                                    <span class="ratings">
-															<span class="rating-wrap">
-																<span class="star" style="width: 100%"></span>
-                                                    </span>
-                                                    <span class="rating-num">(4)</span>
-                                                    </span>
-                                                    <span class="price">
-															<span class="new">$38.00</span>
-                                                    <span class="old">$42.05</span>
-                                                    </span>
-                                                    <button class="btn btn-sm btn-outline-dark btn-hover-primary">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                            <!-- Single Product Deal End -->
-
-                                        </div>
-                                        <!-- Product End -->
-
-                                        <!-- Product Start -->
-                                        <div class="swiper-slide product-wrapper" data-aos="fade-left" data-aos-delay="600">
-
-                                            <!-- Single Product Deal Start -->
-                                            <div class="product single-deal-product product-border-left">
-                                                <div class="thumb">
-                                                    <a href="single-product-sale.html" class="image">
-                                                        <img src="assets/images/products/medium-size/8.jpg" alt="Product" />
-                                                    </a>
-                                                </div>
-                                                <div class="content">
-                                                    <p class="inner-desc">Hurry Up! Offer Ends In:</p>
-                                                    <div class="countdown-area">
-                                                        <div class="countdown-wrapper d-flex" data-countdown="2022/12/24"></div>
-                                                    </div>
-                                                    <h4 class="sub-title"><a href="single-product-sale.html">Studio Design</a></h4>
-                                                    <h5 class="title"><a href="single-product-sale.html">Classic Trucker Hat</a></h5>
-                                                    <span class="ratings">
-															<span class="rating-wrap">
-																<span class="star" style="width: 65%"></span>
-                                                    </span>
-                                                    <span class="rating-num">(3)</span>
-                                                    </span>
-                                                    <span class="price">
-															<span class="new">$07.00</span>
-                                                    <span class="old">$08.40</span>
-                                                    </span>
-                                                    <button class="btn btn-sm btn-outline-dark btn-hover-primary">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                            <!-- Single Product Deal End -->
-
-                                        </div>
-                                        <!-- Product End -->
-
-                                        <!-- Product Start -->
-                                        <div class="swiper-slide product-wrapper">
-
-                                            <!-- Single Product Deal Start -->
-                                            <div class="product single-deal-product product-border-left">
-                                                <div class="thumb">
-                                                    <a href="single-product-sale.html" class="image">
-                                                        <img src="assets/images/products/medium-size/9.jpg" alt="Product" />
-                                                    </a>
-                                                </div>
-                                                <div class="content">
-                                                    <p class="inner-desc">Hurry Up! Offer Ends In:</p>
-                                                    <div class="countdown-area">
-                                                        <div class="countdown-wrapper d-flex" data-countdown="2022/12/24"></div>
-                                                    </div>
-                                                    <h4 class="sub-title"><a href="single-product-sale.html">Studio Design</a></h4>
-                                                    <h5 class="title"><a href="single-product-sale.html">Basic Lather Sneaker</a></h5>
-                                                    <span class="ratings">
-															<span class="rating-wrap">
-																<span class="star" style="width: 80%"></span>
-                                                    </span>
-                                                    <span class="rating-num">(2)</span>
-                                                    </span>
-                                                    <span class="price">
-															<span class="new">$88.00</span>
-                                                    <span class="old">$92.50</span>
-                                                    </span>
-                                                    <button class="btn btn-sm btn-outline-dark btn-hover-primary">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                            <!-- Single Product Deal End -->
-
-                                        </div>
-                                        <!-- Product End -->
-
-                                    </div>
-
-                                    <!-- Swiper Pagination Start -->
-                                    <div class="swiper-pagination d-md-none"></div>
-                                    <!-- Swiper Pagination End -->
-
-                                    <!-- Next Previous Button Start -->
-                                    <div class="swiper-product-deal-next swiper-button-next swiper-button-white d-md-flex d-none"><i class="pe-7s-angle-right"></i></div>
-                                    <div class="swiper-product-deal-prev swiper-button-prev swiper-button-white d-md-flex d-none"><i class="pe-7s-angle-left"></i></div>
-                                    <!-- Next Previous Button End -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="product-deal-clothings">
-                            <div class="product-deal-carousel">
-                                <div class="swiper-container">
-                                    <div class="swiper-wrapper">
-
-                                        <!-- Product Start -->
-                                        <div class="swiper-slide product-wrapper mb-n10">
-
-                                            <!-- Single Product Deal Start -->
-                                            <div class="product single-deal-product product-border-left mb-10">
-                                                <div class="thumb">
-                                                    <a href="single-product-sale.html" class="image">
-                                                        <img src="assets/images/products/medium-size/9.jpg" alt="Product" />
-                                                    </a>
-                                                </div>
-                                                <div class="content">
-                                                    <p class="inner-desc">Hurry Up! Offer Ends In:</p>
-                                                    <div class="countdown-area">
-                                                        <div class="countdown-wrapper d-flex" data-countdown="2022/12/24"></div>
-                                                    </div>
-                                                    <h4 class="sub-title"><a href="single-product-sale.html">Studio Design</a></h4>
-                                                    <h5 class="title"><a href="single-product-sale.html">Basic Lather Sneaker</a></h5>
-                                                    <span class="ratings">
-															<span class="rating-wrap">
-																<span class="star" style="width: 80%"></span>
-                                                    </span>
-                                                    <span class="rating-num">(2)</span>
-                                                    </span>
-                                                    <span class="price">
-															<span class="new">$88.00</span>
-                                                    <span class="old">$92.50</span>
-                                                    </span>
-                                                    <button class="btn btn-sm btn-outline-dark btn-hover-primary">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                            <!-- Single Product Deal End -->
-
-                                        </div>
-                                        <!-- Product End -->
-
-                                        <!-- Product Start -->
-                                        <div class="swiper-slide product-wrapper mb-n10">
-
-                                            <!-- Single Product Deal Start -->
-                                            <div class="product single-deal-product product-border-left mb-10">
-                                                <div class="thumb">
-                                                    <a href="single-product-sale.html" class="image">
-                                                        <img src="assets/images/products/medium-size/1.jpg" alt="Product" />
-                                                    </a>
-                                                    <span class="badges">
-															<span class="sale">-30%</span>
-                                                    </span>
-                                                </div>
-                                                <div class="content">
-                                                    <p class="inner-desc">Hurry Up! Offer Ends In:</p>
-                                                    <div class="countdown-area">
-                                                        <div class="countdown-wrapper d-flex" data-countdown="2022/12/24"></div>
-                                                    </div>
-                                                    <h4 class="sub-title"><a href="single-product-sale.html">Studio Design</a></h4>
-                                                    <h5 class="title"><a href="single-product-sale.html">Enjoy The Rest T-Shirt</a></h5>
-                                                    <span class="ratings">
-															<span class="rating-wrap">
-																<span class="star" style="width: 100%"></span>
-                                                    </span>
-                                                    <span class="rating-num">(4)</span>
-                                                    </span>
-                                                    <span class="price">
-															<span class="new">$38.00</span>
-                                                    <span class="old">$42.05</span>
-                                                    </span>
-                                                    <button class="btn btn-sm btn-outline-dark btn-hover-primary">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                            <!-- Single Product Deal End -->
-
-                                        </div>
-                                        <!-- Product End -->
-
-                                    </div>
-
-                                    <!-- Swiper Pagination Start -->
-                                    <div class="swiper-pagination d-md-none"></div>
-                                    <!-- Swiper Pagination End -->
-
-                                    <!-- Next Previous Button Start -->
-                                    <div class="swiper-product-deal-next swiper-button-next swiper-button-white d-md-flex d-none"><i class="pe-7s-angle-right"></i></div>
-                                    <div class="swiper-product-deal-prev swiper-button-prev swiper-button-white d-md-flex d-none"><i class="pe-7s-angle-left"></i></div>
-                                    <!-- Next Previous Button End -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Products Tab End -->
-        </div>
-    </div>
-    <!-- Product Deal Section End -->
+   {{-- Product deal contador (Futuramente) --}}
 
     <!-- Banner Section Start -->
     <div class="section">
@@ -1159,7 +911,7 @@
                 <div class="col-md-6 col-12 mb-6" data-aos="fade-right" data-aos-delay="300">
                     <div class="banner">
                         <div class="banner-image">
-                            <a href="shop-grid.html"><img src="assets/images/banner/banner-4.jpg" alt="Banner Image"></a>
+                            <a href="shop-grid.html"><img src="{{asset('useLadame/images/banner/banner-4.jpg')}}" alt="Banner Image"></a>
                         </div>
                         <div class="info">
                             <div class="small-banner-content">
@@ -1176,7 +928,7 @@
                 <div class="col-md-6 col-12 mb-6" data-aos="fade-left" data-aos-delay="300">
                     <div class="banner">
                         <div class="banner-image">
-                            <a href="shop-grid.html"><img src="assets/images/banner/banner-5.jpg" alt="Banner Image"></a>
+                            <a href="shop-grid.html"><img src="{{asset('useLadame/images/banner/banner-5.jpg')}}" alt="Banner Image"></a>
                         </div>
                         <div class="info">
                             <div class="small-banner-content">
@@ -1220,8 +972,8 @@
 
                                         <div class="thumb">
                                             <a href="single-product.html" class="image">
-                                                <img class="first-image" src="assets/images/products/small-product/1.jpg" alt="Product" />
-                                                <img class="second-image" src="assets/images/products/small-product/5.jpg" alt="Product" />
+                                                <img class="first-image" src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Product" />
+                                                <img class="second-image" src="{{asset('useLadame/images/products/small-product/5.jpg')}}" alt="Product" />
                                             </a>
                                         </div>
                                         <div class="content">
@@ -1244,8 +996,8 @@
                                     <div class="single-product-list product-hover mb-6">
                                         <div class="thumb">
                                             <a href="single-product.html" class="image">
-                                                <img class="first-image" src="assets/images/products/small-product/2.jpg" alt="Product" />
-                                                <img class="second-image" src="assets/images/products/small-product/3.jpg" alt="Product" />
+                                                <img class="first-image" src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Product" />
+                                                <img class="second-image" src="{{asset('useLadame/images/products/small-product/5.jpg')}}" alt="Product" />
                                             </a>
                                         </div>
                                         <div class="content">
@@ -1268,8 +1020,8 @@
                                     <div class="single-product-list product-hover mb-6">
                                         <div class="thumb">
                                             <a href="single-product.html" class="image">
-                                                <img class="first-image" src="assets/images/products/small-product/4.jpg" alt="Product" />
-                                                <img class="second-image" src="assets/images/products/small-product/10.jpg" alt="Product" />
+                                                <img class="first-image" src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Product" />
+                                                <img class="second-image" src="{{asset('useLadame/images/products/small-product/5.jpg')}}" alt="Product" />
                                             </a>
                                         </div>
                                         <div class="content">
@@ -1298,8 +1050,8 @@
                                     <div class="single-product-list product-hover mb-6">
                                         <div class="thumb">
                                             <a href="single-product.html" class="image">
-                                                <img class="first-image" src="assets/images/products/small-product/5.jpg" alt="Product" />
-                                                <img class="second-image" src="assets/images/products/small-product/6.jpg" alt="Product" />
+                                                <img class="first-image" src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Product" />
+                                                <img class="second-image" src="{{asset('useLadame/images/products/small-product/5.jpg')}}" alt="Product" />
                                             </a>
                                         </div>
                                         <div class="content">
@@ -1322,8 +1074,8 @@
                                     <div class="single-product-list product-hover mb-6">
                                         <div class="thumb">
                                             <a href="single-product.html" class="image">
-                                                <img class="first-image" src="assets/images/products/small-product/4.jpg" alt="Product" />
-                                                <img class="second-image" src="assets/images/products/small-product/10.jpg" alt="Product" />
+                                                <img class="first-image" src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Product" />
+                                                <img class="second-image" src="{{asset('useLadame/images/products/small-product/5.jpg')}}" alt="Product" />
                                             </a>
                                         </div>
                                         <div class="content">
@@ -1346,8 +1098,8 @@
                                     <div class="single-product-list product-hover mb-6">
                                         <div class="thumb">
                                             <a href="single-product.html" class="image">
-                                                <img class="first-image" src="assets/images/products/small-product/1.jpg" alt="Product" />
-                                                <img class="second-image" src="assets/images/products/small-product/5.jpg" alt="Product" />
+                                                <img class="first-image" src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Product" />
+                                                <img class="second-image" src="{{asset('useLadame/images/products/small-product/5.jpg')}}" alt="Product" />
                                             </a>
                                         </div>
                                         <div class="content">
@@ -1405,8 +1157,8 @@
                                     <div class="single-product-list product-hover mb-6">
                                         <div class="thumb">
                                             <a href="single-product.html" class="image">
-                                                <img class="first-image" src="assets/images/products/small-product/5.jpg" alt="Product" />
-                                                <img class="second-image" src="assets/images/products/small-product/6.jpg" alt="Product" />
+                                                <img class="first-image" src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Product" />
+                                                <img class="second-image" src="{{asset('useLadame/images/products/small-product/5.jpg')}}" alt="Product" />
                                             </a>
                                         </div>
                                         <div class="content">
@@ -1429,8 +1181,8 @@
                                     <div class="single-product-list product-hover mb-6">
                                         <div class="thumb">
                                             <a href="single-product.html" class="image">
-                                                <img class="first-image" src="assets/images/products/small-product/4.jpg" alt="Product" />
-                                                <img class="second-image" src="assets/images/products/small-product/10.jpg" alt="Product" />
+                                                <img class="first-image" src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Product" />
+                                                <img class="second-image" src="{{asset('useLadame/images/products/small-product/5.jpg')}}" alt="Product" />
                                             </a>
                                         </div>
                                         <div class="content">
@@ -1453,8 +1205,8 @@
                                     <div class="single-product-list product-hover mb-6">
                                         <div class="thumb">
                                             <a href="single-product.html" class="image">
-                                                <img class="first-image" src="assets/images/products/small-product/1.jpg" alt="Product" />
-                                                <img class="second-image" src="assets/images/products/small-product/5.jpg" alt="Product" />
+                                                <img class="first-image" src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Product" />
+                                                <img class="second-image" src="{{asset('useLadame/images/products/small-product/5.jpg')}}" alt="Product" />
                                             </a>
                                         </div>
                                         <div class="content">
@@ -1483,8 +1235,8 @@
                                     <div class="single-product-list product-hover mb-6">
                                         <div class="thumb">
                                             <a href="single-product.html" class="image">
-                                                <img class="first-image" src="assets/images/products/small-product/7.jpg" alt="Product" />
-                                                <img class="second-image" src="assets/images/products/small-product/9.jpg" alt="Product" />
+                                                <img class="first-image" src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Product" />
+                                                <img class="second-image" src="{{asset('useLadame/images/products/small-product/5.jpg')}}" alt="Product" />
                                             </a>
                                         </div>
                                         <div class="content">
@@ -1506,8 +1258,8 @@
                                     <div class="single-product-list product-hover mb-6">
                                         <div class="thumb">
                                             <a href="single-product.html" class="image">
-                                                <img class="first-image" src="assets/images/products/small-product/11.jpg" alt="Product" />
-                                                <img class="second-image" src="assets/images/products/small-product/10.jpg" alt="Product" />
+                                                <img class="first-image" src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Product" />
+                                                <img class="second-image" src="{{asset('useLadame/images/products/small-product/5.jpg')}}" alt="Product" />
                                             </a>
                                         </div>
                                         <div class="content">
@@ -1529,8 +1281,8 @@
                                     <div class="single-product-list product-hover mb-6">
                                         <div class="thumb">
                                             <a href="single-product.html" class="image">
-                                                <img class="first-image" src="assets/images/products/small-product/3.jpg" alt="Product" />
-                                                <img class="second-image" src="assets/images/products/small-product/5.jpg" alt="Product" />
+                                                <img class="first-image" src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Product" />
+                                                <img class="second-image" src="{{asset('useLadame/images/products/small-product/5.jpg')}}" alt="Product" />
                                             </a>
                                         </div>
                                         <div class="content">
@@ -1586,8 +1338,8 @@
                                     <div class="single-product-list product-hover mb-6">
                                         <div class="thumb">
                                             <a href="single-product.html" class="image">
-                                                <img class="first-image" src="assets/images/products/small-product/7.jpg" alt="Product" />
-                                                <img class="second-image" src="assets/images/products/small-product/9.jpg" alt="Product" />
+                                                <img class="first-image" src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Product" />
+                                                <img class="second-image" src="{{asset('useLadame/images/products/small-product/5.jpg')}}" alt="Product" />
                                             </a>
                                         </div>
                                         <div class="content">
@@ -1609,8 +1361,8 @@
                                     <div class="single-product-list product-hover mb-6">
                                         <div class="thumb">
                                             <a href="single-product.html" class="image">
-                                                <img class="first-image" src="assets/images/products/small-product/11.jpg" alt="Product" />
-                                                <img class="second-image" src="assets/images/products/small-product/10.jpg" alt="Product" />
+                                                <img class="first-image" src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Product" />
+                                                <img class="second-image" src="{{asset('useLadame/images/products/small-product/5.jpg')}}" alt="Product" />
                                             </a>
                                         </div>
                                         <div class="content">
@@ -1632,8 +1384,8 @@
                                     <div class="single-product-list product-hover mb-6">
                                         <div class="thumb">
                                             <a href="single-product.html" class="image">
-                                                <img class="first-image" src="assets/images/products/small-product/3.jpg" alt="Product" />
-                                                <img class="second-image" src="assets/images/products/small-product/5.jpg" alt="Product" />
+                                                <img class="first-image" src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Product" />
+                                                <img class="second-image" src="{{asset('useLadame/images/products/small-product/5.jpg')}}" alt="Product" />
                                             </a>
                                         </div>
                                         <div class="content">
@@ -1662,8 +1414,8 @@
                                     <div class="single-product-list product-hover mb-6">
                                         <div class="thumb">
                                             <a href="single-product.html" class="image">
-                                                <img class="first-image" src="assets/images/products/small-product/1.jpg" alt="Product" />
-                                                <img class="second-image" src="assets/images/products/small-product/5.jpg" alt="Product" />
+                                                <img class="first-image" src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Product" />
+                                                <img class="second-image" src="{{asset('useLadame/images/products/small-product/5.jpg')}}" alt="Product" />
                                             </a>
                                         </div>
                                         <div class="content">
@@ -1686,8 +1438,8 @@
                                     <div class="single-product-list product-hover mb-6">
                                         <div class="thumb">
                                             <a href="single-product.html" class="image">
-                                                <img class="first-image" src="assets/images/products/small-product/2.jpg" alt="Product" />
-                                                <img class="second-image" src="assets/images/products/small-product/3.jpg" alt="Product" />
+                                                <img class="first-image" src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Product" />
+                                                <img class="second-image" src="{{asset('useLadame/images/products/small-product/5.jpg')}}" alt="Product" />
                                             </a>
                                         </div>
                                         <div class="content">
@@ -1710,8 +1462,8 @@
                                     <div class="single-product-list product-hover mb-6">
                                         <div class="thumb">
                                             <a href="single-product.html" class="image">
-                                                <img class="first-image" src="assets/images/products/small-product/4.jpg" alt="Product" />
-                                                <img class="second-image" src="assets/images/products/small-product/10.jpg" alt="Product" />
+                                                <img class="first-image" src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Product" />
+                                                <img class="second-image" src="{{asset('useLadame/images/products/small-product/5.jpg')}}" alt="Product" />
                                             </a>
                                         </div>
                                         <div class="content">
@@ -1752,7 +1504,9 @@
         </div>
     </div>
     <!-- Product List End -->
+@endsection
 
+@section('clients-area')
     <!-- Brand Logo Start -->
     <div class="section">
         <div class="container">
@@ -1766,31 +1520,35 @@
 
                                     <!-- Single Brand Logo Start -->
                                     <div class="swiper-slide single-brand-logo" data-aos="fade-up" data-aos-delay="300">
-                                        <a href="#"><img src="assets/images/brand-logo/1.png" alt="Brand Logo"></a>
+                                        <a href="https://bckcode.com.br" target="_blank"><img style="width: 200px;" src="{{asset('useLadame/images/logo/marca-dagua-dourada.png')}}" alt="Brand Logo"></a>
                                     </div>
                                     <!-- Single Brand Logo End -->
 
                                     <!-- Single Brand Logo Start -->
                                     <div class="swiper-slide single-brand-logo" data-aos="fade-up" data-aos-delay="400">
-                                        <a href="#"><img src="assets/images/brand-logo/2.png" alt="Brand Logo"></a>
+                                        {{-- <a href="#"><img src="assets/images/brand-logo/2.png" alt="Brand Logo"></a> --}}
+                                        <a href="https://bckcode.com.br" target="_blank"><img style="width: 200px;" src="{{asset('useLadame/images/logo/marca-dagua-preta.png')}}" alt="Brand Logo"></a>
                                     </div>
                                     <!-- Single Brand Logo End -->
 
                                     <!-- Single Brand Logo Start -->
                                     <div class="swiper-slide single-brand-logo" data-aos="fade-up" data-aos-delay="500">
-                                        <a href=""><img src="assets/images/brand-logo/3.png" alt="Brand Logo"></a>
+                                        {{-- <a href=""><img src="assets/images/brand-logo/3.png" alt="Brand Logo"></a> --}}
+                                        <a href="https://bckcode.com.br" target="_blank"><img style="width: 200px;" src="{{asset('useLadame/images/logo/marca-dagua-dourada.png')}}" alt="Brand Logo"></a>
                                     </div>
                                     <!-- Single Brand Logo End -->
 
                                     <!-- Single Brand Logo Start -->
                                     <div class="swiper-slide single-brand-logo" data-aos="fade-up" data-aos-delay="600">
-                                        <a href="#"><img src="assets/images/brand-logo/4.png" alt="Brand Logo"></a>
+                                        {{-- <a href="#"><img src="assets/images/brand-logo/4.png" alt="Brand Logo"></a> --}}
+                                        <a href="https://bckcode.com.br" target="_blank"><img style="width: 200px;" src="{{asset('useLadame/images/logo/marca-dagua-preta.png')}}" alt="Brand Logo"></a>
                                     </div>
                                     <!-- Single Brand Logo End -->
 
                                     <!-- Single Brand Logo Start -->
                                     <div class="swiper-slide single-brand-logo" data-aos="fade-up" data-aos-delay="700">
-                                        <a href="#"><img src="assets/images/brand-logo/5.png" alt="Brand Logo"></a>
+                                        {{-- <a href="#"><img src="assets/images/brand-logo/5.png" alt="Brand Logo"></a> --}}
+                                        <a href="https://bckcode.com.br" target="_blank"><img style="width: 200px;" src="{{asset('useLadame/images/logo/marca-dagua-dourada.png')}}" alt="Brand Logo"></a>
                                     </div>
                                     <!-- Single Brand Logo End -->
 

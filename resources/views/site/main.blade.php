@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ladame | Compre On-line</title>
+    <title>Ladame | Boutique de Lingerie</title>
     <!-- Favicons -->
     <link rel="shortcut icon" href="{{asset('useLadame/images/favicon.ico')}}">
 
@@ -29,6 +29,7 @@
 
     <link rel="stylesheet" href="{{asset('useLadame/css/style.css')}}" />
 
+    @stack('css')
 
 
     <!-- Use the minified version files listed below for better performance and remove the files listed above -->
@@ -77,7 +78,7 @@
 
                     <!-- Header Top Message Start -->
                     <div class="col">
-                        <p class="header-top-message">Aproveite nossas promoçoes de inauguração!. <a href="shop-grid.html">Ver agora</a></p>
+                        <p class="header-top-message">Aproveite nossas promoçoes de inauguração!. <a href="{{route('products')}}">Ver agora</a></p>
                     </div>
                     <!-- Header Top Message End -->
 
@@ -105,7 +106,7 @@
                             <div class="main-menu position-relative">
                                 <ul>
                                     <li><a href="{{route('home')}}"> <span>Home</span></a></li>
-                                    <li><a href="{{route('products')}}"> <span>Nossos Produtos</span></a></li>
+                                    <li><a href="{{route('products')}}"> <span>Produtos</span></a></li>
                                     <li class="has-children position-static">
                                         <a href="#"><span>Categorias</span> <i class="fa fa-angle-down"></i></a>
                                         <ul class="mega-menu row-cols-4">
@@ -133,6 +134,7 @@
                                             </li>
                                         </ul>
                                     </li>
+                                    <li><a href="{{route('about')}}"> <span>Sobre nós</span></a></li>
                                     <li><a href="{{route('contact')}}"> <span>Contato</span></a></li>
                                 </ul>
                             </div>
@@ -197,15 +199,10 @@
                 <div class="mobile-navigation">
                     <nav>
                         <ul class="mobile-menu">
+                            <li><a href="{{route('home')}}">Home</a></li>
+                            <li><a href="{{route('products')}}">Produtos</a></li>
                             <li class="has-children">
-                                <a href="#">Home <i class="fa fa-angle-down"></i></a>
-                                <ul class="dropdown">
-                                    <li><a href="index.html">Home One</a></li>
-                                    <li><a href="index-2.html">Home Two</a></li>
-                                </ul>
-                            </li>
-                            <li class="has-children">
-                                <a href="#">Shop <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                <a href="#">Categorias <i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                 <ul class="dropdown">
                                     <li><a href="shop-grid.html">Shop Grid</a></li>
                                     <li><a href="shop-left-sidebar.html">Shop Left Sidebar</a></li>
@@ -219,53 +216,15 @@
                                     <li><a href="compare.html">Compare</a></li>
                                 </ul>
                             </li>
-                            <li class="has-children">
-                                <a href="#">Product <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                <ul class="dropdown">
-                                    <li><a href="single-product.html">Single Product</a></li>
-                                    <li><a href="single-product-sale.html">Single Product Sale</a></li>
-                                    <li><a href="single-product-group.html">Single Product Group</a></li>
-                                    <li><a href="single-product-normal.html">Single Product Normal</a></li>
-                                    <li><a href="single-product-affiliate.html">Single Product Affiliate</a></li>
-                                    <li><a href="single-product-slider.html">Single Product Slider</a></li>
-                                    <li><a href="single-product-gallery-left.html">Gallery Left</a></li>
-                                    <li><a href="single-product-gallery-right.html">Gallery Right</a></li>
-                                    <li><a href="single-product-tab-style-left.html">Tab Style Left</a></li>
-                                    <li><a href="single-product-tab-style-right.html">Tab Style Right</a></li>
-                                    <li><a href="single-product-sticky-left.html">Sticky Left</a></li>
-                                    <li><a href="single-product-sticky-right.html">Sticky Right</a></li>
-                                </ul>
-                            </li>
-                            <li class="has-children">
-                                <a href="#">Pages <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                <ul class="dropdown">
-                                    <li><a href="about.html">About Us</a></li>
-                                    <li><a href="contact.html">Contact</a></li>
-                                    <li><a href="faq.html">Faq</a></li>
-                                    <li><a href="404-error.html">Error 404</a></li>
-                                    <li><a href="my-account.html">My Account</a></li>
-                                    <li><a href="login-register.html">Loging | Register</a></li>
-                                </ul>
-                            </li>
-                            <li class="has-children">
-                                <a href="#">Blog <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                <ul class="dropdown">
-                                    <li><a href="blog.html">Blog</a></li>
-                                    <li><a href="blog-left-sidebar.html">Blog Left Sidebar</a></li>
-                                    <li><a href="blog-right-sidebar.html">Blog Right Sidebar</a></li>
-                                    <li><a href="blog-details.html">Blog Details</a></li>
-                                    <li><a href="blog-details-sidebar.html">Blog Details Sidebar</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="about.html">About</a></li>
-                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="{{route('about')}}">Sobre nós</a></li>
+                            <li><a href="{{route('contact')}}">Contato</a></li>
                         </ul>
                     </nav>
                 </div>
                 <!-- Mobile Menu End -->
 
                 <!-- Language, Currency & Link Start -->
-                <div class="offcanvas-lag-curr mb-6">
+                {{-- <div class="offcanvas-lag-curr mb-6">
                     <h2 class="title">Languages</h2>
                     <div class="header-top-lan-curr-link">
                         <div class="header-top-lan dropdown">
@@ -285,7 +244,7 @@
                             </ul>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <!-- Language, Currency & Link End -->
 
                 <!-- Contact Links/Social Links Start -->
@@ -293,19 +252,19 @@
 
                     <!-- Contact Links Start -->
                     <ul class="contact-links">
-                        <li><i class="fa fa-phone"></i><a href="#"> +012 3456 789 123</a></li>
-                        <li><i class="fa fa-envelope-o"></i><a href="#"> info@example.com</a></li>
-                        <li><i class="fa fa-clock-o"></i> <span>Monday - Sunday 9.00 - 18.00</span> </li>
+                        <li><i class="fa fa-phone"></i><a href="phone: (27)99999-9999"> (27) 99999-9999</a></li>
+                        <li><i class="fa fa-envelope-o"></i><a href="#"> contato@useladame.com</a></li>
+                        <li><i class="fa fa-clock-o"></i> <span>Segunda à Sexta 9:00 - 22:00</span> </li>
                     </ul>
                     <!-- Contact Links End -->
 
                     <!-- Social Widget Start -->
                     <div class="widget-social">
-                        <a title="Facebook" href="#"><i class="fa fa-facebook-f"></i></a>
-                        <a title="Twitter" href="#"><i class="fa fa-twitter"></i></a>
-                        <a title="Linkedin" href="#"><i class="fa fa-linkedin"></i></a>
-                        <a title="Youtube" href="#"><i class="fa fa-youtube"></i></a>
-                        <a title="Vimeo" href="#"><i class="fa fa-vimeo"></i></a>
+                        <a title="Facebook" href="https://www.facebook.com/useladame" target="_blank"><i class="fa fa-facebook-f"></i></a>
+                        <a title="Instagram" href="https://www.instagram.com/useladame/" target="_blank"><i class="fa fa-instagram"></i></a>
+                        <a title="WhatsApp" href="phone: (27)99999-9999"><i class="fa fa-whatsapp"></i></a>
+                        {{-- {{-- <a title="Youtube" href="#"><i class="fa fa-youtube"></i></a> --}}
+                        <a title="Email" href="mailto:contato@useladame.com"><i class="fa fa-envelope"></i></a> 
                     </div>
                     <!-- Social Widget Ende -->
                 </div>
@@ -351,7 +310,7 @@
                 <!-- Offcanvas Cart Content Start -->
                 <div class="offcanvas-cart-content">
                     <!-- Offcanvas Cart Title Start -->
-                    <h2 class="offcanvas-cart-title mb-10">Shopping Cart</h2>
+                    <h2 class="offcanvas-cart-title mb-10">Seu Carrinho</h2>
                     <!-- Offcanvas Cart Title End -->
 
                     <!-- Cart Product/Price Start -->
@@ -360,7 +319,7 @@
                         <!-- Single Cart Product Start -->
                         <div class="single-cart-product">
                             <div class="cart-product-thumb">
-                                <a href="single-product.html"><img src="assets/images/products/small-product/1.jpg" alt="Cart Product"></a>
+                                <a href="single-product.html"><img src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Cart Product"></a>
                             </div>
                             <div class="cart-product-content">
                                 <h3 class="title"><a href="single-product.html">Brother Hoddies in Grey</a></h3>
@@ -387,7 +346,7 @@
                         <!-- Single Cart Product Start -->
                         <div class="single-cart-product">
                             <div class="cart-product-thumb">
-                                <a href="single-product.html"><img src="assets/images/products/small-product/2.jpg" alt="Cart Product"></a>
+                                <a href="single-product.html"><img src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Cart Product"></a>
                             </div>
                             <div class="cart-product-content">
                                 <h3 class="title"><a href="single-product.html">Basic Jogging Shorts</a></h3>
@@ -414,7 +373,7 @@
                         <!-- Single Cart Product Start -->
                         <div class="single-cart-product">
                             <div class="cart-product-thumb">
-                                <a href="single-product.html"><img src="assets/images/products/small-product/3.jpg" alt="Cart Product"></a>
+                                <a href="single-product.html"><img src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Cart Product"></a>
                             </div>
                             <div class="cart-product-content">
                                 <h3 class="title"><a href="single-product.html">Enjoy The Rest T-Shirt</a></h3>
@@ -444,8 +403,8 @@
 
                     <!-- Cart Product Button Start -->
                     <div class="cart-product-btn mt-4">
-                        <a href="cart.html" class="btn btn-dark btn-hover-primary rounded-0 w-100">View cart</a>
-                        <a href="checkout.html" class="btn btn-dark btn-hover-primary rounded-0 w-100 mt-4">Checkout</a>
+                        <a href="{{route('cart')}}" class="btn btn-dark btn-hover-primary rounded-0 w-100">Ver Carrinho</a>
+                        <a href="{{route('cart.confirm')}}" class="btn btn-dark btn-hover-primary rounded-0 w-100 mt-4">Finalizar Compra</a>
                     </div>
                     <!-- Cart Product Button End -->
 
@@ -461,6 +420,7 @@
 
 
     @yield('content')
+    @yield('clients-area')
 
     <!-- Footer Section Start -->
     <footer class="section footer-section">
@@ -470,50 +430,49 @@
                 <div class="row mb-n10">
                     <div class="col-12 col-sm-6 col-lg-4 col-xl-4 mb-10" data-aos="fade-up" data-aos-delay="200">
                         <div class="single-footer-widget">
-                            <h2 class="widget-title">Contact Us</h2>
-                            <p class="desc-content">Lorem ipsum dolor sit amet, consectetur adipisicing sed do eiusmod tempor incididun</p>
+                            <h2 class="widget-title">Fale conosco</h2>
+                            <p class="desc-content">Será um prazer poder falar com você. Estamos esperando seu contato e sua visita!</p>
                             <!-- Contact Address Start -->
                             <ul class="widget-address">
-                                <li><span>Address: </span> 123 Main Street, Anytown, CA 12345 - USA.</li>
-                                <li><span>Call to: </span> <a href="#"> (012) 800 456 789-987</a></li>
-                                <li><span>Mail to: </span> <a href="#"> yourmail@example.com</a></li>
+                                <li><span>Endereço: </span> Avenida Mário Gurgel, 5353. Shopping Moxuara. Loja __ Espírito Santo</li>
+                                <li><span>Atendimento: </span> <a href="tel: (27)99555-8745"> (27) 99999-9999</a></li>
+                                <li><span>E-mail: </span> <a href="mailto: contato@useladame.com"> contato@useladame.com</a></li>
                             </ul>
                             <!-- Contact Address End -->
 
                             <!-- Soclial Link Start -->
                             <div class="widget-social justify-content-start mt-4">
-                                <a title="Facebook" href="#"><i class="fa fa-facebook-f"></i></a>
-                                <a title="Twitter" href="#"><i class="fa fa-twitter"></i></a>
-                                <a title="Linkedin" href="#"><i class="fa fa-linkedin"></i></a>
-                                <a title="Youtube" href="#"><i class="fa fa-youtube"></i></a>
-                                <a title="Vimeo" href="#"><i class="fa fa-vimeo"></i></a>
+                                <a title="Facebook" href="https://www.facebook.com/useladame" target="_blank"><i class="fa fa-facebook-f"></i></a>
+                                <a title="Instagram" href="https://www.instagram.com/useladame/" target="_blank"><i class="fa fa-instagram"></i></a>
+                                {{-- <a title="Linkedin" href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
+                                <a title="Youtube" href="#" target="_blank"><i class="fa fa-youtube"></i></a>
+                                <a title="Vimeo" href="#" target="_blank"><i class="fa fa-vimeo"></i></a> --}}
                             </div>
                             <!-- Social Link End -->
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-2 col-xl-2 mb-10" data-aos="fade-up" data-aos-delay="300">
                         <div class="single-footer-widget">
-                            <h2 class="widget-title">Information</h2>
+                            <h2 class="widget-title">Informações</h2>
                             <ul class="widget-list">
-                                <li><a href="about.html">About Us</a></li>
-                                <li><a href="about.html">Delivery Information</a></li>
-                                <li><a href="about.html">Privacy Policy</a></li>
-                                <li><a href="about.html">Terms & Conditions</a></li>
-                                <li><a href="about.html">Customer Service</a></li>
-                                <li><a href="about.html">Return Policy</a></li>
+                                <li><a href="{{route('about')}}">Sobre nós</a></li>
+                                {{-- <li><a href="about.html">Politicas de privacidade</a></li> --}}
+                                <li><a href="about.html">Termos de uso</a></li>
+                                <li><a href="about.html">Políticas de entrega</a></li>
+                                <li><a href="about.html">Políticas de troca</a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-2 col-xl-2 mb-10" data-aos="fade-up" data-aos-delay="400">
                         <div class="single-footer-widget aos-init aos-animate">
-                            <h2 class="widget-title">My Account</h2>
+                            <h2 class="widget-title">Links Rápidos</h2>
                             <ul class="widget-list">
-                                <li><a href="account.html">My Account</a></li>
-                                <li><a href="wishlist.html">Wishlist</a></li>
-                                <li><a href="contact.html">Newsletter</a></li>
-                                <li><a href="contact.html">Help Center</a></li>
-                                <li><a href="contact.html">Conditin</a></li>
-                                <li><a href="contact.html">Term Of Use</a></li>
+                                <li><a href="{{route('login')}}">Minha conta</a></li>
+                                <li><a href="wishlist.html">Lista de desejos</a></li>
+                                {{-- <li><a href="contact.html">Newsletter</a></li> --}}
+                                <li><a href="contact.html">Canais de ajuda</a></li>
+                                {{-- <li><a href="contact.html">Conditin</a></li> --}}
+                                <li><a href="contact.html">Termos de uso</a></li>
                             </ul>
                         </div>
                     </div>
@@ -521,13 +480,13 @@
                         <div class="single-footer-widget">
                             <h2 class="widget-title">Newsletter</h2>
                             <div class="widget-body">
-                                <p class="desc-content mb-0">Get E-mail updates about our latest shop and special offers.</p>
+                                <p class="desc-content mb-0">Assine nossa newsletter e receba nossas melhores ofertas no seu e-mail!</p>
 
                                 <!-- Newsletter Form Start -->
                                 <div class="newsletter-form-wrap pt-4">
                                     <form id="mc-form" class="mc-form">
-                                        <input type="email" id="mc-email" class="form-control email-box mb-4" placeholder="Enter your email here.." name="EMAIL">
-                                        <button id="mc-submit" class="newsletter-btn btn btn-primary btn-hover-dark" type="submit">Subscribe</button>
+                                        <input type="email" id="mc-email" class="form-control email-box mb-4" placeholder="Insira seu melhor email.." name="EMAIL">
+                                        <button id="mc-submit" class="newsletter-btn btn btn-primary btn-hover-dark" type="submit">Assinar</button>
                                     </form>
                                     <!-- mailchimp-alerts Start -->
                                     <div class="mailchimp-alerts text-centre">
@@ -780,6 +739,8 @@
 
     <!--Main JS-->
     <script src="{{asset('useLadame/js/main.js')}}"></script>
+
+    @stack('js')
 
 </body>
 
