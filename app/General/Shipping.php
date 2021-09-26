@@ -8,7 +8,6 @@ use App\ProductVariation;
 use Exception;
 use FlyingLuscas\Correios\Client;
 use FlyingLuscas\Correios\Service;
-use Illuminate\Support\Facades\Cookie;
 
 class Shipping
 {

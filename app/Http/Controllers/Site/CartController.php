@@ -14,6 +14,7 @@ use App\ProductVariation;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Payments\PagarMe\Order\CreateOrder;
 
 class CartController extends Controller
 {
@@ -147,22 +148,18 @@ class CartController extends Controller
 
     public function createOrder(Request $request)
     {
-        $addressId = $request->post('address_id');
-        $shippingId = $request->post('shipping_id');
-
-        if (empty($addressId)) {
-            return redirect()
-                ->route('cart.confirm')
-                ->withErrors('Endereço inválido.');
-        }
-
         DB::beginTransaction();
 
         try {
             $customer = auth()->user();
 
-            $order = new Order();
-            $order->createOrder($customer, $addressId, $shippingId);
+            // Antes:
+            // $order = new Order();
+            // $order->createOrder($customer, $addressId, $shippingId);
+
+            // TODO usar classe /Payments/PagarMe/Order/CreateOrder
+            $order = new CreateOrder($customer);
+            $redirectUrl = $order->create($request->post());
 
             DB::commit();
         } catch (Exception $e) {
@@ -172,6 +169,8 @@ class CartController extends Controller
                 ->route('cart')
                 ->withErrors($e->getMessage());
         }
+
+        // retornar para essa rota -> $redirectUrl
 
         return redirect()->route('panel.order.show', $order->id)->withSuccess('Você está quase! Efetue o pagamento para iniciarmos a separação do seu pedido :)');
     }

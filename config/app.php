@@ -253,5 +253,6 @@ return [
         'postal_code' => env('SHIPPING_POSTAL_CODE'),
         'additional_shipping_days' => env('SHIPPING_ADDITIONAL_SHIPPING_DAYS'),
     ],
-    'has_email_confirmation' => env('HAS_EMAIL_CONFIRMATION', true)
+    'pagar_me_api_token' => env('PAGAR_ME_API_TOKEN'),
+    'pagar_me_api_encrypt' => env('PAGAR_ME_API_ENCRYPT')
 ];
