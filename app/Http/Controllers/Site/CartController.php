@@ -170,7 +170,7 @@ class CartController extends Controller
                 ->withErrors($e->getMessage());
         }
 
-        // retornar para essa rota -> $redirectUrl
+        // TODO retornar para essa rota -> $redirectUrl
 
         return redirect()->route('panel.order.show', $order->id)->withSuccess('Você está quase! Efetue o pagamento para iniciarmos a separação do seu pedido :)');
     }
