@@ -7,12 +7,39 @@ use App\Cart;
 use App\General\Shipping;
 use Exception;
 use PagarMe\Client;
+use stdClass;
 
 class CreateOrder extends Order
 {
     public function create($params)
     {
-        $this->validate();
+        $items = [
+            [
+                'amount' => 1.58,
+                'description' => 1.58,
+                'quantity' => 1,
+            ],
+        ];
+
+        $customer = new stdClass();
+        $customer->name = 'teste teste';
+        $customer->name = 'teste@teste.com';
+
+        $payments = [
+            [
+                'payment_method' => 'credit_card',
+                'credit_card' => [
+                    'installments' => 1,
+                    'statement_descriptor' => 'teste',
+                    'card_id' => 'card_oqyg5aZuP2zK1dja',
+                    'card' => [
+                        'cvv' => '123',
+                    ],
+                ],
+            ],
+        ];
+        
+        // $this->validate();
 
         $cart = Cart::getCart($this->customer->id);
         if ($cart->totalProducts() <= 0) {
@@ -93,7 +120,8 @@ class CreateOrder extends Order
                     ],
                 ];
             */
-            'items' => $this->items,
+            // 'items' => $this->items,
+            'items' => $items,
         ]);
 
         return $transaction;
@@ -107,7 +135,6 @@ class CreateOrder extends Order
             throw new Exception('Informe os itens do pedido.');
         }
 
-        $this->customer = $this->params->customer;
         if (empty($this->customer)) {
             throw new Exception('Informe os dados do cliente.');
         }
