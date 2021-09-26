@@ -1,7 +1,5 @@
 <?php
 
-use laravel\pagseguro\Platform\Laravel5\ServiceProvider;
-
 return [
 
     /*
@@ -181,7 +179,7 @@ return [
         Canducci\ZipCode\Providers\ZipCodeServiceProvider::class,
         Canducci\ZipCode\Providers\ZipCodeAddressServiceProvider::class,
         geekcom\ValidatorDocs\ValidatorProvider::class,
-        laravel\pagseguro\Platform\Laravel5\ServiceProvider::class,
+        // laravel\pagseguro\Platform\Laravel5\ServiceProvider::class,
 
     ],
 
@@ -236,7 +234,7 @@ return [
         'Twig' => TwigBridge\Facade\Twig::class,
         'ZipCode'   => Canducci\ZipCode\Facades\ZipCode::class,
         'Address'   => Canducci\ZipCode\Facades\ZipCodeAddress::class,
-        'PagSeguro' => laravel\pagseguro\Platform\Laravel5\PagSeguro::class,
+        // 'PagSeguro' => laravel\pagseguro\Platform\Laravel5\PagSeguro::class,
     ],
 
     'domain' => env('APP_DOMAIN'),
@@ -245,10 +243,10 @@ return [
         'name' => env('COMPANY_NAME'),
         'cnpj' => env('COMPANY_CNPJ')
     ],
-    'pagseguro' => [
-        'email' => env('PAGSEGURO_EMAIL'),
-        'token' => env('PAGSEGURO_TOKEN'),
-    ],
+    // 'pagseguro' => [
+    //     'email' => env('PAGSEGURO_EMAIL'),
+    //     'token' => env('PAGSEGURO_TOKEN'),
+    // ],
     'shipping' => [
         'postal_code' => env('SHIPPING_POSTAL_CODE'),
         'additional_shipping_days' => env('SHIPPING_ADDITIONAL_SHIPPING_DAYS'),
