@@ -41,7 +41,6 @@
     <link rel="stylesheet" href="assets/css/style.min.css"> 
     -->
 </head>
-
 <body>
     <div class="header section">
 
@@ -150,7 +149,13 @@
                                 <!-- Search Header Action Button End -->
 
                                 <!-- User Account Header Action Button Start -->
-                                <a href="{{route('login')}}" class="header-action-btn d-none d-md-block"><i class="pe-7s-user"></i></a>
+                                @if(Auth::check())
+                                    <a href="{{route('panel.profile')}}" class="header-action-btn d-none d-md-block"><i class="pe-7s-user"></i></a>
+                                @endif
+
+                                @if(Auth::guest())
+                                    <a href="{{route('login')}}" class="header-action-btn d-none d-md-block"><i class="pe-7s-user"></i></a>
+                                @endif
                                 <!-- User Account Header Action Button End -->
 
                                 <!-- Wishlist Header Action Button Start -->
@@ -713,6 +718,7 @@
     <script src="{{asset('useLadame/js/vendor/jquery-migrate-3.3.2.min.js')}}"></script>
     <script src="{{asset('useLadame/js/vendor/modernizr-3.11.2.min.js')}}"></script>
 
+    @stack('js')
 
     <!-- Plugins JS -->
 
@@ -735,12 +741,12 @@
    <script src="useLadame/js/plugins.min.js"></script> 
    -->
 
-
+   
 
     <!--Main JS-->
     <script src="{{asset('useLadame/js/main.js')}}"></script>
 
-    @stack('js')
+    
 
 </body>
 

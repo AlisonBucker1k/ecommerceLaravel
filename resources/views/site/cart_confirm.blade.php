@@ -436,10 +436,11 @@
                                 </h5>
                                 <div class="collapse" id="collapseExample-2">
                                     <div class="card card-body rounded-0">
-                                        <div class="card-wrapper"></div>
+                                       
                                         <div class="col-md-12">
                                             <div class="checkout-form-list">
                                                <form action="">
+                                                <div class="card-wrapper"></div>
                                                 <label>Titular do Cartão <span class="required">*</span></label>
                                                 <input type="text" required id="nome_cartao">
                                                 <input class="form-control" placeholder="0000 0000 0000 0000" name="ccnumber" id="number">
@@ -454,7 +455,7 @@
                             </div>
                         </div>
                         <div class="order-button-payment">
-                            <button class="btn btn-dark btn-hover-primary rounded-0 w-100">Place Order</button>
+                            <button class="btn btn-dark btn-hover-primary rounded-0 w-100">Finalizar Compra</button>
                         </div>
                     </div>
                     <!-- Payment Accordion Order Button End -->
@@ -471,8 +472,10 @@
     <link rel="stylesheet" href="{{asset('useLadame/css/card.css')}}">
 @endpush
 @push('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
     <script src="{{asset('useLadame/js/plugins/jquery.card.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.11.2/jquery.mask.min.js" integrity="sha512-Y/GIYsd+LaQm6bGysIClyez2HGCIN1yrs94wUrHoRAD5RSURkqqVQEU6mM51O90hqS80ABFTGtiDpSXd2O05nw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.11.2/jquery.mask.min.js"  crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
     <script src="{{asset('useLadame/js/plugins/card.js')}}"></script>
 
     <script>
