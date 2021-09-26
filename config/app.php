@@ -254,5 +254,6 @@ return [
         'additional_shipping_days' => env('SHIPPING_ADDITIONAL_SHIPPING_DAYS'),
     ],
     'pagar_me_api_token' => env('PAGAR_ME_API_TOKEN'),
-    'pagar_me_api_encrypt' => env('PAGAR_ME_API_ENCRYPT')
+    'pagar_me_api_encrypt' => env('PAGAR_ME_API_ENCRYPT'),
+    'pagar_me_api_base_url' => env('PAGAR_ME_API_BASE_URL'),
 ];
