@@ -15,6 +15,7 @@ class Order extends PagarMe
 {
     public function __construct(Customer $customer)
     {
+        dd('order');
         $this->customer = $customer;
     }
     
@@ -40,30 +41,3 @@ class Order extends PagarMe
     protected $device;    
 }
 
-/*
- {
-  "items": [
-    {
-      "amount": 2990,
-      "description": "Chaveiro do Tesseract",
-      "quantity": 1
-    }
-  ],
-  "customer": {
-    "name": "Tony Stark",
-    "email": "avengerstark@ligadajustica.com.br"
-  },
-  "payments": [{
-    "payment_method": "credit_card",
-    "credit_card": {
-      "installments": 1,
-      "statement_descriptor": "AVENGERS",
-      "card_id": "card_oqyg5aZuP2zK1dja",
-      "card": {
-        "cvv": "123"
-      }
-    }
-  }]
-} 
- 
- */

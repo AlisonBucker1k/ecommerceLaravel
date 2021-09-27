@@ -132,9 +132,9 @@
 
                         <!-- Apply Coupon Wrapper Start -->
                         <div class="apply-coupon-wrapper">
-                            <form action="#" method="post" class=" d-block d-md-flex">
-                                <input type="text" placeholder="Enter Your Coupon Code" required />
-                                <button class="btn btn-dark btn-hover-primary rounded-0">Apply Coupon</button>
+                            <form action="{{ route('cart.confirm') }}" method="post" class=" d-block d-md-flex">
+                                @csrf
+                                <button class="btn btn-dark btn-hover-primary rounded-0">FINALIZAR!!!!</button>
                             </form>
                         </div>
                         <!-- Apply Coupon Wrapper End -->
