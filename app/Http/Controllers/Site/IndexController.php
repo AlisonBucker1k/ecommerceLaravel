@@ -26,6 +26,7 @@ class IndexController extends Controller
             ->orderBy('discount_percent', 'DESC')
             ->limit($limit)
             ->get();
+        $data['activeProducts'] = $product->activeProducts($limit);
 
         return view('site.home', $data);
     }

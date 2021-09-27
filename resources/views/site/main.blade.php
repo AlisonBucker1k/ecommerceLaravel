@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ladame | Boutique de Lingerie</title>
     <!-- Favicons -->
-    <link rel="shortcut icon" href="{{asset('useLadame/images/favicon.ico')}}">
+    <link rel="shortcut icon" href="{{asset('useLadame/images/icon.png')}}">
 
     <!-- Vendor CSS (Icon Font) -->
 
@@ -95,7 +95,7 @@
                         <!-- Header Logo Start -->
                         <div class="col-xl-2 col-6">
                             <div class="header-logo">
-                                <a href="{{route('home')}}"><img src="{{asset('useLadame/images/logo/logo.png')}}" alt="Site Logo" width="105px"/></a>
+                                <a href="{{route('home')}}"><img src="{{asset('useLadame/images/logo/logo.png')}}" alt="Site Logo" width="140px"/></a>
                             </div>
                         </div>
                         <!-- Header Logo End -->
@@ -106,11 +106,12 @@
                                 <ul>
                                     <li><a href="{{route('home')}}"> <span>Home</span></a></li>
                                     <li><a href="{{route('products')}}"> <span>Produtos</span></a></li>
-                                    <li class="has-children position-static">
+                                    {{-- <li class="has-children position-static">
                                         <a href="#"><span>Categorias</span> <i class="fa fa-angle-down"></i></a>
                                         <ul class="mega-menu row-cols-4">
+                                            @foreach ($categoriesWithProduct  as $category)
                                             <li class="col">
-                                                <h4 class="mega-menu-title">Shop Layout</h4>
+                                                <h4 class="mega-menu-title">{{$category->name}}</h4>
                                                 <ul class="mb-n2">
                                                     <li><a href="shop-grid.html">Shop Grid</a></li>
                                                     <li><a href="shop-left-sidebar.html">Left Sidebar</a></li>
@@ -120,19 +121,9 @@
                                                     <li><a href="shop-list-right-sidebar.html">List Right Sidebar</a></li>
                                                 </ul>
                                             </li>
-                                            <li class="col">
-                                                <h4 class="mega-menu-title">Shop Layout</h4>
-                                                <ul class="mb-n2">
-                                                    <li><a href="shop-grid.html">Shop Grid</a></li>
-                                                    <li><a href="shop-left-sidebar.html">Left Sidebar</a></li>
-                                                    <li><a href="shop-right-sidebar.html">Right Sidebar</a></li>
-                                                    <li><a href="shop-list-fullwidth.html">List Fullwidth</a></li>
-                                                    <li><a href="shop-list-left-sidebar.html">List Left Sidebar</a></li>
-                                                    <li><a href="shop-list-right-sidebar.html">List Right Sidebar</a></li>
-                                                </ul>
-                                            </li>
+                                            @endforeach
                                         </ul>
-                                    </li>
+                                    </li> --}}
                                     <li><a href="{{route('about')}}"> <span>Sobre nós</span></a></li>
                                     <li><a href="{{route('contact')}}"> <span>Contato</span></a></li>
                                 </ul>
@@ -167,7 +158,7 @@
                                 <!-- Shopping Cart Header Action Button Start -->
                                 <a href="javascript:void(0)" class="header-action-btn header-action-btn-cart">
                                     <i class="pe-7s-shopbag"></i>
-                                    <span class="header-action-num">3</span>
+                                    <span class="header-action-num">{{ $totalCartQuantity }}</span>
                                 </a>
                                 <!-- Shopping Cart Header Action Button End -->
 
@@ -206,7 +197,7 @@
                         <ul class="mobile-menu">
                             <li><a href="{{route('home')}}">Home</a></li>
                             <li><a href="{{route('products')}}">Produtos</a></li>
-                            <li class="has-children">
+                            {{-- <li class="has-children">
                                 <a href="#">Categorias <i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                 <ul class="dropdown">
                                     <li><a href="shop-grid.html">Shop Grid</a></li>
@@ -220,7 +211,7 @@
                                     <li><a href="checkout.html">Checkout</a></li>
                                     <li><a href="compare.html">Compare</a></li>
                                 </ul>
-                            </li>
+                            </li> --}}
                             <li><a href="{{route('about')}}">Sobre nós</a></li>
                             <li><a href="{{route('contact')}}">Contato</a></li>
                         </ul>

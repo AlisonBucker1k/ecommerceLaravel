@@ -2,17 +2,16 @@
 @section('content')
     <!-- Breadcrumb Section Start -->
     <div class="section">
-
         <!-- Breadcrumb Area Start -->
         <div class="breadcrumb-area bg-light">
             <div class="container-fluid">
                 <div class="breadcrumb-content text-center">
-                    <h1 class="title">Single Product</h1>
+                    <h1 class="title">{{$product->name}}</h1>
                     <ul>
                         <li>
-                            <a href="index.html">Home </a>
+                            <a href="{{route('home')}}">Home </a>
                         </li>
-                        <li class="active"> Single Product</li>
+                        <li class="active"> {{$product->name}}</li>
                     </ul>
                 </div>
             </div>
@@ -99,7 +98,7 @@
 
                         <!-- Product Head Start -->
                         <div class="product-head mb-3">
-                            <h2 class="product-title">Sample product</h2>
+                            <h2 class="product-title">{{$product->name}}</h2>
                         </div>
                         <!-- Product Head End -->
 
@@ -126,7 +125,7 @@
                         <!-- SKU End -->
 
                         <!-- Description Start -->
-                        <p class="desc-content mb-5">I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness.</p>
+                        <p class="desc-content mb-5">{{$product->description}}</p>
                         <!-- Description End -->
 
                         <!-- Product Meta Start -->

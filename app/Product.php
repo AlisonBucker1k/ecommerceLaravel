@@ -49,9 +49,9 @@ class Product extends Model
         return 'https://img.youtube.com/vi/' . getIdYoutube($this->youtube_url) . '/hqdefault.jpg';
     }
 
-    public function activeProducts()
+    public function activeProducts($limit = null)
     {
-        return $this->where('status', 1)->get();
+        return $this->where('status', 1)->limit($limit)->get();
     }
 
     public function images()
