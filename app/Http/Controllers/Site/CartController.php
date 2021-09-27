@@ -155,6 +155,8 @@ class CartController extends Controller
 
         try {
             $params = $request->post();
+            $params['address_id'] = 1;
+            $params['shipping_id'] = 1; // sedex
             $customer = auth()->user();
 
             // Antes:
@@ -165,18 +167,6 @@ class CartController extends Controller
             // $order = new OrderOrder($customer);
             // $redirectUrl = $order->create($request->post());
 
-            $items = [
-                [
-                    'amount' => 1.58,
-                    'description' => 1.58,
-                    'quantity' => 1,
-                ],
-            ];
-    
-            // $customer = new stdClass();
-            // $customer->name = 'teste teste';
-            // $customer->name = 'teste@teste.com';
-    
             $payments = [
                 [
                     'payment_method' => 'credit_card',
@@ -198,65 +188,102 @@ class CartController extends Controller
                 throw new Exception('Adicione um produto no carrinho efetuar a compra');
             }
     
-            $address = Address::query()->where(['customer_id' => $customer->id, 'id' => $params->address_id])->first();
+            $address = Address::query()->where(['customer_id' => $customer->id, 'id' => $params['address_id']])->first();
     
             $shipping = new Shipping();
-            $result = $shipping->calculate($cart, $address->postal_code, $params->shipping_id);
-            if (empty($result)) {
+            $shippingDetails = $shipping->calculate($cart, $address->postal_code, $params['shipping_id']);
+            if (empty($shippingDetails)) {
                 throw new Exception('Não foi possível calcular o frete, tente novamente mais tarde.');
             }
     
-            $totalValue = $result['value'] + $cart->totalValue();
+            $totalValue = $shippingDetails['value'] + $cart->totalValue();
+            $totalValue = 1.03; // TODO remover
+
+            // TODO TESTAR COM ISSO AGORA
+            [
+            "items"=>[],
+            "customer"=>[],
+            "payments"=> [
+                [   
+                    "amount" => 3000,
+                    "payment_method"=>"checkout",
+                    "checkout"=> [
+                        "expires_in"=>240,
+                        "billing_address_editable" => false,
+                        "customer_editable" => true,
+                        "accepted_payment_methods"=> ['credit_card', 'debit_card', 'boleto', 'bank_transfer', 'pix'],
+                        "success_url"=> "https://www.pagar.me", // TODO corrigir para nossa rota
+                        "credit_card"=> [],
+                    ],
+                ],
+            ]
+            ];
             
             // TODO corrigir atribuição de valores dos parâmetros
-    
-            $client = new Client(config('PAGAR_ME_API_TOKEN'));
+            
+            // https://docs.pagar.me/reference#checkout-pagarme
+            $client = new Client(config('app.pagar_me_api_token'));
             $transaction = $client->transactions()->create([
+                // 'currency' => 'BRL',
+                // 'closed' => true,
                 'amount' => $totalValue,
-                'payment_method' => $this->params->payment_method,
-                'card_holder_name' => $this->params->amount,
-                'card_cvv' => $this->params->amount,
-                'card_number' => $this->params->amount,
-                'card_expiration_date' => $this->params->amount,
+                "checkout" => [
+                    "expires_in" =>120,
+                    "billing_address_editable"  => false,
+                    "customer_editable"  => true,
+                    "accepted_payment_methods" => ["credit_card"],
+                    "success_url" => "https =>//www.pagar.me",
+                    "credit_card" => []
+                ],
+                //payment_method	
+                //string	Meio de pagamento. 
+                //Valores possíveis: credit_card,debit_card, 
+                //boleto, voucher, bank_transfer, safety_pay, checkout, cash, pix.
+                'payment_method' => 'checkout',
+                'card_holder_name' => 'TESTE TESTE DO TESTE',
+                'card_cvv' => '123',
+                'card_number' => '123412341234',
+                'card_expiration_date' => '03/2020',
                 'customer' => [
-                    'external_id' => $customer->id,
-                    'name' => $customer->name,
-                    'type' => 'individual', // TODO corrigir
-                    'country' => $customer->country,
-                    'documents' => [
-                      [
-                        'type' => $customer->amount,
-                        'number' => $customer->amount,
-                      ]
-                    ],
-                    'phone_numbers' => [ $customer->phone ],
+                    'external_id' => '1',
+                    'name' => 'Teset teste',
                     'email' => $customer->email,
+                    'type' => 'individual', // TODO corrigir
+                    'country' => 'br',
+                    'documents' => [
+                        [
+                            'type' => 'CPF',
+                            'number' => '15979545786',
+                        ],
+                    ],
+                    'phone_numbers' => ['+5527998393682']
                 ],
                 'billing' => [
-                    'name' => $this->billingAddress->name,
+                    'name' => 'Endereco de Teste',
                     'address' => [
-                      'country' => $this->billingAddress->country,
-                      'street' => $this->billingAddress->street,
-                      'street_number' => $this->billingAddress->street_number,
-                      'state' => $this->billingAddress->state,
-                      'city' => $this->billingAddress->city,
-                      'neighborhood' => $this->billingAddress->neighborhood,
-                      'zipcode' => $this->billingAddress->zipcode,
+                      'country' => 'br',
+                      'street' => $address->street,
+                      'street_number' => $address->number,
+                      'state' => $address->state,
+                      'city' => $address->city,
+                      'neighborhood' => $address->district,
+                      'zipcode' => getOnlyNumber($address->postal_code),
                     ]
                 ],
                 'shipping' => [
-                    'name' => $this->shipping->name,
-                    'fee'=> $this->shipping->fee,
-                    'delivery_date' => $this->shipping->delivery_date,
-                    'expedited' => $this->shipping->expedited,
+                    'name' => $shippingDetails['description'],
+                    'fee'=> $shippingDetails['value'],
+                    // 'delivery_date' => $shippingDetails['deadline'],
+                    'delivery_date' => '2020-01-01',
+                    'expedited' => true,
                     'address' => [
-                      'country' => $this->shipping->address->country,
-                      'street' => $this->shipping->address->street,
-                      'street_number' => $this->shipping->address->street_number,
-                      'state' => $this->shipping->address->state,
-                      'city' => $this->shipping->address->city,
-                      'neighborhood' => $this->shipping->address->neighborhood,
-                      'zipcode' => $this->shipping->address->zipcode,
+                      'country' => 'br',
+                      'street' => $address->street,
+                      'street_number' => $address->number,
+                      'state' => $address->state,
+                      'city' => $address->city,
+                      'neighborhood' => $address->district,
+                      'zipcode' => getOnlyNumber($address->postal_code),
                     ]
                 ],
                 /*
@@ -273,8 +300,17 @@ class CartController extends Controller
                     ];
                 */
                 // 'items' => $this->items,
-                'items' => $items,
+                'items' => [
+                    [
+                        'id' => '1',
+                        'title' => 'asdas',
+                        'unit_price' => 2,
+                        'quantity' => 1,
+                        'tangible' => true,
+                    ],
+                ],
             ]);
+            dd($transaction);
 
             DB::commit();
         } catch (Exception $e) {

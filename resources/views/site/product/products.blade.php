@@ -73,44 +73,50 @@
                     <!-- Shop Wrapper Start -->
                     <div class="row shop_wrapper grid_3">
                         @forelse ($products as $product)
-                            @php
-                                $variation = $product->availableVariation();
-                            @endphp
-                            <div class="col-lg-4 col-md-4 col-sm-6 product" data-aos="fade-up" data-aos-delay="400">
-                                <div class="product-inner">
-                                    <div class="thumb">
-                                        <a href="single-product.html" class="image">
-                                            <img class="first-image" src="{{asset('useLadame/images/products/medium-size/2.jpg')}}" alt="Product" />
-                                            <img class="second-image" src="{{asset('useLadame/images/products/medium-size/2.jpg')}}" alt="Product" />
-                                        </a>
-                                        <div class="actions">
-                                            <a href="wishlist.html" title="Wishlist" class="action wishlist"><i class="pe-7s-like"></i></a>
-                                            <a href="#" title="Quickview" class="action quickview" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i class="pe-7s-search"></i></a>
-                                            <a href="compare.html" title="Compare" class="action compare"><i class="pe-7s-shuffle"></i></a>
+                            <form action="{{ route('cart.product.add', [$product->slug]) }}" method="post">
+                                @csrf
+                                <input type="hidden" name="variation_id" id="variationId" value="{{ $product->mainVariation->id }}">
+                                
+                                @php
+                                    $variation = $product->availableVariation();
+                                @endphp
+
+                                <div class="col-lg-4 col-md-4 col-sm-6 product" data-aos="fade-up" data-aos-delay="400">
+                                    <div class="product-inner">
+                                        <div class="thumb">
+                                            <a href="single-product.html" class="image">
+                                                <img class="first-image" src="{{asset('useLadame/images/products/medium-size/2.jpg')}}" alt="Product" />
+                                                <img class="second-image" src="{{asset('useLadame/images/products/medium-size/2.jpg')}}" alt="Product" />
+                                            </a>
+                                            <div class="actions">
+                                                <a href="wishlist.html" title="Wishlist" class="action wishlist"><i class="pe-7s-like"></i></a>
+                                                <a href="#" title="Quickview" class="action quickview" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i class="pe-7s-search"></i></a>
+                                                <a href="compare.html" title="Compare" class="action compare"><i class="pe-7s-shuffle"></i></a>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="content">
-                                        <h4 class="sub-title"><a href="single-product.html">{{ $product->name }}</a></h4>
-                                        <h5 class="title"><a href="single-product.html">{{ $product->name }}</a></h5>
-                                        <span class="ratings">
-                                            <span class="rating-wrap">
-                                            <span class="star" style="width: 100%"></span>
-                                        </span>
-                                        <span class="rating-num">(4)</span>
-                                        </span>
-                                        <p>{{ $product->description }}</p>
-                                        <span class="price">
-                                            <span class="new">{{ $variation->final_price_formated }}</span>
-                                            <span class="old">{{ $variation->final_price_formated }}</span>
-                                        </span>
-                                        <div class="shop-list-btn">
-                                            <a title="Wishlist" href="#" class="btn btn-sm btn-outline-dark btn-hover-primary wishlist"><i class="fa fa-heart"></i></a>
-                                            <button class="btn btn-sm btn-outline-dark btn-hover-primary" title="Add To Cart">Add To Cart</button>
-                                            <a title="Compare" href="#" class="btn btn-sm btn-outline-dark btn-hover-primary compare"><i class="fa fa-random"></i></a>
+                                        <div class="content">
+                                            <h4 class="sub-title"><a href="single-product.html">{{ $product->name }}</a></h4>
+                                            <h5 class="title"><a href="single-product.html">{{ $product->name }}</a></h5>
+                                            <span class="ratings">
+                                                <span class="rating-wrap">
+                                                <span class="star" style="width: 100%"></span>
+                                            </span>
+                                            <span class="rating-num">(4)</span>
+                                            </span>
+                                            <p>{{ $product->description }}</p>
+                                            <span class="price">
+                                                <span class="new">{{ $variation->final_price_formated }}</span>
+                                                <span class="old">{{ $variation->final_price_formated }}</span>
+                                            </span>
+                                            <div class="shop-list-btn">
+                                                <a title="Wishlist" href="#" class="btn btn-sm btn-outline-dark btn-hover-primary wishlist"><i class="fa fa-heart"></i></a>
+                                                <button type="submit" class="" title="Comprar">Comprar</button>
+                                                <a title="Compare" href="#" class="btn btn-sm btn-outline-dark btn-hover-primary compare"><i class="fa fa-random"></i></a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         @empty
                             <p>Nenhum produto encontrado</p>
                         @endforelse 
