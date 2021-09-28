@@ -29,7 +29,8 @@ class ProductController extends Controller
         $query = $product->availableProducts();
         $filters = $this->filters($query, $request, $category, $subcategory);
 
-        $products = $query->where('products.status', ProductStatus::ACTIVE)
+        $products = $query
+            ->where('products.status', ProductStatus::ACTIVE)
             ->orderBy('products.id', 'desc')
             ->paginate(20);
 

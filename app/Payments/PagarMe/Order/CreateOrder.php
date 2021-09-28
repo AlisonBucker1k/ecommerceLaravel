@@ -2,21 +2,67 @@
 
 namespace Payments\PagarMe\Order;
 
+use App\Address;
+use App\Cart;
+use App\General\Shipping;
 use Exception;
 use PagarMe\Client;
+use stdClass;
 
 class CreateOrder extends Order
 {
     public function create($params)
     {
-        $this->validate();
+        dd('asd');
+        $items = [
+            [
+                'amount' => 1.58,
+                'description' => 1.58,
+                'quantity' => 1,
+            ],
+        ];
+
+        $customer = new stdClass();
+        $customer->name = 'teste teste';
+        $customer->name = 'teste@teste.com';
+
+        $payments = [
+            [
+                'payment_method' => 'credit_card',
+                'credit_card' => [
+                    'installments' => 1,
+                    'statement_descriptor' => 'teste',
+                    'card_id' => 'card_oqyg5aZuP2zK1dja',
+                    'card' => [
+                        'cvv' => '123',
+                    ],
+                ],
+            ],
+        ];
+        
+        // $this->validate();
+
+        $cart = Cart::getCart($this->customer->id);
+        if ($cart->totalProducts() <= 0) {
+            throw new Exception('Adicione um produto no carrinho efetuar a compra');
+        }
+
+        $address = Address::query()->where(['customer_id' => $this->customer->id, 'id' => $addressId])->first();
+
+        $shipping = new Shipping();
+        $result = $shipping->calculate($cart, $address->postal_code, $params->shipping_id);
+        if (empty($result)) {
+            throw new Exception('Não foi possível calcular o frete, tente novamente mais tarde.');
+        }
+
+        $totalValue = $result['value'] + $cart->totalValue();
         
         // TODO corrigir atribuição de valores dos parâmetros
 
         $client = new Client(config('PAGAR_ME_API_TOKEN'));
         $transaction = $client->transactions()->create([
-            'amount' => $this->params->amount,
-            'payment_method' => $this->params->amount,
+            'amount' => $totalValue,
+            'payment_method' => $this->params->payment_method,
             'card_holder_name' => $this->params->amount,
             'card_cvv' => $this->params->amount,
             'card_number' => $this->params->amount,
@@ -24,7 +70,7 @@ class CreateOrder extends Order
             'customer' => [
                 'external_id' => $this->customer->id,
                 'name' => $this->customer->name,
-                'type' => $this->customer->type,
+                'type' => 'individual', // TODO corrigir
                 'country' => $this->customer->country,
                 'documents' => [
                   [
@@ -75,46 +121,11 @@ class CreateOrder extends Order
                     ],
                 ];
             */
-            'items' => $this->items,
+            // 'items' => $this->items,
+            'items' => $items,
         ]);
 
         return $transaction;
-    }
-
-    public function comoEraAntes()
-    {
-        $customerId = $customer->id;
-        $cart = Cart::getCart($customerId);
-        if ($cart->totalProducts() <= 0) {
-            throw new Exception('Adicione um produto no carrinho efetuar a compra');
-        }
-
-        $address = Address::query()->where(['customer_id' => $customerId, 'id' => $addressId])->first();
-
-        $shipping = new Shipping();
-        $result = $shipping->calculate($cart, $address->postal_code, $shippingId);
-        if (empty($result)) {
-            throw new Exception('Não foi possível calcular o frete, tente novamente mais tarde.');
-        }
-
-        $totalValue = $result['value'] + $cart->totalValue();
-
-        $this->customer_id = $customerId;
-        $this->address_id = $addressId;
-        $this->value = $totalValue;
-        $this->shipping_id = $shippingId;
-        $this->shipping_description = $result['description'];
-        $this->shipping_value = $result['value'];
-        $this->shipping_deadline = $result['deadline'];
-        $this->shipping_code = null;
-        $this->status = OrderStatus::PENDING;
-        $this->save();
-
-        $orderProduct = new OrderProduct();
-        $orderProduct->addOrderProducts($cart, $this->id);
-
-        $invoice = new Invoice();
-        $invoice->createOrderInvoice($customerId, $totalValue, $this->id);
     }
 
     // TODO testar validação
@@ -125,7 +136,6 @@ class CreateOrder extends Order
             throw new Exception('Informe os itens do pedido.');
         }
 
-        $this->customer = $this->params->customer;
         if (empty($this->customer)) {
             throw new Exception('Informe os dados do cliente.');
         }
