@@ -19,10 +19,10 @@ class IndexController extends Controller
         $limit = 16;
 
         $product = new Product();
-        $data['products_highlighted'] = $product->highlightedProducts()->limit($limit)->get();
+        $data['highlightedProducts'] = $product->highlightedProducts()->limit($limit)->get();
 
         $productVariation = new ProductVariation();
-        $data['products_promotion'] = $productVariation->variationsOnSale()
+        $data['promotionProducts'] = $productVariation->variationsOnSale()
             ->orderBy('discount_percent', 'DESC')
             ->limit($limit)
             ->get();
