@@ -159,30 +159,6 @@ class CartController extends Controller
             $params['shipping_id'] = 1; // sedex
             $customer = auth()->user();
 
-            // Antes:
-            // $order = new Order();
-            // $order->createOrder($customer, $addressId, $shippingId);
-
-            // TODO usar classe /Payments/PagarMe/Order/CreateOrder
-            // $order = new OrderOrder($customer);
-            // $redirectUrl = $order->create($request->post());
-
-            $payments = [
-                [
-                    'payment_method' => 'credit_card',
-                    'credit_card' => [
-                        'installments' => 1,
-                        'statement_descriptor' => 'teste',
-                        'card_id' => 'card_oqyg5aZuP2zK1dja',
-                        'card' => [
-                            'cvv' => '123',
-                        ],
-                    ],
-                ],
-            ];
-            
-            // $this->validate();
-    
             $cart = Cart::getCart($customer->id);
             if ($cart->totalProducts() <= 0) {
                 throw new Exception('Adicione um produto no carrinho efetuar a compra');
@@ -201,28 +177,49 @@ class CartController extends Controller
 
             // TODO TESTAR COM ISSO AGORA
             [
-            "items"=>[],
-            "customer"=>[],
-            "payments"=> [
-                [   
-                    "amount" => 3000,
-                    "payment_method"=>"checkout",
-                    "checkout"=> [
-                        "expires_in"=>240,
-                        "billing_address_editable" => false,
-                        "customer_editable" => true,
-                        "accepted_payment_methods"=> ['credit_card', 'debit_card', 'boleto', 'bank_transfer', 'pix'],
-                        "success_url"=> "https://www.pagar.me", // TODO corrigir para nossa rota
-                        "credit_card"=> [],
+                "items"=>[],
+                "customer"=>[],
+                "payments"=> [
+                    [   
+                        "amount" => 2,
+                        "payment_method"=>"checkout",
+                        "checkout"=> [
+                            "expires_in"=>240,
+                            "billing_address_editable" => false,
+                            "customer_editable" => true,
+                            "accepted_payment_methods"=> ['credit_card', 'debit_card', 'boleto', 'bank_transfer', 'pix'],
+                            "success_url"=> "https://www.pagar.me", // TODO corrigir para nossa rota
+                            "credit_card"=> [],
+                        ],
                     ],
-                ],
-            ]
+                ]
             ];
             
             // TODO corrigir atribuição de valores dos parâmetros
             
             // https://docs.pagar.me/reference#checkout-pagarme
             $client = new Client(config('app.pagar_me_api_token'));
+            $transaction = $client->transactions()->create(
+                [
+                    "items"=>[],
+                    "customer"=>[],
+                    "payments"=> [
+                        [   
+                            "amount" => 2,
+                            "payment_method"=>"checkout",
+                            "checkout"=> [
+                                "expires_in"=>240,
+                                "billing_address_editable" => false,
+                                "customer_editable" => true,
+                                "accepted_payment_methods"=> ['credit_card', 'debit_card', 'boleto', 'bank_transfer', 'pix'],
+                                "success_url"=> "https://www.pagar.me", // TODO corrigir para nossa rota
+                                "credit_card"=> [],
+                            ],
+                        ],
+                    ]
+                ]
+            );
+            dd($transaction);
             $transaction = $client->transactions()->create([
                 // 'currency' => 'BRL',
                 // 'closed' => true,

@@ -134,7 +134,8 @@
                         <div class="apply-coupon-wrapper">
                             <form action="{{ route('cart.confirm') }}" method="post" class=" d-block d-md-flex">
                                 @csrf
-                                <button class="btn btn-dark btn-hover-primary rounded-0">FINALIZAR!!!!</button>
+                                {{-- <button class="btn btn-dark btn-hover-primary rounded-0">FINALIZAR!!!!</button> --}}
+                                <a href="#" class="btn btn-dark btn-hover-primary rounded-0" id="btnFinalize">FINALIZAR!!!!</a>
                             </form>
                         </div>
                         <!-- Apply Coupon Wrapper End -->
@@ -200,3 +201,76 @@
     </div>
     <!-- Shopping Cart Section End -->
 @endsection
+
+@push('js')
+<script>
+    $('#btnFinalize').click(() => {
+        var teste = {
+            "items": [],
+            "customer": {},
+            "payments": [
+                {   
+                    "amount" : 3000,
+                    "payment_method":"checkout",
+                    "checkout": {
+                        "expires_in":120,
+                        "billing_address_editable" : false,
+                        "customer_editable" : true,
+                        "accepted_payment_methods": ["credit_card"],
+                        "success_url": "http://useladame.local/carrinho",
+                        "credit_card": {}
+                    }
+                }
+            ]
+        };
+
+        $.ajax({
+            method: "POST",
+            url: "https://api.pagar.me/core/v5/orders/",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ak_test_BbNUx5jouhZpJnYLqURiQdPiXLpCIm',
+                'Access-Control-Allow-Origin': 'http://useladame.local',
+            },
+            data: JSON.stringify(teste)
+            })
+            .done(function( msg ) {
+                console.log(msg);
+            });
+
+        return false;
+        // let response = await fetch('https://api.pagar.me/core/v5/orders/', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //             'Authorization': 'Basic ak_test_BbNUx5jouhZpJnYLqURiQdPiXLpCIm',
+        //         },
+        //         body: JSON.stringify({
+        //                 "items": [],
+        //                 "customer": {},
+        //                 "payments": [
+        //                     {   
+        //                         "amount" : 3000,
+        //                         "payment_method":"checkout",
+        //                         "checkout": {
+        //                             "expires_in":120,
+        //                             "billing_address_editable" : false,
+        //                             "customer_editable" : true,
+        //                             "accepted_payment_methods": ["credit_card"],
+        //                             "success_url": "http://useladame.local/carrinho",
+        //                             "credit_card": {}
+        //                         }
+        //                     }
+        //                 ]
+        //             }),
+        //     });
+
+        //     if (response.ok) { // if HTTP-status is 200-299
+        //     // get the response body (the method explained below)
+        //     let json = await response.json();
+        //     } else {
+        //         alert("HTTP-Error: " + response.status);
+        //     }
+    });
+</script>
+@endpush
