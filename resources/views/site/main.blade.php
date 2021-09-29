@@ -109,28 +109,22 @@
                                     <li class="has-children position-static">
                                         <a href="#"><span>Categorias</span> <i class="fa fa-angle-down"></i></a>
                                         <ul class="mega-menu row-cols-4">
-                                            <li class="col">
-                                                <h4 class="mega-menu-title">Shop Layout</h4>
-                                                <ul class="mb-n2">
-                                                    <li><a href="shop-grid.html">Shop Grid</a></li>
-                                                    <li><a href="shop-left-sidebar.html">Left Sidebar</a></li>
-                                                    <li><a href="shop-right-sidebar.html">Right Sidebar</a></li>
-                                                    <li><a href="shop-list-fullwidth.html">List Fullwidth</a></li>
-                                                    <li><a href="shop-list-left-sidebar.html">List Left Sidebar</a></li>
-                                                    <li><a href="shop-list-right-sidebar.html">List Right Sidebar</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="col">
-                                                <h4 class="mega-menu-title">Shop Layout</h4>
-                                                <ul class="mb-n2">
-                                                    <li><a href="shop-grid.html">Shop Grid</a></li>
-                                                    <li><a href="shop-left-sidebar.html">Left Sidebar</a></li>
-                                                    <li><a href="shop-right-sidebar.html">Right Sidebar</a></li>
-                                                    <li><a href="shop-list-fullwidth.html">List Fullwidth</a></li>
-                                                    <li><a href="shop-list-left-sidebar.html">List Left Sidebar</a></li>
-                                                    <li><a href="shop-list-right-sidebar.html">List Right Sidebar</a></li>
-                                                </ul>
-                                            </li>
+                                            @forelse ($categories as $category)
+                                                <li class="col">
+                                                    <h4>
+                                                        <a href="{{ route('products', [$category->slug]) }}">{{ $category->name }}</a>
+                                                    </h4>
+                                                    @if (!empty($category->subcategories))
+                                                        <ul class="mb-n2">
+                                                            @foreach ($category->subcategories as $subcategory)
+                                                                <li><a href="{{ route('products', [$category->slug, $subcategory->slug]) }}">{{ $subcategory->name }}</a></li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @endif
+                                                </li>
+                                            @empty
+                                                asd
+                                            @endforelse
                                         </ul>
                                     </li>
                                     <li><a href="{{route('about')}}"> <span>Sobre nós</span></a></li>
@@ -317,92 +311,32 @@
                     <!-- Offcanvas Cart Title Start -->
                     <h2 class="offcanvas-cart-title mb-10">Seu Carrinho</h2>
                     <!-- Offcanvas Cart Title End -->
-
-                    <!-- Cart Product/Price Start -->
-                    <div class="cart-product-wrapper mb-6">
-
-                        <!-- Single Cart Product Start -->
-                        <div class="single-cart-product">
-                            <div class="cart-product-thumb">
-                                <a href="single-product.html"><img src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Cart Product"></a>
+                    @forelse ($cartProducts as $cartProduct)
+                        <div class="cart-product-wrapper mb-6">
+                            <div class="single-cart-product">
+                                <div class="cart-product-thumb">
+                                    <a href="single-product.html"><img src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Cart Product"></a>
+                                </div>
+                                <div class="cart-product-content">
+                                    <h3 class="title"><a href="single-product.html">{{ $cartProduct->product->name }}</a></h3>
+                                    <span class="price">
+                                    <span class="new">R$ {{ $cartProduct->variation->promotion_value_formated }}</span>
+                                    <span class="old">R$ {{ $cartProduct->variation->value_formated }}</span>
+                                    </span>
+                                </div>
                             </div>
-                            <div class="cart-product-content">
-                                <h3 class="title"><a href="single-product.html">Brother Hoddies in Grey</a></h3>
-                                <span class="price">
-								<span class="new">$38.50</span>
-                                <span class="old">$40.00</span>
-                                </span>
-                            </div>
-                        </div>
-                        <!-- Single Cart Product End -->
-
-                        <!-- Product Remove Start -->
-                        <div class="cart-product-remove">
-                            <a href="#"><i class="fa fa-trash"></i></a>
-                        </div>
-                        <!-- Product Remove End -->
-
-                    </div>
-                    <!-- Cart Product/Price End -->
-
-                    <!-- Cart Product/Price Start -->
-                    <div class="cart-product-wrapper mb-6">
-
-                        <!-- Single Cart Product Start -->
-                        <div class="single-cart-product">
-                            <div class="cart-product-thumb">
-                                <a href="single-product.html"><img src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Cart Product"></a>
-                            </div>
-                            <div class="cart-product-content">
-                                <h3 class="title"><a href="single-product.html">Basic Jogging Shorts</a></h3>
-                                <span class="price">
-								<span class="new">$14.50</span>
-                                <span class="old">$18.00</span>
-                                </span>
+                            <div class="cart-product-remove">
+                                <a href="#"><i class="fa fa-trash"></i></a>
                             </div>
                         </div>
-                        <!-- Single Cart Product End -->
-
-                        <!-- Product Remove Start -->
-                        <div class="cart-product-remove">
-                            <a href="#"><i class="fa fa-trash"></i></a>
-                        </div>
-                        <!-- Product Remove End -->
-
-                    </div>
-                    <!-- Cart Product/Price End -->
-
-                    <!-- Cart Product/Price Start -->
-                    <div class="cart-product-wrapper mb-6">
-
-                        <!-- Single Cart Product Start -->
-                        <div class="single-cart-product">
-                            <div class="cart-product-thumb">
-                                <a href="single-product.html"><img src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Cart Product"></a>
-                            </div>
-                            <div class="cart-product-content">
-                                <h3 class="title"><a href="single-product.html">Enjoy The Rest T-Shirt</a></h3>
-                                <span class="price">
-								<span class="new">$20.00</span>
-                                <span class="old">$21.00</span>
-                                </span>
-                            </div>
-                        </div>
-                        <!-- Single Cart Product End -->
-
-                        <!-- Product Remove Start -->
-                        <div class="cart-product-remove">
-                            <a href="#"><i class="fa fa-trash"></i></a>
-                        </div>
-                        <!-- Product Remove End -->
-
-                    </div>
-                    <!-- Cart Product/Price End -->
+                    @empty
+                        <p>Nenhum produto no carrinho</p>
+                    @endforelse
 
                     <!-- Cart Product Total Start -->
                     <div class="cart-product-total">
                         <span class="value">Subtotal</span>
-                        <span class="price">220$</span>
+                        <span class="price">{{ $cartTotalValue }}</span>
                     </div>
                     <!-- Cart Product Total End -->
 
