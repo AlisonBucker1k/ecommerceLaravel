@@ -167,7 +167,7 @@
                                 <!-- Shopping Cart Header Action Button Start -->
                                 <a href="javascript:void(0)" class="header-action-btn header-action-btn-cart">
                                     <i class="pe-7s-shopbag"></i>
-                                    <span class="header-action-num">3</span>
+                                    <span class="header-action-num">{{ $totalCartQuantity }}</span>
                                 </a>
                                 <!-- Shopping Cart Header Action Button End -->
 
