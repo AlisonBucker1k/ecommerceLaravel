@@ -69,7 +69,5 @@ Route::middleware('site.boot')->group(function() {
         Route::get('pedidos/{order}/cancel','OrderController@destroy')->name('order.cancel');
 
         Route::get('fatura/{invoice}', 'InvoiceController@show')->name('invoice.show');
-
-        Route::get('fatura/{invoice}/pagamento/pagseguro', 'InvoiceController@payWithPagseguro')->name('invoice.pagseguro_payment');
     });
 });
