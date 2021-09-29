@@ -26,32 +26,53 @@
                     <div class="cart-calculator-wrapper" style="margin-top: 0 !important;">
                         <div class="cart-calculate-items">
                             <h3 class="title">Editar Perfil</h3>
-                            <form style="padding: 15px;">
+                            <form method="post" action="{{ route('panel.profile.edit') }}" style="padding: 15px;">
+                                @csrf
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Nome</label>
-                                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" value="{{ $customer->profile->name }}">
+                                            <input name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ $customer->profile->name }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Sobrenome</label>
-                                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" value="{{ $customer->profile->last_name }}">
+                                            <input name="last_name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ $customer->profile->last_name }}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Celular</label>
-                                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" value="{{ $customer->profile->cellphone }}">
+                                            <label for="exampleInputEmail1">CPF</label>
+                                            <input name="cellphone" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ $customer->profile->cpf }}" disabled>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
+                                            <label for="exampleInputEmail1">Data de Nascimento</label>
+                                            <input name="birth_date" type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ $customer->profile->birth_date }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Celular</label>
+                                            <input name="cellphone" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ $customer->profile->cellphone }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
                                             <label for="exampleInputEmail1">Telefone</label>
-                                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" value="{{ $customer->profile->phone }}">
+                                            <input name="phone" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ $customer->profile->phone }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">E-mail</label>
+                                            <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" value="{{ $customer->email }}">
                                         </div>
                                     </div>
                                 </div>
