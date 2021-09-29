@@ -16,7 +16,8 @@ class CustomerProfile extends Model
         'cellphone',
         'status',
         'customer_id',
-        'cpf'
+        'cpf',
+        'photo',
     ];
 
     /**
@@ -107,7 +108,12 @@ class CustomerProfile extends Model
      */
     public function getFullNameLong()
     {
-        return 'Olá, ' . $this->name . ' ' . $this->last_name;
+        return "Olá, $this->name $this->last_name";
+    }
+
+    public function getPhotoOrDefaultAttribute()
+    {
+        return $this->photo ?? asset('useLadame/images/logo/no-image.jpg');
     }
 
     /**
@@ -115,7 +121,7 @@ class CustomerProfile extends Model
      */
     public function getFullNameShort()
     {
-        return $this->name. '. ' . $this->last_name;
+        return "$this->name $this->last_name";
     }
 
     /**
