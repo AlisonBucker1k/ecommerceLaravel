@@ -38,7 +38,6 @@ class CartController extends Controller
         $cart = Cart::getCart($customerId, Cookie::get('cart_token'));
         $this->removeUnavailableProducts($cart, $request);
         $data['cart'] = $cart;
-        dd($data);
 
         return view('site.cart', $data);
     }
