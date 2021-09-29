@@ -1,23 +1,6 @@
 @extends('site.main')
 
 @section('content')
-    <div class="section">
-        <div class="breadcrumb-area bg-light">
-            <div class="container-fluid">
-                <div class="breadcrumb-content text-center">
-                    <h1 class="title">Perfil</h1>
-                    <ul>
-                        <li>
-                            <a href="{{ route('home') }}">Home</a>
-                        </li>
-                        <li class="active">Perfil</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Shopping Cart Section Start -->
     <div class="section section-margin">
         <div class="container">
             <div class="row">
@@ -75,15 +58,15 @@
                                 <hr>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Senha Atual</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" name="old_password" placeholder="Senha atual">
+                                    <input type="password" class="form-control" id="exampleInputPassword1" name="old_password">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Nova Senha</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Nova senha">
+                                    <input type="password" class="form-control" id="exampleInputPassword1" name="password">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Confirmação da Nova Senha</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" name="password_confirmation" placeholder="Confirmação da nova senha">
+                                    <input type="password" class="form-control" id="exampleInputPassword1" name="password_confirmation">
                                 </div>
                                 
                                 <button type="submit" class="btn btn-primary pull-right">Salvar</button>
