@@ -1,31 +1,25 @@
 @extends('site.main')
-@section('content')
-    <!-- Breadcrumb Section Start -->
-    <div class="section">
 
-        <!-- Breadcrumb Area Start -->
+@section('content')
+    <div class="section">
         <div class="breadcrumb-area bg-light">
             <div class="container-fluid">
                 <div class="breadcrumb-content text-center">
-                    <h1 class="title">Shopping Cart</h1>
+                    <h1 class="title">Carrinho de Compras</h1>
                     <ul>
                         <li>
-                            <a href="index.html">Home </a>
+                            <a href="{{ route('home') }}">Home</a>
                         </li>
-                        <li class="active"> Shopping Cart</li>
+                        <li class="active">Carrinho</li>
                     </ul>
                 </div>
             </div>
         </div>
-        <!-- Breadcrumb Area End -->
-
     </div>
-    <!-- Breadcrumb Section End -->
 
     <!-- Shopping Cart Section Start -->
     <div class="section section-margin">
         <div class="container">
-
             <div class="row">
                 <div class="col-12">
 
@@ -55,7 +49,7 @@
                                                 @endforeach
                                             </a>
                                         </td>
-                                        <td class="pro-price"><span>R$</span></td>
+                                        <td class="pro-price"><span>R$ {{ $cartProduct->variation->value_formated }}</span></td>
                                         <td class="pro-quantity">
                                             <div class="quantity">
                                                 <div class="cart-plus-minus">
@@ -67,7 +61,15 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="pro-subtotal"><span>$95.00</span></td>
+                                        <td class="pro-subtotal">
+                                            <span>
+                                                R$ {{ $cartProduct->subtotal_value_formated }} 
+                                                @if ($cartProduct->variation->discount_percent > 0)
+                                                    <br/>
+                                                    <small>Desconto de {{ $cartProduct->variation->discount_percent_formatted }}</small>
+                                                @endif
+                                            </span>
+                                        </td>
                                         <td class="pro-remove"><a href="#"><i class="pe-7s-trash"></i></a></td>
                                     </tr>
                                 @empty
@@ -97,7 +99,7 @@
                                     </tr>
                                     <tr class="total">
                                         <td>Total</td>
-                                        <td class="total-amount">$300</td>
+                                        <td class="total-amount">{{ $cart->total_value_formated }}</td>
                                     </tr>
                                 </table>
                             </div>

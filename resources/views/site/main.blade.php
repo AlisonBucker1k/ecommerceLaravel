@@ -486,23 +486,17 @@
                             <h2 class="widget-title">Newsletter</h2>
                             <div class="widget-body">
                                 <p class="desc-content mb-0">Assine nossa newsletter e receba nossas melhores ofertas no seu e-mail!</p>
-
-                                <!-- Newsletter Form Start -->
                                 <div class="newsletter-form-wrap pt-4">
                                     <form id="mc-form" class="mc-form">
-                                        <input type="email" id="mc-email" class="form-control email-box mb-4" placeholder="Insira seu melhor email.." name="EMAIL">
+                                        <input type="email" id="mc-email" class="form-control email-box mb-4" placeholder="Insira seu melhor e-mail" name="email">
                                         <button id="mc-submit" class="newsletter-btn btn btn-primary btn-hover-dark" type="submit">Assinar</button>
                                     </form>
-                                    <!-- mailchimp-alerts Start -->
                                     <div class="mailchimp-alerts text-centre">
                                         <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
                                         <div class="mailchimp-success text-success"></div><!-- mailchimp-success end -->
                                         <div class="mailchimp-error text-danger"></div><!-- mailchimp-error end -->
                                     </div>
-                                    <!-- mailchimp-alerts end -->
                                 </div>
-                                <!-- Newsletter Form End -->
-
                             </div>
                         </div>
                     </div>

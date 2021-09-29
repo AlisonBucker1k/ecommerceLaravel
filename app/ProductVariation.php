@@ -28,6 +28,15 @@ class ProductVariation extends Model
         return currencyFloat2Brl($this->promotion_value);
     }
 
+    public function getDiscountPercentFormattedAttribute()
+    {
+        if ($this->discount_percent > 0) {
+            return "-$this->discount_percent%";
+        }
+
+        return '';
+    }
+
     public function getFinalPriceAttribute()
     {
         if ($this->discount_percent > 0) {
