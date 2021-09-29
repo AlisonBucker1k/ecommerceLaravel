@@ -4,17 +4,14 @@ namespace App\Http\Controllers\Site;
 
 use App\Enums\OrderHistoryStatus;
 use App\Enums\OrderStatus;
-use App\Invoice;
 use App\Order;
 use App\Http\Controllers\Controller;
 use App\OrderHistory;
+use Exception;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
     public function orders()
     {
         $data['pendingStatus'] = OrderStatus::PENDING;
@@ -26,16 +23,13 @@ class OrderController extends Controller
         return view('site.panel.customer.orders', $data);
     }
 
-    /**
-     * @param Order $order
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
     public function show(Order $order)
     {
         if ($order->customer_id != auth()->id()) {
             return back()->withErrors('Pedido não encontrado.');
         }
 
+        $data['pendingStatus'] = OrderStatus::PENDING;
         $data['shippingCode'] = OrderHistory::getLastShippingCode($order->id);
         $data['orderHistorySentStatus'] = OrderHistoryStatus::SENT;
         $data['order'] = $order;
@@ -51,11 +45,12 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         DB::beginTransaction();
+
         try {
             $order->invoice->cancel();
 
             DB::commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
 
             return back()->withErrors($e->getMessage());
@@ -63,6 +58,4 @@ class OrderController extends Controller
 
         return redirect()->route('panel.order.show', $order)->withSuccess('Pedido cancelado com sucesso!');
     }
-
-
 }
