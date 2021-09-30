@@ -81,9 +81,11 @@ class Product extends Model
 
     public function availableVariation()
     {
-        $productVariation = new ProductVariation();
-
-        return $productVariation->availableVariation()->where('product_id', $this->id)->orderBy('main', 'DESC')->first();
+        return (new ProductVariation())
+            ->availableVariation()
+            ->where('product_id', $this->id)
+            ->orderBy('main', 'DESC')
+            ->first();
     }
 
     public function grids()
