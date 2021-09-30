@@ -16,7 +16,7 @@ class ContactController extends Controller
 
     public function sendEmail(Request $request)
     {
-        Mail::to('gabrielbitti0@gmail.com')->send(new ContactSended($request));
+        Mail::to(config('app.company.emails.contact'))->send(new ContactSended($request));
 
         return back()->withSuccess('E-mail enviado com sucesso! Fique no aguardo do nosso contato.');
     }

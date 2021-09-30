@@ -6,22 +6,22 @@
             <div class="swiper-container">
                 <div class="swiper-wrapper">
                     <div class="hero-slide-item swiper-slide">
-                        <div class="hero-slide-bg">
-                            <img src="{{asset('useLadame/images/slider/slide-1.jpg')}}" alt="Slider Image" />
+                        <div class="hero-slide-bg" style="height: auto;">
+                            <img src="{{asset('assets/img/modelos.jpeg')}}" alt="Slider Image" />
                         </div>
                         <div class="container">
                             <div class="hero-slide-content">
                                 <h2 class="title">
                                     Women New <br />Collection
                                 </h2>
-                                <p>Up to 70% off selected Product</p>
-                                <a href="shop-grid.html" class="btn btn-lg btn-primary btn-hover-dark">Shop Now</a>
+                                <p>Ganhe 50% de desconto em produtos selecionados</p>
+                                <a href="{{ route('products') }}" class="btn btn-lg btn-primary btn-hover-dark">Ver Produtos</a>
                             </div>
                         </div>
                     </div>
                     <div class="hero-slide-item swiper-slide">
                         <div class="hero-slide-bg">
-                            <img src="{{asset('useLadame/images/slider/slide-1-2.jpg')}}" alt="Slider Image" />
+                            <img src="{{asset('assets/img/no-image.jpg')}}" alt="Slider Image" />
                         </div>
                         <div class="container">
                             <div class="hero-slide-content">
@@ -30,7 +30,7 @@
 										Collection
                                 </h2>
                                 <p>Up to 40% off selected Product</p>
-                                <a href="shop-grid.html" class="btn btn-lg btn-primary btn-hover-dark">Shop Now</a>
+                                <a href="{{ route('products') }}" class="btn btn-lg btn-primary btn-hover-dark">Ver Produtos</a>
                             </div>
                         </div>
                     </div>
@@ -56,8 +56,8 @@
                                 <img src="{{asset('useLadame/images/icons/feature-icon-2.png')}}" alt="Feature Icon">
                             </div>
                             <div class="content">
-                                <h5 class="title">Free Shipping</h5>
-                                <p>Free shipping on all order</p>
+                                <h5 class="title">Entrega Grátis</h5>
+                                <p>Para todos os pedidos</p>
                             </div>
                         </div>
                     </div>
@@ -67,8 +67,8 @@
                                 <img src="{{asset('useLadame/images/icons/feature-icon-3.png')}}" alt="Feature Icon">
                             </div>
                             <div class="content">
-                                <h5 class="title">Support 24/7</h5>
-                                <p>Support 24 hours a day</p>
+                                <h5 class="title">Suporte 24/7</h5>
+                                <p>Suporte 24 horas por dia</p>
                             </div>
                         </div>
                     </div>
@@ -78,8 +78,8 @@
                                 <img src="{{asset('useLadame/images/icons/feature-icon-4.png')}}" alt="Feature Icon">
                             </div>
                             <div class="content">
-                                <h5 class="title">Money Return</h5>
-                                <p>Back guarantee under 5 days</p>
+                                <h5 class="title">Dinheiro de Volta</h5>
+                                <p>Se não gostar do produto</p>
                             </div>
                         </div>
                     </div>
@@ -89,8 +89,8 @@
                                 <img src="{{asset('useLadame/images/icons/feature-icon-1.png')}}" alt="Feature Icon">
                             </div>
                             <div class="content">
-                                <h5 class="title">Order Discount</h5>
-                                <p>Onevery order over $150</p>
+                                <h5 class="title">Descontos</h5>
+                                <p>Para pedidos acima de R$299,00</p>
                             </div>
                         </div>
                     </div>
@@ -118,39 +118,38 @@
                                     <div class="swiper-wrapper mb-n10">
                                         <div class="swiper-slide product-wrapper">
                                             @forelse ($highlightedProducts as $highlightedProduct)
-                                                @php
-                                                    $variation = $highlightedProduct->availableVariation();
-                                                @endphp
-                                                
-                                                <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
-                                                    <div class="thumb">
-                                                        <a href="/produto/ut-adipisci-sed-suscit-libero/20" class="image">
-                                                            <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
-                                                            <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
-                                                        </a>
-                                                        <div class="actions">
-                                                            <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
-                                                            <a href="#" class="action quickview" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i class="pe-7s-search"></i></a>
-                                                            <a href="#" class="action compare"><i class="pe-7s-shuffle"></i></a>
+                                                @php $variation = $highlightedProduct->availableVariation(); @endphp
+                                                <form method="post" action="{{ route('cart.product.add', [$highlightedProduct->slug, $variation->id]) }}">
+                                                    @csrf
+                                                    <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
+                                                        <div class="thumb">
+                                                            <a href="{{ route('product.show', [$highlightedProduct->slug, $variation->id]) }}" class="image">
+                                                                <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
+                                                                <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
+                                                            </a>
+                                                            <div class="actions">
+                                                                <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
+                                                                <a href="#" class="action quickview" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i class="pe-7s-search"></i></a>
+                                                                <a href="#" class="action compare"><i class="pe-7s-shuffle"></i></a>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="content">
-                                                        <h4 class="sub-title"><a href="single-product.html">{{ $highlightedProduct->slug }}</a></h4>
-                                                        <h5 class="title"><a href="produto/ut-adipisci-sed-suscipit-libero/20">{{ $highlightedProduct->slug }}</a></h5>
-                                                        <span class="ratings">
-                                                            <span class="rating-wrap">
-                                                            <span class="star" style="width: 100%"></span>
+                                                        <div class="content">
+                                                            <h4 class="sub-title"><a href="{{ route('product.show', [$highlightedProduct->slug, $variation->id]) }}">{{ $highlightedProduct->slug }}</a></h4>
+                                                            <h5 class="title"><a href="{{ route('product.show', [$highlightedProduct->slug, $variation->id]) }}">{{ $highlightedProduct->slug }}</a></h5>
+{{--                                                            <span class="ratings">--}}
+{{--                                                            <span class="rating-wrap">--}}
+{{--                                                            <span class="star" style="width: 100%"></span>--}}
                                                         </span>
-                                                        <span class="rating-num">(4)</span>
+{{--                                                        <span class="rating-num">(4)</span>--}}
                                                         </span>
-                                                        <p>{{ $highlightedProduct->id }}</p>
-                                                        <span class="price">
+                                                            <span class="price">
                                                             <span class="new">{{ $variation->final_price_formated }}</span>
                                                             <span class="old">{{ $variation->final_price_formated }}</span>
                                                         </span>
-                                                        <button class="btn btn-sm btn-outline-dark btn-hover-primary">Adicionar ao Carrinho</button>
+                                                            <button type="submit" class="btn btn-sm btn-outline-dark btn-hover-primary">Adicionar ao Carrinho</button>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </form>
                                             @empty
                                                 <p>Nenhum produto disponível</p>
                                             @endforelse
@@ -167,35 +166,37 @@
                                 <div class="swiper-container">
                                     <div class="swiper-wrapper mb-n10">
                                         <div class="swiper-slide product-wrapper">
-                                            @forelse ($promotionProducts as $productVariation) 
-                                                <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
-                                                    <div class="thumb">
-                                                        <a href="/produto/ut-adipisci-sed-suscit-libero/20" class="image">
-                                                            <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
-                                                            <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
-                                                        </a>
-                                                        <div class="actions">
-                                                            <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
-                                                            <a href="#" class="action quickview" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i class="pe-7s-search"></i></a>
-                                                            <a href="#" class="action compare"><i class="pe-7s-shuffle"></i></a>
+                                            @forelse ($promotionProducts as $productVariation)
+                                                <form method="post" action="{{ route('cart.product.add', [$productVariation->product->slug, $productVariation->id]) }}">
+                                                    @csrf
+                                                    <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
+                                                        <div class="thumb">
+                                                            <a href="{{ route('product.show', [$productVariation->product->slug, $productVariation->id]) }}" class="image">
+                                                                <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
+                                                                <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
+                                                            </a>
+                                                            <div class="actions">
+                                                                <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
+                                                                <a href="#" class="action quickview" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i class="pe-7s-search"></i></a>
+                                                                <a href="#" class="action compare"><i class="pe-7s-shuffle"></i></a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="content">
+                                                            <h4 class="sub-title"><a href="{{ route('product.show', [$productVariation->product->slug, $productVariation->id]) }}">{{ $productVariation->product->slug }}</a></h4> <h5 class="title"><a href="produto/ut-adipisci-sed-suscipit-libero/20">{{ $highlightedProduct->slug }}</a></h5>
+{{--                                                            <span class="ratings">--}}
+{{--                                                                <span class="rating-wrap">--}}
+{{--                                                                    <span class="star" style="width: 100%"></span>--}}
+{{--                                                                </span>--}}
+{{--                                                                <span class="rating-num">(4)</span>--}}
+{{--                                                            </span>--}}
+                                                            <span class="price">
+                                                                <span class="new">{{ $productVariation->value_formated }}</span>
+                                                                <span class="old">{{ $productVariation->final_price_formated }}</span>
+                                                            </span>
+                                                            <button class="btn btn-sm btn-outline-dark btn-hover-primary">Adicionar ao Carrinho</button>
                                                         </div>
                                                     </div>
-                                                    <div class="content">
-                                                        <h4 class="sub-title"><a href="single-product.html">{{ $productVariation->product->slug }}</a></h4> <h5 class="title"><a href="produto/ut-adipisci-sed-suscipit-libero/20">{{ $highlightedProduct->slug }}</a></h5>
-                                                        <span class="ratings">
-                                                            <span class="rating-wrap">
-                                                            <span class="star" style="width: 100%"></span>
-                                                        </span>
-                                                        <span class="rating-num">(4)</span>
-                                                        </span>
-                                                        <p>{{ $productVariation->product->id }}</p>
-                                                        <span class="price">
-                                                            <span class="new">{{ $productVariation->value_formated }}</span>
-                                                            <span class="old">{{ $productVariation->final_price_formated }}</span>
-                                                        </span>
-                                                        <button class="btn btn-sm btn-outline-dark btn-hover-primary">Adicionar ao Carrinho</button>
-                                                    </div>
-                                                </div>
+                                                </form>
                                             @empty
                                                 <p>Nenhum produto disponível</p>
                                             @endforelse
@@ -238,7 +239,7 @@
    {{-- Product deal contador (Futuramente) --}}
 
     <!-- Banner Section Start -->
-    
+
     <!-- Banner Section End -->
 
     <!-- Product List Start -->
