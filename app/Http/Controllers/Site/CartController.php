@@ -7,24 +7,16 @@ use App\Cart;
 use App\CartProduct;
 use App\General\Shipping;
 use App\Http\Controllers\Controller;
-use App\Order;
-use Exception;
-use Illuminate\Http\Request;
 use App\Product;
 use App\ProductVariation;
+use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
-use Illuminate\View\View;
 use PagarMe\Client;
-use Payments\PagarMe\Order\CreateOrder;
-use Payments\PagarMe\Order\Order as OrderOrder;
 
 class CartController extends Controller
 {
-    /**
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|View
-     */
     public function index(Request $request)
     {
         $customerId = null;
@@ -38,16 +30,10 @@ class CartController extends Controller
         $cart = Cart::getCart($customerId, Cookie::get('cart_token'));
         $this->removeUnavailableProducts($cart, $request);
         $data['cart'] = $cart;
-        // dd($cart->cartProducts);
 
         return view('site.cart', $data);
     }
 
-    /**
-     * @param Product $product
-     * @param Request $request
-     * @return mixed
-     */
     public function addProduct(Product $product, Request $request)
     {
         $variationId = $request->post('variation_id');
@@ -60,10 +46,6 @@ class CartController extends Controller
         return redirect()->route('cart')->withSuccess('Produto adicionado com sucesso!');
     }
 
-    /**
-     * @param Request $request
-     * @return bool
-     */
     public function editCartProduct(Request $request)
     {
         $cartProduct = CartProduct::query()->find($request->post('cart_product_id'));
@@ -73,11 +55,6 @@ class CartController extends Controller
         return [];
     }
 
-    /**
-     * @param CartProduct $cartProduct
-     * @return mixed
-     * @throws Exception
-     */
     public function removeProduct(CartProduct $cartProduct)
     {
         $cartProduct->delete();
@@ -85,12 +62,6 @@ class CartController extends Controller
         return redirect()->route('cart')->withSuccess('Produto removido com sucesso!');
     }
 
-    /**
-     * Calculate the order freight.
-     *
-     * @param Request $request
-     * @return false|string
-     */
     public function calculateFreight(Request $request)
     {
         try {
@@ -164,15 +135,15 @@ class CartController extends Controller
             if ($cart->totalProducts() <= 0) {
                 throw new Exception('Adicione um produto no carrinho efetuar a compra');
             }
-    
+
             $address = Address::query()->where(['customer_id' => $customer->id, 'id' => $params['address_id']])->first();
-    
+
             $shipping = new Shipping();
             $shippingDetails = $shipping->calculate($cart, $address->postal_code, $params['shipping_id']);
             if (empty($shippingDetails)) {
                 throw new Exception('Não foi possível calcular o frete, tente novamente mais tarde.');
             }
-    
+
             $totalValue = $shippingDetails['value'] + $cart->totalValue();
             $totalValue = 1.03; // TODO remover
 
@@ -181,7 +152,7 @@ class CartController extends Controller
                 "items"=>[],
                 "customer"=>[],
                 "payments"=> [
-                    [   
+                    [
                         "amount" => 2,
                         "payment_method"=>"checkout",
                         "checkout"=> [
@@ -195,9 +166,9 @@ class CartController extends Controller
                     ],
                 ]
             ];
-            
+
             // TODO corrigir atribuição de valores dos parâmetros
-            
+
             // https://docs.pagar.me/reference#checkout-pagarme
             $client = new Client(config('app.pagar_me_api_token'));
             $transaction = $client->transactions()->create(
@@ -205,7 +176,7 @@ class CartController extends Controller
                     "items"=>[],
                     "customer"=>[],
                     "payments"=> [
-                        [   
+                        [
                             "amount" => 2,
                             "payment_method"=>"checkout",
                             "checkout"=> [
@@ -233,9 +204,9 @@ class CartController extends Controller
                     "success_url" => "https =>//www.pagar.me",
                     "credit_card" => []
                 ],
-                //payment_method	
-                //string	Meio de pagamento. 
-                //Valores possíveis: credit_card,debit_card, 
+                //payment_method
+                //string	Meio de pagamento.
+                //Valores possíveis: credit_card,debit_card,
                 //boleto, voucher, bank_transfer, safety_pay, checkout, cash, pix.
                 'payment_method' => 'checkout',
                 'card_holder_name' => 'TESTE TESTE DO TESTE',
