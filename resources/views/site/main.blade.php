@@ -172,7 +172,7 @@
 
                                 @if(Auth::check())
                                     <a href="{{route('customer.logout')}}" class="header-action-btn d-none d-md-block"><i class="fa fa-sign-out"></i></a>
-                            @endif
+                                @endif
                                 <!-- Mobile Menu Hambarger Action Button End -->
 
                             </div>
@@ -330,7 +330,7 @@
                                 </div>
                             </div>
                             <div class="cart-product-remove">
-                                <a href="#"><i class="fa fa-trash"></i></a>
+                                <a href="{{ route('cart.product.remove', $cartProduct->id) }}"><i class="fa fa-trash"></i></a>
                             </div>
                         </div>
                     @empty
