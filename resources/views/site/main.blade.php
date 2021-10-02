@@ -35,10 +35,10 @@
     <!-- Use the minified version files listed below for better performance and remove the files listed above -->
 
 
-    <!-- 
+    <!--
     <link rel="stylesheet" href="assets/css/vendor.min.css">
     <link rel="stylesheet" href="assets/css/plugins.min.css">
-    <link rel="stylesheet" href="assets/css/style.min.css"> 
+    <link rel="stylesheet" href="assets/css/style.min.css">
     -->
 </head>
 <body>
@@ -169,6 +169,10 @@
                                 <a href="javascript:void(0)" class="header-action-btn header-action-btn-menu d-xl-none d-lg-block">
                                     <i class="fa fa-bars"></i>
                                 </a>
+
+                                @if(Auth::check())
+                                    <a href="{{route('customer.logout')}}" class="header-action-btn d-none d-md-block"><i class="fa fa-sign-out"></i></a>
+                            @endif
                                 <!-- Mobile Menu Hambarger Action Button End -->
 
                             </div>
@@ -263,7 +267,7 @@
                         <a title="Instagram" href="https://www.instagram.com/useladame/" target="_blank"><i class="fa fa-instagram"></i></a>
                         <a title="WhatsApp" href="phone: (27)99999-9999"><i class="fa fa-whatsapp"></i></a>
                         {{-- {{-- <a title="Youtube" href="#"><i class="fa fa-youtube"></i></a> --}}
-                        <a title="Email" href="mailto:contato@useladame.com"><i class="fa fa-envelope"></i></a> 
+                        <a title="Email" href="mailto:contato@useladame.com"><i class="fa fa-envelope"></i></a>
                     </div>
                     <!-- Social Widget Ende -->
                 </div>
@@ -664,17 +668,17 @@
     <!-- Use the minified version files listed below for better performance and remove the files listed above -->
 
 
-    <!-- 
+    <!--
    <script src="useLadame/js/vendor.min.js"></script>
-   <script src="useLadame/js/plugins.min.js"></script> 
+   <script src="useLadame/js/plugins.min.js"></script>
    -->
 
-   
+
 
     <!--Main JS-->
     <script src="{{asset('useLadame/js/main.js')}}"></script>
 
-    
+
 
 </body>
 
