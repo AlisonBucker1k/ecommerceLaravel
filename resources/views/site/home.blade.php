@@ -119,7 +119,8 @@
                                         <div class="swiper-slide product-wrapper">
                                             @forelse ($highlightedProducts as $highlightedProduct)
                                                 @php $variation = $highlightedProduct->availableVariation(); @endphp
-                                                <form method="post" action="{{ route('cart.product.add', [$highlightedProduct->slug, $variation->id]) }}">
+                                                <form method="post" action="{{ route('cart.product.add', [$highlightedProduct->slug]) }}">
+                                                    <input type="hidden" name="variation_id" id="variationId" value="{{  $variation->id }}">
                                                     @csrf
                                                     <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
                                                         <div class="thumb">
@@ -167,7 +168,8 @@
                                     <div class="swiper-wrapper mb-n10">
                                         <div class="swiper-slide product-wrapper">
                                             @forelse ($promotionProducts as $productVariation)
-                                                <form method="post" action="{{ route('cart.product.add', [$productVariation->product->slug, $productVariation->id]) }}">
+                                                <form method="post" action="{{ route('cart.product.add', [$productVariation->product->slug]) }}">
+                                                    <input type="hidden" name="variation_id" id="variationId" value="{{ $productVariation->id }}">
                                                     @csrf
                                                     <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
                                                         <div class="thumb">
