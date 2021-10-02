@@ -68,7 +68,11 @@
                                                     @endif
                                                 </span>
                                             </td>
-                                            <td class="pro-remove"><a href="#"><i class="pe-7s-trash"></i></a></td>
+                                            <td class="pro-remove">
+                                                <a href="{{ route('cart.product.remove', $cartProduct->id) }}">
+                                                    <i class="pe-7s-trash"></i>
+                                                </a>
+                                            </td>
                                         </tr>
                                     @empty
                                         <tr>
