@@ -21,66 +21,39 @@
             <div class="row mb-10">
                 <div class="col-lg-12 col-12 mb-4">
                     <div class="your-order-area border">
-                        <div class="your-order-table table-responsive">
-                            <form action="" method="post">
-                                <div class="checkbox-form">
-                                    <h3 class="title">Informações do comprador</h3>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="checkout-form-list">
-                                                <label>Rua <span class="required">*</span></label>
-                                                <input placeholder="Street address" type="text">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="checkout-form-list">
-                                                <label>Complemento</label>
-                                                <input placeholder="Street address" type="text">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="checkout-form-list">
-                                                <label>Cidade <span class="required">*</span></label>
-                                                <input type="text">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-6">
-                                            <div class="country-select">
-                                                <label>País <span class="required">*</span></label>
-                                                <select class="myniceselect nice-select wide rounded-0" disabled>
-                                                    <option data-display="Bangladesh">Brasil</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="checkout-form-list">
-                                                <label>Estado <span class="required">*</span></label>
-                                                <input placeholder="" type="text">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="checkout-form-list">
-                                                <label>CEP <span class="required">*</span></label>
-                                                <input placeholder="" type="text">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+                        <h3 class="title">Endereço de entrega</h3>
+                        <div class="form-row">
+                            <div class="form-group col">
+                                @if ($addresses != null)
+                                    <select class="form-control" id="address" name="address_id">
+                                        <option value="">Selecione</option>
+                                        @foreach ($addresses as $address)
+                                            <option value="{{ $address->id }}" data-cep="{{ $address->postal_code }}" >{{ $address->complete_address }}</option>
+                                        @endforeach
+                                    </select>
+                                @else
+                                    Nenhum endereço cadastrado
+                                @endif
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="form-row">
+                            <div class="form-group col-8">
+                                <div id="shipping-options"></div>
+                            </div>
+                            <div class="form-group col-4 text-right">
+                                <a href="#addAddress" data-toggle="modal" class="btn btn-primary btn-modern text-uppercase">
+                                    Novo Endereço
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+
+
             <div class="row mb-n4">
                 <div class="col-lg-12 col-12 mb-4">
                     <div class="your-order-area border">
@@ -89,7 +62,7 @@
                             <table class="table">
                                 <thead>
                                     <tr class="cart-product-head">
-                                        <th class="cart-product-name text-start">Produto</th>
+                                        <th class="cart-product-name text-start">Produtos</th>
                                         <th class="cart-product-total text-end">Total</th>
                                     </tr>
                                 </thead>
@@ -114,12 +87,12 @@
                                                     </div>
                                                 @else
                                                     <td class="product-price text-right">
-                                                        <span class="amount">R$ {{ $cartProduct->variation->final_price_formated }}</span>
+                                                        <span class="amount">{{ $cartProduct->variation->final_price_formated }}</span>
                                                         @if ($cartProduct->variation->discount_percent > 0)
                                                             <br>
                                                             <del>
                                                                 <small>
-                                                                    <span class="amount">R$ {{ $cartProduct->variation->value_formated }}</span>
+                                                                    <span class="amount">{{ $cartProduct->variation->value_formated }}</span>
                                                                 </small>
                                                             </del>
                                                         @endif
@@ -127,7 +100,7 @@
                                                 @endif
                                             </td>
                                             <td class="cart-product-total text-end pe-0">
-                                                <span class="amount">R$ {{ $cartProduct->subtotal_value_formated }}</span>
+                                                <span class="amount">{{ $cartProduct->subtotal_value_formated }}</span>
                                             </td>
                                         </tr>
                                     @empty
@@ -139,62 +112,63 @@
                                 <tfoot>
                                     <tr class="cart-subtotal">
                                         <th class="text-start ps-0">Subtotal</th>
-                                        <td class="text-end pe-0"><span class="amount">R$349.00</span></td>
+                                        <td class="text-end pe-0"><span class="amount">{{ $cart->total_value_formated }}</span></td>
                                     </tr>
                                     <tr class="cart-subtotal">
+                                        {{-- TODO fazer cálculo do frete nessa tela --}}
                                         <th class="text-start ps-0">Frete</th>
-                                        <td class="text-end pe-0"><span class="amount">R$349.00</span></td>
+                                        <td class="text-end pe-0"><span class="amount">Selecione o endereço</span></td>
                                     </tr>
                                     <tr class="order-total">
-                                        <th class="text-start ps-0">Order Total</th>
-                                        <td class="text-end pe-0"><strong><span class="amount">R$349.00</span></strong></td>
+                                        <th class="text-start ps-0">Total</th>
+                                        <td class="text-end pe-0"><strong><span class="amount">{{ $cart->total_value_formated }}</span></strong></td>
                                     </tr>
                                 </tfoot>
                             </table>
                         </div>
-                        <div class="payment-accordion-order-button">
-                            <div class="payment-accordion">
-                                <div class="single-payment">
-                                    <h5 class="panel-title mb-3">
-                                        <a class="collapse-off" data-bs-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                           Boleto Bancário
-                                        </a>
-                                    </h5>
-                                    <div class="collapse show" id="collapseExample">
-                                        <div class="card card-body rounded-0">
-                                            <p>Você poderá pagar em qualquer loteria, ou pelo aplicativo do seu banco. Seu pedido será confirmado após o periodo de compensação do boleto <strong>(Dois à 3 dias úteis)</strong>.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="single-payment">
-                                    <h5 class="panel-title mb-3">
-                                        <a class="collapse-off" data-bs-toggle="collapse" href="#collapseExample-2" aria-expanded="false" aria-controls="collapseExample-2">
-                                            Cartão de Crédito.
-                                        </a>
-                                    </h5>
-                                    <div class="collapse" id="collapseExample-2">
-                                        <div class="card card-body rounded-0">
-                                            <div class="col-md-12">
-                                                <div class="checkout-form-list">
-                                                   <form action="">
-                                                    <div class="card-wrapper"></div>
-                                                    <label>Titular do Cartão <span class="required">*</span></label>
-                                                    <input type="text" required id="nome_cartao">
-                                                    <input class="form-control" placeholder="0000 0000 0000 0000" name="ccnumber" id="number">
-                                                    <input type="text" name="ccmonth" id="ccmonth" class="form-control" placeholder="MM" maxlength="2" minlength="2" >
-                                                    <input type="text"class="form-control" id="ccyear" name="ccyear" placeholder="AAAA">
-                                                    <input class="form-control" id="cvv" name="cvv" type="number" placeholder="Dígito Verificador">
-                                                   </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+{{--                        <div class="payment-accordion-order-button">--}}
+{{--                            <div class="payment-accordion">--}}
+{{--                                <div class="single-payment">--}}
+{{--                                    <h5 class="panel-title mb-3">--}}
+{{--                                        <a class="collapse-off" data-bs-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">--}}
+{{--                                           Boleto Bancário--}}
+{{--                                        </a>--}}
+{{--                                    </h5>--}}
+{{--                                    <div class="collapse show" id="collapseExample">--}}
+{{--                                        <div class="card card-body rounded-0">--}}
+{{--                                            <p>Você poderá pagar em qualquer loteria, ou pelo aplicativo do seu banco. Seu pedido será confirmado após o periodo de compensação do boleto <strong>(Dois à 3 dias úteis)</strong>.</p>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <div class="single-payment">--}}
+{{--                                    <h5 class="panel-title mb-3">--}}
+{{--                                        <a class="collapse-off" data-bs-toggle="collapse" href="#collapseExample-2" aria-expanded="false" aria-controls="collapseExample-2">--}}
+{{--                                            Cartão de Crédito.--}}
+{{--                                        </a>--}}
+{{--                                    </h5>--}}
+{{--                                    <div class="collapse" id="collapseExample-2">--}}
+{{--                                        <div class="card card-body rounded-0">--}}
+{{--                                            <div class="col-md-12">--}}
+{{--                                                <div class="checkout-form-list">--}}
+{{--                                                   <form action="">--}}
+{{--                                                    <div class="card-wrapper"></div>--}}
+{{--                                                    <label>Titular do Cartão <span class="required">*</span></label>--}}
+{{--                                                    <input type="text" required id="nome_cartao">--}}
+{{--                                                    <input class="form-control" placeholder="0000 0000 0000 0000" name="ccnumber" id="number">--}}
+{{--                                                    <input type="text" name="ccmonth" id="ccmonth" class="form-control" placeholder="MM" maxlength="2" minlength="2" >--}}
+{{--                                                    <input type="text"class="form-control" id="ccyear" name="ccyear" placeholder="AAAA">--}}
+{{--                                                    <input class="form-control" id="cvv" name="cvv" type="number" placeholder="Dígito Verificador">--}}
+{{--                                                   </form>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <div class="order-button-payment">
                                 <button class="btn btn-dark btn-hover-primary rounded-0 w-100">Finalizar Compra</button>
                             </div>
-                        </div>
+{{--                        </div>--}}
                     </div>
                 </div>
             </div>

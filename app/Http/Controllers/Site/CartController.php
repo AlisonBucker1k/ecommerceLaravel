@@ -96,6 +96,7 @@ class CartController extends Controller
 
         $data['addresses'] = $customer->activeAddresses;
         $data['cart'] = $cart;
+//        dd($cart);
 
         return view('site.cart_confirm', $data);
     }
