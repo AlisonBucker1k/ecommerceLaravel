@@ -1,1 +1,374 @@
-{% extends 'site.main.twig' %}{% block content %}	<div class="container">		<div class="row">			<div class="col-lg-3">				<aside class="sidebar">					<form action="{{ route('products') }}" method="get">						<div class="input-group mb-3 pb-1">							<input class="form-control text-1" placeholder="Buscar..." name="product_name" id="product_name" type="text" value="{{ old('product_name') }}">							<span class="input-group-append">								<button type="submit" class="btn btn-dark text-1 p-2"><i class="fas fa-search m-2"></i></button>							</span>						</div>					</form>					<h5 class="font-weight-bold pt-3">Categorias</h5>					<ul class="nav nav-list flex-column accordion">						{% for category in categoriesWithProduct %}							{% set subcategories = category.subcategories %}							<li class="nav-item">								<a										class="nav-link {{ product.category.slug == category.slug ? 'font-weight-bold' : '' }}"										{% if subcategories|length > 0 %}											data-toggle="collapse"											href="#collapse{{ category.id }}"											aria-expanded="true"											aria-controls="collapse{{ category.id }}"										{% else %}											href="{{ route('products', category.slug) }}"										{% endif %}								>									{{ category.name }}								</a>								{% if subcategories|length > 0 %}									<ul id="collapse{{ category.id }}" class="ml-2 collapse {% if product.category.slug == category.slug %}show{% endif %}">										{% for subcategory in subcategories %}											<li>												<a href="{{ route('products', [category.slug, subcategory.slug]) }}" class="{{ product.subcategory.slug == subcategory.slug ? 'font-weight-bold' : '' }}">													{{ subcategory.name }}												</a>											</li>										{% endfor %}										<li>											<a href="{{ route('products', category.slug) }}" class="{{ product.subcategory.slug is null and product.category.slug == category.slug ? 'font-weight-bold' : '' }}">												Todos											</a>										</li>									</ul>								{% endif %}							</li>						{% endfor %}					</ul>				</aside>			</div>			<div class="col-lg-9">				<div class="row">					<div class="col-lg-6">						<div id="loadGallery">							<img src="/assets/img/loader.gif">						</div>						<div class="fotorama hide" id="gallery" data-nav="thumbs" data-allowfullscreen="true" data-width="100%" data-ratio="800/600">							{% if product.youtube_url == '' and product.images|length <= 0 %}								<img src="/assets/img/no-image.jpg">							{% endif %}							{% if product.youtube_url %}								<a href="{{ product.youtube_url }}" data-img="{{ product.youtube_thumb }}">									<img src="{{ product.youtube_thumb }}">								</a>							{% endif %}							{% if product.images|length > 0 %}								{% for image in product.images %}									<img src="{{ image.file }}" id="image{{ image.id }}">								{% endfor %}							{% endif %}						</div>					</div>					<div class="col-lg-6">						<div class="summary entry-summary">							<h1 class="mb-0 font-weight-bold text-7">{{ product.name }}</h1>							{% if total_stock <= 0 %}								<div class="alert alert-warning">									Produto indisponível no momento.								</div>							{% else %}								{% if product.has_grid_variation == 0 %}									<div id="valueDefault">										{% if product.mainVariation.promotion_value > 0 %}											<strong class="main-value">												<small>R$</small> {{ product.mainVariation.promotion_value_formated }}											</strong>											<strike class="text-1">												<small>R$</small> {{ product.mainVariation.value_formated }}											</strike>											<p>												Economia de R$ {{ product.mainVariation.value_saving_formated }}											</p>										{% else %}											<strong class="main-value mb-4">												<small>R$</small> {{ product.mainVariation.value_formated }}											</strong>										{% endif %}									</div>								{% endif %}								<div id="loadingValue" class="d-none">									<span class="fa fa-spin fa-spinner"></span>								</div>								<div id="currentValue" class="d-none">									<strong class="main-value is-promotion" id="promotionValue">										<small>R$</small> <span class="value"></span>									</strong>									<div id="totalValue">										<strike class="text-1 promotion">											<small>R$</small> <span class="value"></span>										</strike>										<strong class="main-value no-promotion mb-4">											<small>R$</small> <span class="value"></span>										</strong>									</div>									<p class="is-promotion" id="discountDescription">										Economia de R$ <span class="value"></span>									</p>								</div>								<form method="post" action="/carrinho/{{ product.slug }}/add" id="addCartForm" class="form-bg">									<input type="hidden" name="_token" value="{{ csrf_token() }}">									<input type="hidden" name="variation_id" id="variationId" value="{{ product.mainVariation.id }}">									<div class="row">										{% for grid in grids %}											<div class="col-md-12 mb-3">												<div class="form-group">													<label class="control-label font-weight-bold">{{ grid.description }}</label>													<select class="form-control select-variation" id="variation{{ grid.id }}" data-id="{{ grid.id }}" name="variation[{{ grid.id }}]" required="required">														{% for variation in grid.variations %}															<option value="{{ variation.id }}" {% if product.variation.items[grid.grid_id].grid_variation_id == variation.id %}selected="selected"{% endif %}>{{ variation.description }}</option>														{% endfor %}													</select>												</div>											</div>										{% endfor %}										<button type="submit" id="btnBuy" class="btn btn-primary btn-block">											COMPRAR										</button>									</div>								</form>							{% endif %}							{% if product.category.id != '' or product.subcategory.id != '' %}								<div class="product-meta">									<span class="posted-in">										Categoria:										{% if product.category.id != '' %}											<a rel="tag" href="{{ route('products', product.category.slug) }}">{{ product.category.name }}</a>										{% endif %}										{% if product.subcategory.id != '' %}											, <a rel="tag" href="{{ route('products', [product.category.slug, product.subcategory.slug]) }}">{{ product.subcategory.name }}</a>.										{% endif %}									</span>								</div>							{% endif %}						</div>					</div>				</div>				{% if product.description != '' %}					<div class="row mt-3">						<div class="col">							<div class="tabs tabs-product mb-2">								<ul class="nav nav-tabs">									<li class="nav-item active">										<a class="nav-link py-3 px-4" href="#productDescription" data-toggle="tab">Descrição</a>									</li>								</ul>								<div class="tab-content p-0">									<div class="tab-pane p-4 active" id="productDescription">										{{ product.description | raw }}									</div>								</div>							</div>						</div>					</div>				{% endif %}			</div>		</div>	</div>{% endblock content %}{% block header %}	<link href="/general/components/fotorama/fotorama.css" rel="stylesheet">	<style>		.calculate-shipping .card-body {			background-color: #f5f5f5;		}		.prod-name {			font-size: 2.6em;		}		.main-value {			display: block;			font-size: 2em;			color: #C66756;		}		.hide {			visibility: hidden;		}		#loadGallery{			width: 435px;			height: 370px;		}		#loadGallery > img{			width: 100px;			position:absolute;			left: 50%;			margin-left: -50px;			margin-top: 100px;		}		#gallery{			background-color: #fff;			border: 1px solid #eee;			-webkit-border-radius: 4px;			-moz-border-radius: 4px;			border-radius: 4px;		}		.promotion-description {			color: #13ABE1;		}		.form-bg{			background-color: #f5f5f5;			padding: 25px 25px;		}		.td-img {			width: 64px;		}		.discount p {			font-size: 1.9em;			line-height: 0.75em;			color: #fff;			margin: 5px;		}		.discount p small{			font-size: 0.5em;		}	</style>{% endblock header %}{% block footer %}	<script src="/general/components/fotorama/fotorama.js"></script>	<script type="text/javascript">		$(function(){			var defaultImage = {% if product.youtube_url != '' %}1{% else %}0{% endif %};			setTimeout(function(){				$('#gallery').removeClass('hide');				$('#loadGallery').remove();				var $fotoramaDiv = $('.fotorama').fotorama();				fotorama = $fotoramaDiv.data('fotorama');				fotorama.show(defaultImage);			},500);			{% if product.has_grid_variation %}				function changeVariation(id, value) {					$('.select-variation').attr('readonly', 'readonly');					$('#currentValue').addClass('d-none');					$('#loadingValue').removeClass('d-none');					$.ajax({						url: '{{ route('product.variations', [product.slug]) }}',						dataType: 'json',						data: {							product_grid_id: id,							variation_id: value						},						success: function(data) {							$('#variationImage').html('');							$('.select-variation').removeAttr('readonly');							$('.select-variation').each(function(){								let gridObj = $(this);								let variationValue = gridObj.val();								let productGridId = gridObj.attr('data-id');								var selected = false;								gridObj.val('');								$(this).children('option').each(function(){									let variationObj = $(this);									let variationId = variationObj.attr('value');									let grids = data.grids;									variationObj.attr('disabled', 'disabled');									if (grids != undefined && productGridId in grids) {										let variations = data.grids[productGridId].variations;										$.each(variations, function(index, value) {											if (id == productGridId || variationId == '' || index == variationId) {												variationObj.removeAttr('disabled');												if (variationId != '' && (variationValue == variationId || selected === false)) {													selected = true;													gridObj.val(variationId);												}											}										});									}								});							});							findVariation();						}					});				}				function findVariation() {					$.ajax({						url: '{{ route('product.variations.find', [product.slug]) }}',						dataType: 'json',						data: $('.select-variation').serialize(),						success: function(data) {							$('#variationImage').html('');							$('#loadingValue').addClass('d-none');							if (data.variation != null) {								let variation = data.variation;								if (variation.image != null) {									fotorama.show('image' + variation.image.id);								} else {									fotorama.show(defaultImage);								}								$('#variationId').val(variation.id);								$('.is-promotion').addClass('d-none');								$('#currentValue #totalValue .value').text(variation.value);								$('#currentValue #totalValue .promotion').addClass('d-none');								$('#currentValue #totalValue .no-promotion').removeClass('d-none');								if (variation.promotion_value != null) {									$('#currentValue #totalValue .promotion').removeClass('d-none');									$('#currentValue #totalValue .no-promotion').addClass('d-none');									$('.is-promotion').removeClass('d-none');									$('#currentValue #promotionValue .value').text(variation.promotion_value);									$('#currentValue #discountDescription .value').text(variation.diff_value);								}								$('#loadingValue').addClass('d-none');								$('#currentValue').removeClass('d-none');							}						}					});				}				function isComplete() {					$('.select-variation').each(function(){						if ($(this).val() == '') {							return false;						}					});					return true;				}				$('#addCartForm').submit(function(){					if (isComplete() === false) {						toastr.warning('Informe todas as variações que deseja no produto');					}				});				let value = $('.select-variation').eq(0).val();				let id = $('.select-variation').eq(0).attr('data-id');				changeVariation(id, value);				$('.select-variation').change(function() {					let self = $(this);					let id = self.attr('data-id');					let value = self.val();					changeVariation(id, value);				});			{% endif %}		});	</script>{% endblock footer %}
+{% extends 'site_backup.main.twig' %}
+
+{% block content %}
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3">
+				<aside class="sidebar">
+					<form action="{{ route('products') }}" method="get">
+						<div class="input-group mb-3 pb-1">
+							<input class="form-control text-1" placeholder="Buscar..." name="product_name" id="product_name" type="text" value="{{ old('product_name') }}">
+							<span class="input-group-append">
+								<button type="submit" class="btn btn-dark text-1 p-2"><i class="fas fa-search m-2"></i></button>
+							</span>
+						</div>
+					</form>
+					<h5 class="font-weight-bold pt-3">Categorias</h5>
+					<ul class="nav nav-list flex-column accordion">
+						{% for category in categoriesWithProduct %}
+							{% set subcategories = category.subcategories %}
+							<li class="nav-item">
+								<a
+										class="nav-link {{ product.category.slug == category.slug ? 'font-weight-bold' : '' }}"
+										{% if subcategories|length > 0 %}
+											data-toggle="collapse"
+											href="#collapse{{ category.id }}"
+											aria-expanded="true"
+											aria-controls="collapse{{ category.id }}"
+										{% else %}
+											href="{{ route('products', category.slug) }}"
+										{% endif %}
+								>
+									{{ category.name }}
+								</a>
+								{% if subcategories|length > 0 %}
+									<ul id="collapse{{ category.id }}" class="ml-2 collapse {% if product.category.slug == category.slug %}show{% endif %}">
+										{% for subcategory in subcategories %}
+											<li>
+												<a href="{{ route('products', [category.slug, subcategory.slug]) }}" class="{{ product.subcategory.slug == subcategory.slug ? 'font-weight-bold' : '' }}">
+													{{ subcategory.name }}
+												</a>
+											</li>
+										{% endfor %}
+										<li>
+											<a href="{{ route('products', category.slug) }}" class="{{ product.subcategory.slug is null and product.category.slug == category.slug ? 'font-weight-bold' : '' }}">
+												Todos
+											</a>
+										</li>
+									</ul>
+								{% endif %}
+							</li>
+						{% endfor %}
+					</ul>
+				</aside>
+			</div>
+			<div class="col-lg-9">
+				<div class="row">
+					<div class="col-lg-6">
+						<div id="loadGallery">
+							<img src="/assets/img/loader.gif">
+						</div>
+						<div class="fotorama hide" id="gallery" data-nav="thumbs" data-allowfullscreen="true" data-width="100%" data-ratio="800/600">
+							{% if product.youtube_url == '' and product.images|length <= 0 %}
+								<img src="/assets/img/no-image.jpg">
+							{% endif %}
+
+							{% if product.youtube_url %}
+								<a href="{{ product.youtube_url }}" data-img="{{ product.youtube_thumb }}">
+									<img src="{{ product.youtube_thumb }}">
+								</a>
+							{% endif %}
+
+							{% if product.images|length > 0 %}
+								{% for image in product.images %}
+									<img src="{{ image.file }}" id="image{{ image.id }}">
+								{% endfor %}
+							{% endif %}
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="summary entry-summary">
+							<h1 class="mb-0 font-weight-bold text-7">{{ product.name }}</h1>
+							{% if total_stock <= 0 %}
+								<div class="alert alert-warning">
+									Produto indisponível no momento.
+								</div>
+							{% else %}
+								{% if product.has_grid_variation == 0 %}
+									<div id="valueDefault">
+										{% if product.mainVariation.promotion_value > 0 %}
+											<strong class="main-value">
+												<small>R$</small> {{ product.mainVariation.promotion_value_formated }}
+											</strong>
+											<strike class="text-1">
+												<small>R$</small> {{ product.mainVariation.value_formated }}
+											</strike>
+											<p>
+												Economia de R$ {{ product.mainVariation.value_saving_formated }}
+											</p>
+										{% else %}
+											<strong class="main-value mb-4">
+												<small>R$</small> {{ product.mainVariation.value_formated }}
+											</strong>
+										{% endif %}
+									</div>
+								{% endif %}
+								<div id="loadingValue" class="d-none">
+									<span class="fa fa-spin fa-spinner"></span>
+								</div>
+								<div id="currentValue" class="d-none">
+									<strong class="main-value is-promotion" id="promotionValue">
+										<small>R$</small> <span class="value"></span>
+									</strong>
+									<div id="totalValue">
+										<strike class="text-1 promotion">
+											<small>R$</small> <span class="value"></span>
+										</strike>
+										<strong class="main-value no-promotion mb-4">
+											<small>R$</small> <span class="value"></span>
+										</strong>
+									</div>
+									<p class="is-promotion" id="discountDescription">
+										Economia de R$ <span class="value"></span>
+									</p>
+								</div>
+								<form method="post" action="/carrinho/{{ product.slug }}/add" id="addCartForm" class="form-bg">
+									<input type="hidden" name="_token" value="{{ csrf_token() }}">
+									<input type="hidden" name="variation_id" id="variationId" value="{{ product.mainVariation.id }}">
+									<div class="row">
+										{% for grid in grids %}
+											<div class="col-md-12 mb-3">
+												<div class="form-group">
+													<label class="control-label font-weight-bold">{{ grid.description }}</label>
+													<select class="form-control select-variation" id="variation{{ grid.id }}" data-id="{{ grid.id }}" name="variation[{{ grid.id }}]" required="required">
+														{% for variation in grid.variations %}
+															<option value="{{ variation.id }}" {% if product.variation.items[grid.grid_id].grid_variation_id == variation.id %}selected="selected"{% endif %}>{{ variation.description }}</option>
+														{% endfor %}
+													</select>
+												</div>
+											</div>
+										{% endfor %}
+
+										<button type="submit" id="btnBuy" class="btn btn-primary btn-block">
+											COMPRAR
+										</button>
+									</div>
+								</form>
+							{% endif %}
+
+							{% if product.category.id != '' or product.subcategory.id != '' %}
+								<div class="product-meta">
+									<span class="posted-in">
+										Categoria:
+										{% if product.category.id != '' %}
+											<a rel="tag" href="{{ route('products', product.category.slug) }}">{{ product.category.name }}</a>
+										{% endif %}
+										{% if product.subcategory.id != '' %}
+											, <a rel="tag" href="{{ route('products', [product.category.slug, product.subcategory.slug]) }}">{{ product.subcategory.name }}</a>.
+										{% endif %}
+									</span>
+								</div>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+				{% if product.description != '' %}
+					<div class="row mt-3">
+						<div class="col">
+							<div class="tabs tabs-product mb-2">
+								<ul class="nav nav-tabs">
+									<li class="nav-item active">
+										<a class="nav-link py-3 px-4" href="#productDescription" data-toggle="tab">Descrição</a>
+									</li>
+								</ul>
+								<div class="tab-content p-0">
+									<div class="tab-pane p-4 active" id="productDescription">
+										{{ product.description | raw }}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock content %}
+{% block header %}
+	<link href="/general/components/fotorama/fotorama.css" rel="stylesheet">
+	<style>
+		.calculate-shipping .card-body {
+			background-color: #f5f5f5;
+		}
+		.prod-name {
+			font-size: 2.6em;
+		}
+		.main-value {
+			display: block;
+			font-size: 2em;
+			color: #C66756;
+		}
+		.hide {
+			visibility: hidden;
+		}
+		#loadGallery{
+			width: 435px;
+			height: 370px;
+		}
+		#loadGallery > img{
+			width: 100px;
+			position:absolute;
+			left: 50%;
+			margin-left: -50px;
+			margin-top: 100px;
+		}
+		#gallery{
+			background-color: #fff;
+			border: 1px solid #eee;
+			-webkit-border-radius: 4px;
+			-moz-border-radius: 4px;
+			border-radius: 4px;
+		}
+		.promotion-description {
+			color: #13ABE1;
+		}
+		.form-bg{
+			background-color: #f5f5f5;
+			padding: 25px 25px;
+		}
+		.td-img {
+			width: 64px;
+		}
+		.discount p {
+			font-size: 1.9em;
+			line-height: 0.75em;
+			color: #fff;
+			margin: 5px;
+		}
+		.discount p small{
+			font-size: 0.5em;
+		}
+	</style>
+{% endblock header %}
+{% block footer %}
+	<script src="/general/components/fotorama/fotorama.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			var defaultImage = {% if product.youtube_url != '' %}1{% else %}0{% endif %};
+			setTimeout(function(){
+				$('#gallery').removeClass('hide');
+				$('#loadGallery').remove();
+
+				var $fotoramaDiv = $('.fotorama').fotorama();
+				fotorama = $fotoramaDiv.data('fotorama');
+				fotorama.show(defaultImage);
+			},500);
+
+			{% if product.has_grid_variation %}
+				function changeVariation(id, value) {
+					$('.select-variation').attr('readonly', 'readonly');
+
+					$('#currentValue').addClass('d-none');
+					$('#loadingValue').removeClass('d-none');
+
+					$.ajax({
+						url: '{{ route('product.variations', [product.slug]) }}',
+						dataType: 'json',
+						data: {
+							product_grid_id: id,
+							variation_id: value
+						},
+						success: function(data) {
+							$('#variationImage').html('');
+							$('.select-variation').removeAttr('readonly');
+							$('.select-variation').each(function(){
+								let gridObj = $(this);
+								let variationValue = gridObj.val();
+								let productGridId = gridObj.attr('data-id');
+								var selected = false;
+
+								gridObj.val('');
+
+								$(this).children('option').each(function(){
+									let variationObj = $(this);
+									let variationId = variationObj.attr('value');
+									let grids = data.grids;
+									variationObj.attr('disabled', 'disabled');
+									if (grids != undefined && productGridId in grids) {
+										let variations = data.grids[productGridId].variations;
+										$.each(variations, function(index, value) {
+											if (id == productGridId || variationId == '' || index == variationId) {
+												variationObj.removeAttr('disabled');
+
+												if (variationId != '' && (variationValue == variationId || selected === false)) {
+													selected = true;
+													gridObj.val(variationId);
+												}
+											}
+										});
+									}
+								});
+							});
+
+							findVariation();
+						}
+					});
+				}
+
+				function findVariation() {
+					$.ajax({
+						url: '{{ route('product.variations.find', [product.slug]) }}',
+						dataType: 'json',
+						data: $('.select-variation').serialize(),
+						success: function(data) {
+							$('#variationImage').html('');
+							$('#loadingValue').addClass('d-none');
+
+							if (data.variation != null) {
+								let variation = data.variation;
+								if (variation.image != null) {
+									fotorama.show('image' + variation.image.id);
+								} else {
+									fotorama.show(defaultImage);
+								}
+
+								$('#variationId').val(variation.id);
+								$('.is-promotion').addClass('d-none');
+								$('#currentValue #totalValue .value').text(variation.value);
+								$('#currentValue #totalValue .promotion').addClass('d-none');
+								$('#currentValue #totalValue .no-promotion').removeClass('d-none');
+								if (variation.promotion_value != null) {
+									$('#currentValue #totalValue .promotion').removeClass('d-none');
+									$('#currentValue #totalValue .no-promotion').addClass('d-none');
+									$('.is-promotion').removeClass('d-none');
+									$('#currentValue #promotionValue .value').text(variation.promotion_value);
+									$('#currentValue #discountDescription .value').text(variation.diff_value);
+								}
+
+								$('#loadingValue').addClass('d-none');
+								$('#currentValue').removeClass('d-none');
+							}
+						}
+					});
+				}
+
+				function isComplete() {
+					$('.select-variation').each(function(){
+						if ($(this).val() == '') {
+							return false;
+						}
+					});
+
+					return true;
+				}
+
+				$('#addCartForm').submit(function(){
+					if (isComplete() === false) {
+						toastr.warning('Informe todas as variações que deseja no produto');
+					}
+				});
+
+				let value = $('.select-variation').eq(0).val();
+				let id = $('.select-variation').eq(0).attr('data-id');
+				changeVariation(id, value);
+
+				$('.select-variation').change(function() {
+					let self = $(this);
+					let id = self.attr('data-id');
+					let value = self.val();
+					changeVariation(id, value);
+				});
+			{% endif %}
+		});
+	</script>
+{% endblock footer %}
