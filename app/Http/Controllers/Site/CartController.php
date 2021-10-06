@@ -55,6 +55,16 @@ class CartController extends Controller
         return [];
     }
 
+    public function increaseCartProductQuantity(CartProduct $cartProduct, Request $request)
+    {
+        dd($cartProduct->id);
+    }
+
+    public function decreaseCartProductQuantity(CartProduct $cartProduct, Request $request)
+    {
+
+    }
+
     public function removeProduct(CartProduct $cartProduct)
     {
         $cartProduct->delete();

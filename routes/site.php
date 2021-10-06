@@ -23,6 +23,8 @@ Route::middleware('site.boot')->group(function() {
     Route::post('/carrinho/{product}/add', 'CartController@addProduct')->name('cart.product.add');
     Route::get('/carrinho/{cartProduct}/remove', 'CartController@removeProduct')->name('cart.product.remove');
     Route::post('/carrinho/edit', 'CartController@editCartProduct')->name('cart.edit');
+    Route::post('/carrinho/{cartProduct}/increase-quantity', 'CartController@increaseCartProductQuantity')->name('cart_product.increase_quantity');
+    Route::post('/carrinho/{cartProduct}/decrease-quantity', 'CartController@decreaseCartProductQuantity')->name('cart_product.decrease_quantity');
     Route::get('/carrinho/calculate-freight', 'CartController@calculateFreight')->name('cart.product.freight');
 
     Route::middleware(CheckLogin::class)->group(function() {
