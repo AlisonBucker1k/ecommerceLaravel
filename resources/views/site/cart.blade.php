@@ -48,9 +48,9 @@
                                                 </a>
                                             </td>
                                             <td class="pro-price"><span>{{ $cartProduct->variation->value_formated }}</span></td>
-                                            <td class="pro-quantity">
-                                                <div class="quantity">
-                                                    <div class="cart-plus-minus">
+                                            <td class="--pro-quantity">
+                                                <div class="--quantity">
+                                                    <div class="--cart-plus-minus">
                                                         <input class="cart-plus-minus-box" value="{{ $cartProduct->quantity }}" type="text">
                                                         <div class="dec qtybutton change-product-quantity" data-post-url="{{ route('cart_product.decrease_quantity', [$cartProduct->id]) }}"><i class="fa fa-minus"></i></div>
                                                         <div class="inc qtybutton change-product-quantity" data-post-url="{{ route('cart_product.increase_quantity', [$cartProduct->id]) }}"><i class="fa fa-plus"></i></div>
@@ -116,25 +116,19 @@
 @push('js')
     <script type="text/javascript">
         $('.change-product-quantity').click(function () {
-            alert('asdasdasdasd');
-            let url = $(this).attr('data-post-url');
-            alert(url);
-
             $.ajax({
+                url: $(this).attr('data-post-url'),
                 type: 'post',
-{{--                url: '{{ route('cart_product.increase_quantity') }}',--}}
-                url: url,
                 dataType: 'json',
-                beforeSend: function(){
-                    // $('#loading-product').removeClass('d-none');
-                    $('#change-product-quantity').addClass('d-none');
-                },
                 data: {
-                    _token: '{{ csrf_token() }}'
+                    _token: '{{ csrf_token() }}',
                 },
-                success: function() {
-                    alert('aaaaaaa');
-                    // window.location.reload();
+                success: function(response) {
+                    if (response.error) {
+                        alert(response.message);
+                    }
+
+                    window.location.reload();
                 }
             });
         });

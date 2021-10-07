@@ -46,32 +46,6 @@ class CartController extends Controller
         return redirect()->route('cart')->withSuccess('Produto adicionado com sucesso!');
     }
 
-    public function editCartProduct(Request $request)
-    {
-        $cartProduct = CartProduct::query()->find($request->post('cart_product_id'));
-        $cartProduct->quantity = $request->post('quantity');
-        $cartProduct->update();
-
-        return [];
-    }
-
-    public function increaseCartProductQuantity(CartProduct $cartProduct, Request $request)
-    {
-        dd($cartProduct->id);
-    }
-
-    public function decreaseCartProductQuantity(CartProduct $cartProduct, Request $request)
-    {
-
-    }
-
-    public function removeProduct(CartProduct $cartProduct)
-    {
-        $cartProduct->delete();
-
-        return redirect()->route('cart')->withSuccess('Produto removido com sucesso!');
-    }
-
     public function calculateFreight(Request $request)
     {
         try {
@@ -106,15 +80,13 @@ class CartController extends Controller
 
         $data['addresses'] = $customer->activeAddresses;
         $data['cart'] = $cart;
-//        dd($cart);
 
         return view('site.cart_confirm', $data);
     }
 
     private function removeUnavailableProducts(Cart $cart, Request $request)
     {
-        $cartProducts = $cart->cartProducts()->get();
-        foreach ($cartProducts as $cartProduct) {
+        foreach ($cart->cartProducts()->get() as $cartProduct) {
             $variation = $cartProduct->variation;
             $product = $cartProduct->product;
 
