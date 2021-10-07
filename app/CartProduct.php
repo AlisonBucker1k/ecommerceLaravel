@@ -54,4 +54,20 @@ class CartProduct extends Model
         $this->product_variation_id = $productVariation->id;
         $this->save();
     }
+
+    public function increaseQuantity()
+    {
+        $this->quantity += 1;
+        $this->save();
+    }
+
+    public function decreaseQuantity()
+    {
+        if ($this->quantity == 0) {
+            return ;
+        }
+
+        $this->quantity -= 1;
+        $this->save();
+    }
 }

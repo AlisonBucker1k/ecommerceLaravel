@@ -21,14 +21,16 @@ Route::middleware('site.boot')->group(function() {
 
     Route::get('/carrinho', 'CartController@index')->name('cart');
     Route::post('/carrinho/{product}/add', 'CartController@addProduct')->name('cart.product.add');
-    Route::get('/carrinho/{cartProduct}/remove', 'CartController@removeProduct')->name('cart.product.remove');
-    Route::post('/carrinho/edit', 'CartController@editCartProduct')->name('cart.edit');
     Route::get('/carrinho/calculate-freight', 'CartController@calculateFreight')->name('cart.product.freight');
 
     Route::middleware(CheckLogin::class)->group(function() {
         Route::get('/carrinho/finalizar', 'CartController@confirmOrder')->name('cart.confirm');
         Route::post('/carrinho/finalizar', 'CartController@createOrder');
     });
+
+    Route::get('/carrinho/{cartProduct}/remove', 'CartProductController@removeProduct')->name('cart.product.remove');
+    Route::post('/carrinho/{cartProduct}/increase-quantity', 'CartProductController@increaseCartProductQuantity')->name('cart_product.increase_quantity');
+    Route::post('/carrinho/{cartProduct}/decrease-quantity', 'CartProductController@decreaseCartProductQuantity')->name('cart_product.decrease_quantity');
 
     Route::get('acessar', 'AuthController@index')->name('login');
     Route::post('acessar', 'AuthController@login');
@@ -45,11 +47,6 @@ Route::middleware('site.boot')->group(function() {
     Route::get('clientes/senha/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('customer.password.form');
 
     Route::get('endereco/buscar', 'AddressController@find')->name('address.find');
-
-    Route::post('/pagseguro/notification', [
-        'uses' => '\laravel\pagseguro\Platform\Laravel5\NotificationController@notification',
-        'as' => 'pagseguro.notification',
-    ]);
 
     Route::middleware(['Auth:web_site'])->prefix('painel')->name('panel.')->group(function() {
         Route::get('/', 'CustomerController@index')->name('panel');

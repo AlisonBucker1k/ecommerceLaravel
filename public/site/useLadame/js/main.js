@@ -12,7 +12,7 @@
 			$('.header-sticky').removeClass('sticky');
 		}
 	});
-	
+
 	/*-----------------------------------------
 		Off Canvas Mobile Menu
 	-------------------------------------------*/
@@ -40,7 +40,7 @@
 		$("body").removeClass('fix');
 		$(".offcanvas-search").removeClass('open');
 	});
-	
+
 	/*-----------------------------------------
 		Off Canvas Mobile Menu
 	-------------------------------------------*/
@@ -54,7 +54,7 @@
 		$("body").removeClass('fix');
 		$(".cart-offcanvas-wrapper").removeClass('open');
     });
-    
+
     /*----------------------------------------
 		Responsive Mobile Menu
 	------------------------------------------*/
@@ -82,7 +82,7 @@
 			}
 		}
 	});
-    
+
     /*----------------------------------------
 	   Slider Activation
 	------------------------------------------*/
@@ -110,7 +110,7 @@
 		},
 		// Responsive breakpoints
 	});
-	
+
 	/* Product Carousel Activation */
     var productCarousel = new Swiper('.product-carousel .swiper-container', {
 		loop: true,
@@ -130,7 +130,7 @@
 			type: 'bullets',
 			clickable: 'true'
 		},
-		
+
 		// Responsive breakpoints
 		breakpoints: {
 			// when window width is >= 320px
@@ -158,7 +158,7 @@
 				slidesPerView: 4,
 			}
 		}
-	});	
+	});
 	/* Modal Product Carousel Activation */
     var productCarousel = new Swiper('.modal-product-carousel .swiper-container', {
 		loop: true,
@@ -349,7 +349,7 @@
             swiper: zoomThumb
         }
 	});
-	
+
     /*-- Single product with Thumbnail Horizental -- */
 	var galleryThumbs = new Swiper('.single-product-thumb', {
 		spaceBetween: 10,
@@ -424,31 +424,31 @@
 	/*----------------------------------------*/
 
 	$('.shop_toolbar_btn > button').on('click', function (e) {
-	
+
 		e.preventDefault();
-		
+
 		$('.shop_toolbar_btn > button').removeClass('active');
 		$(this).addClass('active');
-		
+
 		var parentsDiv = $('.shop_wrapper');
 		var viewMode = $(this).data('role');
-		
-		
+
+
 		parentsDiv.removeClass('grid_3 grid_4 grid_5 grid_list').addClass(viewMode);
 
 		if(viewMode == 'grid_3'){
 			parentsDiv.children().addClass('col-lg-4 col-md-4 col-sm-6').removeClass('col-lg-3 col-cust-5 col-12');
-			
+
 		}
 
 		if(viewMode == 'grid_4'){
 			parentsDiv.children().addClass('col-xl-3 col-lg-4 col-md-4 col-sm-6').removeClass('col-lg-4 col-cust-5 col-12');
 		}
-		
+
 		if(viewMode == 'grid_list'){
 			parentsDiv.children().addClass('col-12').removeClass('col-xl-3 col-lg-3 col-lg-4 col-md-6 col-md-4 col-sm-6 col-cust-5');
 		}
-			
+
 	});
 
 	/*----------------------------------------*/
@@ -479,24 +479,24 @@
 	/*  Cart Plus Minus Button
 	/*----------------------------------------*/
 
-	$('.cart-plus-minus').append(
-		'<div class="dec qtybutton"><i class="fa fa-minus"></i></div><div class="inc qtybutton"><i class="fa fa-plus"></i></div>'
-	);
-	$('.qtybutton').on('click', function () {
-		var $button = $(this);
-		var oldValue = $button.parent().find('input').val();
-		if ($button.hasClass('inc')) {
-			var newVal = parseFloat(oldValue) + 1;
-		} else {
-			// Don't allow decrementing below zero
-			if (oldValue > 1) {
-				var newVal = parseFloat(oldValue) - 1;
-			} else {
-				newVal = 1;
-			}
-		}
-		$button.parent().find('input').val(newVal);
-	});
+	// $('.cart-plus-minus').append(
+	// 	'<div class="dec qtybutton"><i class="fa fa-minus"></i></div><div class="inc qtybutton"><i class="fa fa-plus"></i></div>'
+	// );
+	// $('.qtybutton').on('click', function () {
+	// 	var $button = $(this);
+	// 	var oldValue = $button.parent().find('input').val();
+	// 	if ($button.hasClass('inc')) {
+	// 		var newVal = parseFloat(oldValue) + 1;
+	// 	} else {
+	// 		// Don't allow decrementing below zero
+	// 		if (oldValue > 1) {
+	// 			var newVal = parseFloat(oldValue) - 1;
+	// 		} else {
+	// 			newVal = 1;
+	// 		}
+	// 	}
+	// 	$button.parent().find('input').val(newVal);
+	// });
 
 	/*----------------------------------------*/
 	/*  Lightgallery Active
@@ -587,7 +587,7 @@
         }
 	}
 	/*-------------------------
-        Ajax Contact Form 
+        Ajax Contact Form
     ---------------------------*/
     $(function() {
 

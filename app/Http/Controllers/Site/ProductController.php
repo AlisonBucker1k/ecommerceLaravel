@@ -3,26 +3,18 @@
 namespace App\Http\Controllers\Site;
 
 use App\Category;
-use App\Enums\ProductImageMain;
 use App\Enums\ProductStatus;
 use App\Enums\ProductVariationMain;
 use App\Http\Controllers\Controller;
+use App\Product;
 use App\ProductVariation;
 use App\ProductVariationItem;
 use App\Subcategory;
-use Illuminate\Http\Request;
-use App\Product;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\View\View;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    /**
-     * Display the list of products.
-     *
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|View
-     */
     public function index(Request $request, Category $category, Subcategory $subcategory)
     {
         $product = new Product();
@@ -57,11 +49,6 @@ class ProductController extends Controller
         return $breadcrumb;
     }
 
-    /**
-     * @param Product $product
-     * @param ProductVariation $productVariation
-     * @return \Illuminate\Contracts\View\Factory|View
-     */
     public function show(Product $product, ProductVariation $productVariation)
     {
         if ($product->has_grid_variation) {
@@ -79,17 +66,12 @@ class ProductController extends Controller
         $data['total_stock'] = $product->totalStock();
 
         return view('site.product.product', $data);
+//        return view('site_backup.product.product', $data);
     }
 
-    /**
-     * @param Builder $query
-     * @param Request $request
-     * @return Request
-     */
     private function filters(Builder &$query, Request $request, Category $category, Subcategory $subcategory)
     {
         if (!empty($request->category)) {
-
             $query->where('products.category_id', $category->id);
         }
 
@@ -103,8 +85,10 @@ class ProductController extends Controller
 
         if (!empty($request->start_value) || !empty($request->end_value)) {
             $productVariation = new ProductVariation();
-            $variations = $productVariation->availableVariation()
+            $variations = $productVariation
+                ->availableVariation()
                 ->where('product_variations.main', '=', ProductVariationMain::YES);
+
             $query->joinSub($variations, 'product_variations', function ($join) {
                 $join->on('product_variations.product_id', '=', 'products.id');
             });
@@ -117,6 +101,7 @@ class ProductController extends Controller
                     $query->where('product_variations.value', '>=', currencyBrl2Float($startValue));
                     $query->where('product_variations.promotion_value', '<=', 0);
                 });
+
                 $query->orWhere('product_variations.promotion_value', '>=', currencyBrl2Float($startValue));
             });
         }
@@ -128,6 +113,7 @@ class ProductController extends Controller
                     $query->where('product_variations.value', '<=', currencyBrl2Float($endValue));
                     $query->where('product_variations.promotion_value', '<=', 0);
                 });
+
                 $query->orWhere('product_variations.promotion_value', '<=', currencyBrl2Float($endValue));
             });
         }

@@ -47,15 +47,13 @@
                                                     @endforeach
                                                 </a>
                                             </td>
-                                            <td class="pro-price"><span>R$ {{ $cartProduct->variation->value_formated }}</span></td>
-                                            <td class="pro-quantity">
-                                                <div class="quantity">
-                                                    <div class="cart-plus-minus">
+                                            <td class="pro-price"><span>{{ $cartProduct->variation->value_formated }}</span></td>
+                                            <td class="--pro-quantity">
+                                                <div class="--quantity">
+                                                    <div class="--cart-plus-minus">
                                                         <input class="cart-plus-minus-box" value="{{ $cartProduct->quantity }}" type="text">
-                                                        <div class="dec qtybutton">-</div>
-                                                        <div class="inc qtybutton">+</div>
-                                                        <div class="dec qtybutton"><i class="fa fa-minus"></i></div>
-                                                        <div class="inc qtybutton"><i class="fa fa-plus"></i></div>
+                                                        <div class="dec qtybutton change-product-quantity" data-post-url="{{ route('cart_product.decrease_quantity', [$cartProduct->id]) }}"><i class="fa fa-minus"></i></div>
+                                                        <div class="inc qtybutton change-product-quantity" data-post-url="{{ route('cart_product.increase_quantity', [$cartProduct->id]) }}"><i class="fa fa-plus"></i></div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -68,7 +66,11 @@
                                                     @endif
                                                 </span>
                                             </td>
-                                            <td class="pro-remove"><a href="#"><i class="pe-7s-trash"></i></a></td>
+                                            <td class="pro-remove">
+                                                <a href="{{ route('cart.product.remove', $cartProduct->id) }}">
+                                                    <i class="pe-7s-trash"></i>
+                                                </a>
+                                            </td>
                                         </tr>
                                     @empty
                                         <tr>
@@ -112,74 +114,23 @@
 @endsection
 
 @push('js')
-<script>
-    $('#btnFinalize').click(() => {
-        var teste = {
-            "items": [],
-            "customer": {},
-            "payments": [
-                {
-                    "amount" : 3000,
-                    "payment_method":"checkout",
-                    "checkout": {
-                        "expires_in":120,
-                        "billing_address_editable" : false,
-                        "customer_editable" : true,
-                        "accepted_payment_methods": ["credit_card"],
-                        "success_url": "http://useladame.local/carrinho",
-                        "credit_card": {}
+    <script type="text/javascript">
+        $('.change-product-quantity').click(function () {
+            $.ajax({
+                url: $(this).attr('data-post-url'),
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                },
+                success: function(response) {
+                    if (response.error) {
+                        alert(response.message);
                     }
+
+                    window.location.reload();
                 }
-            ]
-        };
-
-        $.ajax({
-            method: "POST",
-            url: "https://api.pagar.me/core/v5/orders/",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Basic ak_test_BbNUx5jouhZpJnYLqURiQdPiXLpCIm',
-                'Access-Control-Allow-Origin': 'http://useladame.local',
-            },
-            data: JSON.stringify(teste)
-            })
-            .done(function( msg ) {
-                console.log(msg);
             });
-
-        return false;
-        // let response = await fetch('https://api.pagar.me/core/v5/orders/', {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'Authorization': 'Basic ak_test_BbNUx5jouhZpJnYLqURiQdPiXLpCIm',
-        //         },
-        //         body: JSON.stringify({
-        //                 "items": [],
-        //                 "customer": {},
-        //                 "payments": [
-        //                     {
-        //                         "amount" : 3000,
-        //                         "payment_method":"checkout",
-        //                         "checkout": {
-        //                             "expires_in":120,
-        //                             "billing_address_editable" : false,
-        //                             "customer_editable" : true,
-        //                             "accepted_payment_methods": ["credit_card"],
-        //                             "success_url": "http://useladame.local/carrinho",
-        //                             "credit_card": {}
-        //                         }
-        //                     }
-        //                 ]
-        //             }),
-        //     });
-
-        //     if (response.ok) { // if HTTP-status is 200-299
-        //     // get the response body (the method explained below)
-        //     let json = await response.json();
-        //     } else {
-        //         alert("HTTP-Error: " + response.status);
-        //     }
-    });
-</script>
+        });
+    </script>
 @endpush

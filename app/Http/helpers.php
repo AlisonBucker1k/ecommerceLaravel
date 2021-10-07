@@ -51,7 +51,7 @@ if (!function_exists('currencyBrl2Float')) {
 if (!function_exists('currencyFloat2Brl')) {
     function currencyFloat2Brl($value) : string
     {
-        return number_format($value, 2, ",", ".");
+        return 'R$' .  number_format($value, 2, ",", ".");
     }
 }
 
