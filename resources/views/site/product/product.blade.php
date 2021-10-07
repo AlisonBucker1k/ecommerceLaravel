@@ -1,91 +1,97 @@
 @extends('site.main')
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3">
-                <aside class="sidebar">
-                    <form action="{{ route('products') }}" method="get">
-                        <div class="input-group mb-3 pb-1">
-                            <input class="form-control text-1" placeholder="Buscar..." name="product_name" id="product_name" type="text" value="{{ old('product_name') }}">
-                            <span class="input-group-append">
-								<button type="submit" class="btn btn-dark text-1 p-2"><i class="fas fa-search m-2"></i></button>
-							</span>
-                        </div>
-                    </form>
-                    <h5 class="font-weight-bold pt-3">Categorias</h5>
-                    <ul class="nav nav-list flex-column accordion">
-                        @foreach ($categoriesWithProduct as $category)
-                            @php $subcategories = $category->subcategories; @endphp
-                            <li class="nav-item">
-                                <a
-                                    class="nav-link {{ $product->category->slug == $category->slug ? 'font-weight-bold' : '' }}"
-                                    @if (count($subcategories) > 0)
-                                        data-toggle="collapse"
-                                        href="#collapse{{ $category->id }}"
-                                        aria-expanded="true"
-                                        aria-controls="collapse{{ $category->id }}"
-                                    @else
-                                        href="{{ route('products', $category->slug) }}"
-                                    @endif
-                                    >
-                                    {{ $category->name }}
-                                </a>
-
-                                @if (!empty(subcategories))
-                                    <ul id="collapse{{ $category->id }}" class="ml-2 collapse @if ($product->category->slug == $category->slug)show@endif">
-                                        @foreach ($subcategories as $subcategory)
-                                            <li>
-                                                <a href="{{ route('products', [$category->slug, $subcategory->slug]) }}" class="{{ $product->subcategory->slug == $subcategory->slug ? 'font-weight-bold' : '' }}">
-                                                    {{ $subcategory->name }}
-                                                </a>
-                                            </li>
-                                        @endforeach
-
-                                        <li>
-                                            <a href="{{ route('products', $category->slug) }}" class="{{ $product->subcategory->slug == null && $product->category->slug == $category->slug ? 'font-weight-bold' : '' }}">
-                                                Todos
-                                            </a>
-                                        </li>
-                                    </ul>
-                                @endif
-                            </li>
-                        @endforeach
+    <div class="section">
+        <div class="breadcrumb-area bg-light">
+            <div class="container-fluid">
+                <div class="breadcrumb-content text-center">
+                    <h1 class="title">{{ $product->name }}</h1>
+                    <ul>
+                        <li>
+                            <a href="{{ route('home') }}">Home </a>
+                        </li>
+                        <li class="active">{{ $product->name }}</li>
                     </ul>
-                </aside>
+                </div>
             </div>
-            <div class="col-lg-9">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div id="loadGallery">
-                            <img src="/assets/img/loader.gif">
-                        </div>
-                        <div class="fotorama hide" id="gallery" data-nav="thumbs" data-allowfullscreen="true" data-width="100%" data-ratio="800/600">
-                            @if ($product->youtube_url == '' && count($product->images) <= 0)
-                                <img src="/assets/img/no-image.jpg">
-                            @endif
-
-                            @if ($product->youtube_url)
-                                <a href="{{ $product->youtube_url }}" data-img="{{ $product->youtube_thumb }}">
-                                    <img src="{{ $product->youtube_thumb }}">
-                                </a>
-                            @endif
-
-                            @if (!empty($product->images))
-                                @foreach ($product->images as $image)
-                                    <img src="{{ $image->file }}" id="image{{ $image->id }}">
-                                @endforeach
-                            @endif
+        </div>
+    </div>
+    <div class="section section-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 offset-lg-0 col-md-8 offset-md-2 col-custom">
+                    <div class="product-details-img">
+                        <div class="single-product-thumb swiper-container gallery-thumbs">
+                            <div class="swiper-wrapper">
+                                @if (!empty($product->images))
+                                    @foreach ($product->images as $image)
+                                        <div class="swiper-slide">
+                                            <img src="{{ $image->file }}" id="image{{ $image->id }}">
+                                        </div>
+                                    @endforeach
+                                @endif
+                            </div>
+                            <div class="swiper-button-horizental-next  swiper-button-next"><i class="pe-7s-angle-right"></i></div>
+                            <div class="swiper-button-horizental-prev swiper-button-prev"><i class="pe-7s-angle-left"></i></div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="summary entry-summary">
-                            <h1 class="mb-0 font-weight-bold text-7">{{ $product->name }}</h1>
-                            @if ($total_stock <= 0)
-                                <div class="alert alert-warning">
-                                    Produto indisponível no momento.
-                                </div>
-                            @else
+                </div>
+                <div class="col-lg-7 col-custom">
+                    <div class="product-summery position-relative">
+                        <div class="product-head mb-3">
+                            <h2 class="product-title">{{ $product->name }}</h2>
+                        </div>
+                        <div class="price-box mb-2">
+                            <span class="regular-price">{{ $product->mainVariation->promotion_value_formated }}</span>
+                            <span class="old-price"><del>{{ $product->mainVariation->value_formated }}</del></span>
+                        </div>
+{{--                            <span class="ratings justify-content-start">--}}
+{{--                                <span class="rating-wrap">--}}
+{{--                                    <span class="star" style="width: 100%"></span>--}}
+{{--                                </span>--}}
+{{--                        <span class="rating-num">(4)</span>--}}
+{{--                            </span>--}}
+{{--                        <div class="sku mb-3">--}}
+{{--                            <span>SKU: 12345</span>--}}
+{{--                        </div>--}}
+{{--                        <p class="desc-content mb-5">asdasdasd</p>--}}
+{{--                        <div class="product-meta mb-3">--}}
+{{--                            <div class="product-size">--}}
+{{--                                <span>Tamanho:</span>--}}
+{{--                                <a href=""><strong>S</strong></a>--}}
+{{--                                <a href=""><strong>M</strong></a>--}}
+{{--                                <a href=""><strong>L</strong></a>--}}
+{{--                                <a href=""><strong>XL</strong></a>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="product-color-variation mb-3">--}}
+{{--                            <button type="button" class="btn bg-danger"></button>--}}
+{{--                            <button type="button" class="btn bg-primary"></button>--}}
+{{--                            <button type="button" class="btn bg-dark"></button>--}}
+{{--                            <button type="button" class="btn bg-success"></button>--}}
+{{--                        </div>--}}
+{{--                        <div class="product-meta mb-5">--}}
+{{--                            <div class="product-metarial">--}}
+{{--                                <span>Material:</span>--}}
+{{--                                <a href=""><strong>Metal</strong></a>--}}
+{{--                                <a href=""><strong>Resin</strong></a>--}}
+{{--                                <a href=""><strong>Lather</strong></a>--}}
+{{--                                <a href=""><strong>Polymer</strong></a>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+                        <div class="quantity mb-5">
+                            <div class="cart-plus-minus">
+                                <input class="cart-plus-minus-box" value="0" type="text">
+                                <div class="dec qtybutton"></div>
+                                <div class="inc qtybutton"></div>
+                            </div>
+                        </div>
+
+                        @if ($total_stock <= 0)
+                            <div class="alert alert-warning">
+                                Produto indisponível no momento.
+                            </div>
+                        @else
                             @if ($product->has_grid_variation == 0)
                                 <div id="valueDefault">
                                     @if ($product->mainVariation->promotion_value > 0)
@@ -146,10 +152,10 @@
                                     </button>
                                 </div>
                             </form>
-                            @endif
+                        @endif
 
-                            @if ($product->category->id != '' || $product->subcategory->id != '')
-                                <div class="product-meta">
+                        @if ($product->category->id != '' || $product->subcategory->id != '')
+                            <div class="product-meta">
                                     <span class="posted-in">
                                         Categoria:
                                         @if ($product->category->id != '')
@@ -160,165 +166,9 @@
                                             , <a rel="tag" href="{{ route('products', [$product->category->slug, $product->subcategory->slug]) }}">{{ $product->subcategory->name }}</a>.
                                         @endif
                                     </span>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-
-                @if ($product->description != '')
-                    <div class="row mt-3">
-                        <div class="col">
-                            <div class="tabs tabs-product mb-2">
-                                <ul class="nav nav-tabs">
-                                    <li class="nav-item active">
-                                        <a class="nav-link py-3 px-4" href="#productDescription" data-toggle="tab">Descrição</a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content p-0">
-                                    <div class="tab-pane p-4 active" id="productDescription">
-                                        {{ $product->description }}
-                                    </div>
-                                </div>
                             </div>
-                        </div>
-                    </div>
-                @endif
-            </div>
-        </div>
-    </div>
+                        @endif
 
-
-
-
-
-
-
-
-
-    <div class="section">
-        <div class="breadcrumb-area bg-light">
-            <div class="container-fluid">
-                <div class="breadcrumb-content text-center">
-                    <h1 class="title">{{ $product->name }}</h1>
-                    <ul>
-                        <li>
-                            <a href="{{ route('home') }}">Home </a>
-                        </li>
-                        <li class="active">{{ $product->name }}</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="section section-margin">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-5 offset-lg-0 col-md-8 offset-md-2 col-custom">
-                    <div class="product-details-img">
-                        <div class="single-product-img swiper-container gallery-top">
-                            <div class="swiper-wrapper popup-gallery">
-                                <a class="swiper-slide w-100" href="assets/images/products/large-size/1.jpg">
-                                    <img class="w-100" src="assets/images/products/large-size/1.jpg" alt="Product">
-                                </a>
-                                <a class="swiper-slide w-100" href="assets/images/products/large-size/2.jpg">
-                                    <img class="w-100" src="assets/images/products/large-size/2.jpg" alt="Product">
-                                </a>
-                                <a class="swiper-slide w-100" href="assets/images/products/large-size/3.jpg">
-                                    <img class="w-100" src="assets/images/products/large-size/3.jpg" alt="Product">
-                                </a>
-                                <a class="swiper-slide w-100" href="assets/images/products/large-size/4.jpg">
-                                    <img class="w-100" src="assets/images/products/large-size/4.jpg" alt="Product">
-                                </a>
-                                <a class="swiper-slide w-100" href="assets/images/products/large-size/5.jpg">
-                                    <img class="w-100" src="assets/images/products/large-size/5.jpg" alt="Product">
-                                </a>
-                                <a class="swiper-slide w-100" href="assets/images/products/large-size/6.jpg">
-                                    <img class="w-100" src="assets/images/products/large-size/6.jpg" alt="Product">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="single-product-thumb swiper-container gallery-thumbs">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <img src="assets/images/products/small-product/1.jpg" alt="Product">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="assets/images/products/small-product/2.jpg" alt="Product">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="assets/images/products/small-product/3.jpg" alt="Product">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="assets/images/products/small-product/4.jpg" alt="Product">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="assets/images/products/small-product/5.jpg" alt="Product">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="assets/images/products/small-product/6.jpg" alt="Product">
-                                </div>
-                            </div>
-                            <div class="swiper-button-horizental-next  swiper-button-next"><i class="pe-7s-angle-right"></i></div>
-                            <div class="swiper-button-horizental-prev swiper-button-prev"><i class="pe-7s-angle-left"></i></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-7 col-custom">
-                    <div class="product-summery position-relative">
-                        <div class="product-head mb-3">
-                            <h2 class="product-title">{{ $product->name }}</h2>
-                        </div>
-                        <div class="price-box mb-2">
-                            <span class="regular-price">{{ $product->mainVariation->promotion_value_formated }}</span>
-                            <span class="old-price"><del>{{ $product->mainVariation->value_formated }}</del></span>
-                        </div>
-                        <span class="ratings justify-content-start">
-                            <span class="rating-wrap">
-                            <span class="star" style="width: 100%"></span>
-                        </span>
-                        <span class="rating-num">(4)</span>
-                        </span>
-                        <div class="sku mb-3">
-                            <span>SKU: 12345</span>
-                        </div>
-                        <p class="desc-content mb-5">asdasdasd</p>
-                        <div class="product-meta mb-3">
-                            <div class="product-size">
-                                <span>Tamanho:</span>
-                                <a href=""><strong>S</strong></a>
-                                <a href=""><strong>M</strong></a>
-                                <a href=""><strong>L</strong></a>
-                                <a href=""><strong>XL</strong></a>
-                            </div>
-                        </div>
-                        <div class="product-color-variation mb-3">
-                            <button type="button" class="btn bg-danger"></button>
-                            <button type="button" class="btn bg-primary"></button>
-                            <button type="button" class="btn bg-dark"></button>
-                            <button type="button" class="btn bg-success"></button>
-                        </div>
-                        <div class="product-meta mb-5">
-                            <div class="product-metarial">
-                                <span>Material:</span>
-                                <a href=""><strong>Metal</strong></a>
-                                <a href=""><strong>Resin</strong></a>
-                                <a href=""><strong>Lather</strong></a>
-                                <a href=""><strong>Polymer</strong></a>
-                            </div>
-                        </div>
-                        <div class="quantity mb-5">
-                            <div class="cart-plus-minus">
-                                <input class="cart-plus-minus-box" value="0" type="text">
-                                <div class="dec qtybutton"></div>
-                                <div class="inc qtybutton"></div>
-                            </div>
-                        </div>
-                        <div class="cart-wishlist-btn mb-4">
-                            <div class="add-to_cart">
-                                <a class="btn btn-outline-dark btn-hover-primary" href="cart.html">Comprar</a>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
