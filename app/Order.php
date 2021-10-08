@@ -177,4 +177,11 @@ class Order extends Model
         $this->shipping_code = $newShippingCode;
         $this->update();
     }
+
+    public static function getFromPagarMeTransactionId($transactionId)
+    {
+        return self::query()
+            ->where('pagar_me_transaction_id', $transactionId)
+            ->first();
+    }
 }
