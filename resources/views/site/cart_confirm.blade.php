@@ -50,10 +50,6 @@
                     </div>
                 </div>
             </div>
-
-
-
-
             <div class="row mb-n4">
                 <div class="col-lg-12 col-12 mb-4">
                     <div class="your-order-area border">
@@ -126,49 +122,9 @@
                                 </tfoot>
                             </table>
                         </div>
-{{--                        <div class="payment-accordion-order-button">--}}
-{{--                            <div class="payment-accordion">--}}
-{{--                                <div class="single-payment">--}}
-{{--                                    <h5 class="panel-title mb-3">--}}
-{{--                                        <a class="collapse-off" data-bs-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">--}}
-{{--                                           Boleto Bancário--}}
-{{--                                        </a>--}}
-{{--                                    </h5>--}}
-{{--                                    <div class="collapse show" id="collapseExample">--}}
-{{--                                        <div class="card card-body rounded-0">--}}
-{{--                                            <p>Você poderá pagar em qualquer loteria, ou pelo aplicativo do seu banco. Seu pedido será confirmado após o periodo de compensação do boleto <strong>(Dois à 3 dias úteis)</strong>.</p>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="single-payment">--}}
-{{--                                    <h5 class="panel-title mb-3">--}}
-{{--                                        <a class="collapse-off" data-bs-toggle="collapse" href="#collapseExample-2" aria-expanded="false" aria-controls="collapseExample-2">--}}
-{{--                                            Cartão de Crédito.--}}
-{{--                                        </a>--}}
-{{--                                    </h5>--}}
-{{--                                    <div class="collapse" id="collapseExample-2">--}}
-{{--                                        <div class="card card-body rounded-0">--}}
-{{--                                            <div class="col-md-12">--}}
-{{--                                                <div class="checkout-form-list">--}}
-{{--                                                   <form action="">--}}
-{{--                                                    <div class="card-wrapper"></div>--}}
-{{--                                                    <label>Titular do Cartão <span class="required">*</span></label>--}}
-{{--                                                    <input type="text" required id="nome_cartao">--}}
-{{--                                                    <input class="form-control" placeholder="0000 0000 0000 0000" name="ccnumber" id="number">--}}
-{{--                                                    <input type="text" name="ccmonth" id="ccmonth" class="form-control" placeholder="MM" maxlength="2" minlength="2" >--}}
-{{--                                                    <input type="text"class="form-control" id="ccyear" name="ccyear" placeholder="AAAA">--}}
-{{--                                                    <input class="form-control" id="cvv" name="cvv" type="number" placeholder="Dígito Verificador">--}}
-{{--                                                   </form>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-                            <div class="order-button-payment">
-                                <button class="btn btn-dark btn-hover-primary rounded-0 w-100">Finalizar Compra</button>
-                            </div>
-{{--                        </div>--}}
+                        <div class="order-button-payment">
+                            <button class="btn btn-dark btn-hover-primary rounded-0 w-100 btn-pay">Finalizar Compra</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -181,20 +137,59 @@
 @endpush
 
 @push('js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="{{asset('useLadame/js/plugins/jquery.card.js')}}"></script>
-    <script src="{{asset('useLadame/js/plugins/card.js')}}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{{asset('useLadame/js/plugins/jquery.card.js')}}"></script>
+    <script type="text/javascript" src="{{asset('useLadame/js/plugins/card.js')}}"></script>
+    <script type="text/javascript" src="https://assets.pagar.me/checkout/1.1.0/checkout.js"></script>
 
-    <script>
-        var card = new Card({
-            form: 'form',
-            container: '.card-wrapper',
-            formSelectors: {
-                nameInput: 'input#nome_cartao',
-                numberInput: 'input#number',
-                expiryInput: 'input#ccmonth, input#ccyear',
-                cvcInput: 'input#cvv'
-            }
+    <script type="text/javascript">
+        // TODO isso é necessário?
+        // let card = new Card({
+        //     form: 'form',
+        //     container: '.card-wrapper',
+        //     formSelectors: {
+        //         nameInput: 'input#nome_cartao',
+        //         numberInput: 'input#number',
+        //         expiryInput: 'input#ccmonth, input#ccyear',
+        //         cvcInput: 'input#cvv'
+        //     }
+        // });
+
+        let button = document.querySelector('.btn-pay');
+
+        button.addEventListener('click', () => {
+            var checkout = new PagarMeCheckout.Checkout({
+                encryption_key: 'ek_test_82pi8ALVpEwDL9cdx71PZzSKF4Pnv0',
+                success: (data) => {
+                    console.log(data);
+                    alert('Deu certo!!! Criando pedido no banco de dados...');
+                    // TODO chamar rota POST /carrinho/finalizar
+                },
+                error: (err) => {
+                    console.log(err);
+                },
+            });
+
+            checkout.open({
+                amount: 10000,
+                maxInstallments: 12,
+                defaultInstallment: 1,
+                customerData: 'true',
+                createToken: 'true',
+                paymentMethods: 'boleto,credit_card,pix',
+                uiColor: '#1ea51c',
+                boletoDiscountPercentage: 0,
+                // TODO corrigir data do boleto -> deve ser de hoje até daqui 3 dias?
+                boletoExpirationDate: '12/12/2022',
+                postbackUrl: '{{ route('pagar_me.post_back') }}',
+                items: [{
+                    id: '1',
+                    title: 'ItemZero',
+                    unit_price: 10000,
+                    quantity: 1,
+                    tangible: 'false'
+                }],
+            });
         });
     </script>
 @endpush

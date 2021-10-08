@@ -6,6 +6,10 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes(['verify' => true]);
 
+Route::group('/pagar-me', function() {
+    Route::post('/post-back', 'PagarMeController@postBack')->name('pagar_me.post_back');
+});
+
 Route::middleware('site.boot')->group(function() {
     Route::get('/', 'IndexController@index')->name('home');
     Route::get('/home', 'IndexController@index');
@@ -47,6 +51,9 @@ Route::middleware('site.boot')->group(function() {
     Route::get('clientes/senha/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('customer.password.form');
 
     Route::get('endereco/buscar', 'AddressController@find')->name('address.find');
+
+    // TODO remover caso as rotas dedicadas do post-back deem certo (Linha 7)
+    // Route::post('pagar-me/post-back', 'PagarMeController@postBack')->name('pagar_me.post_back');
 
     Route::middleware(['Auth:web_site'])->prefix('painel')->name('panel.')->group(function() {
         Route::get('/', 'CustomerController@index')->name('panel');
