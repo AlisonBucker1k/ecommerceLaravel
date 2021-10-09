@@ -136,14 +136,8 @@ class Order extends Model
         return $this->hasOne('App\Shipping');
     }
 
-    public function createOrder($customer, int $addressId, int $shippingId)
+    public function createOrder($customer, int $addressId, int $shippingId, $transactionId)
     {
-        // TODO buscar transaction e validar se deu tudo certo
-        $transactionId = 'test_transaction_poptS5I9NJ3qtyuZtW97q7zz3JajnV';
-        $transaction = new Transaction();
-        $transaction->getTransaction($transactionId);
-
-        // TODO se deu certo, criar pedido
         $customerId = $customer->id;
         $cart = Cart::getCart($customerId);
         if ($cart->totalProducts() <= 0) {
@@ -163,6 +157,10 @@ class Order extends Model
 
         $totalValue = $result['value'] + $cart->totalValue();
 
+        // TODO buscar transaction e validar se deu tudo certo
+        $transaction = new Transaction();
+        $pagarMeTransaction = $transaction->find($transactionId, $totalValue);
+
         $this->customer_id = $customerId;
         $this->address_id = $addressId;
         $this->value = $totalValue;
@@ -172,6 +170,8 @@ class Order extends Model
         $this->shipping_deadline = $result['deadline'];
         $this->shipping_code = null;
         $this->status = OrderStatus::PENDING;
+        $this->pagar_me_transaction_id = $transactionId;
+        $this->pagar_me_json = json_encode($pagarMeTransaction);
         $this->save();
 
         $orderProduct = new OrderProduct();

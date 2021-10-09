@@ -8,7 +8,7 @@ use PagarMe\PagarMe;
 
 class Transaction extends PagarMe
 {
-    public function getTransaction($transactionId, $amount)
+    public function find($transactionId, $amount)
     {
         if (!isset($transactionId)) {
             throw new Exception('Token da transação não informado.');
@@ -20,9 +20,8 @@ class Transaction extends PagarMe
         ];
 
         $pagarMeClient = new Client(config('app.pagar_me_api_token'));
-        $transaction = $pagarMeClient->transactions()->capture($request);
 
-        return json_encode($transaction);
+        return $pagarMeClient->transactions()->capture($request);
     }
 }
 
