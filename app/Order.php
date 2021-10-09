@@ -5,11 +5,11 @@ namespace App;
 use App\Enums\OrderHistoryStatus;
 use App\Enums\OrderStatus;
 use App\General\Shipping;
+use App\Payments\PagarMe\Transaction;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 class Order extends Model
 {
@@ -138,6 +138,12 @@ class Order extends Model
 
     public function createOrder($customer, int $addressId, int $shippingId)
     {
+        // TODO buscar transaction e validar se deu tudo certo
+        $transactionId = 'test_transaction_poptS5I9NJ3qtyuZtW97q7zz3JajnV';
+        $transaction = new Transaction();
+        $transaction->getTransaction($transactionId);
+
+        // TODO se deu certo, criar pedido
         $customerId = $customer->id;
         $cart = Cart::getCart($customerId);
         if ($cart->totalProducts() <= 0) {
@@ -145,6 +151,9 @@ class Order extends Model
         }
 
         $address = Address::query()->where(['customer_id' => $customerId, 'id' => $addressId])->first();
+        if (empty($address)) {
+            throw new Exception('Endereço inválido.');
+        }
 
         $shipping = new Shipping();
         $result = $shipping->calculate($cart, $address->postal_code, $shippingId);
@@ -168,8 +177,9 @@ class Order extends Model
         $orderProduct = new OrderProduct();
         $orderProduct->addOrderProducts($cart, $this->id);
 
-        $invoice = new Invoice();
-        $invoice->createOrderInvoice($customerId, $totalValue, $this->id);
+        // TODO acho que é desnecessário por enquanto
+//        $invoice = new Invoice();
+//        $invoice->createOrderInvoice($customerId, $totalValue, $this->id);
     }
 
     public function updateShippingCode($newShippingCode)
