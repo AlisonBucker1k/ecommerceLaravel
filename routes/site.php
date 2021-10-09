@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes(['verify' => true]);
 
-Route::group('/pagar-me', function() {
+Route::prefix('/pagar-me')->group(function() {
     Route::post('/post-back', 'PagarMeController@postBack')->name('pagar_me.post_back');
 });
 

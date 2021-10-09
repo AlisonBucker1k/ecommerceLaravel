@@ -63,11 +63,11 @@ class CartProduct extends Model
 
     public function decreaseQuantity()
     {
+        $this->quantity -= 1;
         if ($this->quantity == 0) {
-            return ;
+            return $this->delete();
         }
 
-        $this->quantity -= 1;
         $this->save();
     }
 }
