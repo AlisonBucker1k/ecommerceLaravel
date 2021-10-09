@@ -52,9 +52,6 @@ Route::middleware('site.boot')->group(function() {
 
     Route::get('endereco/buscar', 'AddressController@find')->name('address.find');
 
-    // TODO remover caso as rotas dedicadas do post-back deem certo (Linha 7)
-    // Route::post('pagar-me/post-back', 'PagarMeController@postBack')->name('pagar_me.post_back');
-
     Route::middleware(['Auth:web_site'])->prefix('painel')->name('panel.')->group(function() {
         Route::get('/', 'CustomerController@index')->name('panel');
         Route::get('perfil', 'CustomerController@profile')->name('profile');
