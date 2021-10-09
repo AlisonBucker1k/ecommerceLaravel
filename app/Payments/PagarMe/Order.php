@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Payments\PagarMe\Order;
+namespace App\Payments\PagarMe;
 
 use App\Order as UseLadameOrder;
 use Exception;
