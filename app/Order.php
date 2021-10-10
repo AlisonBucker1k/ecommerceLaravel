@@ -136,46 +136,50 @@ class Order extends Model
         return $this->hasOne('App\Shipping');
     }
 
-    public function createOrder($customer, int $addressId, int $shippingId, $transactionId)
+    public function createOrder($customer, $params)
     {
-        $customerId = $customer->id;
-        $cart = Cart::getCart($customerId);
+        $cart = Cart::getCart($customer->id);
         if ($cart->totalProducts() <= 0) {
             throw new Exception('Adicione um produto no carrinho efetuar a compra');
         }
 
-        $address = Address::query()->where(['customer_id' => $customerId, 'id' => $addressId])->first();
+        $address = Address::query()->where(['customer_id' => $customer->id, 'id' => $params->address_id])->first();
         if (empty($address)) {
             throw new Exception('Endereço inválido.');
         }
 
         $shipping = new Shipping();
-        $result = $shipping->calculate($cart, $address->postal_code, $shippingId);
+        $result = $shipping->calculate($cart, $address->postal_code, $params->shipping_id);
         if (empty($result)) {
             throw new Exception('Não foi possível calcular o frete, tente novamente mais tarde.');
         }
 
         $totalValue = $result['value'] + $cart->totalValue();
 
-        // TODO buscar transaction e validar se deu tudo certo
-        $transaction = new Transaction();
-        $pagarMeTransaction = $transaction->find($transactionId, $totalValue);
+        // TODO remover
+        $totalValue = 10000;
 
-        $this->customer_id = $customerId;
-        $this->address_id = $addressId;
+        $this->customer_id = $customer->id;
+        $this->address_id = $params->address_id;
         $this->value = $totalValue;
-        $this->shipping_id = $shippingId;
+        $this->shipping_id = $params->shipping_id;
         $this->shipping_description = $result['description'];
         $this->shipping_value = $result['value'];
         $this->shipping_deadline = $result['deadline'];
-        $this->shipping_code = null;
+//        $this->shipping_code = null;
         $this->status = OrderStatus::PENDING;
-        $this->pagar_me_transaction_id = $transactionId;
-        $this->pagar_me_json = json_encode($pagarMeTransaction);
         $this->save();
 
         $orderProduct = new OrderProduct();
         $orderProduct->addOrderProducts($cart, $this->id);
+
+        $transaction = new Transaction();
+        $totalValue = 10000;
+        $pagarMeTransaction = $transaction->find($params->transaction_token, $totalValue);
+
+        $this->pagar_me_transaction_id = $pagarMeTransaction->transaction->id;
+        $this->pagar_me_json = $pagarMeTransaction->toJson();
+        $this->save();
 
         // TODO acho que é desnecessário por enquanto
 //        $invoice = new Invoice();

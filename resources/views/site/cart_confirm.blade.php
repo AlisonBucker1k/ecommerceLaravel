@@ -49,6 +49,18 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-12">
+                    <div class="form-row">
+                        <div class="form-group col-8">
+                            <div id="shipping-options"></div>
+                        </div>
+                        <div class="form-group col-4 text-right">
+                            <a href="#addAddress" data-toggle="modal" class="btn btn-primary btn-modern text-uppercase">
+                                Novo Endereço
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="row mb-n4">
                 <div class="col-lg-12 col-12 mb-4">
@@ -161,12 +173,40 @@
             var checkout = new PagarMeCheckout.Checkout({
                 encryption_key: 'ek_test_82pi8ALVpEwDL9cdx71PZzSKF4Pnv0',
                 success: (data) => {
-                    console.log(data);
-                    alert('Deu certo!!! Criando pedido no banco de dados...');
-                    // TODO chamar rota POST /carrinho/finalizar
+                    let formData = new FormData();
+                    formData.append('transaction_token', data.token);
+                    formData.append('address_id', $('#address').val());
+                    formData.append('shipping_id', $('#shipping').val());
+
+                    $.ajax({
+                        type: 'post',
+                        url: '{{ route('cart.confirm') }}',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        headers: {
+                            'X-CSRF-Token':  '{{ csrf_token() }}'
+                        },
+                        error: function(data, textStatus, errorThrown) {
+                            alert('error');
+                            console.log(data);
+                        },
+                        success: function(data) {
+                            if (data.error) {
+                                alert(data.message);
+                                // toastr.error(data.message);
+                                return false;
+                            }
+
+                            alert(data.message);
+                            // toastr.success(data.message);
+                            console.log(data);
+                        }
+                    });
                 },
                 error: (err) => {
                     console.log(err);
+                    alert('error!!!!');
                 },
             });
 
@@ -191,5 +231,204 @@
                 }],
             });
         });
+    </script>
+
+    <script type="text/javascript">
+        localeSettings = {
+            minimumFractionDigits: 2,
+            style: 'currency',
+            currency: 'BRL'
+        };
+
+        $('.cep').mask('00000-000');
+
+        function clearForm() {
+            document.getElementById('district').value=("");
+            document.getElementById('city').value=("");
+            document.getElementById('street').value=("");
+            document.getElementById('uf').value=("");
+        }
+
+        function callback(data) {
+            if (!("erro" in data)) {
+                document.getElementById('district').value=(data.bairro);
+                document.getElementById('city').value=(data.localidade);
+                document.getElementById('street').value=(data.logradouro);
+                document.getElementById('uf').value=(data.uf);
+            } else {
+                clearForm();
+                toastr.error("CEP não encontrado.");
+            }
+        }
+
+        function findCep(valor) {
+            var cep = valor.replace(/\D/g, '');
+            if (cep != "") {
+                var cepValidate = /^[0-9]{8}$/;
+
+                if(cepValidate.test(cep)) {
+                    document.getElementById('district').value="...";
+                    document.getElementById('city').value="...";
+                    document.getElementById('street').value="...";
+                    document.getElementById('uf').value="...";
+
+                    var script = document.createElement('script');
+                    script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=callback';
+                    document.body.appendChild(script);
+
+                } else {
+                    clearForm();
+                    alert("Formato de CEP inválido.");
+                }
+            } else {
+                clearForm();
+            }
+        }
+
+        function calculateShipping(cep)
+        {
+            $('#shipping-value').html('-');
+            $('#total-value').html('-');
+            $('#btn-create-order').attr({'disabled': 'disabled'});
+            let shippingOptions = $('#shipping-options');
+            shippingOptions.html('');
+
+            $.ajax({
+                type: 'get',
+                url: '/carrinho/calculate-freight',
+                dataType: 'json',
+                data: { cep: cep },
+                beforeSend: function () {
+                    let btn = $('#btn-add-address');
+                    shippingOptions.attr({'disabled': 'disabled'}).prepend(
+                        $('<div>').addClass('loading-shipping-calculate').append(
+                            $('<span>').addClass('fa fa-fw fa-spin fa-spinner').text(),
+                            ' Calculando..'
+                        )
+                    );
+                },
+                complete: function () {
+                    shippingOptions.removeAttr('disabled').children('.loading-shipping-calculate').remove();
+                },
+                success: function (data) {
+                    $('#btn-calculate-freight').html('Calcular').removeAttr('disabled');
+
+                    if (data.error === true) {
+                        toastr.error(data.message);
+                        $('#shipping-value').html('-');
+                        $('#total-value').html('-');
+                        shippingOptions.addClass('d-none');
+
+                        return false;
+                    }
+
+                    for (let shippingType in data) {
+                        let dataShipping = data[shippingType];
+                        let value = dataShipping.value;
+                        var brlValue = 'Grátis';
+                        if (value > 0) {
+                            brlValue = value.toLocaleString('pt-BR', localeSettings);
+                        }
+
+                        if (dataShipping.warning != undefined && data.warning != '') {
+                            toastr.warning(data.warning);
+                        }
+
+                        shippingOptions.append(
+                            $('<div>').addClass('form-check').append(
+                                $('<input>').addClass('form-check-input').attr({
+                                    'type': 'radio',
+                                    'name': 'shipping_id',
+                                    'id': 'type' + shippingType,
+                                    'data-value': dataShipping.value
+                                }).val(shippingType),
+
+                                $('<label>')
+                                    .addClass('form-check-label')
+                                    .attr({'for': 'type' + shippingType})
+                                    .html(dataShipping.description + ' - <strong>' + brlValue + '</strong> - Prazo: ' + dataShipping.deadline + ' dias úteis')
+                            )
+                        );
+                    }
+                }
+            });
+        }
+
+        function handleErrors(data)
+        {
+            let responseJson = data.responseJSON;
+            if (typeof responseJson.errors !== 'object' && responseJson.message !== undefined) {
+                toastr.error(responseJson.message);
+
+                return;
+            }
+
+            let errors = responseJson.errors;
+            for (let field in errors) {
+                toastr.error(errors[field][0]);
+            }
+        }
+
+        $('#form-add-address').submit(function(e) {
+            e.preventDefault();
+
+            let btn = $('#btn-add-address');
+            btn.attr({'disabled': 'disabled'}).prepend(
+                $('<span>').addClass('fa fa-fw fa-spin fa-spinner loading'), ' '
+            );
+
+            $.ajax({
+                url: '{{ route('panel.address.store.json') }}',
+                type: 'POST',
+                dataType: 'json',
+                data: $(this).serialize(),
+                complete: function (data) {
+                    btn.removeAttr('disabled').children('.loading').remove();
+                },
+                success: function (data) {
+                    $('#address').append(
+                        $('<option>').val(data.id).attr({'data-cep':data.postal_code}).text(data.complete_address).prop('selected', 'selected')
+                    );
+
+                    $('#addAddress').modal('toggle');
+                    $('#form-add-address input, #form-add-address select').val('');
+                    calculateShipping(data.postal_code);
+                    toastr.success('Endereço criado com sucesso!');
+                },
+                error: function (data) {
+                    handleErrors(data)
+                }
+            });
+
+            return false;
+        });
+
+        $(document).on('change', '.form-check-input', function () {
+            let value = parseFloat($(this).attr('data-value'));
+            let subtotal = parseFloat('{{ cart.total_value }}');
+            let totalValue = value + subtotal;
+            let shippingValue = 'Grátis';
+            if (value > 0) {
+                shippingValue = value.toLocaleString('pt-BR', localeSettings);
+            }
+
+            $('#shipping-value').html(shippingValue);
+            $('#total-value').html(totalValue.toLocaleString('pt-BR', localeSettings));
+            $('#btn-create-order').removeAttr('disabled');
+        });
+
+        $('#address').change(function () {
+            let cep = $(this).children('option:selected').attr('data-cep');
+            if (cep == '') {
+                toastr.error('');
+            }
+
+            calculateShipping(cep);
+        });
+
+        let cep = $('#address option:selected').attr('data-cep');
+        if (cep !== undefined && cep !== '') {
+            calculateShipping(cep);
+        }
     </script>
 @endpush

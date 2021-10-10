@@ -104,22 +104,31 @@ class CartController extends Controller
     public function createOrder(Request $request)
     {
         $customer = auth()->user();
-        $addressId = $request->post('address_id');
-        $shippingId = $request->post('shipping_id');
 
         DB::beginTransaction();
 
         try {
             $order = new Order();
-            $order->createOrder($customer, $addressId, $shippingId);
+            $order->createOrder($customer, $request);
+
+            $response = [
+                'error' => false,
+                'message' => 'Pedido criado com sucesso!',
+            ];
 
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
+            $response = [
+                'error' => true,
+                'message' => $e->getMessage(),
+            ];
 
-            return redirect()->route('cart')->withErrors($e->getMessage());
+//            return redirect()->route('cart')->withErrors($e->getMessage());
         }
 
-        return redirect()->route('panel.order.show', $order->id)->withSuccess('Pedido realizado!');
+        return response()->json($response);
+
+//        return redirect()->route('panel.order.show', $order->id)->withSuccess('Pedido realizado!');
     }
 }
