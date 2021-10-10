@@ -23,7 +23,7 @@ class Transaction extends PagarMe
         $request = [
             'id' => $transactionId,
             'amount' => $amount,
-        ];""
+        ];
 
         $pagarMeClient = new Client(config('app.pagar_me_api_token'));
         $transaction = $pagarMeClient->transactions()->capture($request);
