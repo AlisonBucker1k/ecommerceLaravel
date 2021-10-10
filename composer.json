@@ -23,7 +23,8 @@
         "michael/laravelpagseguro": "dev-master",
         "pagarme/pagarme-php": "^4.1",
         "rcrowe/twigbridge": "^0.9.8",
-        "verot/class.upload.php": "^2.0"
+        "verot/class.upload.php": "^2.0",
+        "ext-json": "*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
