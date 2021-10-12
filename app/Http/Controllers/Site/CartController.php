@@ -77,6 +77,7 @@ class CartController extends Controller
 
         $data = [
             'cart' => $cart,
+            'customer' => $customer,
             'addresses' => $customer->activeAddresses,
         ];
 

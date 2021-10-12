@@ -156,9 +156,6 @@ class Order extends Model
 
         $totalValue = $result['value'] + $cart->totalValue();
 
-        // TODO remover
-        $totalValue = 10000;
-
         $this->customer_id = $customer->id;
         $this->address_id = $params->address_id;
         $this->value = $totalValue;
@@ -166,7 +163,6 @@ class Order extends Model
         $this->shipping_description = $result['description'];
         $this->shipping_value = $result['value'];
         $this->shipping_deadline = $result['deadline'];
-//        $this->shipping_code = null;
         $this->status = OrderStatus::PENDING;
         $this->save();
 
@@ -174,8 +170,7 @@ class Order extends Model
         $orderProduct->addOrderProducts($cart, $this->id);
 
         $transaction = new Transaction();
-        $totalValue = 10000;
-        $pagarMeTransaction = $transaction->find($params->transaction_token, $totalValue);
+        $pagarMeTransaction = $transaction->find($params->transaction_token, valueInCents(currencyFloat2Brl($totalValue)));
 
         $this->pagar_me_transaction_id = $pagarMeTransaction->transaction->id;
         $this->pagar_me_json = $pagarMeTransaction->toJson();
