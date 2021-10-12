@@ -55,6 +55,17 @@ if (!function_exists('currencyFloat2Brl')) {
     }
 }
 
+if (!function_exists('valueInCents')) {
+    function valueInCents($value)
+    {
+        if (strlen($value) == 2) {
+            return preg_replace('/\D/', '', $value . '00');
+        }
+
+        return preg_replace('/\D/', '', $value);
+    }
+}
+
 if (!function_exists('getOnlyNumber')) {
     function getOnlyNumber($value)
     {

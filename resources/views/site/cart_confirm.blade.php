@@ -28,7 +28,7 @@
                                     <select class="form-control" id="address" name="address_id">
                                         <option value="">Selecione</option>
                                         @foreach ($addresses as $address)
-                                            <option value="{{ $address->id }}" data-cep="{{ $address->postal_code }}" >{{ $address->complete_address }}</option>
+                                            <option value="{{ $address->id }}" data-cep="{{ $address->postal_code }}" data-address="{{ $address }}">{{ $address->complete_address }}</option>
                                         @endforeach
                                     </select>
                                 @else
@@ -125,11 +125,11 @@
                                     <tr class="cart-subtotal">
                                         {{-- TODO fazer cálculo do frete nessa tela --}}
                                         <th class="text-start ps-0">Frete</th>
-                                        <td class="text-end pe-0"><span class="amount">Selecione o endereço</span></td>
+                                        <td class="text-end pe-0"><span id="shipping-value">Selecione o endereço</span></td>
                                     </tr>
                                     <tr class="order-total">
                                         <th class="text-start ps-0">Total</th>
-                                        <td class="text-end pe-0"><strong><span class="amount">{{ $cart->total_value_formated }}</span></strong></td>
+                                        <td class="text-end pe-0"><strong><span id="total-value">{{ $cart->total_value_formated }}</span></strong></td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -155,28 +155,21 @@
     <script type="text/javascript" src="https://assets.pagar.me/checkout/1.1.0/checkout.js"></script>
 
     <script type="text/javascript">
-        // TODO isso é necessário?
-        // let card = new Card({
-        //     form: 'form',
-        //     container: '.card-wrapper',
-        //     formSelectors: {
-        //         nameInput: 'input#nome_cartao',
-        //         numberInput: 'input#number',
-        //         expiryInput: 'input#ccmonth, input#ccyear',
-        //         cvcInput: 'input#cvv'
-        //     }
-        // });
-
         let button = document.querySelector('.btn-pay');
-
         button.addEventListener('click', () => {
+            let isShippingSelected = $('.form-check-input:checked').length > 0;
+            if (!isShippingSelected) {
+                alert('Selecione uma opção de entrega.');
+                return false;
+            }
+
             var checkout = new PagarMeCheckout.Checkout({
                 encryption_key: 'ek_test_82pi8ALVpEwDL9cdx71PZzSKF4Pnv0',
                 success: (data) => {
                     let formData = new FormData();
                     formData.append('transaction_token', data.token);
                     formData.append('address_id', $('#address').val());
-                    formData.append('shipping_id', $('#shipping').val());
+                    formData.append('shipping_id', $('.form-check-input:checked').val());
 
                     $.ajax({
                         type: 'post',
@@ -194,41 +187,95 @@
                         success: function(data) {
                             if (data.error) {
                                 alert(data.message);
-                                // toastr.error(data.message);
+                                // alert(data.message);
                                 return false;
                             }
 
                             alert(data.message);
-                            // toastr.success(data.message);
+                            // alert(data.message);
                             console.log(data);
                         }
                     });
                 },
                 error: (err) => {
                     console.log(err);
-                    alert('error!!!!');
+                    alert('erro no checkout');
                 },
             });
 
+            let totalValueInCents = parseInt($('#total-value').text().replace(/\D/g, ''));
+            let shippingFeeInCents = parseInt($('#shipping-value').text().replace(/\D/g, ''));
+            let selectedAddress = $('#address option:selected').data('address');
+
+            let items = [];
+            @foreach($cartProducts as $cartProduct)
+                items.push({
+                    id: {{ $cartProduct->product->id }},
+                    title: '{{ $cartProduct->product->name }}',
+                    unit_price: {{ getOnlyNumber($cartProduct->variation->value) }},
+                    quantity: {{ $cartProduct->quantity }},
+                    tangible: 'true',
+                });
+            @endforeach
+
             checkout.open({
-                amount: 10000,
-                maxInstallments: 12,
+                items: items,
+                amount: totalValueInCents,
+                maxInstallments: 3,
                 defaultInstallment: 1,
-                customerData: 'true',
+                customerData: 'false',
                 createToken: 'true',
-                paymentMethods: 'boleto,credit_card,pix',
+                paymentMethods: 'boleto,credit_card',
+                // TODO se for PIX tem que ter esse parâmetro:
+                // pix_expiration_date: '12/10/2022 23:59:59',
                 uiColor: '#1ea51c',
                 boletoDiscountPercentage: 0,
-                // TODO corrigir data do boleto -> deve ser de hoje até daqui 3 dias?
-                boletoExpirationDate: '12/12/2022',
+                boletoExpirationDate: '{{ $billExpirationDate }}',
                 postbackUrl: '{{ route('pagar_me.post_back') }}',
-                items: [{
-                    id: '1',
-                    title: 'ItemZero',
-                    unit_price: 10000,
-                    quantity: 1,
-                    tangible: 'false'
-                }],
+                customer: {
+                    external_id: {{ $customer->id }},
+                    name: '{{ $customer->profile->getFullNameShort() }}',
+                    type: 'individual',
+                    country: selectedAddress.country.toLowerCase(),
+                    email: '{{ $customer->email }}',
+                    birthday: '{{ $customer->profile->birth_date }}',
+                    documents: [
+                        {
+                            type: 'cpf',
+                            number: '{{ getOnlyNumber($customer->profile->cpf) }}',
+                        },
+                    ],
+                    phone_numbers: [
+                        '{{ $customer->profile->cellphone }}',
+                    ],
+                },
+                billing: {
+                    name: '{{ $customer->profile->getFullNameShort() }}',
+                    address: {
+                        street: selectedAddress.street,
+                        street_number: selectedAddress.number,
+                        zipcode: selectedAddress.postal_code,
+                        country: selectedAddress.country.toLowerCase(),
+                        state: selectedAddress.state,
+                        city: selectedAddress.city,
+                        neighborhood: selectedAddress.district,
+                        complementary: selectedAddress.complement,
+                    },
+                },
+                shipping: {
+                    name: '{{ $customer->profile->getFullNameShort() }}',
+                    fee: shippingFeeInCents,
+                    address: {
+                        street: selectedAddress.street,
+                        street_number: selectedAddress.number,
+                        zipcode: selectedAddress.postal_code,
+                        country: selectedAddress.country.toLowerCase(),
+                        state: selectedAddress.state,
+                        city: selectedAddress.city,
+                        neighborhood: selectedAddress.district,
+                        complementary: selectedAddress.complement,
+                    },
+                },
             });
         });
     </script>
@@ -240,7 +287,7 @@
             currency: 'BRL'
         };
 
-        $('.cep').mask('00000-000');
+        // $('.cep').mask('00000-000');
 
         function clearForm() {
             document.getElementById('district').value=("");
@@ -257,7 +304,7 @@
                 document.getElementById('uf').value=(data.uf);
             } else {
                 clearForm();
-                toastr.error("CEP não encontrado.");
+                alert("CEP não encontrado.");
             }
         }
 
@@ -285,8 +332,7 @@
             }
         }
 
-        function calculateShipping(cep)
-        {
+        function calculateShipping(cep) {
             $('#shipping-value').html('-');
             $('#total-value').html('-');
             $('#btn-create-order').attr({'disabled': 'disabled'});
@@ -314,7 +360,7 @@
                     $('#btn-calculate-freight').html('Calcular').removeAttr('disabled');
 
                     if (data.error === true) {
-                        toastr.error(data.message);
+                        alert(data.message);
                         $('#shipping-value').html('-');
                         $('#total-value').html('-');
                         shippingOptions.addClass('d-none');
@@ -354,18 +400,17 @@
             });
         }
 
-        function handleErrors(data)
-        {
+        function handleErrors(data) {
             let responseJson = data.responseJSON;
             if (typeof responseJson.errors !== 'object' && responseJson.message !== undefined) {
-                toastr.error(responseJson.message);
+                alert(responseJson.message);
 
                 return;
             }
 
             let errors = responseJson.errors;
             for (let field in errors) {
-                toastr.error(errors[field][0]);
+                alert(errors[field][0]);
             }
         }
 
@@ -393,7 +438,7 @@
                     $('#addAddress').modal('toggle');
                     $('#form-add-address input, #form-add-address select').val('');
                     calculateShipping(data.postal_code);
-                    toastr.success('Endereço criado com sucesso!');
+                    alert('Endereço criado com sucesso!');
                 },
                 error: function (data) {
                     handleErrors(data)
@@ -405,7 +450,7 @@
 
         $(document).on('change', '.form-check-input', function () {
             let value = parseFloat($(this).attr('data-value'));
-            let subtotal = parseFloat('{{ cart.total_value }}');
+            let subtotal = parseFloat('{{ $cart->total_value }}');
             let totalValue = value + subtotal;
             let shippingValue = 'Grátis';
             if (value > 0) {
@@ -420,7 +465,7 @@
         $('#address').change(function () {
             let cep = $(this).children('option:selected').attr('data-cep');
             if (cep == '') {
-                toastr.error('');
+                alert('');
             }
 
             calculateShipping(cep);

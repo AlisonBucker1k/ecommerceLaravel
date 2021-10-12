@@ -28,8 +28,6 @@ class Order extends PagarMe
         $order = UseLadameOrder::getFromPagarMeTransactionId($params->id);
         $order->status = $params->current_status;
         $order->save();
-
-        // TODO criar histórico de processamento dos pedidos? — Talvez usar tablela order_hirstory
     }
 }
 

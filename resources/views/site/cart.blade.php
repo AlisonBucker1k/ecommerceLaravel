@@ -26,7 +26,7 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th class="pro-thumbnail">Image</th>
+                                        <th class="pro-thumbnail">Imagem</th>
                                         <th class="pro-title">Produto</th>
                                         <th class="pro-price">Preço</th>
                                         <th class="pro-quantity">Quantidade</th>
@@ -59,7 +59,7 @@
                                             </td>
                                             <td class="pro-subtotal">
                                                 <span>
-                                                    R$ {{ $cartProduct->subtotal_value_formated }}
+                                                    {{ $cartProduct->subtotal_value_formated }}
                                                     @if ($cartProduct->variation->discount_percent > 0)
                                                         <br/>
                                                         <small>Desconto de {{ $cartProduct->variation->discount_percent_formatted }}</small>
@@ -86,20 +86,12 @@
                     <div class="col-lg-5 ms-auto col-custom">
                         <div class="cart-calculator-wrapper">
                             <div class="cart-calculate-items">
-                                <h3 class="title">Total</h3>
+                                <h3 class="title">Finalizar Compra</h3>
                                 <div class="table-responsive">
                                     <table class="table">
                                         <tr>
                                             <td>Subtotal</td>
                                             <td>{{ $cart->total_value_formated }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Entrega</td>
-                                            <td>-</td>
-                                        </tr>
-                                        <tr class="total">
-                                            <td>Total</td>
-                                            <td class="total-amount">{{ $cart->total_value_formated }}</td>
                                         </tr>
                                     </table>
                                 </div>
