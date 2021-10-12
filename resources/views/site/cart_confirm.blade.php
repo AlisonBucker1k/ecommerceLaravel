@@ -227,14 +227,11 @@
                 createToken: 'true',
                 paymentMethods: 'boleto,credit_card',
                 // TODO se for PIX tem que ter esse parâmetro:
-                pix_expiration_date: '12/10/2022 23:59:59',
+                // pix_expiration_date: '12/10/2022 23:59:59',
                 uiColor: '#1ea51c',
                 boletoDiscountPercentage: 0,
-                //TODO corrigir data do boleto:
-                // deve ser de hoje até daqui 3 dias?
-                boletoExpirationDate: '12/12/2022',
+                boletoExpirationDate: '{{ $billExpirationDate }}',
                 postbackUrl: '{{ route('pagar_me.post_back') }}',
-                // TODO corrigir informaçaoes do customer
                 customer: {
                     external_id: {{ $customer->id }},
                     name: '{{ $customer->profile->getFullNameShort() }}',
