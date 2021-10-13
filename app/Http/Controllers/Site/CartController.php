@@ -126,6 +126,7 @@ class CartController extends Controller
             $response = [
                 'error' => false,
                 'message' => 'Pedido criado com sucesso!',
+                'redirect_url' => route('panel.order.show', $order->id),
             ];
 
             DB::commit();
@@ -135,12 +136,8 @@ class CartController extends Controller
                 'error' => true,
                 'message' => $e->getMessage(),
             ];
-
-//            return redirect()->route('cart')->withErrors($e->getMessage());
         }
 
         return response()->json($response);
-
-//        return redirect()->route('panel.order.show', $order->id)->withSuccess('Pedido realizado!');
     }
 }

@@ -165,9 +165,9 @@
 
             var checkout = new PagarMeCheckout.Checkout({
                 encryption_key: 'ek_test_82pi8ALVpEwDL9cdx71PZzSKF4Pnv0',
-                success: (data) => {
+                success: (response) => {
                     let formData = new FormData();
-                    formData.append('transaction_token', data.token);
+                    formData.append('transaction_token', response.token);
                     formData.append('address_id', $('#address').val());
                     formData.append('shipping_id', $('.form-check-input:checked').val());
 
@@ -180,26 +180,19 @@
                         headers: {
                             'X-CSRF-Token':  '{{ csrf_token() }}'
                         },
-                        error: function(data, textStatus, errorThrown) {
-                            alert('error');
-                            console.log(data);
-                        },
                         success: function(data) {
                             if (data.error) {
                                 alert(data.message);
-                                // alert(data.message);
                                 return false;
                             }
 
-                            alert(data.message);
-                            // alert(data.message);
-                            console.log(data);
+                            window.location = data.redirect_url;
                         }
                     });
                 },
-                error: (err) => {
-                    console.log(err);
-                    alert('erro no checkout');
+                error: (error) => {
+                    console.log(error);
+                    alert('Erro no Pagamento.');
                 },
             });
 
@@ -226,8 +219,6 @@
                 customerData: 'false',
                 createToken: 'true',
                 paymentMethods: 'boleto,credit_card',
-                // TODO se for PIX tem que ter esse parâmetro:
-                // pix_expiration_date: '12/10/2022 23:59:59',
                 uiColor: '#1ea51c',
                 boletoDiscountPercentage: 0,
                 boletoExpirationDate: '{{ $billExpirationDate }}',
