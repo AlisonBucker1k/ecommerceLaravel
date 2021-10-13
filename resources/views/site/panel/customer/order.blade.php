@@ -22,12 +22,32 @@
             <div class="row">
                 <div class="col-12">
                     <div class="featured-boxes">
+                        <div class="row mb-5">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="form-group row mb-0">
+                                            <h5>Status do Pagamento</h5>
+                                        </div>
+                                        <div class="form-group row mb-0">
+                                            <div class="col">{{ $order->pagar_me_order_status }}</div>
+                                        </div>
+
+                                        @if (\App\Payments\PagarMe\Order::canCancelBill($order->pagar_me_json))
+                                            <div class="form-group row mb-0">
+                                                <a href="{{ route('panel.order.cancel',  $order->id) }}" onclick="return confirm('Deseja realmente cancelar o pedido?');" class="btn btn-danger">Cancelar Pedido</a>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="form-group row mb-0">
-                                            <h5>Detalhes</h5>
+                                            <h5>Detalhes do Pedido</h5>
                                         </div>
                                         <div class="form-group row mb-0">
                                             <label class="font-weight-bold">Valor:</label>
