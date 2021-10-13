@@ -30,7 +30,7 @@
                                             <h5>Status do Pagamento</h5>
                                         </div>
                                         <div class="form-group row mb-0">
-                                            <div class="col">{{ $order->pagar_me_order_status }}</div>
+                                            <div class="col">{{ \App\Payments\PagarMe\Order::getOrderStatus($order->pagar_me_json) }}</div>
                                         </div>
 
                                         @if (\App\Payments\PagarMe\Order::canCancelBill($order->pagar_me_json))
