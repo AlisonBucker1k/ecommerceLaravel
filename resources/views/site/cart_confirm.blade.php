@@ -49,18 +49,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12">
-                    <div class="form-row">
-                        <div class="form-group col-8">
-                            <div id="shipping-options"></div>
-                        </div>
-                        <div class="form-group col-4 text-right">
-                            <a href="#addAddress" data-toggle="modal" class="btn btn-primary btn-modern text-uppercase">
-                                Novo Endereço
-                            </a>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="row mb-n4">
                 <div class="col-lg-12 col-12 mb-4">
