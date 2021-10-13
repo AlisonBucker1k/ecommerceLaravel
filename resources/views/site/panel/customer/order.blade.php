@@ -31,7 +31,7 @@
                                         </div>
                                         <div class="form-group row mb-0">
                                             <label class="font-weight-bold">Valor:</label>
-                                            <div class="col">R$ {{ $order->value_formated }}</div>
+                                            <div class="col">{{ $order->value_formated }}</div>
                                         </div>
                                         <div class="form-group row mb-0">
                                             <label class="font-weight-bold">Data:</label>
@@ -41,7 +41,7 @@
                                             <label class="font-weight-bold">Frete:</label>
                                             <div class="col">
                                                 @if ($order->shipping_value > 0)
-                                                    R$ {{ $order->shipping_value_formated }}
+                                                    {{ $order->shipping_value_formated }}
                                                 @else
                                                     <strong>Grátis</strong>
                                                 @endif
@@ -51,14 +51,14 @@
                                             <label class="font-weight-bold">Envio:</label>
                                             <div class="col">Em {{ $order->shipping_deadline }} dias úteis ({{ $order->shipping_description }})</div>
                                         </div>
-                                        
+
                                         @if ($shippingCode != '')
                                             <div class="form-group row mb-0">
                                                 <label class="font-weight-bold">Código de Rastreio:</label>
                                                 <div class="col">{{ $shippingCode }}</div>
                                             </div>
                                         @endif
-                                        
+
                                         <div class="form-group row mb-0 mt-3">
                                             <h5>Produtos</h5>
                                         </div>
@@ -87,12 +87,12 @@
                                                                 @endforeach
                                                             </td>
                                                             <td class="product-price text-right">
-                                                                <span class="amount">R$ {{ $orderProduct->final_value_formated }}</span>
+                                                                <span class="amount">{{ $orderProduct->final_value_formated }}</span>
                                                                 @if ($orderProduct->discount_percent > 0)
                                                                     <br/>
                                                                     <del>
                                                                         <small>
-                                                                            <span class="amount">R$ {{ $orderProduct->value_formated }}</span>
+                                                                            <span class="amount">{{ $orderProduct->value_formated }}</span>
                                                                         </small>
                                                                     </del>
                                                                 @endif
@@ -101,19 +101,20 @@
                                                                 {{ $orderProduct->quantity }}
                                                             </td>
                                                             <td class="product-subtotal text-right">
-                                                                <span class="amount">R$ {{ $orderProduct->subtotal_value_formated }}</span>
+                                                                <span class="amount">{{ $orderProduct->subtotal_value_formated }}</span>
                                                             </td>
                                                         </tr>
                                                     @endforeach
+
                                                     <tr>
                                                         <td colspan="4" class="text-right font-weight-bold">Subtotal</td>
-                                                        <td class="text-right font-weight-bold">R$ {{ $order->products_total_value_formated }}</td>
+                                                        <td class="text-right font-weight-bold">{{ $order->products_total_value_formated }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="4" class="text-right font-weight-bold">Frete</td>
                                                         <td class="text-right font-weight-bold">
                                                             @if ($order->shipping_value > 0)
-                                                                + R$ {{ $order->shipping_value_formated }}
+                                                                + {{ $order->shipping_value_formated }}
                                                             @else
                                                                 Grátis
                                                             @endif
@@ -121,14 +122,13 @@
                                                     </tr>
                                                     <tr>
                                                         <td colspan="4" class="text-right font-weight-bold">Total</td>
-                                                        <td class="text-right font-weight-bold">R$ {{ $order->value_formated }}</td>
+                                                        <td class="text-right font-weight-bold">{{ $order->value_formated }}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
 
                                         @if ($order->status == $pendingStatus)
-                                            <a href="{{ route('panel.invoice.pagseguro_payment', $order->invoice->id) }}" target="_blank" class="btn btn-success btn-block">Efetuar Pagamento</a>
                                             <a href="{{ route('panel.order.cancel',  $order->id) }}" onclick="return confirm('Deseja realmente cancelar o pedido?');" class="btn btn-default btn-block">Cancelar Pedido</a>
                                         @endif
                                     </div>
@@ -138,6 +138,7 @@
                     </div>
                 </div>
             </div>
+
             @if (!empty($histories))
                 <div class="overflow-hidden mb-1">
                     <h2 class="font-weight-normal text-7 mb-4 mt-4">Atualizações</h2>
