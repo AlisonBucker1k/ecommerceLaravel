@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums;
+use App\Payments\PagarMe\Enums as PagarMeEnums;
 
 return [
 
@@ -105,4 +106,18 @@ return [
         Enums\ShippingStatus::INACTIVE => 'Inativo',
         Enums\ShippingStatus::ACTIVE => 'Ativo',
     ],
+
+    PagarMeEnums\OrderStatus::class => [
+        PagarMeEnums\OrderStatus::PROCESSING => 'Em processo de autorização',
+        PagarMeEnums\OrderStatus::AUTHORIZED => 'Autorizado',
+        PagarMeEnums\OrderStatus::PAID => 'Pago',
+        PagarMeEnums\OrderStatus::REFUNDED => 'Estornado',
+        PagarMeEnums\OrderStatus::WAITING_PAYMENT => 'Aguardando pagamento',
+        PagarMeEnums\OrderStatus::PENDING_REFUND => 'Aguardando estorno',
+        PagarMeEnums\OrderStatus::REFUSED => 'Não autorizado',
+        PagarMeEnums\OrderStatus::CHARGED_BACK => 'A transação sofreu chargeback',
+        PagarMeEnums\OrderStatus::ANALYZING => 'Análise antifraude',
+        PagarMeEnums\OrderStatus::PENDING_REVIEW => 'Aguardando análise',
+    ],
+
 ];

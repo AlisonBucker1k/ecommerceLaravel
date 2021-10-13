@@ -128,9 +128,10 @@
                                             </table>
                                         </div>
 
-                                        @if ($order->status == $pendingStatus)
-                                            <a href="{{ route('panel.order.cancel',  $order->id) }}" onclick="return confirm('Deseja realmente cancelar o pedido?');" class="btn btn-default btn-block">Cancelar Pedido</a>
-                                        @endif
+                                        {{-- TODO corrigir cancelamento pelo PagarMe --}}
+{{--                                        @if ($order->status == $pendingStatus)--}}
+{{--                                            <a href="{{ route('panel.order.cancel',  $order->id) }}" onclick="return confirm('Deseja realmente cancelar o pedido?');" class="btn btn-default btn-block">Cancelar Pedido</a>--}}
+{{--                                        @endif--}}
                                     </div>
                                 </div>
                             </div>
@@ -165,7 +166,7 @@
                                                             <td class="text-center">{{ dateSql2Br($history->created_at) }}</td>
                                                             <td class="text-center">
                                                                 {{ $history->status_description }}
-                                                                @if (history.status == orderHistorySentStatus and history.code != '')
+                                                                @if ($history->status == $orderHistorySentStatus && !empty($history->code))
                                                                     <br>
                                                                     <small>Código: {{ $history->code }}</small>
                                                                 @endif

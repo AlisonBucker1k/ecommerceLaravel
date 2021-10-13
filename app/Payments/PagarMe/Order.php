@@ -26,8 +26,12 @@ class Order extends PagarMe
         $this->validateSignature();
 
         $order = UseLadameOrder::getFromPagarMeTransactionId($params->id);
-        $order->status = $params->current_status;
-        $order->save();
+        if (!empty($order->pagar_me_json)) {
+            $pagarMeDecodedJson = json_decode($order->pagar_me_json);
+            $pagarMeDecodedJson->status = $params->current_status;
+            $order->pagar_me_json = json_encode($pagarMeDecodedJson);
+            $order->save();
+        }
     }
 }
 
