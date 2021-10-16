@@ -123,3 +123,21 @@ if (!function_exists('getIdYoutube')) {
         return preg_replace('/.*(\/|\?v=)(.{11})([&|\/].*|)/', '$2', $url);
     }
 }
+
+if (!function_exists('maskCep')) {
+    function maskCep($cep)
+    {
+        if (empty($cep)) {
+            return '';
+        }
+
+        $mask = '#####-###';
+        $cep = str_replace(' ', '', getOnlyNumber($cep));
+
+        for ($i = 0; $i < strlen($cep); $i++) {
+            $mask[strpos($mask, '#')] = $cep[$i];
+        }
+
+        return $mask;
+    }
+}

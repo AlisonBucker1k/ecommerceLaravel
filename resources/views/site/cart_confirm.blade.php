@@ -41,10 +41,14 @@
                             <div class="form-group col-8">
                                 <div id="shipping-options"></div>
                             </div>
-                            <div class="form-group col-4 text-right">
-                                <a href="#addAddress" data-toggle="modal" class="btn btn-primary btn-modern text-uppercase">
-                                    Novo Endereço
+                            <div class="form-group col-4 text-right mb-5">
+                                <a href="#" class="btn btn-primary btn-modern text-uppercase btn-form-address">
+                                    Novo Endereço <i class="fa fa-caret-down"></i>
                                 </a>
+                            </div>
+
+                            <div class="address-form d-none">
+                                @include('site.elements.address_form')
                             </div>
                         </div>
                     </div>
@@ -263,58 +267,28 @@
         localeSettings = {
             minimumFractionDigits: 2,
             style: 'currency',
-            currency: 'BRL'
+            currency: 'BRL',
         };
 
-        // $('.cep').mask('00000-000');
+        let btnAddressForm = document.querySelector('.btn-form-address');
+        btnAddressForm.addEventListener('click', (event) => {
+            event.preventDefault();
 
-        function clearForm() {
-            document.getElementById('district').value=("");
-            document.getElementById('city').value=("");
-            document.getElementById('street').value=("");
-            document.getElementById('uf').value=("");
-        }
-
-        function callback(data) {
-            if (!("erro" in data)) {
-                document.getElementById('district').value=(data.bairro);
-                document.getElementById('city').value=(data.localidade);
-                document.getElementById('street').value=(data.logradouro);
-                document.getElementById('uf').value=(data.uf);
+            let addressForm = document.querySelector('.address-form');
+            if (addressForm.classList.contains('d-none')){
+                addressForm.classList.remove('d-none');
+                btnAddressForm.innerHTML = 'Novo endereço <i class="fa fa-caret-up"></i>';
             } else {
-                clearForm();
-                alert("CEP não encontrado.");
+                addressForm.classList.add('d-none');
+                btnAddressForm.innerHTML = 'Novo endereço <i class="fa fa-caret-down"></i>';
             }
-        }
-
-        function findCep(valor) {
-            var cep = valor.replace(/\D/g, '');
-            if (cep != "") {
-                var cepValidate = /^[0-9]{8}$/;
-
-                if(cepValidate.test(cep)) {
-                    document.getElementById('district').value="...";
-                    document.getElementById('city').value="...";
-                    document.getElementById('street').value="...";
-                    document.getElementById('uf').value="...";
-
-                    var script = document.createElement('script');
-                    script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=callback';
-                    document.body.appendChild(script);
-
-                } else {
-                    clearForm();
-                    alert("Formato de CEP inválido.");
-                }
-            } else {
-                clearForm();
-            }
-        }
+        });
 
         function calculateShipping(cep) {
             $('#shipping-value').html('-');
             $('#total-value').html('-');
             $('#btn-create-order').attr({'disabled': 'disabled'});
+
             let shippingOptions = $('#shipping-options');
             shippingOptions.html('');
 
@@ -444,7 +418,7 @@
         $('#address').change(function () {
             let cep = $(this).children('option:selected').attr('data-cep');
             if (cep == '') {
-                alert('');
+                return false;
             }
 
             calculateShipping(cep);
