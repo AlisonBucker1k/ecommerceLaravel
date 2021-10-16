@@ -1,41 +1,42 @@
 <div class="create-address contact-form-wrapper">
     <form class="address-form" method="post">
+        <input type="hidden" name="address_id" value="{{ $address->id }}">
         <div class="form-group row">
             <div class="col-lg-4">
                 <label>CEP</label>
-                <input name="cep" id="cep" class="form-control cep" type="text" value="{{ old('cep') }}" onblur="findCep(this.value);" required="required">
+                <input name="cep" id="cep" class="form-control" type="text" value="{{ old('cep', maskCep($address->postal_code)) }}" onblur="findCep(this.value);" required="required">
             </div>
             <div class="col-lg-8">
                 <label>Endereço</label>
-                <input name="street" id="street" class="form-control" type="text" value="{{ old('street') }}" placeholder="Rua..." required="required">
+                <input name="street" id="street" class="form-control" type="text" value="{{ old('street', $address->street) }}" placeholder="Rua..." required="required">
             </div>
         </div>
         <div class="form-group row">
             <div class="col-lg-6">
                 <label>Complemento</label>
-                <input name="complement" class="form-control" type="text" value="{{ old('complement') }}" placeholder="Complemento, Ex: Apto 2014 - Torre Sul">
+                <input name="complement" class="form-control" type="text" value="{{ old('complement', $address->complement) }}" placeholder="Complemento, Ex: Apto 2014 - Torre Sul">
             </div>
             <div class="col-lg-6">
                 <label>Referência</label>
-                <input name="reference" class="form-control" type="text" value="{{ old('reference') }}" placeholder="Referência, Ex: Em frente ao colégio Estadual">
+                <input name="reference" class="form-control" type="text" value="{{ old('reference', $address->reference) }}" placeholder="Referência, Ex: Em frente ao colégio Estadual">
             </div>
         </div>
         <div class="form-group row">
             <div class="col-lg-3">
                 <label>Número</label>
-                <input name="number" class="form-control" type="text" value="{{ old('number') }}">
+                <input name="number" class="form-control" type="text" value="{{ old('number', $address->number) }}">
             </div>
             <div class="col-lg-3">
                 <label>Cidade</label>
-                <input name="city" id="city" class="form-control" type="text" value="{{ old('city') }}" required="required">
+                <input name="city" id="city" class="form-control" type="text" value="{{ old('city', $address->city) }}" required="required">
             </div>
             <div class="col-lg-3">
                 <label>Estado</label>
-                <input name="state" id="uf" class="form-control" type="text" value="{{ old('state') }}" required="required">
+                <input name="state" id="uf" class="form-control" type="text" value="{{ old('state', $address->state) }}" required="required">
             </div>
             <div class="col-lg-3">
                 <label>Bairro</label>
-                <input name="district" id="district" class="form-control" type="text" value="{{ old('district') }}" placeholder="Bairro" required="required">
+                <input name="district" id="district" class="form-control" type="text" value="{{ old('district', $address->district) }}" placeholder="Bairro" required="required">
             </div>
         </div>
         <div class="row mt-5">
@@ -96,7 +97,7 @@
             document.getElementById('street').value = '...';
             document.getElementById('uf').value = '...';
 
-            var script = document.createElement('script');
+            let script = document.createElement('script');
             script.src = 'https://viacep.com.br/ws/' + cep + '/json/?callback=callback';
             document.body.appendChild(script);
         }
