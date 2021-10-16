@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Request;
+use Illuminate\Http\Request;
 use App\Payments\PagarMe\Order as PagarMeOrder;
 
 class PagarMeController extends Controller

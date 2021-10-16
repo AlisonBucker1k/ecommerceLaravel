@@ -44,14 +44,15 @@ class OrderController extends Controller
 
     public function destroy(Order $order)
     {
-        DB::beginTransaction();
+//        DB::beginTransaction();
 
         try {
-            $order->invoice->cancel();
+            // TODO solicitar cancelamento pela API PagarMe
+//            $order->invoice->cancel();
 
-            DB::commit();
+//            DB::commit();
         } catch (Exception $e) {
-            DB::rollBack();
+//            DB::rollBack();
 
             return back()->withErrors($e->getMessage());
         }
