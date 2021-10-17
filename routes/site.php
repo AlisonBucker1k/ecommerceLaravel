@@ -35,6 +35,7 @@ Route::middleware('site.boot')->group(function() {
     Route::get('/carrinho/{cartProduct}/remove', 'CartProductController@removeProduct')->name('cart.product.remove');
     Route::post('/carrinho/{cartProduct}/increase-quantity', 'CartProductController@increaseCartProductQuantity')->name('cart_product.increase_quantity');
     Route::post('/carrinho/{cartProduct}/decrease-quantity', 'CartProductController@decreaseCartProductQuantity')->name('cart_product.decrease_quantity');
+    Route::post('/carrinho/{cartProduct}/quantity', 'CartProductController@changeQuantity')->name('cart_product.change_quantity');
 
     Route::get('acessar', 'AuthController@index')->name('login');
     Route::post('acessar', 'AuthController@login');
