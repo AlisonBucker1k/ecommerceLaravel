@@ -49,17 +49,11 @@
                                             </td>
                                             <td class="pro-price"><span>{{ $cartProduct->variation->value_formated }}</span></td>
                                             <td class="--pro-quantity">
-                                                <div class="--quantity">
-                                                    <div class="--cart-plus-minus">
-                                                        <input class="cart-plus-minus-box" value="{{ $cartProduct->quantity }}" type="text">
-                                                        <div class="dec qtybutton change-product-quantity" data-post-url="{{ route('cart_product.decrease_quantity', [$cartProduct->id]) }}"><i class="fa fa-minus"></i></div>
-                                                        <div class="inc qtybutton change-product-quantity" data-post-url="{{ route('cart_product.increase_quantity', [$cartProduct->id]) }}"><i class="fa fa-plus"></i></div>
-                                                    </div>
-                                                </div>
+                                                @include('site.elements.product_quantity_form', ['cartProduct' => $cartProduct])
                                             </td>
                                             <td class="pro-subtotal">
                                                 <span>
-                                                    {{ $cartProduct->subtotal_value_formated }}
+                                                    <p class="product-quantity">{{ $cartProduct->subtotal_value_formated }}</p>
                                                     @if ($cartProduct->variation->discount_percent > 0)
                                                         <br/>
                                                         <small>Desconto de {{ $cartProduct->variation->discount_percent_formatted }}</small>
@@ -104,25 +98,3 @@
         </div>
     </div>
 @endsection
-
-@push('js')
-    <script type="text/javascript">
-        $('.change-product-quantity').click(function () {
-            $.ajax({
-                url: $(this).attr('data-post-url'),
-                type: 'post',
-                dataType: 'json',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                },
-                success: function(response) {
-                    if (response.error) {
-                        alert(response.message);
-                    }
-
-                    window.location.reload();
-                }
-            });
-        });
-    </script>
-@endpush

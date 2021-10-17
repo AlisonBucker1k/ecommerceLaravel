@@ -79,13 +79,6 @@
 {{--                                <a href=""><strong>Polymer</strong></a>--}}
 {{--                            </div>--}}
 {{--                        </div>--}}
-                        <div class="quantity mb-5">
-                            <div class="cart-plus-minus">
-                                <input class="cart-plus-minus-box" value="0" type="text">
-                                <div class="dec qtybutton"></div>
-                                <div class="inc qtybutton"></div>
-                            </div>
-                        </div>
 
                         @if ($total_stock <= 0)
                             <div class="alert alert-warning">
