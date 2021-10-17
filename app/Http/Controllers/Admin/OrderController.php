@@ -5,11 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\OrderHistoryStatus;
 use App\Enums\OrderStatus;
 use App\Http\Controllers\Controller;
-use App\Mail\OrderStatusUpdate;
 use App\Order;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
