@@ -63,6 +63,11 @@ class Order extends Model
         return OrderStatus::getDescription($this->status);
     }
 
+    public function getPaymentStatusDescriptionAttribute()
+    {
+        return Payments\PagarMe\Order::getOrderStatus($this->pagar_me_json);
+    }
+
     public function getProductsTotalValueAttribute()
     {
         $total = 0;
