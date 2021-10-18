@@ -123,7 +123,7 @@
                                                     @endif
                                                 </li>
                                             @empty
-                                                asd
+                                                
                                             @endforelse
                                         </ul>
                                     </li>
@@ -207,20 +207,29 @@
                             <li class="has-children">
                                 <a href="#">Categorias <i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                 <ul class="dropdown">
-                                    <li><a href="shop-grid.html">Shop Grid</a></li>
-                                    <li><a href="shop-left-sidebar.html">Shop Left Sidebar</a></li>
-                                    <li><a href="shop-right-sidebar.html">Shop Right Sidebar</a></li>
-                                    <li><a href="shop-list-fullwidth.html">Shop List Fullwidth</a></li>
-                                    <li><a href="shop-list-left-sidebar.html">Shop List Left Sidebar</a></li>
-                                    <li><a href="shop-list-right-sidebar.html">Shop List Right Sidebar</a></li>
-                                    <li><a href="wishlist.html">Wishlist</a></li>
-                                    <li><a href="cart.html">Shopping Cart</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                    <li><a href="compare.html">Compare</a></li>
+                                    @forelse ($categories as $category)
+                                        <li class="col">
+                                            <h3>
+                                                <a style="font-weight: 700 !important; font-size: 15px !important;" href="{{ route('products', [$category->slug]) }}">{{ $category->name }}</a>
+                                            </h3>
+                                            @if (!empty($category->subcategories))
+                                                <ul class="mb-n2 " style="margin-bottom: 15px !important; margin-left: 10px;">
+                                                    @foreach ($category->subcategories as $subcategory)
+                                                        <li><a href="{{ route('products', [$category->slug, $subcategory->slug]) }}">{{ $subcategory->name }}</a></li>
+                                                    @endforeach
+                                                </ul>
+                                            @endif
+                                        </li>
+                                    @empty
+                                        
+                                    @endforelse
                                 </ul>
                             </li>
                             <li><a href="{{route('about')}}">Sobre nós</a></li>
                             <li><a href="{{route('contact')}}">Contato</a></li>
+                            @if(Auth::check())
+                                <li><a href="{{route('customer.logout')}}">Sair</a></li>
+                            @endif
                         </ul>
                     </nav>
                 </div>

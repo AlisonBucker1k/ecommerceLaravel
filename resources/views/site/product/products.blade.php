@@ -27,20 +27,19 @@
                             </div>
                         </div>
                         <div class="shop-top-bar-right">
-                            <div class="shop-short-by mr-4">
+                            {{-- <div class="shop-short-by mr-4">
                                 <select class="nice-select" aria-label=".form-select-sm example">
                                     <option selected>Exibir 24</option>
                                     <option value="2">Exibir 12</option>
                                     <option value="3">Exibir 15</option>
                                     <option value="4">Exibir 30</option>
                                 </select>
-                            </div>
+                            </div> --}}
                             <div class="shop-short-by mr-4">
                                 <select class="nice-select" aria-label=".form-select-sm example">
                                     <option selected>Ordenar por: </option>
-                                    <option value="2">Ord. por Avaliação</option>
-                                    <option value="3">Ord. por recentes</option>
-                                    <option value="3">Ord. por Maior Preço</option>
+                                    <option value="1">Ord. por recentes</option>
+                                    <option value="2">Ord. por Maior Preço</option>
                                     <option value="3">Ord. por Menor Preço</option>
                                 </select>
                             </div>
@@ -51,52 +50,46 @@
                         </div>
                     </div>
                     <div class="row shop_wrapper grid_3">
-                        @forelse ($products as $product)
-                            <form action="{{ route('cart.product.add', $product->slug) }}" method="post">
-                                @csrf
-                                <input type="hidden" name="variation_id" id="variationId" value="{{ $product->mainVariation->id }}">
-                                
-                                @php $variation = $product->availableVariation(); @endphp
 
-                                <div class="col-lg-4 col-md-4 col-sm-6 product" data-aos="fade-up" data-aos-delay="400">
+                        @forelse ($products as $product)
+                            <!-- Single Product Start -->
+                            @php $variation = $product->availableVariation(); @endphp
+                            <div class="col-lg-4 col-md-4 col-sm-6 product" data-aos="fade-up" data-aos-delay="200">
+                                <form action="{{ route('cart.product.add', $product->slug) }}" method="post">
                                     <div class="product-inner">
                                         <div class="thumb">
                                             <a href="{{ route('product.show', [$product->slug]) }}" class="image">
                                                 <img class="first-image" src="{{asset('useLadame/images/products/medium-size/2.jpg')}}" alt="Product" />
                                                 <img class="second-image" src="{{asset('useLadame/images/products/medium-size/2.jpg')}}" alt="Product" />
                                             </a>
-                                            <div class="actions">
+                                            {{-- <div class="actions">
                                                 <a href="wishlist.html" title="Wishlist" class="action wishlist"><i class="pe-7s-like"></i></a>
                                                 <a href="#" title="Quickview" class="action quickview" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i class="pe-7s-search"></i></a>
                                                 <a href="compare.html" title="Compare" class="action compare"><i class="pe-7s-shuffle"></i></a>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                         <div class="content">
-                                            <h4 class="sub-title"><a href="{{ route('product.show', [$product->slug]) }}">{{ $product->name }}</a></h4>
+                                            <h4 class="sub-title"><a href="single-product.html"><a href="{{ route('product.show', [$product->slug]) }}">{{ $product->name }}</a></a></h4>
                                             <h5 class="title"><a href="{{ route('product.show', [$product->slug]) }}">{{ $product->name }}</a></h5>
-                                            <span class="ratings">
-                                                <span class="rating-wrap">
-                                                <span class="star" style="width: 100%"></span>
-                                            </span>
-                                            <span class="rating-num">(4)</span>
-                                            </span>
-                                            <p>{{ $product->description }}</p>
+                                        
                                             <span class="price">
                                                 <span class="new">{{ $variation->final_price_formated }}</span>
                                                 <span class="old">{{ $variation->final_price_formated }}</span>
                                             </span>
                                             <div class="shop-list-btn">
                                                 <a title="Wishlist" href="#" class="btn btn-sm btn-outline-dark btn-hover-primary wishlist"><i class="fa fa-heart"></i></a>
-                                                <button type="submit" class="" title="Comprar">Comprar</button>
-                                                <a title="Compare" href="#" class="btn btn-sm btn-outline-dark btn-hover-primary compare"><i class="fa fa-random"></i></a>
+                                                <button class="btn btn-sm btn-outline-dark btn-hover-primary" type="submit" title="Detalhes">Ver mais</button>
+                                                
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
+                            <!-- Single Product End -->
                         @empty
                             <p>Nenhum produto encontrado</p>
                         @endforelse 
+
                     </div>
                     <div class="shop_toolbar_wrapper mt-10">
                         <div class="shop-top-bar-left">
@@ -173,8 +166,13 @@
                                     {{-- TODO corrigir modo de filtrar: usando string '$1 - $200' nao vai rolar --}}
                                     {{-- <input class="slider-range-amount" type="start_value" name="text" id="amount" /> --}}
                                     {{-- <button class="slider-range-submit" type="submit">Filtrar</button> --}}
-                                    <input class="" type="start_value" name="text" id="start-value" placeholder="mínimo" />
-                                    <input class="" type="number" name="end_value" id="end-value" placeholder="máximo" />
+                                    <div class="col-lg-12">
+                                        <input class="slider-range-amount" name="start_value" type="number" id="start-value" placeholder="mínimo" style="width: 100% !important;"/>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <input class="slider-range-amount" type="number" name="end_value" id="end-value" placeholder="máximo" style="width: 100% !important;"/>
+                                    </div>
+                                    
                                     <br>
                                     <button class="slider-range-submit" type="submit">Filtrar</button>
                                 </form>
@@ -241,7 +239,7 @@
                                     </ul>
                                 </div>
                             </div> --}}
-                            {{-- <div class="widget-list">
+                            <div class="widget-list">
                                 <h3 class="widget-title mb-4">Produtos Recentes</h3>
                                 <div class="sidebar-body product-list-wrapper mb-n6">
                                     <!-- Single Product List Start -->
@@ -316,7 +314,7 @@
                                     </div>
                                     <!-- Single Product List End -->
                                 </div>
-                            </div> --}}
+                            </div>
                         </div>
                     </aside>
                 </div>

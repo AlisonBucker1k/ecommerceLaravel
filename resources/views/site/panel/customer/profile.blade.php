@@ -1,139 +1,270 @@
 @extends('site.main')
-
 @section('content')
+     <!-- My Account Section Start -->
     <div class="section section-margin">
         <div class="container">
+
             <div class="row">
-                <div class="col-lg-4 ms-auto col-custom">
-                    <div class="profile-picture">
-                        <div id="customer-photo">
-                            <img src="{{ asset('/assets/img/no-image.jpg') }}" alt="">
-                            {{-- TODO Corrigir foto de perfil --}}
-                            {{-- <img src="{{ $customer->proifle->photo_or_default }}" alt=""> --}}
+                <div class="col-lg-12">
+
+                    <!-- My Account Page Start -->
+                    <div class="myaccount-page-wrapper">
+                        <!-- My Account Tab Menu Start -->
+                        <div class="row">
+                            <div class="col-lg-3 col-md-4">
+                                <div class="myaccount-tab-menu nav" role="tablist">
+                                    <a href="{{route('panel.profile')}}" class="active"><i class="fa fa-dashboard"></i>
+                                        Alterar Dados</a>
+                                        <a href="{{route('panel.orders')}}"><i class="fa fa-cart-arrow-down"></i> Minhas Compras</a>
+                                        <a href="{{route('panel.addresses')}}" ><i class="fa fa-map-marker"></i> Endereços</a>
+                                    <a href="{{route('customer.logout')}}"><i class="fa fa-sign-out"></i> Sair</a>
+                                </div>
+                            </div>
+                            <!-- My Account Tab Menu End -->
+
+                            <!-- My Account Tab Content Start -->
+                            <div class="col-lg-9 col-md-8">
+                                <div class="tab-content" id="myaccountContent">
+                                    <!-- Single Tab Content Start -->
+                                    <div class="tab-pane fade show active" id="dashboad" role="tabpanel">
+                                        <div class="myaccount-content">
+                                            <h3 class="title">Alterar Dados</h3>
+                                            <div class="account-details-form">
+                                                @if ($errors->any())
+                                                <div class="alert alert-danger">
+                                                    @foreach ($errors->all as $erro)
+                                                        {{$erro}}<br>
+                                                    @endforeach
+                                                </div>
+                                                @endif
+                                                <form action="{{ route('panel.profile.edit') }}" method="POST">
+                                                    @csrf
+                                                    <input name="birth_date" class="form-control" type="hidden" value="{{ $customer->profile->birth_date }}">
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="single-input-item mb-3">
+                                                                <label for="first-name" class="required mb-1">Nome</label>
+                                                                <input type="text" name="name" value="{{ $customer->profile->name }}" id="first-name" placeholder="First Name" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="single-input-item mb-3">
+                                                                <label for="last-name" class="required mb-1">Sobrenome</label>
+                                                                <input type="text" name="last-name" value={{$customer->profile->last_name}} id="last-name" placeholder="Last Name" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="single-input-item mb-3">
+                                                        <label for="email" class="required mb-1">E-mail</label>
+                                                        <input type="email" readonly name="email" value="{{$customer->email}}" id="email" placeholder="Email Address" />
+                                                    </div>
+                                                    <div class="single-input-item mb-3">
+                                                        <label for="email" class="required mb-1">Telefone</label>
+                                                        <input type="text" name="phone" value="{{$customer->profile->phone}}" id="email" placeholder="Número para contato" />
+                                                    </div>
+                                                    <div class="single-input-item mb-3">
+                                                        <label for="email" class="required mb-1">Telefone</label>
+                                                        <input type="text" name="cellphone" value="{{$customer->profile->celphone}}" id="email" placeholder="Número para contato" />
+                                                    </div>
+                                                    <fieldset>
+                                                        <legend>Alterar Senha</legend>
+                                                        <p>Preencha somente se desejar alterar a senha.</p>
+                                                        <div class="single-input-item mb-3">
+                                                            <label for="current-pwd" class="required mb-1">Senha Atual</label>
+                                                            <input type="password" id="current-pwd" placeholder="Senha Atual" name="old_password"  />
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-6">
+                                                                <div class="single-input-item mb-3">
+                                                                    <label for="new-pwd" class="required mb-1">Nova Senha</label>
+                                                                    <input type="password" id="new-pwd" placeholder="Nova Senha" name="password" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <div class="single-input-item mb-3">
+                                                                    <label for="confirm-pwd" class="required mb-1">Confirmar senha</label>
+                                                                    <input type="password" id="confirm-pwd" placeholder="Confirme sua senha" name="password_confirmation" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                    <div class="single-input-item single-item-button">
+                                                        <button class="btn btn btn-dark btn-hover-primary rounded-0">Salvar Alterações</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Single Tab Content End -->
+
+                                    <!-- Single Tab Content Start -->
+                                    <div class="tab-pane fade" id="orders" role="tabpanel">
+                                        <div class="myaccount-content">
+                                            <h3 class="title">Orders</h3>
+                                            <div class="myaccount-table table-responsive text-center">
+                                                <table class="table table-bordered">
+                                                    <thead class="thead-light">
+                                                        <tr>
+                                                            <th>Order</th>
+                                                            <th>Date</th>
+                                                            <th>Status</th>
+                                                            <th>Total</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>1</td>
+                                                            <td>Aug 22, 2018</td>
+                                                            <td>Pending</td>
+                                                            <td>$3000</td>
+                                                            <td><a href="cart.html" class="btn btn btn-dark btn-hover-primary btn-sm rounded-0">View</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>2</td>
+                                                            <td>July 22, 2018</td>
+                                                            <td>Approved</td>
+                                                            <td>$200</td>
+                                                            <td><a href="cart.html" class="btn btn btn-dark btn-hover-primary btn-sm rounded-0">View</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>3</td>
+                                                            <td>June 12, 2019</td>
+                                                            <td>On Hold</td>
+                                                            <td>$990</td>
+                                                            <td><a href="cart.html" class="btn btn btn-dark btn-hover-primary btn-sm rounded-0">View</a></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Single Tab Content End -->
+
+                                    <!-- Single Tab Content Start -->
+                                    <div class="tab-pane fade" id="download" role="tabpanel">
+                                        <div class="myaccount-content">
+                                            <h3 class="title">Downloads</h3>
+                                            <div class="myaccount-table table-responsive text-center">
+                                                <table class="table table-bordered">
+                                                    <thead class="thead-light">
+                                                        <tr>
+                                                            <th>Product</th>
+                                                            <th>Date</th>
+                                                            <th>Expire</th>
+                                                            <th>Download</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Haven - Free Real Estate PSD Template</td>
+                                                            <td>Aug 22, 2018</td>
+                                                            <td>Yes</td>
+                                                            <td><a href="#" class="btn btn btn-dark btn-hover-primary rounded-0"><i class="fa fa-cloud-download me-1"></i> Download File</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>HasTech - Profolio Business Template</td>
+                                                            <td>Sep 12, 2018</td>
+                                                            <td>Never</td>
+                                                            <td><a href="#" class="btn btn btn-dark btn-hover-primary rounded-0"><i class="fa fa-cloud-download me-1"></i> Download File</a></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Single Tab Content End -->
+
+                                    <!-- Single Tab Content Start -->
+                                    <div class="tab-pane fade" id="payment-method" role="tabpanel">
+                                        <div class="myaccount-content">
+                                            <h3 class="title">Payment Method</h3>
+                                            <p class="saved-message">You Can't Saved Your Payment Method yet.</p>
+                                        </div>
+                                    </div>
+                                    <!-- Single Tab Content End -->
+
+                                    <!-- Single Tab Content Start -->
+                                    <div class="tab-pane fade" id="address-edit" role="tabpanel">
+                                        <div class="myaccount-content">
+                                            <h3 class="title">Billing Address</h3>
+                                            <address>
+                                                <p><strong>Alex Aya</strong></p>
+                                                <p>1234 Market ##, Suite 900 <br>
+                                                Lorem Ipsum, ## 12345</p>
+                                                <p>Mobile: (123) 123-456789</p>
+                                            </address>
+                                            <a href="#" class="btn btn btn-dark btn-hover-primary rounded-0"><i class="fa fa-edit me-2"></i>Edit Address</a>
+                                        </div>
+                                    </div>
+                                    <!-- Single Tab Content End -->
+
+                                    <!-- Single Tab Content Start -->
+                                    <div class="tab-pane fade" id="account-info" role="tabpanel">
+                                        <div class="myaccount-content">
+                                            <h3 class="title">Account Details</h3>
+                                            <div class="account-details-form">
+                                                <form action="#">
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="single-input-item mb-3">
+                                                                <label for="first-name" class="required mb-1">First Name</label>
+                                                                <input type="text" id="first-name" placeholder="First Name" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="single-input-item mb-3">
+                                                                <label for="last-name" class="required mb-1">Last Name</label>
+                                                                <input type="text" id="last-name" placeholder="Last Name" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="single-input-item mb-3">
+                                                        <label for="display-name" class="required mb-1">Display Name</label>
+                                                        <input type="text" id="display-name" placeholder="Display Name" />
+                                                    </div>
+                                                    <div class="single-input-item mb-3">
+                                                        <label for="email" class="required mb-1">Email Addres</label>
+                                                        <input type="email" id="email" placeholder="Email Address" />
+                                                    </div>
+                                                    <fieldset>
+                                                        <legend>Password change</legend>
+                                                        <div class="single-input-item mb-3">
+                                                            <label for="current-pwd" class="required mb-1">Current Password</label>
+                                                            <input type="password" id="current-pwd" placeholder="Current Password" />
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-6">
+                                                                <div class="single-input-item mb-3">
+                                                                    <label for="new-pwd" class="required mb-1">New Password</label>
+                                                                    <input type="password" id="new-pwd" placeholder="New Password" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <div class="single-input-item mb-3">
+                                                                    <label for="confirm-pwd" class="required mb-1">Confirm Password</label>
+                                                                    <input type="password" id="confirm-pwd" placeholder="Confirm Password" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                    <div class="single-input-item single-item-button">
+                                                        <button class="btn btn btn-dark btn-hover-primary rounded-0">Save Changes</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div> <!-- Single Tab Content End -->
+                                </div>
+                            </div> <!-- My Account Tab Content End -->
                         </div>
                     </div>
-                    <div class="cart-calculator-wrapper" style="margin-top: 0 !important;">
-                        <h3 class="title" style="text-align: left">{{ $customer->profile->full_name }}</h3>
-                        <p class="text"><i class="fa fa-fw fa-star"></i> {{ dateSql2Br($customer->profile->birth_date) }}</p>
-                        <p class="text"><i class="fa fa-fw fa-id-card"></i> {{ $customer->profile->cpf }}</p>
-                        <p class="text"><i class="fa fa-fw fa-phone"></i> {{ $customer->profile->phone }}</p>
-                        <p class="text"><i class="fa fa-fw fa-mobile"></i> {{ $customer->profile->cellphone }}</p>
-                        <p class="text"><i class="fa fa-fw fa-envelope"></i> {{ $customer->email }}</p>
-                        <small style="text-align: center; margin-bottom: 5px;"><p class="text">Cliente desde {{ dateSql2Br($customer->created_at) }}</p></small>
-                    </div>
-                </div>
-                <div class="col-lg-8 ms-auto col-custom">
-                    <div class="cart-calculator-wrapper" style="margin-top: 0 !important;">
-                        <div class="cart-calculate-items">
-                            <h3 class="title">Editar Perfil</h3>
-                            <form method="post" action="{{ route('panel.profile.edit') }}" style="padding: 15px;">
-                                @csrf
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Nome</label>
-                                            <input name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ $customer->profile->name }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Sobrenome</label>
-                                            <input name="last_name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ $customer->profile->last_name }}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">CPF</label>
-                                            <input name="cellphone" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ $customer->profile->cpf }}" disabled>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Data de Nascimento</label>
-                                            <input name="birth_date" type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ $customer->profile->birth_date }}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Celular</label>
-                                            <input name="cellphone" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ $customer->profile->cellphone }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Telefone</label>
-                                            <input name="phone" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ $customer->profile->phone }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">E-mail</label>
-                                            <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" value="{{ $customer->email }}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Senha Atual</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" name="old_password">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Nova Senha</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" name="password">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Confirmação da Nova Senha</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" name="password_confirmation">
-                                </div>
-                                
-                                <button type="submit" class="btn btn-primary pull-right">Salvar</button>
-                            </form>
-                        </div>
-                    </div>
+                    <!-- My Account Page End -->
+
                 </div>
             </div>
+
         </div>
     </div>
-    <!-- Shopping Cart Section End -->
+    <!-- My Account Section End -->
 @endsection
-
-@push('css')
-    <style>
-        #customer-photo {
-            background: #212121;
-            display: flex;
-            flex-direction: row;
-            align-content: center;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        #customer-photo > img {
-            max-width: 150px;
-            border-radius: 100px;
-        }
-
-        p.text {
-            padding: 1px 15px;
-        }
-
-        p > i {
-            font-size: 20px;
-        }
-    </style>
-@endpush
-
-@push('js')
-    <script type="text/javascript" src="/general/components/jquery-mask-plugin/src/jquery.mask.js"></script>
-    <script type="text/javascript">
-        $(function() {
-            $('#phone').mask('(00) 0000-0000');
-            $('#cellphone').mask('(00) 00000-0000');
-        });
-    </script>
-@endpush

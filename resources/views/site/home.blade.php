@@ -103,7 +103,7 @@
             <div class="row">
                 <div class="col-12">
                     <ul class="product-tab-nav nav justify-content-center mb-10 title-border-bottom mt-n3">
-                        <li class="nav-item" data-aos="fade-up" data-aos-delay="300"><a class="nav-link active mt-3" data-bs-toggle="tab" href="#tab-highlighted-products">Destaques</a></li>
+                        <li class="nav-item" data-aos="fade-up" data-aos-delay="300"><a class="nav-link active mt-3" data-bs-toggle="tab" href="#tab-product-all">Destaques</a></li>
                         {{-- <li class="nav-item" data-aos="fade-up" data-aos-delay="400"><a class="nav-link mt-3" data-bs-toggle="tab" href="#tab-product-clothings">Mais Vendidos</a></li> --}}
                         <li class="nav-item" data-aos="fade-up" data-aos-delay="500"><a class="nav-link mt-3" data-bs-toggle="tab" href="#tab-promotion-products">Promoção</a></li>
                     </ul>
@@ -112,53 +112,70 @@
             <div class="row">
                 <div class="col">
                     <div class="tab-content position-relative">
-                        <div class="tab-pane fade show active" id="tab-highlighted-products">
+                        <div class="tab-pane fade show active" id="tab-product-all">
                             <div class="product-carousel">
                                 <div class="swiper-container">
                                     <div class="swiper-wrapper mb-n10">
+                                        <!-- Product Start -->
                                         <div class="swiper-slide product-wrapper">
+                                            @php $l = 0; @endphp
+                                            @php $lt = 0; @endphp
+                                            
                                             @forelse ($highlightedProducts as $highlightedProduct)
-                                                @php $variation = $highlightedProduct->availableVariation(); @endphp
-                                                <form method="post" action="{{ route('cart.product.add', [$highlightedProduct->slug]) }}">
-                                                    <input type="hidden" name="variation_id" id="variationId" value="{{  $variation->id }}">
-                                                    @csrf
-                                                    <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
+                                                @php $l++; @endphp
+                                                @php $lt++; @endphp
+                                                <!-- Single Product Start -->
+                                                <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
+                                                    @php $variation = $highlightedProduct->availableVariation(); @endphp
+                                                    <form method="post" action="{{ route('cart.product.add', [$highlightedProduct->slug]) }}">
+                                                        <input type="hidden" name="variation_id" id="variationId" value="{{  $variation->id }}">
+                                                        @csrf
                                                         <div class="thumb">
                                                             <a href="{{ route('product.show', [$highlightedProduct->slug, $variation->id]) }}" class="image">
                                                                 <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
                                                                 <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
                                                             </a>
-                                                            <div class="actions">
-                                                                <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
-                                                                <a href="#" class="action quickview" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i class="pe-7s-search"></i></a>
-                                                                <a href="#" class="action compare"><i class="pe-7s-shuffle"></i></a>
-                                                            </div>
                                                         </div>
                                                         <div class="content">
-                                                            <h4 class="sub-title"><a href="{{ route('product.show', [$highlightedProduct->slug, $variation->id]) }}">{{ $highlightedProduct->slug }}</a></h4>
-                                                            <h5 class="title"><a href="{{ route('product.show', [$highlightedProduct->slug, $variation->id]) }}">{{ $highlightedProduct->slug }}</a></h5>
-{{--                                                            <span class="ratings">--}}
-{{--                                                            <span class="rating-wrap">--}}
-{{--                                                            <span class="star" style="width: 100%"></span>--}}
-                                                        </span>
-{{--                                                        <span class="rating-num">(4)</span>--}}
-                                                        </span>
+                                                            <h4 class="sub-title"><a href="{{ route('product.show', [$highlightedProduct->slug, $variation->id]) }}">{{ $highlightedProduct->name }}</a></h4>
+                                                            <h5 class="title"><a href="{{ route('product.show', [$highlightedProduct->slug, $variation->id]) }}">{{ $highlightedProduct->name }}</a></h5>
+                                                            
+                                                            </span>
                                                             <span class="price">
-                                                            <span class="new">{{ $variation->final_price_formated }}</span>
-                                                            <span class="old">{{ $variation->final_price_formated }}</span>
-                                                        </span>
-                                                            <button type="submit" class="btn btn-sm btn-outline-dark btn-hover-primary">Adicionar ao Carrinho</button>
+                                                                <span class="new">{{ $variation->final_price_formated }}</span>
+                                                                <span class="old">{{ $variation->final_price_formated }}</span>
+                                                            </span>
+                                                            <button class="btn btn-sm btn-outline-dark btn-hover-primary">Ver mais</button>
                                                         </div>
-                                                    </div>
-                                                </form>
+                                                    </form>
+                                                </div>
+                                                <!-- Single Product End -->
+
+                                                @if ($l === 2)
+                                                    @if ($lt != count($highlightedProducts))
+                                                        </div>
+                                                        <div class="swiper-slide product-wrapper">
+                                                    @endif
+                                                    @php $l = 0; @endphp
+                                                @endif
                                             @empty
                                                 <p>Nenhum produto disponível</p>
                                             @endforelse
+                                            
+
                                         </div>
+
+                                        
                                     </div>
+
+                                    <!-- Swiper Pagination Start -->
                                     <div class="swiper-pagination d-md-none"></div>
+                                    <!-- Swiper Pagination End -->
+
+                                    <!-- Next Previous Button Start -->
                                     <div class="swiper-product-button-next swiper-button-next swiper-button-white d-md-flex d-none"><i class="pe-7s-angle-right"></i></div>
                                     <div class="swiper-product-button-prev swiper-button-prev swiper-button-white d-md-flex d-none"><i class="pe-7s-angle-left"></i></div>
+                                    <!-- Next Previous Button End -->
                                 </div>
                             </div>
                         </div>
@@ -167,7 +184,11 @@
                                 <div class="swiper-container">
                                     <div class="swiper-wrapper mb-n10">
                                         <div class="swiper-slide product-wrapper">
-                                            @forelse ($promotionProducts as $productVariation)
+                                            @php $l = 0; @endphp
+                                            @php $lt = 0; @endphp
+                                           @forelse ($promotionProducts as $productVariation)
+                                                @php $l++; @endphp
+                                                @php $lt++; @endphp
                                                 <form method="post" action="{{ route('cart.product.add', [$productVariation->product->slug]) }}">
                                                     <input type="hidden" name="variation_id" id="variationId" value="{{ $productVariation->id }}">
                                                     @csrf
@@ -199,6 +220,13 @@
                                                         </div>
                                                     </div>
                                                 </form>
+                                                @if ($l === 2)
+                                                    @if ($lt != count($promotionProducts))
+                                                        </div>
+                                                        <div class="swiper-slide product-wrapper">
+                                                    @endif
+                                                    @php $l = 0; @endphp
+                                                @endif
                                             @empty
                                                 <p>Nenhum produto disponível</p>
                                             @endforelse

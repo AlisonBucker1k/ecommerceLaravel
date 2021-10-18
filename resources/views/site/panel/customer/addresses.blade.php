@@ -1,108 +1,258 @@
 @extends('site.main')
-
 @section('content')
-<section class="page-header page-header-classic">
-    <div class="container">
-        <div class="row">
-            <div class="col p-static">
-                <h1 data-title-border>Endereços</h1>
-            </div>
-        </div>
-    </div>
-</section>
-<div class="container py-2">
-    <div class="row">
-        <div class="col-lg-9">
-            {{-- <div class="row mb-2">
-                <div class="col-12">
-                    <button style="margin-top: 7px;" aria-controls="collapseExample" aria-expanded="false" class="btn btn-sm btn-primary btn-modern float-right" data-target="#add-address" data-toggle="collapse" type="button">
-                        <i class="fa fa-plus"></i> Endereço
-                    </button>
-                </div>
-            </div> --}}
-            <div class="row">
-                <div class="col-lg-12 table-responsive-lg">
-                    <table class="table border mb-0">
-                        <tbody>
-                            @forelse ($addresses as $address)
-                                <tr>
-                                    <td>{{ $address->street }}, {{ $address->number }} - {{ $address->district }}, {{ $address->city }} - {{ $address->state }}, {{ $address->postal_code }}</td>
-                                    <td class="text-right">
-                                        @if ($address->main)
-                                            <span class="px-2">
-                                                <i class="fa fa-star"></i>
-                                            </span>
-                                        @else
-                                            <a href="{{ route('panel.address.set_main', $address->id) }}" class="px-2" data-toggle="tooltip" data-placement="left" title="Tornar principal">
-                                                <i class="fa fa-star-o"></i>
-                                            </a>
-                                        @endif
+     <!-- My Account Section Start -->
+    <div class="section section-margin">
+        <div class="container">
 
-                                        <a href="{{ route('panel.address.delete', $address->id) }}" data-toggle="tooltip" data-placement="left" title="Remover" onclick="return confirm('Deseja realmente remover?')">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td class="text-center">Nenhum endereço cadastrado</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <!-- My Account Page Start -->
+                    <div class="myaccount-page-wrapper">
+                        <!-- My Account Tab Menu Start -->
+                        <div class="row">
+                            <div class="col-lg-3 col-md-4">
+                                <div class="myaccount-tab-menu nav" role="tablist">
+                                    <a href="{{route('panel.profile')}}" ><i class="fa fa-dashboard"></i>
+                                        Alterar Dados</a>
+                                    <a href="{{route('panel.orders')}}" ><i class="fa fa-cart-arrow-down"></i> Minhas Compras</a>
+                                    <a href="{{route('panel.addresses')}}" class="active"  class="active"><i class="fa fa-map-marker"></i> Endereços</a>
+                                    <a href="{{route('customer.logout')}}"><i class="fa fa-sign-out"></i> Sair</a>
+                                </div>
+                            </div>
+                            <!-- My Account Tab Menu End -->
+
+                            <!-- My Account Tab Content Start -->
+                            <div class="col-lg-9 col-md-8">
+                                <div class="tab-content" id="myaccountContent">
+                                    <!-- Single Tab Content Start -->
+                                    <div class="tab-pane fade show active" id="dashboad" role="tabpanel">
+                                        <div class="myaccount-content">
+                                            <h3 class="title">Seu Endereço</h3>
+                                            
+                                            @if ($addresses)
+                                                @foreach ($addresses as $address)
+                                                    <address>
+                                                        <p>{{$address->street}}, {{$address->number}} <br>
+                                                        {{ $address->district }}, {{ $address->city }} - {{ $address->state }}, {{ $address->postal_code }}</p>
+                                                        @if ($address->main)
+                                                            <span class="px-2">
+                                                                <i class="fas fa-star"></i>
+                                                            </span>
+                                                        @else
+                                                        <a href="{{ route('panel.address.set_main', address.id) }}" class="px-2" data-toggle="tooltip" data-placement="left" title="Tornar principal">
+                                                            <i class="fas fa-star"></i>
+                                                        </a>
+                                                        <a href="{{ route('panel.address.delete', address.id) }}" data-toggle="tooltip" data-placement="left" title="Remover" onclick="return confirm('Deseja realmente remover?')">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </a>
+                                                        @endif
+                                                    </address>
+                                                    <hr>
+                                                @endforeach
+                                            @else 
+                                                <p class="saved-message">Nenhum endereço cadastrado.</p>
+                                            @endif
+
+                                            <form action="" method="POST">
+                                                @csrf
+                                                <fieldset>
+                                                    <legend>Novo endereço</legend>
+                                                    <p>Preencha os campos se desejar inserir um novo endereço.</p>
+
+                                                    <div class="single-input-item mb-3">
+                                                        <label for="current-pwd" class="required mb-1">CEP</label>
+                                                        <input type="text" id="cep" placeholder="Seu cep" name="cep" value="{{ old('cep') }}" onblur="findCep(this.value);" />
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-8">
+                                                            <div class="single-input-item mb-3">
+                                                                <label for="new-pwd" class="required mb-1">Rua</label>
+                                                                <input type="text" id="street" placeholder="Rua" name="street" value="{{ old('street') }}" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="single-input-item mb-3">
+                                                                <label for="confirm-pwd" class="required mb-1">Número</label>
+                                                                <input type="number" id="number" placeholder="Número da residencia" name="number" value="{{ old('number') }}" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="single-input-item mb-3">
+                                                                <label for="new-pwd" class="required mb-1">Cidade</label>
+                                                                <input type="text" id="city" placeholder="Cidade" name="city" value="{{ old('city') }}"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="single-input-item mb-3">
+                                                                <label for="confirm-pwd" class="required mb-1">Estado</label>
+                                                                <select name="state" id="uf" class="form-control form-control-lg">
+                                                                    <option value="">Selecione seu estado</option>
+                                                                    <option value="AC" {{(old('state') == "AC")?'selected':''}} >Acre</option>
+                                                                    <option value="AL" {{(old('state') == "AL")?'selected':''}} >Alagoas</option>
+                                                                    <option value="AP" {{(old('state') == "AP")?'selected':''}} >Amapá</option>
+                                                                    <option value="AM" {{(old('state') == "AM")?'selected':''}} >Amazonas</option>
+                                                                    <option value="BA" {{(old('state') == "BA")?'selected':''}} >Bahia</option>
+                                                                    <option value="CE" {{(old('state') == "CE")?'selected':''}} >Ceará</option>
+                                                                    <option value="DF" {{(old('state') == "DF")?'selected':''}} >Distrito Federal</option>
+                                                                    <option value="ES" {{(old('state') == "ES")?'selected':''}} >Espírito Santo</option>
+                                                                    <option value="GO" {{(old('state') == "GO")?'selected':''}} >Goiás</option>
+                                                                    <option value="MA" {{(old('state') == "MA")?'selected':''}} >Maranhão</option>
+                                                                    <option value="MT" {{(old('state') == "MT")?'selected':''}} >Mato Grosso</option>
+                                                                    <option value="MS" {{(old('state') == "MS")?'selected':''}} >Mato Grosso do Sul</option>
+                                                                    <option value="MG" {{(old('state') == "MG")?'selected':''}} >Minas Gerais</option>
+                                                                    <option value="PA" {{(old('state') == "PA")?'selected':''}} >Pará</option>
+                                                                    <option value="PB" {{(old('state') == "PB")?'selected':''}} >Paraíba</option>
+                                                                    <option value="PR" {{(old('state') == "PR")?'selected':''}} >Paraná</option>
+                                                                    <option value="PE" {{(old('state') == "PE")?'selected':''}} >Pernambuco</option>
+                                                                    <option value="PI" {{(old('state') == "PI")?'selected':''}} >Piauí</option>
+                                                                    <option value="RJ" {{(old('state') == "RJ")?'selected':''}} >Rio de Janeiro</option>
+                                                                    <option value="RN" {{(old('state') == "RN")?'selected':''}} >Rio Grande do Norte</option>
+                                                                    <option value="RS" {{(old('state') == "RS")?'selected':''}} >Rio Grande do Sul</option>
+                                                                    <option value="RO" {{(old('state') == "RO")?'selected':''}} >Rondônia</option>
+                                                                    <option value="RR" {{(old('state') == "RR")?'selected':''}} >Roraima</option>
+                                                                    <option value="SC" {{(old('state') == "SC")?'selected':''}} >Santa Catarina</option>
+                                                                    <option value="SP" {{(old('state') == "SP")?'selected':''}} >São Paulo</option>
+                                                                    <option value="SE" {{(old('state') == "SE")?'selected':''}} >Sergipe</option>
+                                                                    <option value="TO" {{(old('state') == "TO")?'selected':''}} >Tocantins</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-7">
+                                                            <div class="single-input-item mb-3">
+                                                                <label for="current-pwd" class="required mb-'1'">Bairro</label>
+                                                                <input type="text" id="district" placeholder="Bairro" name="district" value="{{ old('district') }}" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-5">
+                                                            <div class="single-input-item mb-3">
+                                                                <label for="current-pwd" class="required mb-1">Complemento</label>
+                                                                <input type="text" id="complement" placeholder="Complemento" name="complement" value="{{ old('complement') }}" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="single-input-item mb-3">
+                                                                <label for="current-pwd" class="required mb-1">Referência</label>
+                                                                <input type="text" id="reference" placeholder="Ponto de referencia" name="reference" value="{{ old('reference') }}" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                                <div class="single-input-item single-item-button">
+                                                    <button class="btn btn btn-dark btn-hover-primary rounded-0">Salvar Alterações</button>
+                                                </div>
+                                            </form>
+                                            
+                                        </div>
+                                    </div>
+                                    <!-- Single Tab Content End -->
+
+                                     <!-- Single Tab Content Start -->
+                                     <div class="tab-pane fade" id="dashboard" role="tabpanel">
+                                        <div class="myaccount-content">
+                                            
+                                        </div>
+                                    </div>
+                                    <!-- Single Tab Content End -->
+
+                                    <!-- Single Tab Content Start -->
+                                    <div class="tab-pane fade" id="payment-method" role="tabpanel">
+                                        <div class="myaccount-content">
+                                            <h3 class="title">Payment Method</h3>
+                                            <p class="saved-message">You Can't Saved Your Payment Method yet.</p>
+                                        </div>
+                                    </div>
+                                    <!-- Single Tab Content End -->
+
+                                    <!-- Single Tab Content Start -->
+                                    <div class="tab-pane fade" id="address-edit" role="tabpanel">
+                                        <div class="myaccount-content">
+                                            <h3 class="title">Billing Address</h3>
+                                            <address>
+                                                <p><strong>Alex Aya</strong></p>
+                                                <p>1234 Market ##, Suite 900 <br>
+                                                Lorem Ipsum, ## 12345</p>
+                                                <p>Mobile: (123) 123-456789</p>
+                                            </address>
+                                            <a href="#" class="btn btn btn-dark btn-hover-primary rounded-0"><i class="fa fa-edit me-2"></i>Edit Address</a>
+                                        </div>
+                                    </div>
+                                    <!-- Single Tab Content End -->
+
+                                    <!-- Single Tab Content Start -->
+                                    <div class="tab-pane fade" id="account-info" role="tabpanel">
+                                        <div class="myaccount-content">
+                                            <h3 class="title">Account Details</h3>
+                                            <div class="account-details-form">
+                                                <form action="#">
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="single-input-item mb-3">
+                                                                <label for="first-name" class="required mb-1">First Name</label>
+                                                                <input type="text" id="first-name" placeholder="First Name" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="single-input-item mb-3">
+                                                                <label for="last-name" class="required mb-1">Last Name</label>
+                                                                <input type="text" id="last-name" placeholder="Last Name" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="single-input-item mb-3">
+                                                        <label for="display-name" class="required mb-1">Display Name</label>
+                                                        <input type="text" id="display-name" placeholder="Display Name" />
+                                                    </div>
+                                                    <div class="single-input-item mb-3">
+                                                        <label for="email" class="required mb-1">Email Addres</label>
+                                                        <input type="email" id="email" placeholder="Email Address" />
+                                                    </div>
+                                                    <fieldset>
+                                                        <legend>Password change</legend>
+                                                        <div class="single-input-item mb-3">
+                                                            <label for="current-pwd" class="required mb-1">Current Password</label>
+                                                            <input type="password" id="current-pwd" placeholder="Current Password" />
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-6">
+                                                                <div class="single-input-item mb-3">
+                                                                    <label for="new-pwd" class="required mb-1">New Password</label>
+                                                                    <input type="password" id="new-pwd" placeholder="New Password" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <div class="single-input-item mb-3">
+                                                                    <label for="confirm-pwd" class="required mb-1">Confirm Password</label>
+                                                                    <input type="password" id="confirm-pwd" placeholder="Confirm Password" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                    <div class="single-input-item single-item-button">
+                                                        <button class="btn btn btn-dark btn-hover-primary rounded-0">Save Changes</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div> <!-- Single Tab Content End -->
+                                </div>
+                            </div> <!-- My Account Tab Content End -->
+                        </div>
+                    </div>
+                    <!-- My Account Page End -->
+
                 </div>
             </div>
-            <br>
-            <br>
-            <div class="" id="add-address">
-                <div class="overflow-hidden mb-1">
-                    <h2 class="font-weight-normal text-5 mb-4">
-                        <strong class="font-weight-extra-bold">Novo </strong> Endereço
-                    </h2>
-                </div>
-                <form method="post">
-                    @csrf
-                    <div class="form-group row">
-                        <div class="col-lg-4">
-                            <input name="cep" id="cep" class="form-control" type="text" value="{{ old('cep') }}" placeholder="CEP" onblur="findCep(this.value);">
-                        </div>
-                        <div class="col-lg-8">
-                            <input name="street" id="street" class="form-control" type="text" value="{{ old('street') }}" placeholder="Rua...">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-6">
-                            <input name="complement" class="form-control" type="text" value="{{ old('complement') }}" placeholder="Complemento, Ex: Apto 2014 - Torre Sul">
-                        </div>
-                        <div class="col-lg-6">
-                            <input name="reference" class="form-control" type="text" value="{{ old('reference') }}" placeholder="Referência, Ex: Próximo ao colégio Estadual">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3">
-                            <input name="number" class="form-control" type="text" value="{{ old('number') }}" placeholder="Número">
-                        </div>
-                        <div class="col-lg-3">
-                            <input name="city" id="city" class="form-control" type="text" value="{{ old('city') }}" placeholder="Cidade">
-                        </div>
-                        <div class="col-lg-3">
-                            <input name="state" id="uf" class="form-control" type="text" value="{{ old('state') }}" placeholder="Estado">
-                        </div>
-                        <div class="col-lg-3">
-                            <input name="district" id="district" class="form-control" type="text" value="{{ old('district') }}" placeholder="Bairro">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="form-group col-lg-8"></div>
-                        <div class="form-group col-lg-4">
-                            <input type="submit" value="Cadastrar" class="btn btn-primary btn-modern float-right" data-loading-text="Loading...">
-                        </div>
-                    </div>
-                </form>
-            </div>
+
         </div>
     </div>
-</div>
+    <!-- My Account Section End -->
 @endsection
 
 @push('js')

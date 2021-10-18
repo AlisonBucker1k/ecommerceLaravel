@@ -154,15 +154,15 @@
                             </form>
                         @endif
 
-                        @if ($product->category->id != '' || $product->subcategory->id != '')
+                        @if (!empty($product->category) || !empty($product->subcategory))
                             <div class="product-meta">
                                     <span class="posted-in">
                                         Categoria:
-                                        @if ($product->category->id != '')
+                                        @if (!empty($product->category))
                                             <a rel="tag" href="{{ route('products', $product->category->slug) }}">{{ $product->category->name }}</a>
                                         @endif
 
-                                        @if ($product->subcategory->id != '')
+                                        @if (!empty($product->subcategory))
                                             , <a rel="tag" href="{{ route('products', [$product->category->slug, $product->subcategory->slug]) }}">{{ $product->subcategory->name }}</a>.
                                         @endif
                                     </span>
