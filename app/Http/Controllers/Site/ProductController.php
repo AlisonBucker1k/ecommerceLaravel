@@ -66,11 +66,14 @@ class ProductController extends Controller
         $data['total_stock'] = $product->totalStock();
 
         return view('site.product.product', $data);
-//        return view('site_backup.product.product', $data);
     }
 
     private function filters(Builder &$query, Request $request, Category $category, Subcategory $subcategory)
     {
+        if (!empty($request->search_term)) {
+            $query->where('products.name', 'like', "%$request->search_term%");
+        }
+
         if (!empty($request->category)) {
             $query->where('products.category_id', $category->id);
         }
@@ -80,7 +83,7 @@ class ProductController extends Controller
         }
 
         if (!empty($request->product_name)) {
-            $query->where('products.name', 'like', '%' . $request->product_name . '%');
+            $query->where('products.name', 'like', "%$request->product_name%");
         }
 
         if (!empty($request->start_value) || !empty($request->end_value)) {
