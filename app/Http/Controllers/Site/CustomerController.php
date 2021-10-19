@@ -95,13 +95,24 @@ class CustomerController extends Controller
             $customer->createCustomer($request->validated());
         });
 
-        $hasEmailConfirmation = config('app.has_email_confirmation');
         $message = 'Cadastro efetuado com sucesso!';
+
+        $hasEmailConfirmation = config('app.has_email_confirmation');
         if ($hasEmailConfirmation == true) {
             $message .= ' Você receberá um e-mail para ativar sua conta.';
+
+            return redirect()->route('customer.register')->withSuccess($message);
         }
 
-        return redirect(route('customer.register'))->withSuccess($message);
+        $data = [
+            'email' => $request->get('email'),
+            'password' => $request->get('password'),
+            'status' => CustomerStatus::ACTIVE,
+        ];
+
+        Auth::guard('web_site')->attempt($data);
+
+        return redirect()->route('home')->withSuccess($message);
     }
 
     /**
