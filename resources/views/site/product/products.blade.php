@@ -16,7 +16,7 @@
             </div>
         </div>
     </div>
-    <form method="get">
+    <form method="get" class="products-search-form">
         <div class="section section-margin">
             <div class="container">
                 <div class="row flex-row-reverse">
@@ -29,11 +29,11 @@
                             </div>
                             <div class="shop-top-bar-right">
                                 <div class="shop-short-by mr-4">
-                                    <select class="nice-select" aria-label=".form-select-sm example">
+                                    <select name="order" class="nice-select order-select">
                                         <option selected>Ordenar por: </option>
-                                        <option value="1">Ord. por recentes</option>
-                                        <option value="2">Ord. por Maior Preço</option>
-                                        <option value="3">Ord. por Menor Preço</option>
+                                        <option value="recents">Ord. por recentes</option>
+                                        <option value="higher_price">Ord. por Maior Preço</option>
+                                        <option value="lowest_price">Ord. por Menor Preço</option>
                                     </select>
                                 </div>
                                 <div class="shop_toolbar_btn">
@@ -213,3 +213,20 @@
         </div>
     </form>
 @endsection
+
+@push('js')
+    <script>
+        $('.order-select').change(() => {
+            $('.products-search-form').submit();
+        });
+
+        $(document).ready(() => {
+            let optionToSelect = '{{ request()->input('order') }}';
+            // alert(optionToSelect);
+            $('.order-select option[value="lowest_price"]').attr('selected', 'selected');
+            // $(`.order-select`).val(optionToSelect).attr('selected', 'selected');
+        });
+    </script>
+@endpush
+
+
