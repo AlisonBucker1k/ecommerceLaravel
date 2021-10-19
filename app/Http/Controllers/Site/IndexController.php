@@ -5,15 +5,9 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 use App\Product;
 use App\ProductVariation;
-use Illuminate\View\View;
 
 class IndexController extends Controller
 {
-    /**
-     * Display the home page.
-     *
-     * @return View
-     */
     public function index()
     {
         $limit = 16;
@@ -22,7 +16,8 @@ class IndexController extends Controller
         $data['highlightedProducts'] = $product->highlightedProducts()->limit($limit)->get();
 
         $productVariation = new ProductVariation();
-        $data['promotionProducts'] = $productVariation->variationsOnSale()
+        $data['promotionProducts'] = $productVariation
+            ->variationsOnSale()
             ->orderBy('discount_percent', 'DESC')
             ->limit($limit)
             ->get();
@@ -30,12 +25,8 @@ class IndexController extends Controller
         return view('site.home', $data);
     }
 
-    /**
-     * Display about page.
-     *
-     * @return View
-     */
-    public function about() {
+    public function about()
+    {
         return view('site.about');
     }
 }

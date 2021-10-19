@@ -1,4 +1,4 @@
-{% extends 'site.main.twig' %}
+{% extends 'site.-main.twig' %}
 
 {% block content %}
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
@@ -40,7 +40,7 @@
     </div>
     <section class="shop">
         <div class="container">
-            {% if products_highlighted|length > 0 %}
+            {% if highlightedProducts|length > 0 %}
                 <div class="row">
                     <div class="col text-center appear-animation animated fadeInUpShorter appear-animation-visible" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200" style="animation-delay: 200ms;">
                         <h2 class="font-weight-normal text-7 mb-0">Produtos em <strong class="font-weight-extra-bold">Destaque</strong></h2>
@@ -48,7 +48,7 @@
                 </div>
                 <div class="row text-center mt-5">
                     <div class="owl-carousel owl-theme products product-thumb-info-list" data-plugin-options="{'autoplay': true, 'autoplayTimeout': 3000, 'dots': false}">
-                        {% for product in products_highlighted %}
+                        {% for product in highlightedProducts %}
                             {% set variation = product.availableVariation() %}
                             <div class="product px-4 mt-4">
                                 {% if variation.discount_percent > 0 %}
