@@ -27,14 +27,6 @@
                             </div>
                         </div>
                         <div class="shop-top-bar-right">
-                            {{-- <div class="shop-short-by mr-4">
-                                <select class="nice-select" aria-label=".form-select-sm example">
-                                    <option selected>Exibir 24</option>
-                                    <option value="2">Exibir 12</option>
-                                    <option value="3">Exibir 15</option>
-                                    <option value="4">Exibir 30</option>
-                                </select>
-                            </div> --}}
                             <div class="shop-short-by mr-4">
                                 <select class="nice-select" aria-label=".form-select-sm example">
                                     <option selected>Ordenar por: </option>
@@ -91,36 +83,20 @@
                         @endforelse
 
                     </div>
-                    <div class="shop_toolbar_wrapper mt-10">
-                        <div class="shop-top-bar-left">
-                            <div class="shop-short-by mr-4">
-                                <select class="nice-select rounded-0" aria-label=".form-select-sm example">
-                                    <option selected>Exibir 10 por página</option>
-                                    <option value="1">Exibir 25 por página</option>
-                                    <option value="2">Exibir 50 por página</option>
-                                    <option value="3">Exibir 100 por página</option>
-                                </select>
+                    @if (!empty($products->links()->toHtml()))
+                        <div class="shop_toolbar_wrapper mt-10">
+                            <div class="shop-top-bar-left">
+                                &nbsp;
+                            </div>
+                            <div class="shop-top-bar-right">
+                                <nav>
+                                    <ul class="pagination">
+                                        {{ $products->links() }}
+                                    </ul>
+                                </nav>
                             </div>
                         </div>
-                        <div class="shop-top-bar-right">
-                            <nav>
-                                <ul class="pagination">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
+                    @endif
                 </div>
                 <div class="col-lg-3 col-12 col-custom">
                     <aside class="sidebar_widget mt-10 mt-lg-0">
