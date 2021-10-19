@@ -71,7 +71,7 @@
                                         <div class="content">
                                             <h4 class="sub-title"><a href="single-product.html"><a href="{{ route('product.show', [$product->slug]) }}">{{ $product->name }}</a></a></h4>
                                             <h5 class="title"><a href="{{ route('product.show', [$product->slug]) }}">{{ $product->name }}</a></h5>
-                                        
+
                                             <span class="price">
                                                 <span class="new">{{ $variation->final_price_formated }}</span>
                                                 <span class="old">{{ $variation->final_price_formated }}</span>
@@ -79,7 +79,7 @@
                                             <div class="shop-list-btn">
                                                 <a title="Wishlist" href="#" class="btn btn-sm btn-outline-dark btn-hover-primary wishlist"><i class="fa fa-heart"></i></a>
                                                 <button class="btn btn-sm btn-outline-dark btn-hover-primary" type="submit" title="Detalhes">Ver mais</button>
-                                                
+
                                             </div>
                                         </div>
                                     </div>
@@ -88,7 +88,7 @@
                             <!-- Single Product End -->
                         @empty
                             <p>Nenhum produto encontrado</p>
-                        @endforelse 
+                        @endforelse
 
                     </div>
                     <div class="shop_toolbar_wrapper mt-10">
@@ -148,7 +148,7 @@
                                                         @foreach ($subcategories as $subcategory)
                                                             <li>
                                                                 <a href="{{ route('products', $category->slug) }}">{{ $subcategory->name }}</a>
-                                                            </li>    
+                                                            </li>
                                                         @endforeach
                                                     </ul>
                                                 @endif
@@ -162,17 +162,19 @@
                             <div class="widget-list mb-10">
                                 <h3 class="widget-title mb-5">Filtrar por preço</h3>
                                 <form method="get">
-                                    <div id="slider-range"></div>
+                                    {{--                                <div id="slider-range"></div>--}}
                                     {{-- TODO corrigir modo de filtrar: usando string '$1 - $200' nao vai rolar --}}
                                     {{-- <input class="slider-range-amount" type="start_value" name="text" id="amount" /> --}}
                                     {{-- <button class="slider-range-submit" type="submit">Filtrar</button> --}}
-                                    <div class="col-lg-12">
-                                        <input class="slider-range-amount" name="start_value" type="number" id="start-value" placeholder="mínimo" style="width: 100% !important;"/>
+                                    <div class="row">
+                                        <div class="col-lg-6 pr-1">
+                                            <input class="slider-range-amount" name="start_value" type="number" id="start-value" placeholder="mínimo" value="{{ request()->input('start_value') }}" style="width: 100% !important;"/>
+                                        </div>
+                                        <div class="col-lg-6 pl-1">
+                                            <input class="slider-range-amount" type="number" name="end_value" id="end-value" placeholder="máximo" value="{{ request()->input('end_value') }}" style="width: 100% !important;"/>
+                                        </div>
                                     </div>
-                                    <div class="col-lg-12">
-                                        <input class="slider-range-amount" type="number" name="end_value" id="end-value" placeholder="máximo" style="width: 100% !important;"/>
-                                    </div>
-                                    
+
                                     <br>
                                     <button class="slider-range-submit" type="submit">Filtrar</button>
                                 </form>
