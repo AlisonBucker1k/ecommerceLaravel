@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Rules\CepValidate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class AddressRequest extends FormRequest
 {
@@ -28,7 +27,7 @@ class AddressRequest extends FormRequest
         return [
             'cep' => [
                 'required',
-                new CepValidate()
+                //new CepValidate
             ],
             'district' => 'required',
             'city' => 'required',

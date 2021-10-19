@@ -32,14 +32,14 @@ class OrderSended extends Mailable
      */
     public function build()
     {
-        return $this->to($this->email)
+        return $this
+            ->to($this->email)
             ->subject('Sua encomenda está a caminho!')
             ->markdown('emails.order_status.order_sent')
             ->with([
                 'name' => $this->name,
                 'baseUrl' => config('app.url'),
-                'orderUrl' => config('app.url')
-                    . '/orders'
+                'orderUrl' => config('app.url') . '/orders'
             ]);
     }
 }

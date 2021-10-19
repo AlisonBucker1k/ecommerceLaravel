@@ -1,0 +1,18 @@
+{% if breadcrumb != '' %}
+    <section class="page-header breadcrumb">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                    {% for key, page in breadcrumb %}
+                        {% if page != url().current() %}
+                            <li class="breadcrumb-item"><a href="{{ page }}">{{ key|capitalize }}</a></li>
+                        {% else %}
+                            <li class="breadcrumb-item active" aria-current="page">{{ key|capitalize }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ol>
+            </nav>
+        </div>
+    </section>
+{% endif %}

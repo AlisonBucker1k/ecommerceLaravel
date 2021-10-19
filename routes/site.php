@@ -6,6 +6,10 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes(['verify' => true]);
 
+Route::prefix('/pagar-me')->group(function() {
+    Route::post('/post-back', 'PagarMeController@postBack')->name('pagar_me.post_back');
+});
+
 Route::middleware('site.boot')->group(function() {
     Route::get('/', 'IndexController@index')->name('home');
     Route::get('/home', 'IndexController@index');
@@ -21,14 +25,15 @@ Route::middleware('site.boot')->group(function() {
 
     Route::get('/carrinho', 'CartController@index')->name('cart');
     Route::post('/carrinho/{product}/add', 'CartController@addProduct')->name('cart.product.add');
-    Route::get('/carrinho/{cartProduct}/remove', 'CartController@removeProduct')->name('cart.product.remove');
-    Route::post('/carrinho/edit', 'CartController@editCartProduct')->name('cart.edit');
     Route::get('/carrinho/calculate-freight', 'CartController@calculateFreight')->name('cart.product.freight');
 
     Route::middleware(CheckLogin::class)->group(function() {
         Route::get('/carrinho/finalizar', 'CartController@confirmOrder')->name('cart.confirm');
         Route::post('/carrinho/finalizar', 'CartController@createOrder');
     });
+
+    Route::get('/carrinho/{cartProduct}/remove', 'CartProductController@removeProduct')->name('cart.product.remove');
+    Route::post('/carrinho/{cartProduct}/quantity', 'CartProductController@changeQuantity')->name('cart_product.change_quantity');
 
     Route::get('acessar', 'AuthController@index')->name('login');
     Route::post('acessar', 'AuthController@login');
@@ -45,11 +50,6 @@ Route::middleware('site.boot')->group(function() {
     Route::get('clientes/senha/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('customer.password.form');
 
     Route::get('endereco/buscar', 'AddressController@find')->name('address.find');
-
-    Route::post('/pagseguro/notification', [
-        'uses' => '\laravel\pagseguro\Platform\Laravel5\NotificationController@notification',
-        'as' => 'pagseguro.notification',
-    ]);
 
     Route::middleware(['Auth:web_site'])->prefix('painel')->name('panel.')->group(function() {
         Route::get('/', 'CustomerController@index')->name('panel');
@@ -69,7 +69,5 @@ Route::middleware('site.boot')->group(function() {
         Route::get('pedidos/{order}/cancel','OrderController@destroy')->name('order.cancel');
 
         Route::get('fatura/{invoice}', 'InvoiceController@show')->name('invoice.show');
-
-        Route::get('fatura/{invoice}/pagamento/pagseguro', 'InvoiceController@payWithPagseguro')->name('invoice.pagseguro_payment');
     });
 });

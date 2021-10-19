@@ -1,7 +1,5 @@
 <?php
 
-use laravel\pagseguro\Platform\Laravel5\ServiceProvider;
-
 return [
 
     /*
@@ -164,7 +162,6 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
-
         /*
          * Package Service Providers...
          */
@@ -174,14 +171,12 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         TwigBridge\ServiceProvider::class,
         Canducci\ZipCode\Providers\ZipCodeServiceProvider::class,
         Canducci\ZipCode\Providers\ZipCodeAddressServiceProvider::class,
         geekcom\ValidatorDocs\ValidatorProvider::class,
-        laravel\pagseguro\Platform\Laravel5\ServiceProvider::class,
 
     ],
 
@@ -236,22 +231,33 @@ return [
         'Twig' => TwigBridge\Facade\Twig::class,
         'ZipCode'   => Canducci\ZipCode\Facades\ZipCode::class,
         'Address'   => Canducci\ZipCode\Facades\ZipCodeAddress::class,
-        'PagSeguro' => laravel\pagseguro\Platform\Laravel5\PagSeguro::class,
+
     ],
 
     'domain' => env('APP_DOMAIN'),
     'url_admin' => env('APP_URL_ADMIN'),
+
     'company' => [
+
         'name' => env('COMPANY_NAME'),
-        'cnpj' => env('COMPANY_CNPJ')
+        'cnpj' => env('COMPANY_CNPJ'),
+        'emails' => [
+
+            'contact' => env('COMPANY_CONTACT_EMAIL'),
+            'marketing' => env('COMPANY_MARKETING_EMAIL'),
+
+        ],
+
     ],
-    'pagseguro' => [
-        'email' => env('PAGSEGURO_EMAIL'),
-        'token' => env('PAGSEGURO_TOKEN'),
-    ],
+
     'shipping' => [
+
         'postal_code' => env('SHIPPING_POSTAL_CODE'),
         'additional_shipping_days' => env('SHIPPING_ADDITIONAL_SHIPPING_DAYS'),
+
     ],
-    'has_email_confirmation' => env('HAS_EMAIL_CONFIRMATION', true)
+
+    'pagar_me_api_token' => env('PAGAR_ME_API_TOKEN'),
+    'pagar_me_api_encrypt' => env('PAGAR_ME_API_ENCRYPT'),
+    'pagar_me_api_base_url' => env('PAGAR_ME_API_BASE_URL'),
 ];

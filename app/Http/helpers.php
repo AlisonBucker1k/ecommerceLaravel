@@ -51,7 +51,18 @@ if (!function_exists('currencyBrl2Float')) {
 if (!function_exists('currencyFloat2Brl')) {
     function currencyFloat2Brl($value) : string
     {
-        return number_format($value, 2, ",", ".");
+        return 'R$' .  number_format($value, 2, ",", ".");
+    }
+}
+
+if (!function_exists('valueInCents')) {
+    function valueInCents($value)
+    {
+        if (strlen($value) == 2) {
+            return preg_replace('/\D/', '', $value . '00');
+        }
+
+        return preg_replace('/\D/', '', $value);
     }
 }
 
@@ -110,5 +121,23 @@ if (!function_exists('getIdYoutube')) {
     function getIdYoutube($url)
     {
         return preg_replace('/.*(\/|\?v=)(.{11})([&|\/].*|)/', '$2', $url);
+    }
+}
+
+if (!function_exists('maskCep')) {
+    function maskCep($cep)
+    {
+        if (empty($cep)) {
+            return '';
+        }
+
+        $mask = '#####-###';
+        $cep = str_replace(' ', '', getOnlyNumber($cep));
+
+        for ($i = 0; $i < strlen($cep); $i++) {
+            $mask[strpos($mask, '#')] = $cep[$i];
+        }
+
+        return $mask;
     }
 }

@@ -20,7 +20,7 @@ class OrderCreated extends Mailable
      */
     public function __construct(Order $order)
     {
-        $this->name  = $order->customer->profile->name;
+        $this->name = $order->customer->profile->name;
     }
 
     /**
@@ -30,7 +30,8 @@ class OrderCreated extends Mailable
      */
     public function build()
     {
-        return $this->from('noreply@ohyes.com')
+        return $this
+            ->from('gabrielbitti0@gmail.com')
             ->subject('Sua encomenda está a caminho! ')
             ->markdown('emails.order_status.order_created')
             ->with([

@@ -31,11 +31,6 @@ class CartProduct extends Model
         return currencyFloat2Brl($this->subtotal_value);
     }
 
-    /**
-     * @param int $cartId
-     * @param Product $product
-     * @param ProductVariation $productVariation
-     */
     public function addProduct(int $cartId, Product $product, ProductVariation $productVariation)
     {
         $findCartProduct = $this->query()->where([
@@ -52,6 +47,16 @@ class CartProduct extends Model
         $this->product_id = $product->id;
         $this->quantity = 1;
         $this->product_variation_id = $productVariation->id;
+        $this->save();
+    }
+
+    public function changeQuantity($newValue)
+    {
+        if ($newValue <= 0) {
+            return $this->delete();
+        }
+
+        $this->quantity = $newValue;
         $this->save();
     }
 }

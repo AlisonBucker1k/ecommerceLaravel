@@ -8,20 +8,12 @@ use App\ProductVariation;
 use Exception;
 use FlyingLuscas\Correios\Client;
 use FlyingLuscas\Correios\Service;
-use Illuminate\Support\Facades\Cookie;
 
 class Shipping
 {
     private $cep;
     private $cart;
 
-    /**
-     * @param Cart $cart
-     * @param $cep
-     * @param null $shippingId
-     * @return mixed
-     * @throws Exception
-     */
     public function calculate(Cart $cart, $cep, $shippingId = null)
     {
         $result = [];
@@ -44,42 +36,40 @@ class Shipping
         return $result;
     }
 
-    /**
-     * @param int $shippingId
-     * @return array
-     * @throws Exception
-     */
     private function handleShipping(int $shippingId)
     {
-        $result = [];
         $defaultResult = [
             'id' => $shippingId,
             'description' => Enums\Shipping::getDescription($shippingId),
             'warning' => null,
-            'value' => null,
-            'deadline' => null
+            'value' => 10.0,
+            'deadline' => 3,
         ];
 
-        switch ($shippingId) {
-            case Enums\Shipping::SEDEX:
-                $result = $this->calculateCorreios(Service::SEDEX);
-                break;
-            case Enums\Shipping::PAC:
-                $result = $this->calculateCorreios(Service::PAC);
-                break;
-            case Enums\Shipping::REDEEM_IN_STORE:
-                $result = $this->calculateRedeemInStore();
-                break;
-            case Enums\Shipping::LOCAL_SHIPPING:
-                $result = $this->calculateLocalShipping();
-                break;
-        }
+        return $defaultResult;
 
-        if (empty($result)) {
-            return $result;
-        }
+        // TODO testar com internet boa
+//        $result = [];
+//        switch ($shippingId) {
+////            case Enums\Shipping::SEDEX:
+////                $result = $this->calculateCorreios(Service::SEDEX);
+////                break;
+////            case Enums\Shipping::PAC:
+////                $result = $this->calculateCorreios(Service::PAC);
+////                break;
+//            case Enums\Shipping::REDEEM_IN_STORE:
+//                $result = $this->calculateRedeemInStore();
+//                break;
+//            case Enums\Shipping::LOCAL_SHIPPING:
+//                $result = $this->calculateLocalShipping();
+//                break;
+//        }
 
-        return array_merge($defaultResult, $result);
+//        if (empty($result)) {
+//            return $defaultResult;
+//        }
+//
+//        return array_merge($defaultResult, $result);
     }
 
     private function calculateLocalShipping() {
@@ -89,34 +79,32 @@ class Shipping
             return $result;
         }
 
-        $address = $findCep->getObject();
-
-        switch ($address->ibge) {
-            case 3205309: // Vitória
-            case 3205200: // Vila Velha
-                $result['value'] = 0;
-                $result['deadline'] = 3 + config('app.shipping.additional_shipping_days');
-                break;
-        }
+        $result['value'] = 0;
+        $result['deadline'] = 3 + config('app.shipping.additional_shipping_days');
 
         return $result;
+
+//        $address = $findCep->getObject();
+//
+//        switch ($address->ibge) {
+//            case 3205309: // Vitória
+//            case 3205200: // Vila Velha
+//                $result['value'] = 0;
+//                $result['deadline'] = 3 + config('app.shipping.additional_shipping_days');
+//                break;
+//        }
+//
+//        return $result;
     }
 
-    /**
-     * @return array
-     */
-    private function calculateRedeemInStore() {
+    private function calculateRedeemInStore(): array
+    {
         $result['value'] = 0;
         $result['deadline'] = config('app.shipping.additional_shipping_days');
 
         return $result;
     }
 
-    /**
-     * @param $shippingType
-     * @return mixed
-     * @throws Exception
-     */
     private function calculateCorreios($shippingType)
     {
         $cep = $this->cep;
