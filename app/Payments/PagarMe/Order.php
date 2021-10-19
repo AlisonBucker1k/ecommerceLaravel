@@ -11,6 +11,25 @@ use PagarMe\PagarMe;
 
 class Order extends PagarMe
 {
+    protected $pagarMeOrder;
+
+    public function __construct($pagarMeOrderJson)
+    {
+        $this->pagarMeOrder = self::getDecodedJsonOrFail($pagarMeOrderJson);
+
+        return $this;
+    }
+
+    private static function getDecodedJsonOrFail($pagarMeOrderJson)
+    {
+        $pagarMeOrder = json_decode($pagarMeOrderJson);
+        if (empty($pagarMeOrder)) {
+            throw new Exception('Pedido inválido');
+        }
+
+        return $pagarMeOrder;
+    }
+
     private function validatePostBackSignature()
     {
         $requestBody = file_get_contents('php://input');
@@ -40,26 +59,29 @@ class Order extends PagarMe
         }
     }
 
-    public static function canCancelBill($orderPagarMeJson)
+    public function getOrderStatus()
     {
-        $decodedJson = json_decode($orderPagarMeJson);
-        if (empty($orderPagarMeJson)) {
-            return false;
-        }
-
-        return
-            $decodedJson->status == OrderStatus::WAITING_PAYMENT
-            && $decodedJson->payment_method == OrderPaymentMethod::BILL;
+        return OrderStatus::getDescription($this->pagarMeOrder->status);
     }
 
-    public static function getOrderStatus($orderPagarMeJson)
+    public function getOrder()
     {
-        $decodedJson = json_decode($orderPagarMeJson);
-        if (empty($orderPagarMeJson)) {
-            return '-';
-        }
+        $this->pagarMeOrder->status_description = OrderStatus::getDescription($this->pagarMeOrder->status);
+        $this->pagarMeOrder->payment_method_description = OrderPaymentMethod::getDescription($this->pagarMeOrder->payment_method);
 
-        return OrderStatus::getDescription($decodedJson->status);
+        return $this->pagarMeOrder;
+    }
+
+    public function isPaymentTypeBill()
+    {
+        return $this->pagarMeOrder->payment_method == OrderPaymentMethod::BILL;
+    }
+
+    public function canCancelBill()
+    {
+        return
+            $this->pagarMeOrder->status == OrderStatus::WAITING_PAYMENT
+            && $this->pagarMeOrder->payment_method == OrderPaymentMethod::BILL;
     }
 }
 

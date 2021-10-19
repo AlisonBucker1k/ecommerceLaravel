@@ -65,7 +65,11 @@ class Order extends Model
 
     public function getPaymentStatusDescriptionAttribute()
     {
-        return Payments\PagarMe\Order::getOrderStatus($this->pagar_me_json);
+        if (empty($this->pagar_me_json)) {
+            return '-';
+        }
+
+        return (new Payments\PagarMe\Order($this->pagar_me_json))->getOrderStatus();
     }
 
     public function getProductsTotalValueAttribute()
@@ -197,5 +201,14 @@ class Order extends Model
         return self::query()
             ->where('pagar_me_transaction_id', $transactionId)
             ->first();
+    }
+
+    public function getPagarMeOrder()
+    {
+        if (empty($this->pagar_me_json)) {
+            return null;
+        }
+
+        return (new Payments\PagarMe\Order($this->pagar_me_json));
     }
 }
