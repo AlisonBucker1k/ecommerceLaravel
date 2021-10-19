@@ -24,7 +24,7 @@ class ProductController extends Controller
         $products = $query
             ->where('products.status', ProductStatus::ACTIVE)
             ->orderBy('products.id', 'desc')
-            ->paginate(20);
+            ->paginate(30);
 
         $data['products'] = $products;
         $data['filters'] = $filters;

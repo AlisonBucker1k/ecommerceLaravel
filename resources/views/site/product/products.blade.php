@@ -23,7 +23,7 @@
                     <div class="shop_toolbar_wrapper flex-column flex-md-row mb-10">
                         <div class="shop-top-bar-left mb-md-0 mb-2">
                             <div class="shop-top-show">
-                                <span>Exibindo 1–12 de {{ $products->count() }} resultados</span>
+                                <span>Exibindo {{ $products->firstItem() }}–{{ $products->lastItem() }} de {{ $products->total() }} resultados</span>
                             </div>
                         </div>
                         <div class="shop-top-bar-right">
@@ -44,7 +44,6 @@
                     <div class="row shop_wrapper grid_3">
 
                         @forelse ($products as $product)
-                            <!-- Single Product Start -->
                             @php $variation = $product->availableVariation(); @endphp
                             <div class="col-lg-4 col-md-4 col-sm-6 product" data-aos="fade-up" data-aos-delay="200">
                                 <form action="{{ route('cart.product.add', $product->slug) }}" method="post">
@@ -54,11 +53,6 @@
                                                 <img class="first-image" src="{{asset('useLadame/images/products/medium-size/2.jpg')}}" alt="Product" />
                                                 <img class="second-image" src="{{asset('useLadame/images/products/medium-size/2.jpg')}}" alt="Product" />
                                             </a>
-                                            {{-- <div class="actions">
-                                                <a href="wishlist.html" title="Wishlist" class="action wishlist"><i class="pe-7s-like"></i></a>
-                                                <a href="#" title="Quickview" class="action quickview" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i class="pe-7s-search"></i></a>
-                                                <a href="compare.html" title="Compare" class="action compare"><i class="pe-7s-shuffle"></i></a>
-                                            </div> --}}
                                         </div>
                                         <div class="content">
                                             <h4 class="sub-title"><a href="single-product.html"><a href="{{ route('product.show', [$product->slug]) }}">{{ $product->name }}</a></a></h4>
@@ -71,19 +65,17 @@
                                             <div class="shop-list-btn">
                                                 <a title="Wishlist" href="#" class="btn btn-sm btn-outline-dark btn-hover-primary wishlist"><i class="fa fa-heart"></i></a>
                                                 <button class="btn btn-sm btn-outline-dark btn-hover-primary" type="submit" title="Detalhes">Ver mais</button>
-
                                             </div>
                                         </div>
                                     </div>
                                 </form>
                             </div>
-                            <!-- Single Product End -->
                         @empty
                             <p>Nenhum produto encontrado</p>
                         @endforelse
-
                     </div>
-                    @if (!empty($products->links()->toHtml()))
+
+                    @if ($products->links()->toHtml())
                         <div class="shop_toolbar_wrapper mt-10">
                             <div class="shop-top-bar-left">
                                 &nbsp;
@@ -138,10 +130,6 @@
                             <div class="widget-list mb-10">
                                 <h3 class="widget-title mb-5">Filtrar por preço</h3>
                                 <form method="get">
-                                    {{--                                <div id="slider-range"></div>--}}
-                                    {{-- TODO corrigir modo de filtrar: usando string '$1 - $200' nao vai rolar --}}
-                                    {{-- <input class="slider-range-amount" type="start_value" name="text" id="amount" /> --}}
-                                    {{-- <button class="slider-range-submit" type="submit">Filtrar</button> --}}
                                     <div class="row">
                                         <div class="col-lg-6 pr-1">
                                             <input class="slider-range-amount" name="start_value" type="number" id="start-value" placeholder="mínimo" value="{{ request()->input('start_value') }}" style="width: 100% !important;"/>
@@ -150,77 +138,13 @@
                                             <input class="slider-range-amount" type="number" name="end_value" id="end-value" placeholder="máximo" value="{{ request()->input('end_value') }}" style="width: 100% !important;"/>
                                         </div>
                                     </div>
-
-                                    <br>
+                                    <br/>
                                     <button class="slider-range-submit" type="submit">Filtrar</button>
                                 </form>
                             </div>
-                            {{-- <div class="widget-list mb-10">
-                                <h3 class="widget-title">Categorias</h3>
-                                <div class="sidebar-body">
-                                    <ul class="sidebar-list">
-                                        <li><a href="#">All Product</a></li>
-                                        <li><a href="#">Best Seller (5)</a></li>
-                                        <li><a href="#">Featured (4)</a></li>
-                                        <li><a href="#">New Products (6)</a></li>
-                                    </ul>
-                                </div>
-                            </div> --}}
-                            {{-- <div class="widget-list mb-10">
-                                <h3 class="widget-title">Cor</h3>
-                                <div class="sidebar-body">
-                                    <ul class="checkbox-container categories-list">
-                                        <li>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck12">
-                                                <label class="custom-control-label" for="customCheck12">black (20)</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck13">
-                                                <label class="custom-control-label" for="customCheck13">red (6)</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck14">
-                                                <label class="custom-control-label" for="customCheck14">blue (8)</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck11">
-                                                <label class="custom-control-label" for="customCheck11">green (5)</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck15">
-                                                <label class="custom-control-label" for="customCheck15">pink (4)</label>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div> --}}
-                            {{-- <div class="widget-list mb-10">
-                                <h3 class="widget-title mb-4">Tags</h3>
-                                <div class="sidebar-body">
-                                    <ul class="tags mb-n2">
-                                        <li><a href="#">Men</a></li>
-                                        <li><a href="#">Women</a></li>
-                                        <li><a href="#">Fashion</a></li>
-                                        <li><a href="#">Watch</a></li>
-                                        <li><a href="#">Handmade</a></li>
-                                        <li><a href="#">Lather</a></li>
-                                        <li><a href="#">Fabrics</a></li>
-                                    </ul>
-                                </div>
-                            </div> --}}
                             <div class="widget-list">
                                 <h3 class="widget-title mb-4">Produtos Recentes</h3>
                                 <div class="sidebar-body product-list-wrapper mb-n6">
-                                    <!-- Single Product List Start -->
                                     <div class="single-product-list product-hover mb-6">
                                         <div class="thumb">
                                             <a href="single-product.html" class="image">
@@ -242,9 +166,6 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <!-- Single Product List End -->
-
-                                    <!-- Single Product List Start -->
                                     <div class="single-product-list product-hover mb-6">
                                         <div class="thumb">
                                             <a href="single-product.html" class="image">
@@ -266,9 +187,6 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <!-- Single Product List End -->
-
-                                    <!-- Single Product List Start -->
                                     <div class="single-product-list product-hover mb-6">
                                         <div class="thumb">
                                             <a href="single-product.html" class="image">
