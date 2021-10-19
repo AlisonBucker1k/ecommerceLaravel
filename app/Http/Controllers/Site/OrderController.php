@@ -33,6 +33,7 @@ class OrderController extends Controller
         $data['shippingCode'] = OrderHistory::getLastShippingCode($order->id);
         $data['orderHistorySentStatus'] = OrderHistoryStatus::SENT;
         $data['order'] = $order;
+        $data['pagarMeOrder'] = $order->getPagarMeOrder();
         $data['histories'] = $order->histories->where('status', '!=', OrderHistoryStatus::PRIVATE_INFO);
         $data['breadcrumb'] = [
             'Pedidos' => route('panel.orders'),

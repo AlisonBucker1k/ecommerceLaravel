@@ -26,17 +26,21 @@
                             <div class="col">
                                 <div class="card">
                                     <div class="card-body">
-                                        <div class="form-group row mb-0">
+                                        <div class="form-group row mb-2">
                                             <h5>Status do Pagamento</h5>
                                         </div>
-                                        <div class="form-group row mb-0">
-                                            <div class="col">{{ \App\Payments\PagarMe\Order::getOrderStatus($order->pagar_me_json) }}</div>
+                                        <div class="form-group row mb-2">
+                                            <div class="col">{{ $order->payment_status_description }}</div>
                                         </div>
 
-                                        @if (\App\Payments\PagarMe\Order::canCancelBill($order->pagar_me_json))
-                                            <div class="form-group row mb-0">
-                                                <a href="{{ route('panel.order.cancel',  $order->id) }}" onclick="return confirm('Deseja realmente cancelar o pedido?');" class="btn btn-danger">Cancelar Pedido</a>
-                                            </div>
+                                        @if(!empty($pagarMeOrder))
+                                            @if ($pagarMeOrder->isPaymentTypeBill())
+                                                <a href="{{ $pagarMeOrder->getOrder()->boleto_url }}" class="btn btn-sm btn-success mb-2" target="_blank">Pagar Boleto</a>
+
+                                                @if ($pagarMeOrder->canCancelBill())
+                                                    <a href="{{ route('panel.order.cancel', $order->id) }}" onclick="return confirm('Deseja realmente cancelar o pedido?');" class="btn btn-sm btn-danger mb-2">Cancelar Pedido</a>
+                                                @endif
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
