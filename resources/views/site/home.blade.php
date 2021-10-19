@@ -120,7 +120,7 @@
                                         <div class="swiper-slide product-wrapper">
                                             @php $l = 0; @endphp
                                             @php $lt = 0; @endphp
-                                            
+
                                             @forelse ($highlightedProducts as $highlightedProduct)
                                                 @php $l++; @endphp
                                                 @php $lt++; @endphp
@@ -131,41 +131,34 @@
                                                         <input type="hidden" name="variation_id" id="variationId" value="{{  $variation->id }}">
                                                         @csrf
                                                         <div class="thumb">
-                                                            <a href="{{ route('product.show', [$highlightedProduct->slug, $variation->id]) }}" class="image">
+                                                            <a href="{{ route('product.show', [$highlightedProduct->slug]) }}" class="image">
                                                                 <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
                                                                 <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
                                                             </a>
                                                         </div>
                                                         <div class="content">
-                                                            <h4 class="sub-title"><a href="{{ route('product.show', [$highlightedProduct->slug, $variation->id]) }}">{{ $highlightedProduct->name }}</a></h4>
-                                                            <h5 class="title"><a href="{{ route('product.show', [$highlightedProduct->slug, $variation->id]) }}">{{ $highlightedProduct->name }}</a></h5>
-                                                            
-                                                            </span>
+                                                            <h5 class="title"><a href="{{ route('product.show', [$highlightedProduct->slug]) }}">{{ $highlightedProduct->name }}</a></h5>
                                                             <span class="price">
                                                                 <span class="new">{{ $variation->final_price_formated }}</span>
                                                                 <span class="old">{{ $variation->final_price_formated }}</span>
                                                             </span>
-                                                            <button class="btn btn-sm btn-outline-dark btn-hover-primary">Ver mais</button>
+                                                            <a href="{{ route('product.show', [$highlightedProduct->slug]) }}" class="btn btn-sm btn-outline-dark btn-hover-primary">Ver mais</a>
                                                         </div>
                                                     </form>
                                                 </div>
                                                 <!-- Single Product End -->
 
-                                                @if ($l === 2)
-                                                    @if ($lt != count($highlightedProducts))
+                                                @if ($l === 1)
+{{--                                                    @if ($lt != count($highlightedProducts))--}}
                                                         </div>
                                                         <div class="swiper-slide product-wrapper">
-                                                    @endif
+{{--                                                    @endif--}}
                                                     @php $l = 0; @endphp
                                                 @endif
                                             @empty
                                                 <p>Nenhum produto disponível</p>
                                             @endforelse
-                                            
-
                                         </div>
-
-                                        
                                     </div>
 
                                     <!-- Swiper Pagination Start -->
@@ -194,7 +187,7 @@
                                                     @csrf
                                                     <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
                                                         <div class="thumb">
-                                                            <a href="{{ route('product.show', [$productVariation->product->slug, $productVariation->id]) }}" class="image">
+                                                            <a href="{{ route('product.show', [$productVariation->product->slug]) }}" class="image">
                                                                 <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
                                                                 <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
                                                             </a>
@@ -205,7 +198,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="content">
-                                                            <h4 class="sub-title"><a href="{{ route('product.show', [$productVariation->product->slug, $productVariation->id]) }}">{{ $productVariation->product->slug }}</a></h4> <h5 class="title"><a href="produto/ut-adipisci-sed-suscipit-libero/20">{{ $highlightedProduct->slug }}</a></h5>
+                                                            <h4 class="sub-title"><a href="{{ route('product.show', [$productVariation->product->slug]) }}">{{ $productVariation->product->slug }}</a></h4> <h5 class="title"><a href="produto/ut-adipisci-sed-suscipit-libero/20">{{ $highlightedProduct->slug }}</a></h5>
 {{--                                                            <span class="ratings">--}}
 {{--                                                                <span class="rating-wrap">--}}
 {{--                                                                    <span class="star" style="width: 100%"></span>--}}
@@ -216,7 +209,7 @@
                                                                 <span class="new">{{ $productVariation->value_formated }}</span>
                                                                 <span class="old">{{ $productVariation->final_price_formated }}</span>
                                                             </span>
-                                                            <button class="btn btn-sm btn-outline-dark btn-hover-primary">Adicionar ao Carrinho</button>
+                                                            <a href="{{ route('product.show', [$productVariation->product->slug]) }}" class="btn btn-sm btn-outline-dark btn-hover-primary">Ver mais</a>
                                                         </div>
                                                     </div>
                                                 </form>
