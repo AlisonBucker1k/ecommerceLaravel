@@ -100,7 +100,7 @@
                                                     @foreach ($order->products as $orderProduct)
                                                         <tr class="cart_table_item">
                                                             <td class="product-thumbnail" width="100">
-                                                                <img alt="" class="img-fluid" src="{{ $orderProduct->image }}">
+                                                                <img alt="{{ $orderProduct->name }}" class="img-fluid" src="{{ $orderProduct->image }}">
                                                             </td>
                                                             <td class="product-name">
                                                                 <strong>{{ $orderProduct->name }}</strong>

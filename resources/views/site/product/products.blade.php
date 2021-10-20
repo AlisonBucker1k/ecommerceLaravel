@@ -49,8 +49,8 @@
                                     <div class="product-inner">
                                         <div class="thumb">
                                             <a href="{{ route('product.show', [$product->slug]) }}" class="image">
-                                                <img class="first-image" src="{{asset('useLadame/images/products/medium-size/2.jpg')}}" alt="Product" />
-                                                <img class="second-image" src="{{asset('useLadame/images/products/medium-size/2.jpg')}}" alt="Product" />
+                                                <img class="first-image" src="{{asset('useLadame/images/products/medium-size/2.jpg')}}" alt="{{ $product->name }}" />
+                                                <img class="second-image" src="{{asset('useLadame/images/products/medium-size/2.jpg')}}" alt="{{ $product->name }}" />
                                             </a>
                                         </div>
                                         <div class="content">
@@ -142,8 +142,8 @@
                                         <div class="single-product-list product-hover mb-6">
                                             <div class="thumb">
                                                 <a href="single-product.html" class="image">
-                                                    <img class="first-image" src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="Product" />
-                                                    <img class="second-image" src="{{asset('useLadame/images/products/small-product/5.jpg')}}" alt="Product" />
+                                                    <img class="first-image" src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="{{ $product->name }}" />
+                                                    <img class="second-image" src="{{asset('useLadame/images/products/small-product/5.jpg')}}" alt="{{ $product->name }}" />
                                                 </a>
                                             </div>
                                             <div class="content">
@@ -163,8 +163,8 @@
                                         <div class="single-product-list product-hover mb-6">
                                             <div class="thumb">
                                                 <a href="single-product.html" class="image">
-                                                    <img class="first-image" src="{{asset('useLadame/images/products/small-product/2.jpg')}}" alt="Product" />
-                                                    <img class="second-image" src="{{asset('useLadame/images/products/small-product/3.jpg')}}" alt="Product" />
+                                                    <img class="first-image" src="{{asset('useLadame/images/products/small-product/2.jpg')}}" alt="{{ $product->name }}" />
+                                                    <img class="second-image" src="{{asset('useLadame/images/products/small-product/3.jpg')}}" alt="{{ $product->name }}" />
                                                 </a>
                                             </div>
                                             <div class="content">
@@ -184,8 +184,8 @@
                                         <div class="single-product-list product-hover mb-6">
                                             <div class="thumb">
                                                 <a href="single-product.html" class="image">
-                                                    <img class="first-image" src="{{asset('useLadame/images/products/small-product/4.jpg')}}" alt="Product" />
-                                                    <img class="second-image" src="{{asset('useLadame/images/products/small-product/10.jpg')}}" alt="Product" />
+                                                    <img class="first-image" src="{{asset('useLadame/images/products/small-product/4.jpg')}}" alt="{{ $product->name }}" />
+                                                    <img class="second-image" src="{{asset('useLadame/images/products/small-product/10.jpg')}}" alt="{{ $product->name }}" />
                                                 </a>
                                             </div>
                                             <div class="content">

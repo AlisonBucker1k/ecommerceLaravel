@@ -188,8 +188,8 @@
                                                     <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
                                                         <div class="thumb">
                                                             <a href="{{ route('product.show', [$productVariation->product->slug]) }}" class="image">
-                                                                <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
-                                                                <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
+                                                                <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="{{ $productVariation->product->name }}" />
+                                                                <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $productVariation->product->name }}" />
                                                             </a>
                                                             <div class="actions">
                                                                 <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
@@ -708,35 +708,35 @@
 
                                     <!-- Single Brand Logo Start -->
                                     <div class="swiper-slide single-brand-logo" data-aos="fade-up" data-aos-delay="300">
-                                        <a href="https://bckcode.com.br" target="_blank"><img style="width: 200px;" src="{{asset('useLadame/images/logo/marca-dagua-dourada.png')}}" alt="Brand Logo"></a>
+                                        <a href="https://bckcode.com.br" target="_blank"><img style="width: 200px;" src="{{asset('useLadame/images/logo/marca-dagua-dourada.png')}}" alt="Logo BCKCode"></a>
                                     </div>
                                     <!-- Single Brand Logo End -->
 
                                     <!-- Single Brand Logo Start -->
                                     <div class="swiper-slide single-brand-logo" data-aos="fade-up" data-aos-delay="400">
                                         {{-- <a href="#"><img src="assets/images/brand-logo/2.png" alt="Brand Logo"></a> --}}
-                                        <a href="https://bckcode.com.br" target="_blank"><img style="width: 200px;" src="{{asset('useLadame/images/logo/marca-dagua-preta.png')}}" alt="Brand Logo"></a>
+                                        <a href="https://bckcode.com.br" target="_blank"><img style="width: 200px;" src="{{asset('useLadame/images/logo/marca-dagua-preta.png')}}" alt="Logo BCKCode"></a>
                                     </div>
                                     <!-- Single Brand Logo End -->
 
                                     <!-- Single Brand Logo Start -->
                                     <div class="swiper-slide single-brand-logo" data-aos="fade-up" data-aos-delay="500">
                                         {{-- <a href=""><img src="assets/images/brand-logo/3.png" alt="Brand Logo"></a> --}}
-                                        <a href="https://bckcode.com.br" target="_blank"><img style="width: 200px;" src="{{asset('useLadame/images/logo/marca-dagua-dourada.png')}}" alt="Brand Logo"></a>
+                                        <a href="https://bckcode.com.br" target="_blank"><img style="width: 200px;" src="{{asset('useLadame/images/logo/marca-dagua-dourada.png')}}" alt="Logo Use Ladame"></a>
                                     </div>
                                     <!-- Single Brand Logo End -->
 
                                     <!-- Single Brand Logo Start -->
                                     <div class="swiper-slide single-brand-logo" data-aos="fade-up" data-aos-delay="600">
                                         {{-- <a href="#"><img src="assets/images/brand-logo/4.png" alt="Brand Logo"></a> --}}
-                                        <a href="https://bckcode.com.br" target="_blank"><img style="width: 200px;" src="{{asset('useLadame/images/logo/marca-dagua-preta.png')}}" alt="Brand Logo"></a>
+                                        <a href="https://bckcode.com.br" target="_blank"><img style="width: 200px;" src="{{asset('useLadame/images/logo/marca-dagua-preta.png')}}" alt="BCK Logo"></a>
                                     </div>
                                     <!-- Single Brand Logo End -->
 
                                     <!-- Single Brand Logo Start -->
                                     <div class="swiper-slide single-brand-logo" data-aos="fade-up" data-aos-delay="700">
                                         {{-- <a href="#"><img src="assets/images/brand-logo/5.png" alt="Brand Logo"></a> --}}
-                                        <a href="https://bckcode.com.br" target="_blank"><img style="width: 200px;" src="{{asset('useLadame/images/logo/marca-dagua-dourada.png')}}" alt="Brand Logo"></a>
+                                        <a href="https://bckcode.com.br" target="_blank"><img style="width: 200px;" src="{{asset('useLadame/images/logo/marca-dagua-dourada.png')}}" alt="BCK Logo"></a>
                                     </div>
                                     <!-- Single Brand Logo End -->
 
