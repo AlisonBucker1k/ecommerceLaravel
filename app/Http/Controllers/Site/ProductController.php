@@ -70,6 +70,12 @@ class ProductController extends Controller
 
     private function filters(Builder &$query, Request $request, Category $category, Subcategory $subcategory)
     {
+        if (!empty($request->order)) {
+            if ($request->order == 'recents') {
+                $query->orderBy('products.created_at', 'desc');
+            }
+        }
+
         if (!empty($request->search_term)) {
             $query->where('products.name', 'like', "%$request->search_term%");
         }
