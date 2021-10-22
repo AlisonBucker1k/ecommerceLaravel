@@ -23,7 +23,6 @@ class ProductController extends Controller
 
         $products = $query
             ->where('products.status', ProductStatus::ACTIVE)
-            ->orderBy('products.id', 'desc')
             ->paginate(30);
 
         $data['products'] = $products;
@@ -72,8 +71,10 @@ class ProductController extends Controller
     {
         if (!empty($request->order)) {
             if ($request->order == 'recents') {
-                $query->orderBy('products.created_at', 'desc');
+                $query->orderBy('products.updated_at', 'desc');
             }
+        } else {
+            $query->orderBy('products.id', 'desc');
         }
 
         if (!empty($request->search_term)) {
