@@ -41,11 +41,70 @@
             </div>
         </div>
     </div>
+
+    <!-- Banner Section Start -->
     <div class="section section-margin">
         <div class="container">
-            <div class="row mb-n6"></div>
+
+            <!-- Banners Start -->
+            <div class="row mb-n6">
+                <!-- Banner Start -->
+                <div class="col-lg-4 col-md-6 col-12 mb-6">
+                    <div class="banner" data-aos="fade-up" data-aos-delay="300">
+                        <div class="banner-image">
+                            <a href=""><img src="{{asset('useLadame/images/banner/banner-1.jpg')}}" alt=""></a>
+                        </div>
+                        <div class="info">
+                            <div class="small-banner-content">
+                                <h4 class="sub-title">Sun Hat</h4>
+                                <h3 class="title">Get Offer <br />For Summer</h3>
+                                <a href="shop-grid.html" class="btn btn-dark btn-sm">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Banner End -->
+
+                <!-- Banner Start -->
+                <div class="col-lg-4 col-md-6 col-12 mb-6">
+                    <div class="banner" data-aos="fade-up" data-aos-delay="500">
+                        <div class="banner-image">
+                            <a href=""><img src="{{asset('useLadame/images/banner/banner-1.jpg')}}" alt=""></a>
+                        </div>
+                        <div class="info">
+                            <div class="small-banner-content">
+                                <h4 class="sub-title">Ladies Bag</h4>
+                                <h3 class="title">Buy One <br />Get One Free</h3>
+                                <a href="shop-grid.html" class="btn btn-dark btn-sm">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Banner End -->
+
+                <!-- Banner Start -->
+                <div class="col-lg-4 col-md-6 col-12 mb-6">
+                    <div class="banner" data-aos="fade-up" data-aos-delay="700">
+                        <div class="banner-image">
+                            <a href=""><img src="{{asset('useLadame/images/banner/banner-1.jpg')}}" alt=""></a>
+                        </div>
+                        <div class="info">
+                            <div class="small-banner-content">
+                                <h4 class="sub-title">Smart Watch</h4>
+                                <h3 class="title">20% Off <br />Smart Watch</h3>
+                                <a href="shop-grid.html" class="btn btn-dark btn-sm">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Banner End -->
+
+            </div>
+            <!-- Banners End -->
         </div>
     </div>
+    <!-- Banner Section End -->
+
     <div class="section">
         <div class="container">
             <div class="feature-wrap">
@@ -90,7 +149,7 @@
                             </div>
                             <div class="content">
                                 <h5 class="title">Descontos</h5>
-                                <p>Para pedidos acima de R$299,00</p>
+                                <p>Melhores descontos</p>
                             </div>
                         </div>
                     </div>
@@ -120,7 +179,6 @@
                                         <div class="swiper-slide product-wrapper">
                                             @php $l = 0; @endphp
                                             @php $lt = 0; @endphp
-
                                             @forelse ($highlightedProducts as $highlightedProduct)
                                                 @php $l++; @endphp
                                                 @php $lt++; @endphp
@@ -137,6 +195,7 @@
                                                             </a>
                                                         </div>
                                                         <div class="content">
+                                                            <h4 class="sub-title"><a href="{{ route('product.show', [$highlightedProduct->slug]) }}">{{ $highlightedProduct->slug }}</a></h4>
                                                             <h5 class="title"><a href="{{ route('product.show', [$highlightedProduct->slug]) }}">{{ $highlightedProduct->name }}</a></h5>
                                                             <span class="price">
                                                                 <span class="new">{{ $variation->final_price_formated }}</span>
@@ -148,11 +207,11 @@
                                                 </div>
                                                 <!-- Single Product End -->
 
-                                                @if ($l === 1)
-{{--                                                    @if ($lt != count($highlightedProducts))--}}
+                                                @if ($l === 2)
+                                                    @if ($lt != count($highlightedProducts))
                                                         </div>
                                                         <div class="swiper-slide product-wrapper">
-{{--                                                    @endif--}}
+                                                    @endif
                                                     @php $l = 0; @endphp
                                                 @endif
                                             @empty
@@ -191,14 +250,15 @@
                                                                 <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="{{ $productVariation->product->name }}" />
                                                                 <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $productVariation->product->name }}" />
                                                             </a>
-                                                            <div class="actions">
+                                                            {{-- <div class="actions">
                                                                 <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
                                                                 <a href="#" class="action quickview" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i class="pe-7s-search"></i></a>
                                                                 <a href="#" class="action compare"><i class="pe-7s-shuffle"></i></a>
-                                                            </div>
+                                                            </div> --}}
                                                         </div>
                                                         <div class="content">
-                                                            <h4 class="sub-title"><a href="{{ route('product.show', [$productVariation->product->slug]) }}">{{ $productVariation->product->slug }}</a></h4> <h5 class="title"><a href="produto/ut-adipisci-sed-suscipit-libero/20">{{ $highlightedProduct->slug }}</a></h5>
+                                                            <h4 class="sub-title"><a href="{{ route('product.show', [$productVariation->product->slug]) }}">{{ $productVariation->product->slug }}</a></h4>
+                                                            <h5 class="title"><a href="produto/ut-adipisci-sed-suscipit-libero/20">{{ $highlightedProduct->name }}</a></h5>
 {{--                                                            <span class="ratings">--}}
 {{--                                                                <span class="rating-wrap">--}}
 {{--                                                                    <span class="star" style="width: 100%"></span>--}}
