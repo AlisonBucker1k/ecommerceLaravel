@@ -31,9 +31,9 @@
                                 <div class="shop-short-by mr-4">
                                     <select name="order" class="nice-select order-select">
                                         <option selected>Ordenar por: </option>
-                                        <option value="recents">Ord. por recentes</option>
-                                        <option value="higher_price">Ord. por Maior Preço</option>
-                                        <option value="lowest_price">Ord. por Menor Preço</option>
+                                        <option value="recents" @if(request()->input('order') == 'recents') selected @endif>Ord. por recentes</option>
+{{--                                        <option value="higher_price">Ord. por Maior Preço</option>--}}
+{{--                                        <option value="lowest_price">Ord. por Menor Preço</option>--}}
                                     </select>
                                 </div>
                                 <div class="shop_toolbar_btn">
@@ -221,9 +221,8 @@
         });
 
         $(document).ready(() => {
-            let optionToSelect = '{{ request()->input('order') }}';
-            // alert(optionToSelect);
-            $('.order-select option[value="lowest_price"]').attr('selected', 'selected');
+            // TODO finalizar script
+            {{--$('.order-select option[value=' + {{ request()->input('order') }} + ']').attr('selected', 'selected');--}}
             // $(`.order-select`).val(optionToSelect).attr('selected', 'selected');
         });
     </script>
