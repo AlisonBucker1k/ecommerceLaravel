@@ -9,15 +9,26 @@ use Verot\Upload\Upload as VerotUpload;
 
 class Upload extends VerotUpload
 {
-    public function save($path)
+    public function save($path, $image)
     {
-        ini_set('max_execution_time', 300);
+        $uniqueName = $this->uniqueName($path, $image->getClientOriginalExtension());
 
-        $file = $this->process();
+        $publicPath = Storage::disk('public');
 
-        $uniqueName = $this->uniqueName($path, $this->file_dst_name_ext);
+        if ($publicPath->exists("{$path}/{$uniqueName}")) {
+            $publicPath->delete("{$path}/{$uniqueName}");
+        }
+    
+        // $file = $this->file;
+        $image->storeAs($path, $uniqueName, 'public');
 
-        Storage::disk()->put($path . '/' . $uniqueName, $file, 'public');
+        // ini_set('max_execution_time', 300);
+
+        // $file = $this->process();
+
+        // $uniqueName = $this->uniqueName($path, $this->file_dst_name_ext);
+
+        // Storage::disk('public')->put($path . '/' . $uniqueName, $file);
 
         return Storage::url($path . '/' . $uniqueName);
     }
@@ -25,7 +36,7 @@ class Upload extends VerotUpload
     private function uniqueName($path, $format)
     {
         $name = Str::random() . '.' . $format;
-        $exists = Storage::disk()->exists($path . '/' . $name);
+        $exists = Storage::disk('public')->exists($path . '/' . $name);
         if ($exists) {
             return $this->uniqueName($path, $format);
         }

@@ -36,7 +36,7 @@ class ProductImage extends Model
             $upload->image_ratio_fill = true;
             $upload->image_x = 600;
             $upload->image_y = 600;
-            $url = $upload->save(UploadPath::PRODUCT_IMAGES);
+            $url = $upload->save(UploadPath::PRODUCT_IMAGES, $image);
 
             $this->newImage($productId, $url, $main);
 
