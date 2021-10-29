@@ -117,10 +117,10 @@ class Cart extends Model
      * @param Product $product
      * @param ProductVariation $productVariation
      */
-    public function addProduct(Product $product, ProductVariation $productVariation)
+    public function addProduct(Product $product, ProductVariation $productVariation, $quantity)
     {
         $cart = new CartProduct();
-        $cart->addProduct($this->id, $product, $productVariation);
+        $cart->addProduct($this->id, $product, $productVariation, $quantity);
     }
 
     public function totalProducts()
