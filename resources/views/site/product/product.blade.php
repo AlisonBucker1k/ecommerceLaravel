@@ -91,26 +91,6 @@
                                 Produto indisponível no momento.
                             </div>
                         @else
-                            @if ($product->has_grid_variation !== 0)
-                                <div id="valueDefault">
-                                    @if ($product->mainVariation->promotion_value > 0)
-                                        <strong class="main-value">
-                                            {{ $product->mainVariation->promotion_value_formated }}
-                                        </strong>
-                                        <strike class="text-1">
-                                            {{ $product->mainVariation->value_formated }}
-                                        </strike>
-                                        <p>
-                                            Economia de {{ $product->mainVariation->value_saving_formated }}
-                                        </p>
-                                    @else
-                                        <strong class="main-value mb-4">
-                                            {{ $product->mainVariation->value_formated }}
-                                        </strong>
-                                    @endif
-                                </div>
-                            @endif
-
                             <div id="loadingValue" class="d-none">
                                 <span class="fa fa-spin fa-spinner"></span>
                             </div>
@@ -137,11 +117,11 @@
                                     @foreach ($grids as $grid)
                                         <div class="cart-wishlist-btn mb-4">
                                             <div class="col-md-5 mb-3 col-12">
-                                                <div class="form-group">x`
+                                                <div class="form-group">
                                                     <label class="control-label font-weight-bold">{{ $grid->description }}</label>
-                                                    <select class="form-control" id="variation{{ $grid->id }}" data-id="{{ $grid->id }}" name="variation[{{ $grid->id }}]" required="required">
+                                                    <select class="form-control select-variation" id="variation{{ $grid->id }}" data-id="{{ $grid->id }}" name="variation[{{ $grid->id }}]" required="required">
                                                         @foreach ($grid->variations as $variation)
-                                                            <option value="{{ $variation->id }}" @if (isset($product->variation->items[$grid->grid_id]->grid_variation_id) && $product->variation->items[$grid->grid_id]->grid_variation_id == $variation->id) selected="selected"@endif>{{ $variation->description }}</option>
+                                                            <option value="{{ $variation->id }}" @if (isset($product->variation->items[$grid->grid_id]->grid_variation_id) && $product->variation->items[$grid->grid_id]->grid_variation_id == $variation->id) selected="selected" @endif>{{ $variation->description }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -419,6 +399,7 @@
                 }
 
                 function findVariation() {
+                    console.log($('.select-variation').serialize());
                     $.ajax({
                         url: '{{ route('product.variations.find', [$product->slug]) }}',
                         dataType: 'json',
