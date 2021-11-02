@@ -233,11 +233,11 @@
                                                                 <img class="first-image" src="{{ getFullUrl($variation->image) }}" alt="{{ $productVariation->product->name }}" />
                                                                 <img class="second-image" src="{{ getFullUrl($variation->image) }}" alt="{{ $productVariation->product->name }}" />
                                                             </a>
-                                                            <div class="actions">
+                                                            {{-- <div class="actions">
                                                                 <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
                                                                 <a href="#" class="action quickview" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i class="pe-7s-search"></i></a>
                                                                 <a href="#" class="action compare"><i class="pe-7s-shuffle"></i></a>
-                                                            </div>
+                                                            </div> --}}
                                                         </div>
                                                         <div class="content">
                                                             <h4 class="sub-title"><a href="{{ route('product.show', [$productVariation->product->slug]) }}">{{ $productVariation->product->slug }}</a></h4> <h5 class="title"><a href="produto/ut-adipisci-sed-suscipit-libero/20">{{ $highlightedProduct->slug }}</a></h5>
