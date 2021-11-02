@@ -28,13 +28,13 @@
                 <div class="col-lg-6 align-self-center mb-6" data-aos="fade-right" data-aos-delay="600">
                     <div class="about_content">
                         <h2 class="title">Sobre nós</h2>
-                        <h3 class="sub-title">We believe that every project existing in digital world is a result of an idea and every idea has a cause.</h3>
-                        <p>For this reason, our each design serves an idea. Our strength in design is reflected by our name, our care for details. Our specialist won't be afraid to go extra miles just to approach near perfection. We don't require everything to be perfect, but we need them to be perfectly cared for. That's a reason why we are willing to give contributions at best. Not a single detail is missed out under Billey's professional eyes.The amount of dedication and effort equals to the level of passion and by.</p>
+                        <h3 class="sub-title">A La Dame foi criada para a mulher moderna que busca produtos de alta qualidade e destaque em sua versatilidade e conforto.</h3>
+                            <p>Pensado e selecionado com bastante carinho e atenção por nossa equipe, os produtos da La Dame compõe a essencialidade ideal para o dia a dia da mulher. Nosso lema já diz “COMECE A VESTIR-SE BEM PELA LINGERIE”, inspirado na melhor forma de oferecer as mulheres produtos diversificados, de fina qualidade e delicadeza íntima.</p>
                     </div>
                 </div>
                 <div class="col-lg-6 mb-6" data-aos="fade-left" data-aos-delay="600">
                     <div class="about_thumb">
-                        <img class="fit-image" src="{{asset('useLadame/images/about/1.jpg')}}" alt="About Image">
+                        <img class="fit-image" src="{{asset('useLadame/images/about/useladame.png')}}" alt="About Image">
                     </div>
                 </div>
             </div>

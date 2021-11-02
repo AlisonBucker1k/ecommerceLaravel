@@ -43,15 +43,16 @@
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
-                                                <label class="font-weight-bold text-dark text-2">Assunto</label>
-                                                <select class="form-control" name="mail_subject" id="subject" required>
-                                                    <option value="">Selecione</option>
-                                                    <option @if (old('mail_subject') == 'Suporte')selected="selected"@endif>Suporte</option>
-                                                    <option @if (old('mail_subject') == 'Financeiro')selected="selected"@endif>Financeiro</option>
-                                                    <option @if (old('mail_subject') == 'Reclamação')selected="selected"@endif>Reclamação</option>
-                                                    <option @if (old('mail_subject') == 'Sugestão')selected="selected"@endif>Sugestão</option>
-                                                    <option @if (old('mail_subject') == 'Outros')selected="selected"@endif>Outros</option>
-                                                </select>
+                                                <div class="input-item mb-4" data-aos="fade-up" data-aos-delay="400">
+                                                    <select class="form-control" name="mail_subject" id="subject" required>
+                                                        <option value="">Selecione</option>
+                                                        <option @if (old('mail_subject') == 'Suporte')selected="selected"@endif>Suporte</option>
+                                                        <option @if (old('mail_subject') == 'Financeiro')selected="selected"@endif>Financeiro</option>
+                                                        <option @if (old('mail_subject') == 'Reclamação')selected="selected"@endif>Reclamação</option>
+                                                        <option @if (old('mail_subject') == 'Sugestão')selected="selected"@endif>Sugestão</option>
+                                                        <option @if (old('mail_subject') == 'Outros')selected="selected"@endif>Outros</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-12" data-aos="fade-up" data-aos-delay="400">
@@ -83,7 +84,7 @@
                             </div>
                             <div class="single-contact-title-content">
                                 <h4 class="title">Endereço</h4>
-                                <p class="desc-content">Avenida Mário Gurgel, 5353 <br>Shopping Moxuara Loja __</p>
+                                <p class="desc-content">Avenida Mário Gurgel, 5353 <br>Shopping Moxuara Loja L3</p>
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-6 col-sm-12 col-12 single-contact-info mb-6" data-aos="fade-up" data-aos-delay="400">
@@ -92,7 +93,7 @@
                             </div>
                             <div class="single-contact-title-content">
                                 <h4 class="title">Telefone</h4>
-                                <p class="desc-content">+5527998393939</p>
+                                <p class="desc-content">{{ env('COMPANY_WHATSAPP') }}</p>
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-6 col-sm-12 col-12 single-contact-info mb-6" data-aos="fade-up" data-aos-delay="500">
@@ -101,7 +102,7 @@
                             </div>
                             <div class="single-contact-title-content">
                                 <h4 class="title">E-mail</h4>
-                                <p class="desc-content"><a href="#">Support24/7@example.com</a> <br><a href="#">info@example.com</a> </p>
+                                <p class="desc-content"><a href="#">{{ env('COMPANY_EMAIL') }}</a> <br><a href="#">{{ env('COMPANY_EMAIL_SAC') }}</a> </p>
                             </div>
                         </div>
                     </div>

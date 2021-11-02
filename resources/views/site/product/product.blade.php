@@ -28,24 +28,14 @@
                     <!-- Single Product Image Start -->
                     <div class="single-product-img swiper-container gallery-top">
                         <div class="swiper-wrapper popup-gallery">
-                            <a class="swiper-slide w-100" href="{{asset('useLadame/images/products/medium-size/5.jpg')}}">
-                                <img class="w-100" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $product->name }}">
-                            </a>
-                            <a class="swiper-slide w-100" href="{{asset('useLadame/images/products/medium-size/5.jpg')}}">
-                                <img class="w-100" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $product->name }}">
-                            </a>
-                            <a class="swiper-slide w-100" href="{{asset('useLadame/images/products/medium-size/5.jpg')}}">
-                                <img class="w-100" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $product->name }}">
-                            </a>
-                            <a class="swiper-slide w-100" href="{{asset('useLadame/images/products/medium-size/5.jpg')}}">
-                                <img class="w-100" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $product->name }}">
-                            </a>
-                            <a class="swiper-slide w-100" href="{{asset('useLadame/images/products/medium-size/5.jpg')}}">
-                                <img class="w-100" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $product->name }}">
-                            </a>
-                            <a class="swiper-slide w-100" href="{{asset('useLadame/images/products/medium-size/5.jpg')}}">
-                                <img class="w-100" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $product->name }}">
-                            </a>
+
+                            @if (count($product->images) > 0)
+                                @foreach ($product->images as $image)
+                                <a class="swiper-slide w-100" href="{{getFullUrl($image->file)}}">
+                                    <img class="w-100" src="{{getFullUrl($image->file)}}" alt="{{ $product->name }}">
+                                </a>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                     <!-- Single Product Image End -->
@@ -53,24 +43,14 @@
                     <!-- Single Product Thumb Start -->
                     <div class="single-product-thumb swiper-container gallery-thumbs">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <img src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $product->name }}">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $product->name }}">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $product->name }}">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $product->name }}">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $product->name }}">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $product->name }}">
-                            </div>
+
+                            @if (count($product->images) > 0)
+                                @foreach ($product->images as $image)
+                                <div class="swiper-slide">
+                                    <img src="{{getFullUrl($image->file)}}" alt="{{ $product->name }}">
+                                </div>
+                                @endforeach
+                            @endif
                         </div>
 
                         <!-- Next Previous Button Start -->
@@ -119,7 +99,7 @@
                     <!-- SKU End -->
 
                     <!-- Description Start -->
-                    <p class="desc-content mb-5">{{ $product->description }}</p>
+                    <p class="desc-content mb-5">{!! $product->description !!}</p>
                     <!-- Description End -->
 
                     @if ($total_stock <= 0)
@@ -131,17 +111,17 @@
                             <div id="valueDefault">
                                 @if ($product->mainVariation->promotion_value > 0)
                                     <strong class="main-value">
-                                        <small>R$</small> {{ $product->mainVariation->promotion_value_formated }}
+                                        <small></small> {{ $product->mainVariation->promotion_value_formated }}
                                     </strong>
                                     <strike class="text-1">
-                                        <small>R$</small> {{ $product->mainVariation->value_formated }}
+                                        <small></small> {{ $product->mainVariation->value_formated }}
                                     </strike>
                                     <p>
                                         Economia de R$ {{ $product->mainVariation->value_saving_formated }}
                                     </p>
                                 @else
                                     <strong class="main-value mb-4">
-                                        <small>R$</small> {{ $product->mainVariation->value_formated }}
+                                        <small></small> {{ $product->mainVariation->value_formated }}
                                     </strong>
                                 @endif
                             </div>
@@ -279,7 +259,7 @@
             <div class="col-lg-12 col-custom single-product-tab">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active text-uppercase" id="home-tab" data-bs-toggle="tab" href="#connect-1" role="tab" aria-selected="true">Description</a>
+                        <a class="nav-link active text-uppercase" id="home-tab" data-bs-toggle="tab" href="#connect-1" role="tab" aria-selected="true">Descrição</a>
                     </li>
                     {{-- <li class="nav-item">
                         <a class="nav-link text-uppercase" id="profile-tab" data-bs-toggle="tab" href="#connect-2" role="tab" aria-selected="false">Reviews</a>
@@ -294,7 +274,7 @@
                 <div class="tab-content mb-text" id="myTabContent">
                     <div class="tab-pane fade show active" id="connect-1" role="tabpanel" aria-labelledby="home-tab">
                         <div class="desc-content border p-3">
-                            <p class="mb-3">{{ $product->description }}</p>
+                            <p class="mb-3">{!! $product->description !!}</p>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="connect-2" role="tabpanel" aria-labelledby="profile-tab">

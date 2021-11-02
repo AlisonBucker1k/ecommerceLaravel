@@ -90,7 +90,7 @@
                             </div>
                             <div class="content">
                                 <h5 class="title">Descontos</h5>
-                                <p>Para pedidos acima de R$299,00</p>
+                                <p>Acima de R$299,00</p>
                             </div>
                         </div>
                     </div>
@@ -132,8 +132,8 @@
                                                         @csrf
                                                         <div class="thumb">
                                                             <a href="{{ route('product.show', [$highlightedProduct->slug]) }}" class="image">
-                                                                <img style="width: 270px;" class="first-image" src="https://images.useladame.com/upload/{{ $variation->image }}" alt="{{ $highlightedProduct->name }}" />
-                                                                <img class="second-image" src="https://images.useladame.com/upload/{{ $variation->image }}" alt="{{ $highlightedProduct->name }}" />
+                                                                <img class="first-image" src="{{ getFullUrl($variation->image) }}" alt="{{ $highlightedProduct->name }}" />
+                                                                <img class="second-image" src="{{ getFullUrl($variation->image) }}" alt="{{ $highlightedProduct->name }}" />
                                                             </a>
                                                         </div>
                                                         <div class="content">
@@ -170,23 +170,16 @@
                                                     <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
                                                         <div class="thumb">
                                                             <a href="{{ route('product.show', [$productVariation->product->slug]) }}" class="image">
-                                                                <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="{{ $productVariation->product->name }}" />
-                                                                <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $productVariation->product->name }}" />
+                                                                <img class="first-image" src="{{ getFullUrl($productVariation->image) }}" alt="{{ $productVariation->product->name }}" />
+                                                                <img class="second-image" src="{{ getFullUrl($variation->image) }}" alt="{{ $productVariation->product->name }}" />
                                                             </a>
                                                             <div class="actions">
-                                                                <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
-                                                                <a href="#" class="action quickview" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i class="pe-7s-search"></i></a>
-                                                                <a href="#" class="action compare"><i class="pe-7s-shuffle"></i></a>
+
                                                             </div>
                                                         </div>
                                                         <div class="content">
                                                             <h4 class="sub-title"><a href="{{ route('product.show', [$productVariation->product->slug]) }}">{{ $productVariation->product->slug }}</a></h4> <h5 class="title"><a href="produto/ut-adipisci-sed-suscipit-libero/20">{{ $highlightedProduct->slug }}</a></h5>
-{{--                                                            <span class="ratings">--}}
-{{--                                                                <span class="rating-wrap">--}}
-{{--                                                                    <span class="star" style="width: 100%"></span>--}}
-{{--                                                                </span>--}}
-{{--                                                                <span class="rating-num">(4)</span>--}}
-{{--                                                            </span>--}}
+
                                                             <span class="price">
                                                                 <span class="new">{{ $productVariation->value_formated }}</span>
                                                                 <span class="old">{{ $productVariation->final_price_formated }}</span>
@@ -205,7 +198,7 @@
                                             @empty
                                                 <p>Nenhum produto disponível</p>
                                             @endforelse
-                                            
+
 
                                         </div>
                                     </div>
@@ -237,8 +230,8 @@
                                                     <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
                                                         <div class="thumb">
                                                             <a href="{{ route('product.show', [$productVariation->product->slug]) }}" class="image">
-                                                                <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="{{ $productVariation->product->name }}" />
-                                                                <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $productVariation->product->name }}" />
+                                                                <img class="first-image" src="{{ getFullUrl($variation->image) }}" alt="{{ $productVariation->product->name }}" />
+                                                                <img class="second-image" src="{{ getFullUrl($variation->image) }}" alt="{{ $productVariation->product->name }}" />
                                                             </a>
                                                             <div class="actions">
                                                                 <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
@@ -262,7 +255,7 @@
                                                         </div>
                                                     </div>
                                                 </form>
-                                                @if ($l === 2)
+                                                @if ($l === 1)
                                                     @if ($lt != count($promotionProducts))
                                                         </div>
                                                         <div class="swiper-slide product-wrapper">
@@ -293,7 +286,7 @@
     </div>
 
     <!-- Banner Fullwidth Start -->
-    {{-- <div class="section">
+    <div class="section">
         <div class="container">
             <div class="row">
                 <div class="col-12" data-aos="fade-up" data-aos-delay="300">
@@ -305,7 +298,7 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
     <!-- Banner Fullwidth End -->
 
    {{-- Product deal contador (Futuramente) --}}
