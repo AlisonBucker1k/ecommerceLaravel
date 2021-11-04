@@ -66,7 +66,7 @@
                                             {% for orderProduct in order.products %}
                                                 <tr class="cart_table_item">
                                                     <td class="product-thumbnail" style="width: 100px;">
-                                                        <img alt="" class="img-fluid" src="{{ orderProduct.image }}">
+                                                        <img alt="" class="img-fluid" src="{{ getFullUrl(orderProduct.image) }}">
                                                     </td>
                                                     <td class="product-name">
                                                         <strong>{{ orderProduct.name }}</strong>
