@@ -23,6 +23,7 @@ class TwigExtensions extends Twig_Extension
             new Twig_SimpleFunction('dateSql2Br', 'dateSql2Br'),
             new Twig_SimpleFunction('currencyBrl2Float', 'currencyBrl2Float'),
             new Twig_SimpleFunction('currencyFloat2Brl', 'currencyFloat2Brl'),
+            new Twig_SimpleFunction('getFullFtpUrl', 'getFullFtpUrl'),
             new Twig_SimpleFunction('is_numeric', function ($str) {
                 return is_numeric($str);
             })
