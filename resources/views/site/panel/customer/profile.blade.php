@@ -37,34 +37,34 @@
                                                     @endforeach
                                                 </div>
                                                 @endif
-                                                <form action="{{ route('panel.profile.edit') }}" method="POST">
+                                                <form action="{{ route('panel.profile.edit') }}" method="post">
                                                     @csrf
                                                     <input name="birth_date" class="form-control" type="hidden" value="{{ $customer->profile->birth_date }}">
                                                     <div class="row">
                                                         <div class="col-lg-6">
                                                             <div class="single-input-item mb-3">
                                                                 <label for="first-name" class="required mb-1">Nome</label>
-                                                                <input type="text" name="name" value="{{ $customer->profile->name }}" id="first-name" placeholder="First Name" />
+                                                                <input type="text" name="name" value="{{ $customer->profile->name }}" id="first-name" placeholder="Nome" />
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <div class="single-input-item mb-3">
                                                                 <label for="last-name" class="required mb-1">Sobrenome</label>
-                                                                <input type="text" name="last-name" value={{$customer->profile->last_name}} id="last-name" placeholder="Last Name" />
+                                                                <input type="text" name="last_name" value={{$customer->profile->last_name}} id="last-name" placeholder="Sobrenome" />
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="single-input-item mb-3">
                                                         <label for="email" class="required mb-1">E-mail</label>
-                                                        <input type="email" readonly name="email" value="{{$customer->email}}" id="email" placeholder="Email Address" />
+                                                        <input type="email" name="email" value="{{$customer->email}}" id="email" readonly/>
                                                     </div>
                                                     <div class="single-input-item mb-3">
-                                                        <label for="email" class="required mb-1">Telefone</label>
-                                                        <input type="text" name="phone" value="{{$customer->profile->phone}}" id="email" placeholder="Número para contato" />
+                                                        <label for="phone" class="required mb-1">Telefone</label>
+                                                        <input type="text" name="phone" value="{{$customer->profile->phone}}" id="phone"/>
                                                     </div>
                                                     <div class="single-input-item mb-3">
-                                                        <label for="email" class="required mb-1">Telefone</label>
-                                                        <input type="text" name="cellphone" value="{{$customer->profile->celphone}}" id="email" placeholder="Número para contato" />
+                                                        <label for="cellphone" class="required mb-1">Celular</label>
+                                                        <input type="text" name="cellphone" value="{{$customer->profile->celphone}}" id="cellphone" />
                                                     </div>
                                                     <fieldset>
                                                         <legend>Alterar Senha</legend>

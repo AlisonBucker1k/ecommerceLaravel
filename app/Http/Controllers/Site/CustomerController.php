@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Site;
 
 use App\Enums\CustomerStatus;
 use App\Http\Controllers\Controller;
-use App\CustomerProfile;
 use App\Customer;
 use App\Http\Requests\CustomerRequest;
 use Illuminate\Http\Request;
@@ -14,30 +13,11 @@ use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
-    private $customer;
-    private $customer_profile;
-
-    public function __construct()
-    {
-        $this->customer = new Customer();
-        $this->customer_profile = new CustomerProfile();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
     public function create()
     {
         return view('site.customer.login');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
     public function delete()
     {
         return view('site.panel.customer.profile.disable',  [
@@ -50,12 +30,6 @@ class CustomerController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param Customer $customer
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
     public function show(Customer $customer)
     {
         if ($customer->id != auth()->id()) {
@@ -68,26 +42,19 @@ class CustomerController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
     public function profile()
     {
-        return view('site.panel.customer.profile', [
+        $data = [
             'customer' => auth()->user(),
             'address' => auth()->user()->mainAddress,
             'breadcrumb' => [
-                'Meus Dados' => route('panel.profile')
+                'Meus Dados' => route('panel.profile'),
             ]
-        ]);
+        ];
+
+        return view('site.panel.customer.profile', $data);
     }
 
-    /**
-     * @param CustomerRequest $request
-     * @return mixed
-     */
     public function store(CustomerRequest $request)
     {
         DB::transaction(function() use ($request) {
@@ -115,12 +82,6 @@ class CustomerController extends Controller
         return redirect()->route('home')->withSuccess($message);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function update(Request $request)
     {
         $customer = auth()->user();
@@ -145,18 +106,12 @@ class CustomerController extends Controller
                 $customer->updatePassword($request);
             }
 
-            $customer->profile->updateProfile($customer, $request);
+            $customer->profile->updateProfile($request);
         });
 
         return back()->withSuccess('Dados atualizados com sucesso!');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function logout(Request $request)
     {
         Auth::logout();
@@ -164,12 +119,6 @@ class CustomerController extends Controller
         return redirect()->route('home');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Customer $customer
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
     public function destroy(Customer $customer)
     {
         foreach(auth()->user()->ads as $ad) {
