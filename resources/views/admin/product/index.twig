@@ -82,7 +82,7 @@
                             {% for product in products %}
                                 <tr>
                                     <td style="width: 100px;">
-                                        <img style="max-width: 100%;" src="{% if product.mainImage != '' %}{{ product.mainImage.file }}{% else %}/assets/img/no-image.jpg{% endif %}" class="img-responsive">
+                                        <img style="max-width: 100%;" src="{% if product.mainImage != '' %}{{ getFullUrl(product.mainImage.file) }}{% else %}/assets/img/no-image.jpg{% endif %}" class="img-responsive">
                                     </td>
                                     <td>
                                         <strong>{{ product.name }}</strong><br>
