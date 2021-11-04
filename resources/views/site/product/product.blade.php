@@ -255,21 +255,14 @@
         </div>
 
         <div class="row section-margin">
-            <!-- Single Product Tab Start -->
             <div class="col-lg-12 col-custom single-product-tab">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active text-uppercase" id="home-tab" data-bs-toggle="tab" href="#connect-1" role="tab" aria-selected="true">Descrição</a>
                     </li>
-                    {{-- <li class="nav-item">
-                        <a class="nav-link text-uppercase" id="profile-tab" data-bs-toggle="tab" href="#connect-2" role="tab" aria-selected="false">Reviews</a>
-                    </li> --}}
                     <li class="nav-item">
                         <a class="nav-link text-uppercase" id="contact-tab" data-bs-toggle="tab" href="#connect-3" role="tab" aria-selected="false">Políticas de entrega</a>
                     </li>
-                    {{-- <li class="nav-item">
-                        <a class="nav-link text-uppercase" id="review-tab" data-bs-toggle="tab" href="#connect-4" role="tab" aria-selected="false">Size Chart</a>
-                    </li> --}}
                 </ul>
                 <div class="tab-content mb-text" id="myTabContent">
                     <div class="tab-pane fade show active" id="connect-1" role="tabpanel" aria-labelledby="home-tab">
@@ -278,63 +271,37 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="connect-2" role="tabpanel" aria-labelledby="profile-tab">
-                        <!-- Start Single Content -->
                         <div class="product_tab_content  border p-3">
-                            <!-- Start Single Review -->
                             <div class="single-review d-flex mb-4">
-
-                                <!-- Review Thumb Start -->
                                 <div class="review_thumb">
                                     <img alt="review images" src="assets/images/review/1.jpg">
                                 </div>
-                                <!-- Review Thumb End -->
-
-                                <!-- Review Details Start -->
                                 <div class="review_details">
                                     <div class="review_info mb-2">
-
-                                        <!-- Rating Start -->
                                         <span class="ratings justify-content-start mb-3">
-                                                <span class="rating-wrap">
-                                                    <span class="star" style="width: 100%"></span>
+                                            <span class="rating-wrap">
+                                                <span class="star" style="width: 100%"></span>
+                                            </span>
+                                            <span class="rating-num">(1)</span>
                                         </span>
-                                        <span class="rating-num">(1)</span>
-                                        </span>
-                                        <!-- Rating End -->
-
-                                        <!-- Review Title & Date Start -->
                                         <div class="review-title-date d-flex">
                                             <h5 class="title">Admin - </h5><span> January 19, 2021</span>
                                         </div>
-                                        <!-- Review Title & Date End -->
-
                                     </div>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin in viverra ex, vitae vestibulum arcu. Duis sollicitudin metus sed lorem commodo, eu dapibus libero interdum. Morbi convallis viverra erat, et aliquet orci congue vel. Integer in odio enim. Pellentesque in dignissim leo. Vivamus varius ex sit amet quam tincidunt iaculis.</p>
                                 </div>
-                                <!-- Review Details End -->
-
                             </div>
-                            <!-- End Single Review -->
-
-                            <!-- Rating Wrap Start -->
                             <div class="rating_wrap">
                                 <h5 class="rating-title mb-2">Add a review </h5>
                                 <p class="mb-2">Your email address will not be published. Required fields are marked *</p>
                                 <h6 class="rating-sub-title mb-2">Your Rating</h6>
-
-                                <!-- Rating Start -->
                                 <span class="ratings justify-content-start mb-3">
-                                        <span class="rating-wrap">
-                                            <span class="star" style="width: 100%"></span>
+                                    <span class="rating-wrap">
+                                        <span class="star" style="width: 100%"></span>
+                                    </span>
+                                    <span class="rating-num">(2)</span>
                                 </span>
-                                <span class="rating-num">(2)</span>
-                                </span>
-                                <!-- Rating End -->
-
                             </div>
-                            <!-- Rating Wrap End -->
-
-                            <!-- Comments ans Replay Start -->
                             <div class="comments-area comments-reply-area">
                                 <div class="row">
                                     <div class="col-lg-12 col-custom">
@@ -369,29 +336,21 @@
                                             <div class="comment-form-submit">
                                                 <button class="btn btn-dark btn-hover-primary">Submit</button>
                                             </div>
-                                            <!-- Comment Submit Button End -->
-
                                         </form>
-                                        <!-- Comment form End -->
-
                                     </div>
                                 </div>
                             </div>
-                            <!-- Comments ans Replay End -->
-
                         </div>
-                        <!-- End Single Content -->
                     </div>
                     <div class="tab-pane fade" id="connect-3" role="tabpanel" aria-labelledby="contact-tab">
-                        <!-- Shipping Policy Start -->
                         <div class="shipping-policy mb-n2">
-                            <h4 class="title-3 mb-4">Políticas de entrega</h4>
-                            <p class="desc-content mb-2">Logo após que recebermos o seu pagamento, o seu pedido entrará no processo de separação. E será enviado em até dois dias úteis</p>
-                            <p cçass="desc-content mb-2">
+                            <p class="desc-content mb-2">
+                                Logo após recebermos seu pagamento, o pedido entrará em processo de separação e será enviado em até dois dias úteis.
+                            </p>
+                            <p class="desc-content mb-2">
                                 O prazo e o valor da entrega varia de acordo com a sua localização. Você pode obter uma estimativa informando o seu cep na tela de finalizar compras.
                             </p>
                         </div>
-                        <!-- Shipping Policy End -->
                     </div>
                     <div class="tab-pane fade" id="connect-4" role="tabpanel" aria-labelledby="review-tab">
                         <div class="size-tab table-responsive-lg">
@@ -444,12 +403,34 @@
                     </div>
                 </div>
             </div>
-            <!-- Single Product Tab End -->
         </div>
 
-        {{-- TODO: GABRIEL 001. Caso for resolver essa listagem de produtos.. criei um arquivo com o html dessa area.. basta copiar e colar abaixo dessa linha e integrar com backend --}}
-
+        <!-- Products Start -->
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title aos-init aos-animate" data-aos="fade-up" data-aos-delay="300">
+                    <h2 class="title pb-3">Também pode te interessar</h2>
+                    <span></span>
+                    <div class="title-border-bottom"></div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="product-carousel">
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            @foreach ($aleatoryProducts as $aleatoryProduct)
+                                <div class="swiper-slide product-wrapper">
+                                    @include('site.elements.product_item', ['product' => $aleatoryProduct])    
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="swiper-pagination d-md-none"></div>
+                        <div class="swiper-product-button-next swiper-button-next swiper-button-white d-md-flex d-none"><i class="pe-7s-angle-right"></i></div>
+                        <div class="swiper-product-button-prev swiper-button-prev swiper-button-white d-md-flex d-none"><i class="pe-7s-angle-left"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<!-- Shop Section End -->
 @endsection

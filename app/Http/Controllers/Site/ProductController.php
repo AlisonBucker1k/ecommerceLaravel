@@ -66,6 +66,7 @@ class ProductController extends Controller
 
         $data['grids'] = $product->getGridsWithVariationsAvailable($product->id);
         $data['product'] = $product;
+        $data['aleatoryProducts'] = Product::getAleatory(10);
         $data['total_stock'] = $product->totalStock();
 
         return view('site.product.product', $data);
