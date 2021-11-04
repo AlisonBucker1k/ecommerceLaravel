@@ -63,7 +63,13 @@ return [
             'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),
         ],
-
+        'ftp' => [
+            'driver' => 'ftp',
+            'host' => 'ftp.useladame.com',
+            'username' => 'upload@images.useladame.com',
+            'password' => 'bckcode@#2021',
+            'ssl' => true,
+        ],
     ],
 
 ];

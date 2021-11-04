@@ -11,32 +11,21 @@ class Upload extends VerotUpload
 {
     public function save($path, $image)
     {
-        $uniqueName = $this->uniqueName($path, $image->getClientOriginalExtension());
-
-        $publicPath = Storage::disk('public');
-
-        if ($publicPath->exists("{$path}/{$uniqueName}")) {
-            $publicPath->delete("{$path}/{$uniqueName}");
-        }
-    
-        // $file = $this->file;
-        $image->storeAs($path, $uniqueName, 'public');
-
         // ini_set('max_execution_time', 300);
 
-        // $file = $this->process();
+        $file = $this->process();
 
-        // $uniqueName = $this->uniqueName($path, $this->file_dst_name_ext);
+        $uniqueName = $this->uniqueName($path, $this->file_dst_name_ext);
 
-        // Storage::disk('public')->put($path . '/' . $uniqueName, $file);
+        Storage::disk('ftp')->put($path . '/' . $uniqueName, $file, 'public');
 
-        return Storage::url($path . '/' . $uniqueName);
+        return $path . '/' . $uniqueName;
     }
 
     private function uniqueName($path, $format)
     {
         $name = Str::random() . '.' . $format;
-        $exists = Storage::disk('public')->exists($path . '/' . $name);
+        $exists = Storage::disk('ftp')->exists($path . '/' . $name);
         if ($exists) {
             return $this->uniqueName($path, $format);
         }

@@ -141,3 +141,11 @@ if (!function_exists('maskCep')) {
         return $mask;
     }
 }
+
+if (!function_exists('getFullUrl')) {
+    function getFullUrl($path)
+    {
+        $from = env('APP_FTP_UPLOAD_FILES');
+        return $from.$path;
+    }
+}

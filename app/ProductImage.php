@@ -32,7 +32,7 @@ class ProductImage extends Model
             }
 
             $upload = new Upload($image);
-            $upload->image_resize = true;
+            $upload->image_resize = false;
             $upload->image_ratio_fill = true;
             $upload->image_x = 600;
             $upload->image_y = 600;
