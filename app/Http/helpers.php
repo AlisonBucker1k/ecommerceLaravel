@@ -145,7 +145,6 @@ if (!function_exists('maskCep')) {
 if (!function_exists('getFullFtpUrl')) {
     function getFullFtpUrl($path)
     {
-        $from = env('APP_FTP_UPLOAD_FILES');
-        return $from.$path;
+        return config('filesystems.disks.ftp.url') . $path;
     }
 }
