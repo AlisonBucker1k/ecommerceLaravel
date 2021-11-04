@@ -25,7 +25,7 @@ class ProductController extends Controller
             ->where('products.status', ProductStatus::ACTIVE)
             ->paginate(30);
 
-        if(count($products) == 0){
+        if ($products->total() <= 0) {
             return redirect()->back()->with('error', 'Não existe produtos nessa categoria');
         }
 
