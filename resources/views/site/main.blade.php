@@ -123,7 +123,7 @@
                                                     @endif
                                                 </li>
                                             @empty
-                                                
+
                                             @endforelse
                                         </ul>
                                     </li>
@@ -153,7 +153,7 @@
                                 <!-- User Account Header Action Button End -->
 
                                 <!-- Wishlist Header Action Button Start -->
-                                <a href="wishlist.html" class="header-action-btn header-action-btn-wishlist d-none d-md-block">
+                                <a href="" class="header-action-btn header-action-btn-wishlist d-none d-md-block">
                                     <i class="pe-7s-like"></i>
                                 </a>
                                 <!-- Wishlist Header Action Button End -->
@@ -221,7 +221,7 @@
                                             @endif
                                         </li>
                                     @empty
-                                        
+
                                     @endforelse
                                 </ul>
                             </li>
@@ -328,7 +328,7 @@
                         <div class="cart-product-wrapper mb-6">
                             <div class="single-cart-product">
                                 <div class="cart-product-thumb">
-                                    <a href="single-product.html"><img src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="{{ $cartProduct->product->name }}"></a>
+                                    <a href="{{ route('product.show', [$cartProduct->product->slug]) }}"><img src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="{{ $cartProduct->product->name }}"></a>
                                 </div>
                                 <div class="cart-product-content">
                                     <h3 class="title"><a href="{{ route('product.show', [$cartProduct->product->slug]) }}">{{ $cartProduct->product->name }}</a></h3>
@@ -475,7 +475,7 @@
     </a>
     <!-- Scroll Top End -->
 
-    
+
 
     <!-- Scripts -->
     <!-- Scripts -->
