@@ -49,8 +49,8 @@
                                     <div class="product-inner">
                                         <div class="thumb">
                                             <a href="{{ route('product.show', [$product->slug]) }}" class="image">
-                                                <img class="first-image" src="{{getFullUrl($product->mainImage->file)}}" alt="{{ $product->name }}" />
-                                                <img class="second-image" src="{{getFullUrl($product->mainImage->file)}}" alt="{{ $product->name }}" />
+                                                <img class="first-image" src="{{getFullFtpUrl($product->mainImage->file)}}" alt="{{ $product->name }}" />
+                                                <img class="second-image" src="{{getFullFtpUrl($product->mainImage->file)}}" alt="{{ $product->name }}" />
                                             </a>
                                         </div>
                                         <div class="content">

@@ -142,8 +142,8 @@ if (!function_exists('maskCep')) {
     }
 }
 
-if (!function_exists('getFullUrl')) {
-    function getFullUrl($path)
+if (!function_exists('getFullFtpUrl')) {
+    function getFullFtpUrl($path)
     {
         $from = env('APP_FTP_UPLOAD_FILES');
         return $from.$path;

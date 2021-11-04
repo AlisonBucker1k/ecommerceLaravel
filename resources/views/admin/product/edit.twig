@@ -204,7 +204,7 @@
                         <div class="wrapper-dropzone">
                             <div class="image-widget sortable ui-sortable">
                                 <div class="inner">
-                                    <img src="{% if product.mainImage.file != '' %}{{ getFullUrl(product.mainImage.file) }}{% else %}/assets/img/no-img.jpg{% endif %}" class="img-fluid">
+                                    <img src="{% if product.mainImage.file != '' %}{{ getFullFtpUrl(product.mainImage.file) }}{% else %}/assets/img/no-img.jpg{% endif %}" class="img-fluid">
                                 </div>
                             </div>
                             <div class="row">
@@ -218,7 +218,7 @@
                                                 <span class="fa fa-star"></span>
                                             </a>
 
-                                            <img src="{{ getFullUrl(image.file) }}" class="img-fluid">
+                                            <img src="{{ getFullFtpUrl(image.file) }}" class="img-fluid">
                                         </div>
                                     </div>
                                 {% endfor %}
@@ -422,7 +422,7 @@
                                     {% for image in product.images %}
                                         <div class="col-sm-4">
                                             <button class="btn linkImage active" id="image{{ image.id }}" data-id="{{ image.id }}">
-                                                <img src="{{ getFullUrl(image.file) }}" class="img-fluid">
+                                                <img src="{{ getFullFtpUrl(image.file) }}" class="img-fluid">
                                             </button>
                                         </div>
                                     {% else %}

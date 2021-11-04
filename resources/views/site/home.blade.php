@@ -190,8 +190,8 @@
                                                         @csrf
                                                         <div class="thumb">
                                                             <a href="{{ route('product.show', [$highlightedProduct->slug]) }}" class="image">
-                                                                <img class="first-image" src="{{ getFullUrl($variation->image) }}" alt="{{ $highlightedProduct->name }}" />
-                                                                <img class="second-image" src="{{ getFullUrl($variation->image) }}" alt="{{ $highlightedProduct->name }}" />
+                                                                <img class="first-image" src="{{ getFullFtpUrl($variation->image) }}" alt="{{ $highlightedProduct->name }}" />
+                                                                <img class="second-image" src="{{ getFullFtpUrl($variation->image) }}" alt="{{ $highlightedProduct->name }}" />
                                                             </a>
                                                         </div>
                                                         <div class="content">
@@ -229,8 +229,8 @@
                                                     <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
                                                         <div class="thumb">
                                                             <a href="{{ route('product.show', [$productVariation->product->slug]) }}" class="image">
-                                                                <img class="first-image" src="{{ getFullUrl($productVariation->image) }}" alt="{{ $productVariation->product->name }}" />
-                                                                <img class="second-image" src="{{ getFullUrl($variation->image) }}" alt="{{ $productVariation->product->name }}" />
+                                                                <img class="first-image" src="{{ getFullFtpUrl($productVariation->image) }}" alt="{{ $productVariation->product->name }}" />
+                                                                <img class="second-image" src="{{ getFullFtpUrl($variation->image) }}" alt="{{ $productVariation->product->name }}" />
                                                             </a>
                                                             <div class="actions">
 
@@ -289,8 +289,8 @@
                                                     <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
                                                         <div class="thumb">
                                                             <a href="{{ route('product.show', [$productVariation->product->slug]) }}" class="image">
-                                                                <img class="first-image" src="{{ getFullUrl($variation->image) }}" alt="{{ $productVariation->product->name }}" />
-                                                                <img class="second-image" src="{{ getFullUrl($variation->image) }}" alt="{{ $productVariation->product->name }}" />
+                                                                <img class="first-image" src="{{ getFullFtpUrl($variation->image) }}" alt="{{ $productVariation->product->name }}" />
+                                                                <img class="second-image" src="{{ getFullFtpUrl($variation->image) }}" alt="{{ $productVariation->product->name }}" />
                                                             </a>
                                                             {{-- <div class="actions">
                                                                 <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>

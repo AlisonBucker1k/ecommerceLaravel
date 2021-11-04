@@ -328,7 +328,7 @@
                         <div class="cart-product-wrapper mb-6">
                             <div class="single-cart-product">
                                 <div class="cart-product-thumb">
-                                    <a href="{{ route('product.show', [$cartProduct->product->slug]) }}"><img src="{{ getFullUrl($cartProduct->variation->image) }}" alt="{{ $cartProduct->product->name }}"></a>
+                                    <a href="{{ route('product.show', [$cartProduct->product->slug]) }}"><img src="{{ getFullFtpUrl($cartProduct->variation->image) }}" alt="{{ $cartProduct->product->name }}"></a>
                                 </div>
                                 <div class="cart-product-content">
                                     <h3 class="title"><a href="{{ route('product.show', [$cartProduct->product->slug]) }}">{{ $cartProduct->product->name }}</a></h3>

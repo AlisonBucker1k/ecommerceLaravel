@@ -31,8 +31,8 @@
 
                             @if (count($product->images) > 0)
                                 @foreach ($product->images as $image)
-                                <a class="swiper-slide w-100" href="{{getFullUrl($image->file)}}">
-                                    <img class="w-100" src="{{getFullUrl($image->file)}}" alt="{{ $product->name }}">
+                                <a class="swiper-slide w-100" href="{{getFullFtpUrl($image->file)}}">
+                                    <img class="w-100" src="{{getFullFtpUrl($image->file)}}" alt="{{ $product->name }}">
                                 </a>
                                 @endforeach
                             @endif
@@ -47,7 +47,7 @@
                             @if (count($product->images) > 0)
                                 @foreach ($product->images as $image)
                                 <div class="swiper-slide">
-                                    <img src="{{getFullUrl($image->file)}}" alt="{{ $product->name }}">
+                                    <img src="{{getFullFtpUrl($image->file)}}" alt="{{ $product->name }}">
                                 </div>
                                 @endforeach
                             @endif
