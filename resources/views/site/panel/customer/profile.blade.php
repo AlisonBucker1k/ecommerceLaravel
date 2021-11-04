@@ -1,15 +1,11 @@
 @extends('site.main')
+
 @section('content')
-     <!-- My Account Section Start -->
     <div class="section section-margin">
         <div class="container">
-
             <div class="row">
                 <div class="col-lg-12">
-
-                    <!-- My Account Page Start -->
                     <div class="myaccount-page-wrapper">
-                        <!-- My Account Tab Menu Start -->
                         <div class="row">
                             <div class="col-lg-3 col-md-4">
                                 <div class="myaccount-tab-menu nav" role="tablist">
@@ -60,11 +56,11 @@
                                                     </div>
                                                     <div class="single-input-item mb-3">
                                                         <label for="phone" class="required mb-1">Telefone</label>
-                                                        <input type="text" name="phone" value="{{$customer->profile->phone}}" id="phone"/>
+                                                        <input type="text" name="phone" class="phone" value="{{$customer->profile->phone}}" id="phone"/>
                                                     </div>
                                                     <div class="single-input-item mb-3">
                                                         <label for="cellphone" class="required mb-1">Celular</label>
-                                                        <input type="text" name="cellphone" value="{{$customer->profile->celphone}}" id="cellphone" />
+                                                        <input type="text" name="cellphone" class="cellphone" value="{{$customer->profile->celphone}}" id="cellphone" />
                                                     </div>
                                                     <fieldset>
                                                         <legend>Alterar Senha</legend>
@@ -268,3 +264,8 @@
     </div>
     <!-- My Account Section End -->
 @endsection
+
+@push('js')
+    <script type="text/javascript" src="/general/components/jquery-mask-plugin/src/jquery.mask.js"></script>
+    <script type="text/javascript" src="/assets/js/masks.js"></script>
+@endpush

@@ -49254,19 +49254,6 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ "./public/site/assets/js/custom.js":
-/*!*****************************************!*\
-  !*** ./public/site/assets/js/custom.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-$('document').ready(function () {
-  alert('as');
-});
-
-/***/ }),
-
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -49280,8 +49267,6 @@ $('document').ready(function () {
  * building robust, powerful web applications using Vue and Laravel.
  */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
-
-__webpack_require__(/*! ../../public/site/assets/js/custom */ "./public/site/assets/js/custom.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /**
@@ -49452,8 +49437,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /var/www/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/bitti/www/useladame/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/bitti/www/useladame/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

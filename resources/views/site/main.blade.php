@@ -486,7 +486,7 @@
     <script src="{{asset('useLadame/js/vendor/jquery-migrate-3.3.2.min.js')}}"></script>
     <script src="{{asset('useLadame/js/vendor/modernizr-3.11.2.min.js')}}"></script>
 
-    @stack('js')
+
 
     <!-- Plugins JS -->
 
@@ -501,6 +501,7 @@
     <script src="{{asset('useLadame/js/plugins/thia-sticky-sidebar.min.js')}}"></script>
 
 
+    
     <!-- Use the minified version files listed below for better performance and remove the files listed above -->
 
 
@@ -515,7 +516,7 @@
     <script src="{{asset('useLadame/js/main.js')}}"></script>
 
 
-
+    @stack('js')
 </body>
 
 </html>
