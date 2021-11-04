@@ -64,6 +64,15 @@ return [
             'url' => env('AWS_URL'),
         ],
 
+        'ftp' => [
+            'driver' => 'ftp',
+            'host' => 'ftp.useladame.com',
+            'username' => 'upload@images.useladame.com',
+            'password' => 'bckcode@#2021',
+            'ssl' => true,
+            'url' => env('APP_FTP_UPLOAD_FILES'),
+        ],
+        
     ],
 
 ];

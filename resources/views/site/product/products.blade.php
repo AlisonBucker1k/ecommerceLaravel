@@ -49,12 +49,12 @@
                                     <div class="product-inner">
                                         <div class="thumb">
                                             <a href="{{ route('product.show', [$product->slug]) }}" class="image">
-                                                <img class="first-image" src="{{asset('useLadame/images/products/medium-size/2.jpg')}}" alt="{{ $product->name }}" />
-                                                <img class="second-image" src="{{asset('useLadame/images/products/medium-size/2.jpg')}}" alt="{{ $product->name }}" />
+                                                <img class="first-image" src="{{getFullFtpUrl($product->mainImage->file)}}" alt="{{ $product->name }}" />
+                                                <img class="second-image" src="{{getFullFtpUrl($product->mainImage->file)}}" alt="{{ $product->name }}" />
                                             </a>
                                         </div>
                                         <div class="content">
-                                            <h4 class="sub-title"><a href="single-product.html"><a href="{{ route('product.show', [$product->slug]) }}">{{ $product->name }}</a></a></h4>
+                                            <h4 class="sub-title"><a href="{{ route('product.show', [$product->slug]) }}">{{ $product->name }}</a></h4>
                                             <h5 class="title"><a href="{{ route('product.show', [$product->slug]) }}">{{ $product->name }}</a></h5>
                                             <span class="price">
                                                 <span class="new">{{ $variation->final_price_formated }}</span>

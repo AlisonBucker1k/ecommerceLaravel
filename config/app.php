@@ -238,23 +238,17 @@ return [
     'url_admin' => env('APP_URL_ADMIN'),
 
     'company' => [
-
         'name' => env('COMPANY_NAME'),
         'cnpj' => env('COMPANY_CNPJ'),
         'emails' => [
-
             'contact' => env('COMPANY_CONTACT_EMAIL'),
             'marketing' => env('COMPANY_MARKETING_EMAIL'),
-
         ],
-
     ],
 
     'shipping' => [
-
         'postal_code' => env('SHIPPING_POSTAL_CODE'),
         'additional_shipping_days' => env('SHIPPING_ADDITIONAL_SHIPPING_DAYS'),
-
     ],
 
     'pagar_me_api_token' => env('PAGAR_ME_API_TOKEN'),

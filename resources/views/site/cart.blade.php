@@ -38,7 +38,7 @@
                                     @forelse ($cart->cartProducts as $cartProduct)
                                         @php $stockQuantity = $cartProduct->variation->stock_quantity; @endphp
                                         <tr>
-                                            <td class="pro-thumbnail"><a href="#"><img class="img-fluid" src="{{ $cartProduct->variation->image }}" alt="{{ $cartProduct->product->name }}" /></a></td>
+                                            <td class="pro-thumbnail"><a href="#"><img width="100px" class="img-fluid" src="{{ getFullFtpUrl($cartProduct->variation->image) }}" alt="{{ $cartProduct->product->name }}" /></a></td>
                                             <td class="pro-title">
                                                 <a href="{{ route('product.show', [$cartProduct->product->slug, $cartProduct->variation->id]) }}">
                                                     {{ $cartProduct->product->name }} <br/>

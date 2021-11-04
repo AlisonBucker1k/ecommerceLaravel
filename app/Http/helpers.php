@@ -141,3 +141,10 @@ if (!function_exists('maskCep')) {
         return $mask;
     }
 }
+
+if (!function_exists('getFullFtpUrl')) {
+    function getFullFtpUrl($path)
+    {
+        return config('filesystems.disks.ftp.url') . $path;
+    }
+}
