@@ -47,7 +47,7 @@
                                                     @endforeach
                                                 </a>
                                             </td>
-                                            <td class="pro-price"><span>{{ $cartProduct->variation->value_formated }}</span></td>
+                                            <td class="pro-price"><span>{{ $cartProduct->variation->final_price_formated }}</span></td>
                                             <td class="--pro-quantity">
                                                 @include('site.elements.product_quantity_form', ['cartProduct' => $cartProduct])
                                             </td>
