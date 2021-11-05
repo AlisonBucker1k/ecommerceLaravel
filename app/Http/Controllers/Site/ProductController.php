@@ -33,6 +33,7 @@ class ProductController extends Controller
         $data['filters'] = $filters;
         $data['category'] = $category;
         $data['subcategory'] = $subcategory;
+        $data['aleatoryProducts'] = Product::getAleatory(10);
         $data['breadcrumb'] = $this->handleBreadcrumb($category, $subcategory);
 
         return view('site.product.products', $data);
