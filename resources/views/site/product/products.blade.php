@@ -58,7 +58,7 @@
                                             <h5 class="title"><a href="{{ route('product.show', [$product->slug]) }}">{{ $product->name }}</a></h5>
                                             <span class="price">
                                                 <span class="new">{{ $variation->final_price_formated }}</span>
-                                                <span class="old">{{ $variation->final_price_formated }}</span>
+                                                <span class="old">{{ $variation->value_formated }}</span>
                                             </span>
                                             <div class="shop-list-btn">
                                                 <a href="{{ route('product.show', [$product->slug]) }}" class="btn btn-sm btn-outline-dark btn-hover-primary">Ver mais</a>
@@ -137,72 +137,30 @@
                                     <button class="slider-range-submit" type="submit">Filtrar</button>
                                 </div>
                                 <div class="widget-list">
-                                    <h3 class="widget-title mb-4">Produtos Recentes</h3>
+                                    <h4 class="widget-title mb-4">Outras pessoas gostaram</h3>
                                     <div class="sidebar-body product-list-wrapper mb-n6">
-                                        <div class="single-product-list product-hover mb-6">
-                                            <div class="thumb">
-                                                <a href="single-product.html" class="image">
-                                                    <img class="first-image" src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="{{ $product->name }}" />
-                                                    <img class="second-image" src="{{asset('useLadame/images/products/small-product/5.jpg')}}" alt="{{ $product->name }}" />
-                                                </a>
+                                        @foreach ($aleatoryProducts as $aleatoryProduct)
+                                            @php $variation = $product->availableVariation(); @endphp
+                                            <div class="single-product-list product-hover mb-6">
+                                                <div class="thumb">
+                                                    <a href="{{ route('product.show', [$aleatoryProduct->slug]) }}" class="image">
+                                                        <img class="first-image" src="{{ getFullFtpUrl($variation->image) }}" alt="{{ $aleatoryProduct->name }}" />
+                                                        <img class="second-image" src="{{ getFullFtpUrl($variation->image) }}" alt="{{ $aleatoryProduct->name }}" />
+                                                    </a>
+                                                </div>
+                                                <div class="content">
+                                                    <h5 class="title">
+                                                        <a href="{{ route('product.show', [$aleatoryProduct->slug]) }}">
+                                                            {{ $aleatoryProduct->name }}
+                                                        </a>
+                                                    </h5>
+                                                    <span class="price">
+                                                        <span class="new">{{ $variation->final_price_formated }}</span>
+                                                        <span class="old">{{ $variation->value_formated }}</span>
+                                                    </span>
+                                                </div>
                                             </div>
-                                            <div class="content">
-                                                <h5 class="title"><a href="single-product.html">Brother Hoddies in Grey</a></h5>
-                                                <span class="price">
-                                                        <span class="new">$38.00</span>
-                                                <span class="old">$42.50</span>
-                                                </span>
-                                                <span class="ratings">
-                                                        <span class="rating-wrap">
-                                                            <span class="star" style="width: 100%"></span>
-                                                </span>
-                                                <span class="rating-num">(4)</span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="single-product-list product-hover mb-6">
-                                            <div class="thumb">
-                                                <a href="single-product.html" class="image">
-                                                    <img class="first-image" src="{{asset('useLadame/images/products/small-product/2.jpg')}}" alt="{{ $product->name }}" />
-                                                    <img class="second-image" src="{{asset('useLadame/images/products/small-product/3.jpg')}}" alt="{{ $product->name }}" />
-                                                </a>
-                                            </div>
-                                            <div class="content">
-                                                <h5 class="title"><a href="single-product.html">Basic Jogging Shorts</a></h5>
-                                                <span class="price">
-                                                        <span class="new">$21.00</span>
-                                                <span class="old">$22.50</span>
-                                                </span>
-                                                <span class="ratings">
-                                                        <span class="rating-wrap">
-                                                            <span class="star" style="width: 60%"></span>
-                                                </span>
-                                                <span class="rating-num">(4)</span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="single-product-list product-hover mb-6">
-                                            <div class="thumb">
-                                                <a href="single-product.html" class="image">
-                                                    <img class="first-image" src="{{asset('useLadame/images/products/small-product/4.jpg')}}" alt="{{ $product->name }}" />
-                                                    <img class="second-image" src="{{asset('useLadame/images/products/small-product/10.jpg')}}" alt="{{ $product->name }}" />
-                                                </a>
-                                            </div>
-                                            <div class="content">
-                                                <h5 class="title"><a href="single-product.html">Simple Woven Fabrics</a></h5>
-                                                <span class="price">
-                                                        <span class="new">$86.00</span>
-                                                <span class="old">$90.00</span>
-                                                </span>
-                                                <span class="ratings">
-                                                        <span class="rating-wrap">
-                                                            <span class="star" style="width: 80%"></span>
-                                                </span>
-                                                <span class="rating-num">(1)</span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <!-- Single Product List End -->
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>

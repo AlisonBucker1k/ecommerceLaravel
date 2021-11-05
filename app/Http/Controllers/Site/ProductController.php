@@ -33,6 +33,7 @@ class ProductController extends Controller
         $data['filters'] = $filters;
         $data['category'] = $category;
         $data['subcategory'] = $subcategory;
+        $data['aleatoryProducts'] = Product::getAleatory(10);
         $data['breadcrumb'] = $this->handleBreadcrumb($category, $subcategory);
 
         return view('site.product.products', $data);
@@ -66,6 +67,7 @@ class ProductController extends Controller
 
         $data['grids'] = $product->getGridsWithVariationsAvailable($product->id);
         $data['product'] = $product;
+        $data['aleatoryProducts'] = Product::getAleatory(10);
         $data['total_stock'] = $product->totalStock();
 
         return view('site.product.product', $data);

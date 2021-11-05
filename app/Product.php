@@ -2,14 +2,10 @@
 
 namespace App;
 
-use App\Enums\GridStatus;
 use App\Enums\ProductImageMain;
 use App\Enums\ProductVariationMain;
 use App\Enums\ProductStatus;
-use App\Enums\ProductVariationStatus;
-use App\Http\Requests\ProductStoreRequest;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class Product extends Model
@@ -180,9 +176,6 @@ class Product extends Model
         return $aux;
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
     public function availableProducts()
     {
         $products = $this->query()->where('products.status', ProductStatus::ACTIVE);
@@ -202,11 +195,17 @@ class Product extends Model
         return $products;
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
     public function highlightedProducts()
     {
         return $this->availableProducts()->where('highlighted', 1);
+    }
+
+    public static function getAleatory($limit = 20)
+    {
+        return self::query()
+            ->where('status', ProductStatus::ACTIVE)
+            ->limit($limit)
+            ->get()
+            ->shuffle();
     }
 }
