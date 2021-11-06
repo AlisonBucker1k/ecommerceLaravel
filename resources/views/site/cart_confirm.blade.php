@@ -417,7 +417,7 @@
 
         $('#address').change(function () {
             let cep = $(this).children('option:selected').attr('data-cep');
-            if (cep == '') {
+            if (typeof cep == undefined || cep == '') {
                 return false;
             }
 
