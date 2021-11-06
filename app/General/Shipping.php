@@ -79,18 +79,19 @@ class Shipping
         try {
             $findCep = zipcode(getOnlyNumber($this->cep));
             if (empty($findCep)) {
-                throw new Exception('CEP não encontrado.');
+                throw new Exception();
             }
             
             $address = $findCep->getObject();
             if (empty($address)) {
-                throw new Exception('CEP não encontrado.');
+                throw new Exception();
             }
         } catch (Exception $e) {
             return $result;
         }
         
-        if ($address->ibge == 3201308) {
+        $cariacicaIbgeCode = 3201308;
+        if ($address->ibge == $cariacicaIbgeCode) {
             $result['value'] = 0;
             $result['deadline'] = 1 + config('app.shipping.additional_shipping_days');
         }
