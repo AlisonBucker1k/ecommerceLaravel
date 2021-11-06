@@ -96,9 +96,6 @@ class ProductVariation extends Model
         return false;
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
     public function variationsOnSale()
     {
         return $this->availableVariation()

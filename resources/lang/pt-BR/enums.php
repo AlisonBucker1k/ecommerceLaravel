@@ -106,6 +106,11 @@ return [
         Enums\ShippingStatus::INACTIVE => 'Inativo',
         Enums\ShippingStatus::ACTIVE => 'Ativo',
     ],
+    
+    Enums\HighLightedProduct::class => [
+        Enums\HighLightedProduct::NOT => 'Não',
+        Enums\HighLightedProduct::YES => 'Sim',
+    ],
 
     PagarMeEnums\OrderStatus::class => [
         PagarMeEnums\OrderStatus::PROCESSING => 'Em processo de autorização',
