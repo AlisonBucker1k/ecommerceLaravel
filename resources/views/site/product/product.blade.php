@@ -128,7 +128,7 @@
                                             </div>
                                         </div>
                                     @endforeach
-                                    
+
                                     <div class="quantity mb-5">
                                         <div class="cart-plus-minus">
                                             <input class="cart-plus-minus-box quantity-input" value="1"  name="quantity" type="text" min="1" max="{{ $total_stock }}">
@@ -257,7 +257,7 @@
                             <div class="shipping-policy mb-n2">
                                 <h4 class="title-3 mb-4">Políticas de entrega</h4>
                                 <p class="desc-content mb-2">Logo após que recebermos o seu pagamento, o seu pedido entrará no processo de separação. E será enviado em até dois dias úteis</p>
-                                <p cçass="desc-content mb-2">
+                                <p class="desc-content mb-2">
                                     O prazo e o valor da entrega varia de acordo com a sua localização. Você pode obter uma estimativa informando o seu cep na tela de finalizar compras.
                                 </p>
                             </div>
@@ -314,6 +314,47 @@
                     </div>
                 </div>
             </div>
+            <div class="row section-margin">
+                <div class="col-12">
+                    <div class="section-title aos-init aos-animate" data-aos="fade-up" data-aos-delay="300">
+                        <h2 class="title pb-3">Também pode te interessar...</h2>
+                        <span></span>
+                        <div class="title-border-bottom"></div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="product-carousel">
+                        <div class="swiper-container">
+                            <div class="swiper-wrapper">
+                                @foreach ($aleatoryProducts as $aleatoryProduct)
+                                    @php $variation = $aleatoryProduct->availableVariation(); @endphp
+                                    <div class="swiper-slide product-wrapper">
+                                        <div class="product product-border-left" data-aos="fade-up" data-aos-delay="300">
+                                            <div class="thumb">
+                                                <a href="{{ route('product.show', [$aleatoryProduct->slug]) }}" class="image">
+                                                    <img class="first-image" src="{{ getFullFtpUrl($variation->image) }}" alt="{{ $aleatoryProduct->name }}" />
+                                                    <img class="second-image" src="{{ getFullFtpUrl($variation->image) }}" alt="{{ $aleatoryProduct->name }}" />
+                                                </a>
+                                            </div>
+                                            <div class="content">
+                                                <h5 class="title">
+                                                    <a href="{{ route('product.show', [$aleatoryProduct->slug]) }}">
+                                                        {{ $aleatoryProduct->name }}
+                                                    </a>
+                                                </h5>
+                                                <span class="price">
+                                                    <span class="new">{{ $variation->final_price_formated }}</span>
+                                                    <span class="old">{{ $variation->value_formated }}</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
@@ -343,7 +384,7 @@
     </script>
 
     @if($product->has_grid_variation)
-        <script type="text/javascript">    
+        <script type="text/javascript">
             $(function(){
                 function changeVariation(id, value) {
                     $('.select-variation').attr('readonly', 'readonly');
@@ -404,7 +445,7 @@
                                 $('#currentValue #totalValue .value').text(variation.value);
                                 $('#currentValue #totalValue .promotion').addClass('d-none');
                                 $('#currentValue #totalValue .no-promotion').removeClass('d-none');
-                                
+
                                 if (variation.promotion_value != null) {
                                     $('#currentValue #totalValue .promotion').removeClass('d-none');
                                     $('#currentValue #totalValue .no-promotion').addClass('d-none');
