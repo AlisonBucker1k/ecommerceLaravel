@@ -191,6 +191,7 @@
             let totalValueInCents = parseInt($('#total-value').text().replace(/\D/g, ''));
             let shippingFeeInCents = parseInt($('#shipping-value').text().replace(/\D/g, ''));
             let selectedAddress = $('#address option:selected').data('address');
+            let addressComplement = selectedAddress.complement ? selectedAddress.complement : '-';
 
             let items = [];
             @foreach($cartProducts as $cartProduct)
@@ -237,12 +238,12 @@
                     address: {
                         street: selectedAddress.street,
                         street_number: selectedAddress.number,
-                        zipcode: selectedAddress.postal_code,
+                        zipcode: selectedAddress.postal_code.replace(/\D/g, ''),
                         country: selectedAddress.country.toLowerCase(),
                         state: selectedAddress.state,
                         city: selectedAddress.city,
                         neighborhood: selectedAddress.district,
-                        complementary: selectedAddress.complement,
+                        complementary: addressComplement,
                     },
                 },
                 shipping: {
@@ -251,12 +252,12 @@
                     address: {
                         street: selectedAddress.street,
                         street_number: selectedAddress.number,
-                        zipcode: selectedAddress.postal_code,
+                        zipcode: selectedAddress.postal_code.replace(/\D/g, ''),
                         country: selectedAddress.country.toLowerCase(),
                         state: selectedAddress.state,
                         city: selectedAddress.city,
                         neighborhood: selectedAddress.district,
-                        complementary: selectedAddress.complement,
+                        complementary: addressComplement,
                     },
                 },
             });

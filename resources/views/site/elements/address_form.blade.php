@@ -1,5 +1,5 @@
 <div class="create-address contact-form-wrapper">
-    <form class="address-form" method="post">
+    <form id="address-form" method="post">
         <input type="hidden" name="address_id" value="{{ $address->id ?? '' }}">
         <div class="form-group row">
             <div class="col-lg-4">
@@ -8,17 +8,17 @@
             </div>
             <div class="col-lg-8">
                 <label>Endereço</label>
-                <input name="street" id="street" class="form-control" type="text" value="{{ old('street', $address->street ?? '') }}" placeholder="Rua..." required="required">
+                <input name="street" id="street" class="form-control" type="text" value="{{ old('street', $address->street ?? '') }}" placeholder="" required="required">
             </div>
         </div>
         <div class="form-group row">
             <div class="col-lg-6">
                 <label>Complemento</label>
-                <input name="complement" class="form-control" type="text" value="{{ old('complement', $address->complement ?? '') }}" placeholder="Complemento, Ex: Apto 2014 - Torre Sul">
+                <input name="complement" class="form-control" type="text" value="{{ old('complement', $address->complement ?? '') }}" placeholder="">
             </div>
             <div class="col-lg-6">
                 <label>Referência</label>
-                <input name="reference" class="form-control" type="text" value="{{ old('reference', $address->reference ?? '') }}" placeholder="Referência, Ex: Em frente ao colégio Estadual">
+                <input name="reference" class="form-control" type="text" value="{{ old('reference', $address->reference ?? '') }}" placeholder="">
             </div>
         </div>
         <div class="form-group row">
@@ -36,7 +36,7 @@
             </div>
             <div class="col-lg-3">
                 <label>Bairro</label>
-                <input name="district" id="district" class="form-control" type="text" value="{{ old('district', $address->district ?? '') }}" placeholder="Bairro" required="required">
+                <input name="district" id="district" class="form-control" type="text" value="{{ old('district', $address->district ?? '') }}" required="required">
             </div>
         </div>
         <div class="row mt-5">
@@ -49,7 +49,7 @@
 
 @push('js')
     <script>
-        var addressForm = document.querySelector('.address-form');
+        var addressForm = document.getElementById('address-form');
         addressForm.addEventListener('submit', async event => {
             event.preventDefault();
 
