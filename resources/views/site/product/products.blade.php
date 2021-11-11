@@ -140,7 +140,7 @@
                                     <h4 class="widget-title mb-4">Outras pessoas gostaram</h3>
                                     <div class="sidebar-body product-list-wrapper mb-n6">
                                         @foreach ($aleatoryProducts as $aleatoryProduct)
-                                            @php $variation = $product->availableVariation(); @endphp
+                                            @php $variation = $aleatoryProduct->availableVariation(); @endphp
                                             <div class="single-product-list product-hover mb-6">
                                                 <div class="thumb">
                                                     <a href="{{ route('product.show', [$aleatoryProduct->slug]) }}" class="image">
