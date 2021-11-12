@@ -39,7 +39,7 @@ Route::middleware('site.boot')->group(function() {
     Route::post('acessar', 'AuthController@login');
     Route::get('sair', 'AuthController@logout')->name('customer.logout');
 
-    Route::get('cadastrar', 'CustomerController@create')->name('customer.register');
+//    Route::get('cadastrar', 'CustomerController@create')->name('customer.register');
     Route::post('cadastrar', 'CustomerController@store')->name('customer.store');
     Route::get('clientes/{customer}', 'CustomerController@show')->name('customer.profile');
 

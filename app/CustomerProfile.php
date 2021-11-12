@@ -20,16 +20,14 @@ class CustomerProfile extends Model
         'photo',
     ];
 
-    /**
-     * @param $data
-     */
     public function createCustomerProfile($data)
     {
         $this->name = $data['name'];
         $this->last_name = $data['last_name'];
         $this->cpf = $data['cpf'];
         $this->customer_id = $data['customer_id'];
-        $this->save();
+
+        return $this->save();
     }
 
     /**
