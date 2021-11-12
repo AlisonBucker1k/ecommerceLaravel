@@ -330,8 +330,13 @@
                             brlValue = value.toLocaleString('pt-BR', localeSettings);
                         }
 
-                        if (dataShipping.warning != undefined && data.warning != '') {
-                            toastr.warning(data.warning);
+                        if (typeof dataShipping.warning != undefined && dataShipping.warning != '') {
+                            alert(dataShipping.description + ': ' + dataShipping.warning);
+                        }
+
+                        let html = dataShipping.description + ' - <strong>' + brlValue + '</strong>';
+                        if (!dataShipping.deadline == 0) {
+                            html += '- Prazo: ' + dataShipping.deadline + ' dias úteis';
                         }
 
                         shippingOptions.append(
@@ -346,7 +351,7 @@
                                 $('<label>')
                                     .addClass('form-check-label')
                                     .attr({'for': 'type' + shippingType})
-                                    .html(dataShipping.description + ' - <strong>' + brlValue + '</strong> - Prazo: ' + dataShipping.deadline + ' dias úteis')
+                                    .html(html)
                             )
                         );
                     }

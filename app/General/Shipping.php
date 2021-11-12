@@ -41,7 +41,7 @@ class Shipping
         $defaultResult = [
             'id' => $shippingId,
             'description' => Enums\Shipping::getDescription($shippingId),
-            'warning' => null,
+            'warning' => '',
             'value' => 0.0,
             'deadline' => 3,
         ];
@@ -74,6 +74,7 @@ class Shipping
         $result = [
             'value' => 0,
             'deadline' => 3 + config('app.shipping.additional_shipping_days'),
+            'warning' => '',
         ];
 
         try {
@@ -81,7 +82,7 @@ class Shipping
             if (empty($findCep)) {
                 throw new Exception();
             }
-            
+
             $address = $findCep->getObject();
             if (empty($address)) {
                 throw new Exception();
@@ -89,37 +90,37 @@ class Shipping
         } catch (Exception $e) {
             return $result;
         }
-        
+
         $cariacicaIbgeCode = 3201308;
         if ($address->ibge == $cariacicaIbgeCode) {
             $result['value'] = 0;
             $result['deadline'] = 1 + config('app.shipping.additional_shipping_days');
+            $result['warning'] = '';
+
         }
-        
+
         return $result;
     }
 
     private function calculateRedeemInStore(): array
     {
-        $result['value'] = 0;
-        $result['deadline'] = config('app.shipping.additional_shipping_days');
-
-        return $result;
+        return [
+            'value' => 0.0,
+            'deadline' => 0,
+            'warning' => '',
+        ];
     }
 
     private function calculateCorreios($shippingType)
     {
-        $cep = $this->cep;
-
-        $correios = new Client();
-        $calculate = $correios
+        $calculate = (new Client())
             ->freight()
-            ->origin(config('app.shipping.postal_code'))
-            ->destination($cep)
+            ->origin(maskCep(config('app.shipping.postal_code')))
+            ->destination(maskCep($this->cep))
             ->services($shippingType);
 
         $totalValue = 0;
-            
+
         $cart = $this->cart;
         $cartProducts = $cart->cartProducts()->get();
         foreach ($cartProducts as $cartProduct) {
@@ -133,12 +134,12 @@ class Shipping
 
         $results = $calculate->calculate();
         $result = array_shift($results);
-        if (isset($result['error']) && !empty($result['error']) && (!isset($result['error']['code']) || isset($result['error']['code']) && $result['error']['code'] != '011')) {
+        if (isset($result['error']) && !empty($result['error']) && (!isset($result['error']['code']) || isset($result['error']['code'])) && $result['error']['code'] != '011' && $result['error']['code'] != '010') {
             throw new Exception($result['error']['message']);
         }
 
-        $warning = null;
-        if (isset($result['error']['code']) && $result['error']['code'] == '011') {
+        $warning = '';
+        if (isset($result['error']['code']) && in_array($result['error']['code'], ['010', '011'])) {
             $warning = $result['error']['message'];
         }
 
