@@ -7,8 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Customer;
 use App\Http\Requests\CustomerRequest;
 use Illuminate\Http\Request;
-use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,7 +16,6 @@ class CustomerController extends Controller
 {
     public function create()
     {
-
         return view('site.customer.login');
     }
 
@@ -81,11 +80,12 @@ class CustomerController extends Controller
 
         Auth::guard('web_site')->attempt($data);
 
-        if (empty($request->previous_page) || $request->previous_page == route('login')) {
-            return redirect()->route('home')->withSuccess($message);
+        $cookieRedirect = Cookie::get('redirectTo');
+        if (!empty($cookieRedirect)) {
+            return redirect()->to($cookieRedirect);
         }
 
-        return redirect()->back()->withSuccess($message);
+        return redirect()->route('home')->withSuccess($message);
     }
 
     public function update(Request $request)
