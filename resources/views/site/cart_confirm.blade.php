@@ -36,8 +36,7 @@
                                 @endif
                             </div>
                         </div>
-                        <br><br>
-                        <div class="form-row">
+                        <div class="form-row mt-5">
                             <div class="form-group col-8">
                                 <div id="shipping-options"></div>
                             </div>
@@ -46,9 +45,8 @@
                                     Novo Endereço <i class="fa fa-caret-down"></i>
                                 </a>
                             </div>
-
                             <div class="address-form d-none">
-                                @include('site.elements.address_form')
+                                @include('site.elements.address_form', ['address' => []])
                             </div>
                         </div>
                     </div>
@@ -115,7 +113,6 @@
                                         <td class="text-end pe-0"><span class="amount">{{ $cart->total_value_formated }}</span></td>
                                     </tr>
                                     <tr class="cart-subtotal">
-                                        {{-- TODO fazer cálculo do frete nessa tela --}}
                                         <th class="text-start ps-0">Frete</th>
                                         <td class="text-end pe-0"><span id="shipping-value">Selecione o endereço</span></td>
                                     </tr>
@@ -184,7 +181,6 @@
                 },
                 error: (error) => {
                     console.log(error);
-                    alert('Erro no Pagamento.');
                 },
             });
 
@@ -303,7 +299,7 @@
                     shippingOptions.attr({'disabled': 'disabled'}).prepend(
                         $('<div>').addClass('loading-shipping-calculate').append(
                             $('<span>').addClass('fa fa-fw fa-spin fa-spinner').text(),
-                            ' Calculando..'
+                            ' Calculando...'
                         )
                     );
                 },
@@ -330,12 +326,17 @@
                             brlValue = value.toLocaleString('pt-BR', localeSettings);
                         }
 
-                        if (dataShipping.warning != undefined && data.warning != '') {
-                            toastr.warning(data.warning);
+                        let html = dataShipping.description + ' - <strong class="value">' + brlValue + '</strong>';
+                        if (!dataShipping.deadline == 0) {
+                            html += ' - Prazo: ' + dataShipping.deadline + ' dias úteis';
+                        }
+
+                        if (typeof dataShipping.warning != undefined && dataShipping.warning != '') {
+                            html += `<br/><small><i class="pe-7s-attention"></i> ${dataShipping.warning}</small>`;
                         }
 
                         shippingOptions.append(
-                            $('<div>').addClass('form-check').append(
+                            $('<div>').addClass('mb-5 form-check').append(
                                 $('<input>').addClass('form-check-input').attr({
                                     'type': 'radio',
                                     'name': 'shipping_id',
@@ -346,7 +347,7 @@
                                 $('<label>')
                                     .addClass('form-check-label')
                                     .attr({'for': 'type' + shippingType})
-                                    .html(dataShipping.description + ' - <strong>' + brlValue + '</strong> - Prazo: ' + dataShipping.deadline + ' dias úteis')
+                                    .html(html)
                             )
                         );
                     }

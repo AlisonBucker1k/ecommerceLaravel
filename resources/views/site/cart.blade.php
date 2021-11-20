@@ -49,7 +49,11 @@
                                             </td>
                                             <td class="pro-price"><span>{{ $cartProduct->variation->final_price_formated }}</span></td>
                                             <td class="--pro-quantity">
-                                                @include('site.elements.product_quantity_form', ['cartProduct' => $cartProduct])
+                                                <div class="quantity mb-5">
+                                                    <div class="cart-plus-minus">
+                                                        <input class="cart-plus-minus-box new-quantity-input" value="{{ $cartProduct->quantity }}" type="number" name="quantity" min="1" minlength="1" onblur="changeQuantity(this.value, '{{ route('cart_product.change_quantity', [$cartProduct->id]) }}')">
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td class="pro-subtotal">
                                                 <span>
@@ -98,3 +102,29 @@
         </div>
     </div>
 @endsection
+
+@push('js')
+    <script>
+        async function changeQuantity(quantity, action) {
+            let form = new FormData();
+            form.append('new_quantity', quantity);
+
+            await fetch(action, {
+                method: 'post',
+                body: form,
+                headers: {
+                    'X-CSRF-Token':  '{{ csrf_token() }}'
+                },
+            }).then(response => {
+                return response.json();
+            }).then(data => {
+                if (data.error) {
+                    alert(data.message);
+                    return false;
+                }
+
+                location.reload();
+            });
+        }
+    </script>
+@endpush

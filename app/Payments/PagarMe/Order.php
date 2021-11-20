@@ -2,10 +2,12 @@
 
 namespace App\Payments\PagarMe;
 
+use App\Mail\OrderStatusUpdate;
 use App\Order as UseLadameOrder;
 use App\Payments\PagarMe\Enums\OrderPaymentMethod;
 use App\Payments\PagarMe\Enums\OrderStatus;
 use Exception;
+use Illuminate\Support\Facades\Mail;
 use PagarMe\Client;
 use PagarMe\PagarMe;
 
@@ -56,6 +58,8 @@ class Order extends PagarMe
             $pagarMeDecodedJson->status = $postBackResponse->payload->current_status;
             $order->pagar_me_json = json_encode($pagarMeDecodedJson);
             $order->save();
+
+            Mail::send(new OrderStatusUpdate($order, $order->status, $order->customer->email));
         }
     }
 

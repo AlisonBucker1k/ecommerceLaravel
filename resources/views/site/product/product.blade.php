@@ -74,17 +74,14 @@
                         <div class="product-head mb-3">
                             <h2 class="product-title">{{ $product->name }}</h2>
                         </div>
-                        <div class="price-box mb-2">
-                            <span class="regular-price">{{ $product->mainVariation->promotion_value_formated }}</span>
-                            <span class="old-price"><del>{{ $product->mainVariation->value_formated }}</del></span>
-                        </div>
-                        <span class="ratings justify-content-start">
-                            <span class="rating-wrap">
-                                <span class="star" style="width: 100%"></span>
-                            </span>
-                            <span class="rating-num"></span>
-                        </span>
                         <p class="desc-content mb-5">@php echo $product->description @endphp</p>
+{{--                        <span class="ratings justify-content-start">--}}
+{{--                            <span class="rating-wrap">--}}
+{{--                                <span class="star" style="width: 100%"></span>--}}
+{{--                            </span>--}}
+{{--                            <span class="rating-num">4.6</span>--}}
+{{--                        </span>--}}
+
 
                         @if ($total_stock <= 0)
                             <div class="alert alert-warning">
@@ -110,6 +107,7 @@
                                     Economia de <span class="value"></span>
                                 </p>
                             </div>
+                            <br>
                             <form method="post" action="/carrinho/{{ $product->slug }}/add" id="addCartForm" class="form-bg">
                                 @csrf
                                 <input type="hidden" name="variation_id" id="variationId" value="{{ $product->mainVariation->id }}">

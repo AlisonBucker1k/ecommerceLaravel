@@ -8,6 +8,7 @@ use App\Customer;
 use App\Http\Requests\CustomerRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -78,6 +79,11 @@ class CustomerController extends Controller
         ];
 
         Auth::guard('web_site')->attempt($data);
+
+        $cookieRedirect = Cookie::get('redirectTo');
+        if (!empty($cookieRedirect)) {
+            return redirect()->to($cookieRedirect);
+        }
 
         return redirect()->route('home')->withSuccess($message);
     }
