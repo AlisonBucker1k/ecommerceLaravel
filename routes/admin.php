@@ -81,6 +81,7 @@ Route::middleware('Auth:web_admin')->group(function() {
     Route::get('orders', 'OrderController@index')->name('orders.list');
     Route::get('orders/{order}', 'OrderController@show')->name('order.show');
     Route::post('orders/{order}/shipping-code', 'OrderController@updateShippingCode')->name('order.updateShippingCode');
+    Route::post('orders/{order}/status', 'OrderController@changeStatus')->name('order.updateStatus');
 
     Route::post('orders/{order}/history', 'OrderHistoryController@store')->name('order.history.store');
 

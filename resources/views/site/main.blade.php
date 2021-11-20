@@ -152,11 +152,11 @@
                                 @endif
                                 <!-- User Account Header Action Button End -->
 
-                                <!-- Wishlist Header Action Button Start -->
-                                <a href="" class="header-action-btn header-action-btn-wishlist d-none d-md-block">
-                                    <i class="pe-7s-like"></i>
-                                </a>
-                                <!-- Wishlist Header Action Button End -->
+
+                                {{-- TODO criar wishlist --}}
+{{--                                <a href="" class="header-action-btn header-action-btn-wishlist d-none d-md-block">--}}
+{{--                                    <i class="pe-7s-like"></i>--}}
+{{--                                </a>--}}
 
                                 <!-- Shopping Cart Header Action Button Start -->
                                 <a href="javascript:void(0)" class="header-action-btn header-action-btn-cart">

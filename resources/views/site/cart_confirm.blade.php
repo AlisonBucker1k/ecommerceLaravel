@@ -159,6 +159,8 @@
                     formData.append('transaction_token', response.token);
                     formData.append('address_id', $('#address').val());
                     formData.append('shipping_id', $('.form-check-input:checked').val());
+                    // formData.append('shipping_value', $('.form-check-input:checked').children('strong').html());
+                    // formData.append('shipping_description', $('.form-check-input:checked').val());
 
                     $.ajax({
                         type: 'post',
@@ -181,7 +183,6 @@
                 },
                 error: (error) => {
                     console.log(error);
-                    alert('Erro no Pagamento.');
                 },
             });
 
@@ -327,7 +328,7 @@
                             brlValue = value.toLocaleString('pt-BR', localeSettings);
                         }
 
-                        let html = dataShipping.description + ' - <strong>' + brlValue + '</strong>';
+                        let html = dataShipping.description + ' - <strong class="value">' + brlValue + '</strong>';
                         if (!dataShipping.deadline == 0) {
                             html += ' - Prazo: ' + dataShipping.deadline + ' dias úteis';
                         }

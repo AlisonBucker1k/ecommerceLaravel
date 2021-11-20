@@ -5,11 +5,13 @@ namespace App;
 use App\Enums\OrderHistoryStatus;
 use App\Enums\OrderStatus;
 use App\General\Shipping;
+use App\Mail\OrderStatusUpdate;
 use App\Payments\PagarMe\Transaction;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class Order extends Model
 {
@@ -94,8 +96,9 @@ class Order extends Model
         }
 
         $this->status = $status;
-
         $this->update();
+
+        Mail::send(new OrderStatusUpdate($this, $this->status, $this->customer->email));
     }
 
     public function cancel()
@@ -108,8 +111,7 @@ class Order extends Model
 
     public function pay()
     {
-        $this->status = OrderStatus::PAID;
-        $this->update();
+        $this->updateStatus(OrderStatus::PAID);
 
         $history = new OrderHistory();
         $history->addAutoOrderHistory($this, $this->status);
@@ -194,6 +196,8 @@ class Order extends Model
     {
         $this->shipping_code = $newShippingCode;
         $this->update();
+
+        Mail::send(new OrderStatusUpdate($this, $this->status, $this->customer->email));
     }
 
     public static function getFromPagarMeTransactionId($transactionId)

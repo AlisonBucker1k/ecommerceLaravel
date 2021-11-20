@@ -18,7 +18,7 @@
 </section>
 <div class="container py-2">
     <div class="row">
-        <div class="col-lg-9">
+        <div class="col-lg-12">
             <div class="row">
                 <div class="col-12">
                     <div class="featured-boxes">
@@ -26,6 +26,13 @@
                             <div class="col">
                                 <div class="card">
                                     <div class="card-body">
+                                        <div class="form-group row mb-2">
+                                            <h5>Status do Pedido</h5>
+                                        </div>
+                                        <div class="form-group row mb-2">
+                                            <div class="col">{{ $order->status_description }}</div>
+                                        </div>
+                                        <hr>
                                         <div class="form-group row mb-2">
                                             <h5>Status do Pagamento</h5>
                                         </div>
@@ -37,9 +44,9 @@
                                             @if ($pagarMeOrder->isPaymentTypeBill())
                                                 <a href="{{ $pagarMeOrder->getOrder()->boleto_url }}" class="btn btn-sm btn-success mb-2" target="_blank">Pagar Boleto</a>
 
-                                                @if ($pagarMeOrder->canCancelBill())
-                                                    <a href="{{ route('panel.order.cancel', $order->id) }}" onclick="return confirm('Deseja realmente cancelar o pedido?');" class="btn btn-sm btn-danger mb-2">Cancelar Pedido</a>
-                                                @endif
+{{--                                                @if ($pagarMeOrder->canCancelBill())--}}
+{{--                                                    <a href="{{ route('panel.order.cancel', $order->id) }}" onclick="return confirm('Deseja realmente cancelar o pedido?');" class="btn btn-sm btn-danger mb-2">Cancelar Pedido</a>--}}
+{{--                                                @endif--}}
                                             @endif
                                         @endif
                                     </div>
@@ -169,7 +176,7 @@
                     <h2 class="font-weight-normal text-7 mb-4 mt-4">Atualizações</h2>
                 </div>
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-md-12">
                         <div class="featured-boxes">
                             <div class="row">
                                 <div class="col">
@@ -178,15 +185,16 @@
                                             <table class="table table-hover table-responsive-sm">
                                                 <thead>
                                                     <tr>
+                                                        <th scope="col">Descrição</th>
                                                         <th scope="col" class="text-center">Data</th>
                                                         <th scope="col" class="text-center">Status</th>
-                                                        <th scope="col">Descrição</th>
-                                                        <th scope="col" class="text-center">&nbsp;</th>
+                                                        <th scope="col" class="text-center">Arquivo</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @forelse ($histories as $history)
                                                         <tr>
+                                                            <td>{{ $history->description }}</td>
                                                             <td class="text-center">{{ dateSql2Br($history->created_at) }}</td>
                                                             <td class="text-center">
                                                                 {{ $history->status_description }}
@@ -195,11 +203,10 @@
                                                                     <small>Código: {{ $history->code }}</small>
                                                                 @endif
                                                             </td>
-                                                            <td>{{ $history->description }}</td>
                                                             <td class="text-center">
                                                                 @if (!empty($history->file))
-                                                                    <a href="{{ $history->file }}" class="btn btn-sm btn-primary" target="_blank" data-toggle="tooltip" data-placement="left" title="Baixar Arquivo">
-                                                                        <i class="fa fa-cloud-download-alt"></i>
+                                                                    <a href="{{ getFullFtpUrl($history->file) }}" class="btn btn-sm btn-success" target="_blank" data-toggle="tooltip" data-placement="left" title="Baixar Arquivo">
+                                                                        <i class="pe-7s-cloud-download"></i>
                                                                     </a>
                                                                 @endif
                                                             </td>

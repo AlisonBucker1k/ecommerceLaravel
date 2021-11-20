@@ -13,6 +13,7 @@ class Shipping
 {
     private $cep;
     private $cart;
+    private const CARIACICA_IBGE_CODE = 3201308;
 
     public function calculate(Cart $cart, $cep, $shippingId = null)
     {
@@ -91,8 +92,7 @@ class Shipping
             return $result;
         }
 
-        $cariacicaIbgeCode = 3201308;
-        if ($address->ibge == $cariacicaIbgeCode) {
+        if ($address->ibge == self::CARIACICA_IBGE_CODE) {
             $result['value'] = 0;
             $result['deadline'] = 1 + config('app.shipping.additional_shipping_days');
             $result['warning'] = '';

@@ -15,8 +15,13 @@
                 <div style="padding:0px 40px; text-align:justify; color:#666; line-height:150%; font-family:'Roboto','Helvetica',Arial,sans-serif; font-size:13px;">
                     <br><br>
                     <h1 style="margin:0 0 30px 0; color:#222; font-size:18px; font-family:'Roboto','Helvetica',Arial,sans-serif; font-weight:900; text-transform: uppercase;">Ei, {{ $name }}.</h1>
-                    <h2 style=" color: #222;">Seu pedido foi <strong style="color:#b06758;">atualizado</strong>!</h2>
+                    <h2 style=" color: #222;">Seu pedido foi <strong style="color:#b06758;">atualizado!</strong></h2>
                     <p>Novo status: {{ $status }}</p>
+
+                    @if (!empty($order->shipping_code))
+                        <p>Código de Rastreio: {{ $order->shipping_code }}</p>
+                    @endif
+
                     <p>Clique no botão abaixo para ver mais detalhes.</p>
                     <div style="width: 100%; padding: 40px 0; text-align: center;">
                         <a href="{{ $orderUrl }}" style="background-color: #b06758; color: #fff; text-decoration: none; padding: 10px 20px;

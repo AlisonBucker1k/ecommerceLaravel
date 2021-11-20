@@ -12,9 +12,16 @@
                                     <div class="col-6 pl-0" style="float: left;">
                                         <h2 class="h2 mt-0 mb-3 text-dark font-weight-bold" style="line-height: 26px;">Pedido #{{ order.id }}</h2>
                                     </div>
-{#                                    <div class="col-6 pr-0" style="float: right;">#}
-{#                                        <div class="text-right"><span class="badge badge-pill badge-dark" style="font-size: 15px;">{{ order.status_description }}</span></div>#}
-{#                                    </div>#}
+                                    <div class="col-6 pr-0" style="float: right;">
+                                        <div class="text-right">
+                                            <span class="badge badge-pill badge-dark" style="font-size: 15px;">
+                                                <a href="#modalEditOrderStatus" data-toggle="modal" style="text-decoration: none; color: #ffffff;">
+                                                    {{ order.status_description }}
+                                                    <i class="fa fa-fw fa-edit"></i>
+                                                </a>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </header>
@@ -39,7 +46,10 @@
                                             <br/>
                                             Código de Rastreio:
                                             <span class="badge badge-pill badge-dark">
-                                                {{ order.shipping_code | default('Não informado') }}
+                                                <a href="#modalEditShippingCode" data-toggle="modal" style="text-decoration: none; color: #ffffff;">
+                                                    {{ order.shipping_code | default('Não informado') }}
+                                                    <i class="fa fa-fw fa-edit"></i>
+                                                </a>
                                             </span>
                                         </div>
                                     </div>
@@ -117,6 +127,7 @@
                                     </table>
                                 </div>
                             </div>
+
                             {% if order.status != statusPending %}
                                 <div>
                                     <h3 class="text-uppercase">Histórico do Pedido</h3>
@@ -141,7 +152,7 @@
                                                     <td class="text-center">{{ history.description }}</td>
                                                     <td class="text-center">
                                                         {% if history.file != '' %}
-                                                            <a href="{{ history.file }}" target="_blank" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="left" title="Download">
+                                                            <a href="{{ getFullFtpUrl(history.file) }}" target="_blank" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="left" title="Download">
                                                                 <i class="fa fa-cloud-download-alt"></i>
                                                             </a>
                                                         {% endif %}
@@ -156,6 +167,36 @@
                                     </table>
                                     <div class="text-right">
                                         <a href="#modalHistory" data-toggle="modal" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Histórico</a>
+                                    </div>
+                                </div>
+                                <div class="modal" tabindex="-1" role="dialog" id="modalEditOrderStatus">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <form action="{{ route('order.updateStatus', order.id) }}" method="POST">
+                                                {{ csrf_field() }}
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Editar Status do Pedido</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <label for="code">Novo Status</label>
+                                                        <select name="status" id="status" class="form-control">
+                                                            <option value="">Selecione</option>
+                                                            {% for orderStatus in orderStatuses %}
+                                                                <option value="{{ orderStatus.value }}">{{ orderStatus.description }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-sm btn-default" data-dismiss="modal" type="button">Cancelar</button>
+                                                    <button class="btn btn-sm btn-success" type="submit">Salvar</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="modal" tabindex="-1" role="dialog" id="modalEditShippingCode">
