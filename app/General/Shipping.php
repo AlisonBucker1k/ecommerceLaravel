@@ -123,13 +123,37 @@ class Shipping
 
         $cart = $this->cart;
         $cartProducts = $cart->cartProducts()->get();
+
         foreach ($cartProducts as $cartProduct) {
             $variation = $cartProduct->variation;
-            if (ProductVariation::checkAvailable($variation)) {
-                $calculate->item($variation->width, $variation->height, $variation->length, ($variation->weight / 1000), $cartProduct->quantity);
-                $totalProductValue = $cart->value * $cart->quantity;
-                $totalValue += $totalProductValue;
+            if (!ProductVariation::checkAvailable($variation)) {
+                continue;
             }
+
+            $sum = $variation->width + $variation->height + $variation->length;
+            if ($sum > 200) {
+                $variation->width = 66;
+                $variation->height = 66;
+                $variation->length = 66;
+            }
+        }
+
+        foreach ($cartProducts as $cartProduct) {
+            $variation = $cartProduct->variation;
+            if (!ProductVariation::checkAvailable($variation)) {
+                continue;
+            }
+
+            $calculate->item(
+                $variation->width,
+                $variation->height,
+                $variation->length,
+                ($variation->weight / 1000),
+                $cartProduct->quantity
+            );
+
+            $totalProductValue = $cart->value * $cart->quantity;
+            $totalValue += $totalProductValue;
         }
 
         $results = $calculate->calculate();

@@ -74,10 +74,6 @@
                         <div class="product-head mb-3">
                             <h2 class="product-title">{{ $product->name }}</h2>
                         </div>
-                        <div class="price-box mb-2">
-                            <span class="regular-price">{{ $product->mainVariation->promotion_value_formated }}</span>
-                            <span class="old-price"><del>{{ $product->mainVariation->value_formated }}</del></span>
-                        </div>
                         <span class="ratings justify-content-start">
                             <span class="rating-wrap">
                                 <span class="star" style="width: 100%"></span>
