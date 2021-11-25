@@ -6,7 +6,7 @@
             <div class="swiper-container">
                 <div class="swiper-wrapper">
                     <div class="hero-slide-item swiper-slide">
-                        <div class="hero-slide-bg" style="height: auto;">
+                        <div class="hero-slide-bg">
                             <img src="{{asset('assets/img/modelos2.jpeg')}}" alt="" />
                         </div>
                         <div class="container">
@@ -34,7 +34,7 @@
                     </div>
                     <div class="hero-slide-item swiper-slide">
                         <div class="hero-slide-bg">
-                            <img src="{{asset('assets/img/banner-2.jpg')}}" alt="" />
+                            <img src="{{asset('assets/img/banner-7.jpg')}}" alt="" />
                         </div>
                         <div class="container">
                             <div class="hero-slide-content">
