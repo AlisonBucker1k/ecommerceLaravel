@@ -294,30 +294,22 @@
             </div>
         </div>
     </div>
-
-    <!-- Banner Fullwidth Start -->
     <div class="section">
         <div class="container">
             <div class="row">
                 <div class="col-12" data-aos="fade-up" data-aos-delay="300">
                     <div class="banner">
                         <div class="banner-image">
-                            <a href="shop-grid.html"><img src="{{asset('useLadame/images/banner/big-banner.jpg')}}" alt="Banner"></a>
+                            <a href="{{ route('products') }}">
+                                <img src="{{asset('assets/img/banner-footer-6.jpg')}}" alt="Conheça nossos produtos">
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Banner Fullwidth End -->
 
-   {{-- Product deal contador (Futuramente) --}}
-
-    <!-- Banner Section Start -->
-
-    <!-- Banner Section End -->
-
-    <!-- Product List Start -->
     {{-- <div class="section section-padding">
         <div class="container">
             <div class="row mb-n8">
