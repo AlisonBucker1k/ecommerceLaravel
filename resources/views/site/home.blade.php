@@ -78,12 +78,13 @@
                 <div class="col-lg-4 col-md-6 col-12 mb-6">
                     <div class="banner" data-aos="fade-up" data-aos-delay="300">
                         <div class="banner-image">
-                            <a href=""><img src="{{asset('assets/img/mini-banner-1.jpg')}}" alt=""></a>
+                            <a href="{{ route('products') }}"><img src="{{asset('assets/img/mini-banner-1.jpg')}}" alt=""></a>
                         </div>
                         <div class="info">
                             <div class="small-banner-content">
                                 <h4 class="sub-title">Sun Hat</h4>
                                 <h3 class="title">Get Offer <br />For Summer</h3>
+                                <a href="{{ route('products') }}" class="btn btn-dark btn-sm">Comprar Agora</a>
                             </div>
                         </div>
                     </div>
@@ -94,12 +95,13 @@
                 <div class="col-lg-4 col-md-6 col-12 mb-6">
                     <div class="banner" data-aos="fade-up" data-aos-delay="500">
                         <div class="banner-image">
-                            <a href=""><img src="{{asset('assets/img/mini-banner-3.jpg')}}" alt=""></a>
+                            <a href="{{ route('products') }}"><img src="{{asset('assets/img/mini-banner-3.jpg')}}" alt=""></a>
                         </div>
                         <div class="info">
                             <div class="small-banner-content">
                                 <h4 class="sub-title">Ladies Bag</h4>
                                 <h3 class="title">Buy One <br />Get One Free</h3>
+                                <a href="{{ route('products') }}" class="btn btn-dark btn-sm">Comprar Agora</a>
                             </div>
                         </div>
                     </div>
@@ -110,12 +112,13 @@
                 <div class="col-lg-4 col-md-6 col-12 mb-6">
                     <div class="banner" data-aos="fade-up" data-aos-delay="700">
                         <div class="banner-image">
-                            <a href=""><img src="{{asset('assets/img/mini-banner-4.jpg')}}" alt=""></a>
+                            <a href="{{ route('products') }}"><img src="{{asset('assets/img/mini-banner-4.jpg')}}" alt=""></a>
                         </div>
                         <div class="info">
                             <div class="small-banner-content">
                                 <h4 class="sub-title">Smart Watch</h4>
                                 <h3 class="title">20% Off <br />Smart Watch</h3>
+                                <a href="{{ route('products') }}" class="btn btn-dark btn-sm">Comprar Agora</a>
                             </div>
                         </div>
                     </div>
