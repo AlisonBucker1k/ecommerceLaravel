@@ -49,8 +49,13 @@
                                     <div class="product-inner">
                                         <div class="thumb">
                                             <a href="{{ route('product.show', [$product->slug]) }}" class="image">
+                                                @if (isset($product->mainImage->file))
                                                 <img class="first-image" src="{{getFullFtpUrl($product->mainImage->file)}}" alt="{{ $product->name }}" />
                                                 <img class="second-image" src="{{getFullFtpUrl($product->mainImage->file)}}" alt="{{ $product->name }}" />
+                                                @else:
+                                                <img class="second-image" src="" alt="{{ $product->name }}" />
+                                                @endif
+
                                             </a>
                                         </div>
                                         <div class="content">
@@ -144,8 +149,12 @@
                                             <div class="single-product-list product-hover mb-6">
                                                 <div class="thumb">
                                                     <a href="{{ route('product.show', [$aleatoryProduct->slug]) }}" class="image">
-                                                        <img class="first-image" src="{{ getFullFtpUrl($variation->image) }}" alt="{{ $aleatoryProduct->name }}" />
-                                                        <img class="second-image" src="{{ getFullFtpUrl($variation->image) }}" alt="{{ $aleatoryProduct->name }}" />
+                                                        @if ($variation->image)
+                                                            <img class="first-image" src="{{ getFullFtpUrl($variation->image) }}" alt="{{ $aleatoryProduct->name }}" />
+                                                            <img class="second-image" src="{{ getFullFtpUrl($variation->image) }}" alt="{{ $aleatoryProduct->name }}" />
+                                                        @else:
+                                                        <img class="first-image" src="" alt="{{ $aleatoryProduct->name }}" />
+                                                        @endif
                                                     </a>
                                                 </div>
                                                 <div class="content">
