@@ -69,7 +69,7 @@
                                 </ul>
                             </div> --}}
                             <div class="header-top-links">
-                                <span>Ligue pra nós!</span><a href="#"> (27) 9 9657-8957</a>
+                                <span>Ligue pra nós! </span><a href="{{ env('COMPANY_WHATSAPP') }}"> {{ env('COMPANY_WHATSAPP') }}</a>
                             </div>
                         </div>
                     </div>
@@ -152,11 +152,11 @@
                                 @endif
                                 <!-- User Account Header Action Button End -->
 
-                                <!-- Wishlist Header Action Button Start -->
-                                <a href="" class="header-action-btn header-action-btn-wishlist d-none d-md-block">
-                                    <i class="pe-7s-like"></i>
-                                </a>
-                                <!-- Wishlist Header Action Button End -->
+
+                                {{-- TODO criar wishlist --}}
+{{--                                <a href="" class="header-action-btn header-action-btn-wishlist d-none d-md-block">--}}
+{{--                                    <i class="pe-7s-like"></i>--}}
+{{--                                </a>--}}
 
                                 <!-- Shopping Cart Header Action Button Start -->
                                 <a href="javascript:void(0)" class="header-action-btn header-action-btn-cart">
@@ -171,7 +171,7 @@
                                 </a>
 
                                 @if(Auth::check())
-                                    <a href="{{route('customer.logout')}}" class="header-action-btn d-none d-md-block"><i class="fa fa-sign-out"></i></a>
+                                    <a href="{{route('customer.logout')}}" class="header-action-btn d-none d-md-block"><i class="pe-7s-back-2"></i></a>
                                 @endif
                                 <!-- Mobile Menu Hambarger Action Button End -->
 
@@ -264,19 +264,19 @@
 
                     <!-- Contact Links Start -->
                     <ul class="contact-links">
-                        <li><i class="fa fa-phone"></i><a href="phone: (27)99999-9999"> (27) 99999-9999</a></li>
-                        <li><i class="fa fa-envelope-o"></i><a href="#"> contato@useladame.com</a></li>
+                        <li><i class="fa fa-phone"></i><a href="phone: {{env('COMPANY_WHATSAPP')}}"> {{env('COMPANY_WHATSAPP')}}</a></li>
+                        <li><i class="fa fa-envelope-o"></i><a href="#"> {{env('COMPANY_EMAIL')}}</a></li>
                         <li><i class="fa fa-clock-o"></i> <span>Segunda à Sexta 9:00 - 22:00</span> </li>
                     </ul>
                     <!-- Contact Links End -->
 
                     <!-- Social Widget Start -->
                     <div class="widget-social">
-                        <a title="Facebook" href="https://www.facebook.com/useladame" target="_blank"><i class="fa fa-facebook-f"></i></a>
-                        <a title="Instagram" href="https://www.instagram.com/useladame/" target="_blank"><i class="fa fa-instagram"></i></a>
-                        <a title="WhatsApp" href="phone: (27)99999-9999"><i class="fa fa-whatsapp"></i></a>
+                        <a title="Facebook" href="{{env('SOCIAL_FB')}}" target="_blank"><i class="fa fa-facebook-f"></i></a>
+                        <a title="Instagram" href="{{env('SOCIAL_INSTAGRAM')}}" target="_blank"><i class="fa fa-instagram"></i></a>
+                        <a title="WhatsApp" href="phone: {{env('COMPANY_WHATSAPP')}}"><i class="fa fa-whatsapp"></i></a>
                         {{-- {{-- <a title="Youtube" href="#"><i class="fa fa-youtube"></i></a> --}}
-                        <a title="Email" href="mailto:contato@useladame.com"><i class="fa fa-envelope"></i></a>
+                        <a title="Email" href="mailto:{{env('COMPANY_EMAIL')}}"><i class="fa fa-envelope"></i></a>
                     </div>
                     <!-- Social Widget Ende -->
                 </div>
@@ -328,7 +328,7 @@
                         <div class="cart-product-wrapper mb-6">
                             <div class="single-cart-product">
                                 <div class="cart-product-thumb">
-                                    <a href="{{ route('product.show', [$cartProduct->product->slug]) }}"><img src="{{asset('useLadame/images/products/small-product/1.jpg')}}" alt="{{ $cartProduct->product->name }}"></a>
+                                    <a href="{{ route('product.show', [$cartProduct->product->slug]) }}"><img src="{{ getFullFtpUrl($cartProduct->variation->image) }}" alt="{{ $cartProduct->product->name }}"></a>
                                 </div>
                                 <div class="cart-product-content">
                                     <h3 class="title"><a href="{{ route('product.show', [$cartProduct->product->slug]) }}">{{ $cartProduct->product->name }}</a></h3>
@@ -386,16 +386,16 @@
                             <p class="desc-content">Será um prazer poder falar com você. Estamos esperando seu contato e sua visita!</p>
                             <!-- Contact Address Start -->
                             <ul class="widget-address">
-                                <li><span>Endereço: </span> Avenida Mário Gurgel, 5353. Shopping Moxuara. Loja __ Espírito Santo</li>
-                                <li><span>Atendimento: </span> <a href="tel: (27)99555-8745"> (27) 99999-9999</a></li>
-                                <li><span>E-mail: </span> <a href="mailto: contato@useladame.com"> contato@useladame.com</a></li>
+                                <li><span>Endereço: </span> Avenida Mário Gurgel, 5353. Shopping Moxuara. L3 Espírito Santo</li>
+                                <li><span>Atendimento: </span> <a href="tel: {{ env('COMPANY_WHATSAPP') }}"> {{ env('COMPANY_WHATSAPP') }}</a></li>
+                                <li><span>E-mail: </span> <a href="mailto: {{env('COMPANY_EMAIL')}}"> {{env('COMPANY_EMAIL')}}</a></li>
                             </ul>
                             <!-- Contact Address End -->
 
                             <!-- Soclial Link Start -->
                             <div class="widget-social justify-content-start mt-4">
-                                <a title="Facebook" href="https://www.facebook.com/useladame" target="_blank"><i class="fa fa-facebook-f"></i></a>
-                                <a title="Instagram" href="https://www.instagram.com/useladame/" target="_blank"><i class="fa fa-instagram"></i></a>
+                                <a title="Facebook" href="h{{env('SOCIAL_FB')}}" target="_blank"><i class="fa fa-facebook-f"></i></a>
+                                <a title="Instagram" href="{{env('SOCIAL_INSTAGRAM')}}" target="_blank"><i class="fa fa-instagram"></i></a>
                                 {{-- <a title="Linkedin" href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
                                 <a title="Youtube" href="#" target="_blank"><i class="fa fa-youtube"></i></a>
                                 <a title="Vimeo" href="#" target="_blank"><i class="fa fa-vimeo"></i></a> --}}
@@ -420,10 +420,7 @@
                             <h2 class="widget-title">Links Rápidos</h2>
                             <ul class="widget-list">
                                 <li><a href="{{route('login')}}">Minha conta</a></li>
-                                <li><a href="wishlist.html">Lista de desejos</a></li>
-                                {{-- <li><a href="contact.html">Newsletter</a></li> --}}
-                                <li><a href="contact.html">Canais de ajuda</a></li>
-                                {{-- <li><a href="contact.html">Conditin</a></li> --}}
+                                <li><a href="{{ route('contact') }}">Canais de ajuda</a></li>
                                 <li><a href="contact.html">Termos de uso</a></li>
                             </ul>
                         </div>
@@ -434,8 +431,8 @@
                             <div class="widget-body">
                                 <p class="desc-content mb-0">Assine nossa newsletter e receba nossas melhores ofertas no seu e-mail!</p>
                                 <div class="newsletter-form-wrap pt-4">
-                                    <form id="mc-form" class="mc-form">
-                                        <input type="email" id="mc-email" class="form-control email-box mb-4" placeholder="Insira seu melhor e-mail" name="email">
+                                    <form id="mc-form" class="mc-form" action="https://uselalame.us5.list-manage.com/subscribe/post?u=89768dc5e932d8c600c27c2c6&amp;id=ab5a2631ba" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                                        <input type="email" id="mc-email mce-EMAIL" class="form-control email-box mb-4" placeholder="Insira seu melhor e-mail" name="EMAIL">
                                         <button id="mc-submit" class="newsletter-btn btn btn-primary btn-hover-dark" type="submit">Assinar</button>
                                     </form>
                                     <div class="mailchimp-alerts text-centre">
@@ -489,7 +486,7 @@
     <script src="{{asset('useLadame/js/vendor/jquery-migrate-3.3.2.min.js')}}"></script>
     <script src="{{asset('useLadame/js/vendor/modernizr-3.11.2.min.js')}}"></script>
 
-    @stack('js')
+
 
     <!-- Plugins JS -->
 
@@ -502,6 +499,7 @@
     <script src="{{asset('useLadame/js/plugins/jquery-ui.min.js')}}"></script>
     <script src="{{asset('useLadame/js/plugins/lightgallery-all.min.js')}}"></script>
     <script src="{{asset('useLadame/js/plugins/thia-sticky-sidebar.min.js')}}"></script>
+
 
 
     <!-- Use the minified version files listed below for better performance and remove the files listed above -->
@@ -518,7 +516,7 @@
     <script src="{{asset('useLadame/js/main.js')}}"></script>
 
 
-
+    @stack('js')
 </body>
 
 </html>

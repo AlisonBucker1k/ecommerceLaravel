@@ -7,21 +7,20 @@
                 <div class="swiper-wrapper">
                     <div class="hero-slide-item swiper-slide">
                         <div class="hero-slide-bg" style="height: auto;">
-                            <img src="{{asset('assets/img/modelos.jpeg')}}" alt="Slider Image" />
+                            <img src="{{asset('assets/img/modelos2.jpeg')}}" alt="" />
                         </div>
                         <div class="container">
                             <div class="hero-slide-content">
                                 <h2 class="title">
                                     Women New <br />Collection
                                 </h2>
-                                <p>Ganhe 50% de desconto em produtos selecionados</p>
                                 <a href="{{ route('products') }}" class="btn btn-lg btn-primary btn-hover-dark">Ver Produtos</a>
                             </div>
                         </div>
                     </div>
                     <div class="hero-slide-item swiper-slide">
                         <div class="hero-slide-bg">
-                            <img src="{{asset('assets/img/no-image.jpg')}}" alt="Slider Image" />
+                            <img src="{{asset('assets/img/banner-3.jpg')}}" alt="" />
                         </div>
                         <div class="container">
                             <div class="hero-slide-content">
@@ -29,7 +28,34 @@
                                     Trend Fashion<br />
 										Collection
                                 </h2>
-                                <p>Up to 40% off selected Product</p>
+                                <a href="{{ route('products') }}" class="btn btn-lg btn-primary btn-hover-dark">Ver Produtos</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-slide-item swiper-slide">
+                        <div class="hero-slide-bg">
+                            <img src="{{asset('assets/img/banner-2.jpg')}}" alt="" />
+                        </div>
+                        <div class="container">
+                            <div class="hero-slide-content">
+                                <h2 class="title">
+                                    Trend Fashion<br />
+                                    Collection
+                                </h2>
+                                <a href="{{ route('products') }}" class="btn btn-lg btn-primary btn-hover-dark">Ver Produtos</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-slide-item swiper-slide">
+                        <div class="hero-slide-bg">
+                            <img src="{{asset('assets/img/banner-4.jpg')}}" alt="" />
+                        </div>
+                        <div class="container">
+                            <div class="hero-slide-content">
+                                <h2 class="title">
+                                    Trend Fashion<br />
+                                    Collection
+                                </h2>
                                 <a href="{{ route('products') }}" class="btn btn-lg btn-primary btn-hover-dark">Ver Produtos</a>
                             </div>
                         </div>
@@ -52,13 +78,12 @@
                 <div class="col-lg-4 col-md-6 col-12 mb-6">
                     <div class="banner" data-aos="fade-up" data-aos-delay="300">
                         <div class="banner-image">
-                            <a href=""><img src="{{asset('useLadame/images/banner/banner-1.jpg')}}" alt=""></a>
+                            <a href=""><img src="{{asset('assets/img/mini-banner-1.jpg')}}" alt=""></a>
                         </div>
                         <div class="info">
                             <div class="small-banner-content">
                                 <h4 class="sub-title">Sun Hat</h4>
                                 <h3 class="title">Get Offer <br />For Summer</h3>
-                                <a href="shop-grid.html" class="btn btn-dark btn-sm">Shop Now</a>
                             </div>
                         </div>
                     </div>
@@ -69,13 +94,12 @@
                 <div class="col-lg-4 col-md-6 col-12 mb-6">
                     <div class="banner" data-aos="fade-up" data-aos-delay="500">
                         <div class="banner-image">
-                            <a href=""><img src="{{asset('useLadame/images/banner/banner-1.jpg')}}" alt=""></a>
+                            <a href=""><img src="{{asset('assets/img/mini-banner-3.jpg')}}" alt=""></a>
                         </div>
                         <div class="info">
                             <div class="small-banner-content">
                                 <h4 class="sub-title">Ladies Bag</h4>
                                 <h3 class="title">Buy One <br />Get One Free</h3>
-                                <a href="shop-grid.html" class="btn btn-dark btn-sm">Shop Now</a>
                             </div>
                         </div>
                     </div>
@@ -86,13 +110,12 @@
                 <div class="col-lg-4 col-md-6 col-12 mb-6">
                     <div class="banner" data-aos="fade-up" data-aos-delay="700">
                         <div class="banner-image">
-                            <a href=""><img src="{{asset('useLadame/images/banner/banner-1.jpg')}}" alt=""></a>
+                            <a href=""><img src="{{asset('assets/img/mini-banner-4.jpg')}}" alt=""></a>
                         </div>
                         <div class="info">
                             <div class="small-banner-content">
                                 <h4 class="sub-title">Smart Watch</h4>
                                 <h3 class="title">20% Off <br />Smart Watch</h3>
-                                <a href="shop-grid.html" class="btn btn-dark btn-sm">Shop Now</a>
                             </div>
                         </div>
                     </div>
@@ -115,7 +138,7 @@
                                 <img src="{{asset('useLadame/images/icons/feature-icon-2.png')}}" alt="Feature Icon">
                             </div>
                             <div class="content">
-                                <h5 class="title">Entrega Grátis</h5>
+                                <h5 class="title">Entrega Garantida</h5>
                                 <p>Para todos os pedidos</p>
                             </div>
                         </div>
@@ -149,7 +172,7 @@
                             </div>
                             <div class="content">
                                 <h5 class="title">Descontos</h5>
-                                <p>Melhores descontos</p>
+                                <p>Acima de R$299,00</p>
                             </div>
                         </div>
                     </div>
@@ -163,7 +186,6 @@
                 <div class="col-12">
                     <ul class="product-tab-nav nav justify-content-center mb-10 title-border-bottom mt-n3">
                         <li class="nav-item" data-aos="fade-up" data-aos-delay="300"><a class="nav-link active mt-3" data-bs-toggle="tab" href="#tab-product-all">Destaques</a></li>
-                        {{-- <li class="nav-item" data-aos="fade-up" data-aos-delay="400"><a class="nav-link mt-3" data-bs-toggle="tab" href="#tab-product-clothings">Mais Vendidos</a></li> --}}
                         <li class="nav-item" data-aos="fade-up" data-aos-delay="500"><a class="nav-link mt-3" data-bs-toggle="tab" href="#tab-promotion-products">Promoção</a></li>
                     </ul>
                 </div>
@@ -175,37 +197,30 @@
                             <div class="product-carousel">
                                 <div class="swiper-container">
                                     <div class="swiper-wrapper mb-n10">
-                                        <!-- Product Start -->
                                         <div class="swiper-slide product-wrapper">
                                             @php $l = 0; @endphp
                                             @php $lt = 0; @endphp
                                             @forelse ($highlightedProducts as $highlightedProduct)
                                                 @php $l++; @endphp
                                                 @php $lt++; @endphp
-                                                <!-- Single Product Start -->
                                                 <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
                                                     @php $variation = $highlightedProduct->availableVariation(); @endphp
-                                                    <form method="post" action="{{ route('cart.product.add', [$highlightedProduct->slug]) }}">
-                                                        <input type="hidden" name="variation_id" id="variationId" value="{{  $variation->id }}">
-                                                        @csrf
-                                                        <div class="thumb">
-                                                            <a href="{{ route('product.show', [$highlightedProduct->slug]) }}" class="image">
-                                                                <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="Product" />
-                                                                <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="Product" />
-                                                            </a>
-                                                        </div>
-                                                        <div class="content">
-                                                            <h4 class="sub-title"><a href="{{ route('product.show', [$highlightedProduct->slug]) }}">{{ $highlightedProduct->slug }}</a></h4>
-                                                            <h5 class="title"><a href="{{ route('product.show', [$highlightedProduct->slug]) }}">{{ $highlightedProduct->name }}</a></h5>
-                                                            <span class="price">
-                                                                <span class="new">{{ $variation->final_price_formated }}</span>
-                                                                <span class="old">{{ $variation->final_price_formated }}</span>
-                                                            </span>
-                                                            <a href="{{ route('product.show', [$highlightedProduct->slug]) }}" class="btn btn-sm btn-outline-dark btn-hover-primary">Ver mais</a>
-                                                        </div>
-                                                    </form>
+                                                    <div class="thumb">
+                                                        <a href="{{ route('product.show', [$highlightedProduct->slug]) }}" class="image">
+                                                            <img class="first-image" src="{{ getFullFtpUrl($variation->image) }}" alt="{{ $highlightedProduct->name }}" />
+                                                            <img class="second-image" src="{{ getFullFtpUrl($variation->image) }}" alt="{{ $highlightedProduct->name }}" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="content">
+                                                        <h4 class="sub-title"><a href="{{ route('product.show', [$highlightedProduct->slug]) }}">{{ $highlightedProduct->slug }}</a></h4>
+                                                        <h5 class="title"><a href="{{ route('product.show', [$highlightedProduct->slug]) }}">{{ $highlightedProduct->name }}</a></h5>
+                                                        <span class="price">
+                                                            <span class="new">{{ $variation->final_price_formated }}</span>
+                                                            <span class="old">{{ $variation->final_price_formated }}</span>
+                                                        </span>
+                                                        <a href="{{ route('product.show', [$highlightedProduct->slug]) }}" class="btn btn-sm btn-outline-dark btn-hover-primary">Ver mais</a>
+                                                    </div>
                                                 </div>
-                                                <!-- Single Product End -->
 
                                                 @if ($l === 2)
                                                     @if ($lt != count($highlightedProducts))
@@ -216,18 +231,13 @@
                                                 @endif
                                             @empty
                                                 <p>Nenhum produto disponível</p>
+                                                <p>Nenhum produto disponível</p>
                                             @endforelse
                                         </div>
                                     </div>
-
-                                    <!-- Swiper Pagination Start -->
                                     <div class="swiper-pagination d-md-none"></div>
-                                    <!-- Swiper Pagination End -->
-
-                                    <!-- Next Previous Button Start -->
                                     <div class="swiper-product-button-next swiper-button-next swiper-button-white d-md-flex d-none"><i class="pe-7s-angle-right"></i></div>
                                     <div class="swiper-product-button-prev swiper-button-prev swiper-button-white d-md-flex d-none"><i class="pe-7s-angle-left"></i></div>
-                                    <!-- Next Previous Button End -->
                                 </div>
                             </div>
                         </div>
@@ -238,42 +248,27 @@
                                         <div class="swiper-slide product-wrapper">
                                             @php $l = 0; @endphp
                                             @php $lt = 0; @endphp
-                                           @forelse ($promotionProducts as $productVariation)
+                                            @forelse ($promotionProducts as $productVariation)
                                                 @php $l++; @endphp
                                                 @php $lt++; @endphp
-                                                <form method="post" action="{{ route('cart.product.add', [$productVariation->product->slug]) }}">
-                                                    <input type="hidden" name="variation_id" id="variationId" value="{{ $productVariation->id }}">
-                                                    @csrf
-                                                    <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
-                                                        <div class="thumb">
-                                                            <a href="{{ route('product.show', [$productVariation->product->slug]) }}" class="image">
-                                                                <img class="first-image" src="{{asset('useLadame/images/products/medium-size/1.jpg')}}" alt="{{ $productVariation->product->name }}" />
-                                                                <img class="second-image" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $productVariation->product->name }}" />
-                                                            </a>
-                                                            {{-- <div class="actions">
-                                                                <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
-                                                                <a href="#" class="action quickview" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i class="pe-7s-search"></i></a>
-                                                                <a href="#" class="action compare"><i class="pe-7s-shuffle"></i></a>
-                                                            </div> --}}
-                                                        </div>
-                                                        <div class="content">
-                                                            <h4 class="sub-title"><a href="{{ route('product.show', [$productVariation->product->slug]) }}">{{ $productVariation->product->slug }}</a></h4>
-                                                            <h5 class="title"><a href="produto/ut-adipisci-sed-suscipit-libero/20">{{ $highlightedProduct->name }}</a></h5>
-{{--                                                            <span class="ratings">--}}
-{{--                                                                <span class="rating-wrap">--}}
-{{--                                                                    <span class="star" style="width: 100%"></span>--}}
-{{--                                                                </span>--}}
-{{--                                                                <span class="rating-num">(4)</span>--}}
-{{--                                                            </span>--}}
-                                                            <span class="price">
-                                                                <span class="new">{{ $productVariation->value_formated }}</span>
-                                                                <span class="old">{{ $productVariation->final_price_formated }}</span>
-                                                            </span>
-                                                            <a href="{{ route('product.show', [$productVariation->product->slug]) }}" class="btn btn-sm btn-outline-dark btn-hover-primary">Ver mais</a>
-                                                        </div>
+                                                <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
+                                                    <div class="thumb">
+                                                        <a href="{{ route('product.show', [$productVariation->product->slug]) }}" class="image">
+                                                            <img class="first-image" src="{{ getFullFtpUrl($productVariation->image) }}" alt="{{ $productVariation->product->name }}" />
+                                                            <img class="second-image" src="{{ getFullFtpUrl($productVariation->image) }}" alt="{{ $productVariation->product->name }}" />
+                                                        </a>
                                                     </div>
-                                                </form>
-                                                @if ($l === 2)
+                                                    <div class="content">
+                                                        <h4 class="sub-title"><a href="{{ route('product.show', [$productVariation->product->slug]) }}">{{ $productVariation->product->slug }}</a></h4>
+                                                        <h5 class="title"><a href="{{ route('product.show', [$productVariation->product->slug]) }}">{{ $productVariation->name }}</a></h5>
+                                                        <span class="price">
+                                                            <span class="new">{{ $productVariation->value_formated }}</span>
+                                                            <span class="old">{{ $productVariation->final_price_formated }}</span>
+                                                        </span>
+                                                        <a href="{{ route('product.show', [$productVariation->product->slug]) }}" class="btn btn-sm btn-outline-dark btn-hover-primary">Ver mais</a>
+                                                    </div>
+                                                </div>
+                                                @if ($l === 1)
                                                     @if ($lt != count($promotionProducts))
                                                         </div>
                                                         <div class="swiper-slide product-wrapper">
@@ -285,15 +280,9 @@
                                             @endforelse
                                         </div>
                                     </div>
-
-                                    <!-- Swiper Pagination Start -->
                                     <div class="swiper-pagination d-md-none"></div>
-                                    <!-- Swiper Pagination End -->
-
-                                    <!-- Next Previous Button Start -->
                                     <div class="swiper-product-button-next swiper-button-next swiper-button-white d-md-flex d-none"><i class="pe-7s-angle-right"></i></div>
                                     <div class="swiper-product-button-prev swiper-button-prev swiper-button-white d-md-flex d-none"><i class="pe-7s-angle-left"></i></div>
-                                    <!-- Next Previous Button End -->
                                 </div>
                             </div>
                         </div>
@@ -304,7 +293,7 @@
     </div>
 
     <!-- Banner Fullwidth Start -->
-    {{-- <div class="section">
+    <div class="section">
         <div class="container">
             <div class="row">
                 <div class="col-12" data-aos="fade-up" data-aos-delay="300">
@@ -316,7 +305,7 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
     <!-- Banner Fullwidth End -->
 
    {{-- Product deal contador (Futuramente) --}}

@@ -13,6 +13,7 @@ class Shipping
 {
     private $cep;
     private $cart;
+    private const CARIACICA_IBGE_CODE = 3201308;
 
     public function calculate(Cart $cart, $cep, $shippingId = null)
     {
@@ -41,102 +42,128 @@ class Shipping
         $defaultResult = [
             'id' => $shippingId,
             'description' => Enums\Shipping::getDescription($shippingId),
-            'warning' => null,
-            'value' => 10.0,
+            'warning' => '',
+            'value' => 0.0,
             'deadline' => 3,
         ];
 
-        return $defaultResult;
+       $result = [];
+       switch ($shippingId) {
+           case Enums\Shipping::SEDEX:
+               $result = $this->calculateCorreios(Service::SEDEX);
+               break;
+           case Enums\Shipping::PAC:
+               $result = $this->calculateCorreios(Service::PAC);
+               break;
+           case Enums\Shipping::REDEEM_IN_STORE:
+               $result = $this->calculateRedeemInStore();
+               break;
+           case Enums\Shipping::LOCAL_SHIPPING:
+               $result = $this->calculateLocalShipping();
+               break;
+       }
 
-        // TODO testar com internet boa
-//        $result = [];
-//        switch ($shippingId) {
-////            case Enums\Shipping::SEDEX:
-////                $result = $this->calculateCorreios(Service::SEDEX);
-////                break;
-////            case Enums\Shipping::PAC:
-////                $result = $this->calculateCorreios(Service::PAC);
-////                break;
-//            case Enums\Shipping::REDEEM_IN_STORE:
-//                $result = $this->calculateRedeemInStore();
-//                break;
-//            case Enums\Shipping::LOCAL_SHIPPING:
-//                $result = $this->calculateLocalShipping();
-//                break;
-//        }
+       if (empty($result)) {
+           return $defaultResult;
+       }
 
-//        if (empty($result)) {
-//            return $defaultResult;
-//        }
-//
-//        return array_merge($defaultResult, $result);
+       return array_merge($defaultResult, $result);
     }
 
-    private function calculateLocalShipping() {
-        $result = [];
-        $findCep = zipcode($this->cep);
-        if (empty($findCep)) {
+    private function calculateLocalShipping()
+    {
+        $result = [
+            'value' => 0,
+            'deadline' => 3 + config('app.shipping.additional_shipping_days'),
+            'warning' => '',
+        ];
+
+        try {
+            $findCep = zipcode(getOnlyNumber($this->cep));
+            if (empty($findCep)) {
+                throw new Exception();
+            }
+
+            $address = $findCep->getObject();
+            if (empty($address)) {
+                throw new Exception();
+            }
+        } catch (Exception $e) {
             return $result;
         }
 
-        $result['value'] = 0;
-        $result['deadline'] = 3 + config('app.shipping.additional_shipping_days');
+        if ($address->ibge == self::CARIACICA_IBGE_CODE) {
+            $result['value'] = 0;
+            $result['deadline'] = 1 + config('app.shipping.additional_shipping_days');
+            $result['warning'] = '';
+
+        }
 
         return $result;
-
-//        $address = $findCep->getObject();
-//
-//        switch ($address->ibge) {
-//            case 3205309: // Vitória
-//            case 3205200: // Vila Velha
-//                $result['value'] = 0;
-//                $result['deadline'] = 3 + config('app.shipping.additional_shipping_days');
-//                break;
-//        }
-//
-//        return $result;
     }
 
     private function calculateRedeemInStore(): array
     {
-        $result['value'] = 0;
-        $result['deadline'] = config('app.shipping.additional_shipping_days');
-
-        return $result;
+        return [
+            'value' => 0.0,
+            'deadline' => 0,
+            'warning' => '',
+        ];
     }
 
     private function calculateCorreios($shippingType)
     {
-        $cep = $this->cep;
-        $postalCode = getOnlyNumber(config('app.shipping.postal_code'));
-
-        $correios = new Client();
-        $calculate = $correios
+        $calculate = (new Client())
             ->freight()
-            ->origin($postalCode)
-            ->destination($cep)
+            ->origin(maskCep(config('app.shipping.postal_code')))
+            ->destination(maskCep($this->cep))
             ->services($shippingType);
+
+        $totalValue = 0;
 
         $cart = $this->cart;
         $cartProducts = $cart->cartProducts()->get();
-        $totalValue = 0;
+
         foreach ($cartProducts as $cartProduct) {
             $variation = $cartProduct->variation;
-            if (ProductVariation::checkAvailable($variation)) {
-                $calculate->item($variation->width, $variation->height, $variation->length, ($variation->weight / 1000), $cartProduct->quantity);
-                $totalProductValue = $cart->value * $cart->quantity;
-                $totalValue += $totalProductValue;
+            if (!ProductVariation::checkAvailable($variation)) {
+                continue;
             }
+
+            $sum = $variation->width + $variation->height + $variation->length;
+            if ($sum > 200) {
+                $variation->width = 66;
+                $variation->height = 66;
+                $variation->length = 66;
+            }
+        }
+
+        foreach ($cartProducts as $cartProduct) {
+            $variation = $cartProduct->variation;
+            if (!ProductVariation::checkAvailable($variation)) {
+                continue;
+            }
+
+            $calculate->item(
+                $variation->width,
+                $variation->height,
+                $variation->length,
+                ($variation->weight / 1000),
+                $cartProduct->quantity
+            );
+
+            $totalProductValue = $cart->value * $cart->quantity;
+            $totalValue += $totalProductValue;
         }
 
         $results = $calculate->calculate();
         $result = array_shift($results);
-        if (isset($result['error']) && !empty($result['error']) && (!isset($result['error']['code']) || isset($result['error']['code']) && $result['error']['code'] != '011')) {
+        if (isset($result['error']) && !empty($result['error']) && (!isset($result['error']['code']) || isset($result['error']['code'])) && $result['error']['code'] != '011' && $result['error']['code'] != '010') {
             throw new Exception($result['error']['message']);
         }
 
-        $warning = null;
-        if (isset($result['error']['code']) && $result['error']['code'] == '011') {
+        $warning = '';
+        if (isset($result['error']['code']) && in_array($result['error']['code'], ['010', '011'])) {
             $warning = $result['error']['message'];
         }
 

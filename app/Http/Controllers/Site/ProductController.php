@@ -25,10 +25,15 @@ class ProductController extends Controller
             ->where('products.status', ProductStatus::ACTIVE)
             ->paginate(30);
 
+        if ($products->total() <= 0) {
+            return redirect()->back()->with('error', 'Não existe produtos nessa categoria');
+        }
+
         $data['products'] = $products;
         $data['filters'] = $filters;
         $data['category'] = $category;
         $data['subcategory'] = $subcategory;
+        $data['aleatoryProducts'] = Product::getAleatory(10);
         $data['breadcrumb'] = $this->handleBreadcrumb($category, $subcategory);
 
         return view('site.product.products', $data);
@@ -62,6 +67,7 @@ class ProductController extends Controller
 
         $data['grids'] = $product->getGridsWithVariationsAvailable($product->id);
         $data['product'] = $product;
+        $data['aleatoryProducts'] = Product::getAleatory(10);
         $data['total_stock'] = $product->totalStock();
 
         return view('site.product.product', $data);

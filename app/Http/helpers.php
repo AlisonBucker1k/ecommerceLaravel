@@ -141,3 +141,34 @@ if (!function_exists('maskCep')) {
         return $mask;
     }
 }
+
+if (!function_exists('getFullFtpUrl')) {
+    function getFullFtpUrl($path)
+    {
+        return config('filesystems.disks.ftp.url') . $path;
+    }
+}
+
+function logTransactionData()
+{
+    $file_name = "./pagar_me_post_back_" . date('Y-m-d_H-i-s') . '.txt';
+    $myfile = fopen($file_name, "a");
+    ob_start();
+
+    echo "POST\n";
+    print_r(request()->post());
+
+    $txt = ob_get_contents();
+    ob_end_flush();
+
+    fwrite($myfile, $txt);
+    fclose($myfile);
+}
+
+function logTransactionError($txt)
+{
+    $file_name = "./ERROR_pagar_me_post_back_" . date('Y-m-d_H-i-s') . '.txt';
+    $myfile = fopen($file_name, "a");
+    fwrite($myfile, $txt);
+    fclose($myfile);
+}

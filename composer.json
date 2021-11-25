@@ -20,7 +20,6 @@
         "laravel/tinker": "^1.0",
         "laravellegends/pt-br-validator": "5.1.*",
         "league/flysystem-aws-s3-v3": "^1.0",
-        "michael/laravelpagseguro": "dev-master",
         "pagarme/pagarme-php": "^4.1",
         "rcrowe/twigbridge": "^0.9.8",
         "verot/class.upload.php": "^2.0",

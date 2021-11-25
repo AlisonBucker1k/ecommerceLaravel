@@ -36,11 +36,15 @@ class CartController extends Controller
 
     public function addProduct(Product $product, Request $request)
     {
+        $request->validate([
+            'quantity' => 'required|integer|min:1',
+        ]);
+
         $variation = ProductVariation::query()->find($request->post('variation_id'));
 
         $customerId = auth()->id();
         $cart = Cart::getCart($customerId, Cookie::get('cart_token'));
-        $cart->addProduct($product, $variation);
+        $cart->addProduct($product, $variation, $request->quantity);
 
         return redirect()->route('cart')->withSuccess('Produto adicionado com sucesso!');
     }

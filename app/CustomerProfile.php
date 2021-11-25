@@ -20,16 +20,14 @@ class CustomerProfile extends Model
         'photo',
     ];
 
-    /**
-     * @param $data
-     */
     public function createCustomerProfile($data)
     {
         $this->name = $data['name'];
         $this->last_name = $data['last_name'];
         $this->cpf = $data['cpf'];
         $this->customer_id = $data['customer_id'];
-        $this->save();
+
+        return $this->save();
     }
 
     /**
@@ -52,17 +50,14 @@ class CustomerProfile extends Model
         return $customerProfile;
     }
 
-    public function updateProfile($customer, $request)
+    public function updateProfile($params)
     {
-        $customerProfile = $customer->profile()->first();
-        $customerProfile->name = $request->name;
-        $customerProfile->last_name = $request->last_name;
-        $customerProfile->phone = getOnlyNumber($request->phone);
-        $customerProfile->cellphone = getOnlyNumber($request->cellphone);
-        $customerProfile->birth_date = $request->birth_date;
-        $customerProfile->save();
-
-        return $customerProfile;
+        $this->name = $params->name;
+        $this->last_name = $params->last_name;
+        $this->phone = getOnlyNumber($params->phone);
+        $this->cellphone = getOnlyNumber($params->cellphone);
+        $this->birth_date = $params->birth_date;
+        $this->save();
     }
 
     /**

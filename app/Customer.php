@@ -75,12 +75,6 @@ class Customer extends Model implements Authenticatable, MustVerifyEmail, CanRes
         return $this->hasMany('App\Order');
     }
 
-    /**
-     * Create the Customer
-     *
-     * @param $data
-     * @return $this
-     */
     public function createCustomer($data)
     {
         $this->email = $data['email'];

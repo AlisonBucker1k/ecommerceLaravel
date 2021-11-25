@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Site;
 
+use App\Enums\HighLightedProduct;
 use App\Http\Controllers\Controller;
 use App\Product;
 use App\ProductVariation;
@@ -20,6 +21,7 @@ class IndexController extends Controller
             ->variationsOnSale()
             ->orderBy('discount_percent', 'DESC')
             ->limit($limit)
+            ->where('products.highlighted', HighLightedProduct::NOT)
             ->get();
 
         return view('site.home', $data);

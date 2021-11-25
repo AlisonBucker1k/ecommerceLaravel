@@ -27,6 +27,7 @@ class OrderController extends Controller
     {
         $data['order'] = $order;
         $data['listStatus'] = OrderHistoryStatus::getAvailableManualHistory();
+        $data['orderStatuses'] = OrderStatus::getInstances();
         $data['statusPending'] = OrderStatus::PENDING;
 
         return view('admin.order.order', $data);
@@ -37,5 +38,12 @@ class OrderController extends Controller
         $order->updateShippingCode($request->shipping_code);
 
         return back()->withSuccess('Código de rastreio alterado com sucesso!');
+    }
+
+    public function changeStatus(Order $order, Request $request)
+    {
+        $order->updateStatus($request->status);
+
+        return back()->withSuccess('Pedido alterado com sucesso!');
     }
 }
