@@ -20,54 +20,47 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-5 offset-lg-0 col-md-8 offset-md-2 col-custom">
+                    <!-- Product Details Image Start -->
                     <div class="product-details-img">
+
+                        <!-- Single Product Image Start -->
                         <div class="single-product-img swiper-container gallery-top">
                             <div class="swiper-wrapper popup-gallery">
-                                <a class="swiper-slide w-100" href="{{asset('useLadame/images/products/medium-size/5.jpg')}}">
-                                    <img class="w-100" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $product->name }}">
-                                </a>
-                                <a class="swiper-slide w-100" href="{{asset('useLadame/images/products/medium-size/5.jpg')}}">
-                                    <img class="w-100" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $product->name }}">
-                                </a>
-                                <a class="swiper-slide w-100" href="{{asset('useLadame/images/products/medium-size/5.jpg')}}">
-                                    <img class="w-100" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $product->name }}">
-                                </a>
-                                <a class="swiper-slide w-100" href="{{asset('useLadame/images/products/medium-size/5.jpg')}}">
-                                    <img class="w-100" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $product->name }}">
-                                </a>
-                                <a class="swiper-slide w-100" href="{{asset('useLadame/images/products/medium-size/5.jpg')}}">
-                                    <img class="w-100" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $product->name }}">
-                                </a>
-                                <a class="swiper-slide w-100" href="{{asset('useLadame/images/products/medium-size/5.jpg')}}">
-                                    <img class="w-100" src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $product->name }}">
-                                </a>
+
+                                @if (count($product->images) > 0)
+                                    @foreach ($product->images as $image)
+                                    <a class="swiper-slide w-100" href="{{getFullFtpUrl($image->file)}}">
+                                        <img class="w-100" src="{{getFullFtpUrl($image->file)}}" alt="{{ $product->name }}">
+                                    </a>
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
+                        <!-- Single Product Image End -->
+
+                        <!-- Single Product Thumb Start -->
                         <div class="single-product-thumb swiper-container gallery-thumbs">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <img src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $product->name }}">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $product->name }}">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $product->name }}">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $product->name }}">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $product->name }}">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="{{asset('useLadame/images/products/medium-size/5.jpg')}}" alt="{{ $product->name }}">
-                                </div>
+
+                                @if (count($product->images) > 0)
+                                    @foreach ($product->images as $image)
+                                    <div class="swiper-slide">
+                                        <img src="{{getFullFtpUrl($image->file)}}" alt="{{ $product->name }}">
+                                    </div>
+                                    @endforeach
+                                @endif
                             </div>
+
+                            <!-- Next Previous Button Start -->
                             <div class="swiper-button-next swiper-button-white"><i class="pe-7s-angle-right"></i></div>
                             <div class="swiper-button-prev swiper-button-white"><i class="pe-7s-angle-left"></i></div>
+                            <!-- Next Previous Button End -->
+
                         </div>
+                        <!-- Single Product Thumb End -->
+
                     </div>
+                    <!-- Product Details Image End -->
                 </div>
                 <div class="col-lg-7 col-custom">
                     <div class="product-summery position-relative">
