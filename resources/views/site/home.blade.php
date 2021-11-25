@@ -7,21 +7,20 @@
                 <div class="swiper-wrapper">
                     <div class="hero-slide-item swiper-slide">
                         <div class="hero-slide-bg" style="height: auto;">
-                            <img src="{{asset('assets/img/modelos.jpeg')}}" alt="Slider Image" />
+                            <img src="{{asset('assets/img/modelos2.jpeg')}}" alt="" />
                         </div>
                         <div class="container">
                             <div class="hero-slide-content">
                                 <h2 class="title">
                                     Women New <br />Collection
                                 </h2>
-                                <p>Ganhe 50% de desconto em produtos selecionados</p>
                                 <a href="{{ route('products') }}" class="btn btn-lg btn-primary btn-hover-dark">Ver Produtos</a>
                             </div>
                         </div>
                     </div>
                     <div class="hero-slide-item swiper-slide">
                         <div class="hero-slide-bg">
-                            <img src="{{asset('assets/img/no-image.jpg')}}" alt="Slider Image" />
+                            <img src="{{asset('assets/img/banner-3.jpg')}}" alt="" />
                         </div>
                         <div class="container">
                             <div class="hero-slide-content">
@@ -29,7 +28,34 @@
                                     Trend Fashion<br />
 										Collection
                                 </h2>
-                                <p>Up to 40% off selected Product</p>
+                                <a href="{{ route('products') }}" class="btn btn-lg btn-primary btn-hover-dark">Ver Produtos</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-slide-item swiper-slide">
+                        <div class="hero-slide-bg">
+                            <img src="{{asset('assets/img/banner-2.jpg')}}" alt="" />
+                        </div>
+                        <div class="container">
+                            <div class="hero-slide-content">
+                                <h2 class="title">
+                                    Trend Fashion<br />
+                                    Collection
+                                </h2>
+                                <a href="{{ route('products') }}" class="btn btn-lg btn-primary btn-hover-dark">Ver Produtos</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-slide-item swiper-slide">
+                        <div class="hero-slide-bg">
+                            <img src="{{asset('assets/img/banner-4.jpg')}}" alt="" />
+                        </div>
+                        <div class="container">
+                            <div class="hero-slide-content">
+                                <h2 class="title">
+                                    Trend Fashion<br />
+                                    Collection
+                                </h2>
                                 <a href="{{ route('products') }}" class="btn btn-lg btn-primary btn-hover-dark">Ver Produtos</a>
                             </div>
                         </div>
@@ -52,13 +78,12 @@
                 <div class="col-lg-4 col-md-6 col-12 mb-6">
                     <div class="banner" data-aos="fade-up" data-aos-delay="300">
                         <div class="banner-image">
-                            <a href=""><img src="{{asset('useLadame/images/banner/banner-1.jpg')}}" alt=""></a>
+                            <a href=""><img src="{{asset('assets/img/mini-banner-1.jpg')}}" alt=""></a>
                         </div>
                         <div class="info">
                             <div class="small-banner-content">
                                 <h4 class="sub-title">Sun Hat</h4>
                                 <h3 class="title">Get Offer <br />For Summer</h3>
-                                <a href="shop-grid.html" class="btn btn-dark btn-sm">Shop Now</a>
                             </div>
                         </div>
                     </div>
@@ -69,13 +94,12 @@
                 <div class="col-lg-4 col-md-6 col-12 mb-6">
                     <div class="banner" data-aos="fade-up" data-aos-delay="500">
                         <div class="banner-image">
-                            <a href=""><img src="{{asset('useLadame/images/banner/banner-1.jpg')}}" alt=""></a>
+                            <a href=""><img src="{{asset('assets/img/mini-banner-3.jpg')}}" alt=""></a>
                         </div>
                         <div class="info">
                             <div class="small-banner-content">
                                 <h4 class="sub-title">Ladies Bag</h4>
                                 <h3 class="title">Buy One <br />Get One Free</h3>
-                                <a href="shop-grid.html" class="btn btn-dark btn-sm">Shop Now</a>
                             </div>
                         </div>
                     </div>
@@ -86,13 +110,12 @@
                 <div class="col-lg-4 col-md-6 col-12 mb-6">
                     <div class="banner" data-aos="fade-up" data-aos-delay="700">
                         <div class="banner-image">
-                            <a href=""><img src="{{asset('useLadame/images/banner/banner-1.jpg')}}" alt=""></a>
+                            <a href=""><img src="{{asset('assets/img/mini-banner-4.jpg')}}" alt=""></a>
                         </div>
                         <div class="info">
                             <div class="small-banner-content">
                                 <h4 class="sub-title">Smart Watch</h4>
                                 <h3 class="title">20% Off <br />Smart Watch</h3>
-                                <a href="shop-grid.html" class="btn btn-dark btn-sm">Shop Now</a>
                             </div>
                         </div>
                     </div>
