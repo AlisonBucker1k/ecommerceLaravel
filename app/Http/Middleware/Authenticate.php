@@ -15,9 +15,12 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
+        //TODO testar para ver se é isso que está fazendo com que o redirecionamento
+        // na criação de conta não esteja rolando
+
         if (!$request->expectsJson()) {
             Cookie::queue('redirectTo', url()->current(), 60);
-            
+
             return route('login');
         }
     }

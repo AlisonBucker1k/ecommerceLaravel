@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use App\Enums\OrderStatus;
-use App\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -17,7 +16,7 @@ class OrderStatusUpdate extends Mailable
     protected $status;
     protected $order;
 
-    public function __construct(Order $order, $status, $email)
+    public function __construct($order, $status, $email)
     {
         $this->order = $order;
         $this->status = OrderStatus::getDescription($status);
