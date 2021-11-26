@@ -94,17 +94,16 @@ class CustomerController extends Controller
         $request->validate([
             'name' => 'required',
             'last_name' => 'required',
-            'email' => 'required',
             'birth_date' => 'required',
+            'password' => 'required_with:old_password|confirmed',
             'old_password' => [
                 'required_with:password',
                 function ($attribute, $value, $fail) use ($customer) {
                     if (!empty($value) && !Hash::check($value, $customer->password)) {
                         $fail('Senha atual inválida.');
                     }
-                }
+                },
             ],
-            'password' => 'confirmed'
         ]);
 
         DB::transaction(function() use ($request, $customer) {

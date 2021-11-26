@@ -26,13 +26,14 @@
                                         <div class="myaccount-content">
                                             <h3 class="title">Alterar Dados</h3>
                                             <div class="account-details-form">
-                                                @if ($errors->any())
-                                                <div class="alert alert-danger">
-                                                    @foreach ($errors->all as $erro)
-                                                        {{$erro}}<br>
-                                                    @endforeach
-                                                </div>
+                                                @if ($errors->all())
+                                                    <div class="alert alert-danger">
+                                                        @foreach ($errors->all() as $error)
+                                                            {{ $error }}<br>
+                                                        @endforeach
+                                                    </div>
                                                 @endif
+
                                                 <form action="{{ route('panel.profile.edit') }}" method="post">
                                                     @csrf
                                                     <input name="birth_date" class="form-control" type="hidden" value="{{ $customer->profile->birth_date }}">
@@ -46,21 +47,37 @@
                                                         <div class="col-lg-6">
                                                             <div class="single-input-item mb-3">
                                                                 <label for="last-name" class="required mb-1">Sobrenome</label>
-                                                                <input type="text" name="last_name" value={{$customer->profile->last_name}} id="last-name" placeholder="Sobrenome" />
+                                                                <input type="text" name="last_name" value="{{$customer->profile->last_name}}" id="last-name" placeholder="Sobrenome" />
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="single-input-item mb-3">
-                                                        <label for="email" class="required mb-1">E-mail</label>
-                                                        <input type="email" name="email" value="{{$customer->email}}" id="email" readonly/>
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="single-input-item mb-3">
+                                                                <label for="cellphone" class="required mb-1">Celular</label>
+                                                                <input type="text" name="cellphone" class="cellphone" value="{{$customer->profile->celphone}}" id="cellphone" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="single-input-item mb-3">
+                                                                <label for="phone" class="required mb-1">Telefone</label>
+                                                                <input type="text" name="phone" class="phone" value="{{$customer->profile->phone}}" id="phone"/>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="single-input-item mb-3">
-                                                        <label for="phone" class="required mb-1">Telefone</label>
-                                                        <input type="text" name="phone" class="phone" value="{{$customer->profile->phone}}" id="phone"/>
-                                                    </div>
-                                                    <div class="single-input-item mb-3">
-                                                        <label for="cellphone" class="required mb-1">Celular</label>
-                                                        <input type="text" name="cellphone" class="cellphone" value="{{$customer->profile->celphone}}" id="cellphone" />
+                                                    <div class="row">
+                                                        <div class="col-lg-7">
+                                                            <div class="single-input-item mb-3">
+                                                                <label for="email" class="required mb-1">E-mail</label>
+                                                                <input type="email" name="email" value="{{$customer->email}}" id="email" readonly/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-5">
+                                                            <div class="single-input-item mb-3">
+                                                                <label for="birth-date" class="required mb-1">Data de Nascimento</label>
+                                                                <input type="date" name="birth_date" value="{{ $customer->profile->birth_date }}" id="birth-date" />
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <fieldset>
                                                         <legend>Alterar Senha</legend>

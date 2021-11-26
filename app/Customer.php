@@ -101,7 +101,6 @@ class Customer extends Model implements Authenticatable, MustVerifyEmail, CanRes
     {
         $this->slug = $this->getUniqueSlug($request->name, $request->id);
         $this->email = $request->email;
-        $this->password = bcrypt($request->password);
         $this->updated_at = now();
         $this->update();
 
