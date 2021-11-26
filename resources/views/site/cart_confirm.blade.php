@@ -28,7 +28,9 @@
                                     <select class="form-control" id="address" name="address_id">
                                         <option value="">Selecione</option>
                                         @foreach ($addresses as $address)
-                                            <option value="{{ $address->id }}" data-cep="{{ $address->postal_code }}" data-address="{{ $address }}">{{ $address->complete_address }}</option>
+                                            <option @if($address->main == \App\Enums\AddressMain::YES) selected="selected" @endif value="{{ $address->id }}" data-cep="{{ $address->postal_code }}" data-address="{{ $address }}">
+                                                {{ $address->complete_address }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 @else
@@ -46,7 +48,140 @@
                                 </a>
                             </div>
                             <div class="address-form d-none">
-                                @include('site.elements.address_form', ['address' => []])
+                                <div class="create-address contact-form-wrapper">
+                                    <form id="address-form" method="post">
+                                        <input type="hidden" name="address_id" value="{{ $address->id ?? '' }}">
+                                        <div class="form-group row">
+                                            <div class="col-lg-4">
+                                                <label>CEP</label>
+                                                <input name="cep" id="cep" class="cep form-control" type="text" value="{{ old('cep') }}" onblur="findCep(this.value);" required="required">
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <label>Endereço</label>
+                                                <input name="street" id="street" class="form-control" type="text" value="{{ old('street') }}" placeholder="" required="required">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-lg-6">
+                                                <label>Complemento</label>
+                                                <input name="complement" class="form-control" type="text" value="{{ old('complement') }}" placeholder="">
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label>Referência</label>
+                                                <input name="reference" class="form-control" type="text" value="{{ old('reference') }}" placeholder="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-lg-3">
+                                                <label>Número</label>
+                                                <input name="number" class="form-control" type="text" value="{{ old('number') }}">
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <label>Cidade</label>
+                                                <input name="city" id="city" class="form-control" type="text" value="{{ old('city') }}" required="required">
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <label>Estado</label>
+                                                <input name="state" id="uf" class="form-control" type="text" value="{{ old('state') }}" required="required">
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <label>Bairro</label>
+                                                <input name="district" id="district" class="form-control" type="text" value="{{ old('district') }}" required="required">
+                                            </div>
+                                        </div>
+                                        <div class="row mt-5">
+                                            <div class="col-12">
+                                                <button type="submit" id="btn-add-address" name="submit" class="btn btn-dark btn-hover-primary rounded-0">Salvar</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                @push('js')
+                                    <script>
+                                        var addressForm = document.getElementById('address-form');
+                                        addressForm.addEventListener('submit', async event => {
+                                            event.preventDefault();
+
+                                            var btn = $('#btn-add-address');
+                                            btn
+                                                .attr({'disabled': 'disabled'})
+                                                .prepend($('<span>')
+                                                    .addClass('fa fa-fw fa-spin fa-spinner loading'), ' ');
+
+                                            await fetch('{{ route('panel.address.store.json') }}', {
+                                                method: 'post',
+                                                body: new FormData(addressForm),
+                                                headers: {
+                                                    'X-CSRF-Token':  '{{ csrf_token() }}'
+                                                },
+                                            }).then(response => {
+                                                return response.json();
+                                            }).then(data => {
+                                                $('#address').append(
+                                                    $('<option>')
+                                                        .val(data.address.id)
+                                                        .text(data.complete_address)
+                                                        .attr({'data-cep': data.address.postal_code_formatted})
+                                                        .attr({'data-address': JSON.stringify(data.address)})
+                                                        .prop('selected', 'selected')
+                                                );
+
+                                                $('#address').change();
+
+                                                addressForm.classList.add('d-none');
+                                                btnAddressForm.innerHTML = 'Novo endereço <i class="fa fa-caret-down"></i>';
+
+                                                alert('Endereço criado com sucesso!');
+                                            });
+                                        });
+
+                                        function clearForm() {
+                                            document.getElementById('district').value = ('');
+                                            document.getElementById('city').value = ('');
+                                            document.getElementById('street').value = ('');
+                                            document.getElementById('uf').value = ('');
+                                        }
+
+                                        function callback(data) {
+                                            if (!("erro" in data)) {
+                                                document.getElementById('district').value=(data.bairro);
+                                                document.getElementById('city').value=(data.localidade);
+                                                document.getElementById('street').value=(data.logradouro);
+                                                document.getElementById('uf').value=(data.uf);
+                                            } else {
+                                                clearForm();
+                                                toastr.error("CEP não encontrado.");
+                                            }
+                                        }
+
+                                        function findCep(valor) {
+                                            var cep = valor.replace(/\D/g, '');
+                                            if (!cep != '') {
+                                                clearForm();
+                                                return false;
+                                            }
+
+                                            var cepValidate = /^[0-9]{8}$/;
+                                            if (!cepValidate.test(cep)) {
+                                                clearForm();
+                                                alert('Formato de CEP inválido.');
+
+                                                return false;
+                                            }
+
+                                            document.getElementById('district').value = '...';
+                                            document.getElementById('city').value = '...';
+                                            document.getElementById('street').value = '...';
+                                            document.getElementById('uf').value = '...';
+
+                                            var script = document.createElement('script');
+                                            script.src = `https://viacep.com.br/ws/${cep}/json/?callback=callback`;
+                                            document.body.appendChild(script);
+                                        }
+                                    </script>
+                                @endpush
+
                             </div>
                         </div>
                     </div>
@@ -267,11 +402,11 @@
             currency: 'BRL',
         };
 
-        let btnAddressForm = document.querySelector('.btn-form-address');
+        var btnAddressForm = document.querySelector('.btn-form-address');
         btnAddressForm.addEventListener('click', (event) => {
             event.preventDefault();
 
-            let addressForm = document.querySelector('.address-form');
+            var addressForm = document.querySelector('.address-form');
             if (addressForm.classList.contains('d-none')){
                 addressForm.classList.remove('d-none');
                 btnAddressForm.innerHTML = 'Novo endereço <i class="fa fa-caret-up"></i>';
@@ -291,7 +426,7 @@
 
             $.ajax({
                 type: 'get',
-                url: '/carrinho/calculate-freight',
+                url: '{{ route('cart.product.freight') }}',
                 dataType: 'json',
                 data: { cep: cep },
                 beforeSend: function () {
@@ -369,39 +504,44 @@
             }
         }
 
-        $('#form-add-address').submit(function(e) {
-            e.preventDefault();
+        {{--$('#form-add-address').submit(function(e) {--}}
+        {{--    e.preventDefault();--}}
 
-            let btn = $('#btn-add-address');
-            btn.attr({'disabled': 'disabled'}).prepend(
-                $('<span>').addClass('fa fa-fw fa-spin fa-spinner loading'), ' '
-            );
+        {{--    let btn = $('#btn-add-address');--}}
+        {{--    btn.attr({'disabled': 'disabled'}).prepend(--}}
+        {{--        $('<span>').addClass('fa fa-fw fa-spin fa-spinner loading'), ' '--}}
+        {{--    );--}}
 
-            $.ajax({
-                url: '{{ route('panel.address.store.json') }}',
-                type: 'POST',
-                dataType: 'json',
-                data: $(this).serialize(),
-                complete: function (data) {
-                    btn.removeAttr('disabled').children('.loading').remove();
-                },
-                success: function (data) {
-                    $('#address').append(
-                        $('<option>').val(data.id).attr({'data-cep':data.postal_code}).text(data.complete_address).prop('selected', 'selected')
-                    );
+        {{--    $.ajax({--}}
+        {{--        url: '{{ route('panel.address.store.json') }}',--}}
+        {{--        type: 'POST',--}}
+        {{--        dataType: 'json',--}}
+        {{--        data: $(this).serialize(),--}}
+        {{--        complete: function (data) {--}}
+        {{--            btn.removeAttr('disabled').children('.loading').remove();--}}
+        {{--        },--}}
+        {{--        success: function (data) {--}}
+        {{--            $('#address').append(--}}
+        {{--                $('<option>')--}}
+        {{--                    .val(data.id)--}}
+        {{--                    .text(data.complete_address)--}}
+        {{--                    .attr({'data-cep': data.postal_code})--}}
+        {{--                    .prop('selected', 'selected')--}}
+        {{--            );--}}
 
-                    $('#addAddress').modal('toggle');
-                    $('#form-add-address input, #form-add-address select').val('');
-                    calculateShipping(data.postal_code);
-                    alert('Endereço criado com sucesso!');
-                },
-                error: function (data) {
-                    handleErrors(data)
-                }
-            });
+        {{--            addressForm.classList.add('d-none');--}}
+        {{--            btnAddressForm.innerHTML = 'Novo endereço <i class="fa fa-caret-down"></i>';--}}
 
-            return false;
-        });
+        {{--            calculateShipping(data.postal_code);--}}
+        {{--            alert('Endereço criado com sucesso!');--}}
+        {{--        },--}}
+        {{--        error: function (data) {--}}
+        {{--            handleErrors(data)--}}
+        {{--        }--}}
+        {{--    });--}}
+
+        {{--    return false;--}}
+        {{--});--}}
 
         $(document).on('change', '.form-check-input', function () {
             let value = parseFloat($(this).attr('data-value'));

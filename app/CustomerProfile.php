@@ -57,7 +57,8 @@ class CustomerProfile extends Model
         $this->phone = getOnlyNumber($params->phone);
         $this->cellphone = getOnlyNumber($params->cellphone);
         $this->birth_date = $params->birth_date;
-        $this->save();
+
+        return $this->save();
     }
 
     /**

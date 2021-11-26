@@ -28,24 +28,23 @@
                                                     <address>
                                                         <p>{{$address->street}}, {{$address->number}} <br>
                                                         {{ $address->district }}, {{ $address->city }} - {{ $address->state }}, {{ $address->postal_code }}</p>
-                                                        
+
                                                         @if ($address->main)
                                                             <span class="px-2">
                                                                 <i class="fa fa-star"></i>
                                                             </span>
                                                         @else
-
-                                                        <a href="{{ route('panel.address.set_main', $address->id) }}" class="px-2" data-toggle="tooltip" data-placement="left" title="Tornar principal">
-                                                            <i class="fa fa-star"></i>
-                                                        </a>
-                                                        <a href="{{ route('panel.address.delete', $address->id) }}" data-toggle="tooltip" data-placement="left" title="Remover" onclick="return confirm('Deseja realmente remover?')">
-                                                            <i class="fa fa-trash"></i>
-                                                        </a>
+                                                            <a href="{{ route('panel.address.set_main', $address->id) }}" class="px-2" data-toggle="tooltip" data-placement="left" title="Tornar principal">
+                                                                <i class="fa fa-star"></i>
+                                                            </a>
+                                                            <a href="{{ route('panel.address.delete', $address->id) }}" data-toggle="tooltip" data-placement="left" title="Remover" onclick="return confirm('Deseja realmente remover?')">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
                                                         @endif
                                                     </address>
                                                     <hr>
                                                 @endforeach
-                                            @else 
+                                            @else
                                                 <p class="saved-message">Nenhum endereço cadastrado.</p>
                                             @endif
 
@@ -75,7 +74,7 @@
                                     </div>
                                      <div class="tab-pane fade" id="dashboard" role="tabpanel">
                                         <div class="myaccount-content">
-                                            
+
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="payment-method" role="tabpanel">
