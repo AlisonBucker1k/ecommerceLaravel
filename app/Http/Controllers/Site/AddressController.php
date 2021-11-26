@@ -30,10 +30,10 @@ class AddressController extends Controller
     {
         $address = new Address();
         $address->createCustomerAddress(auth()->id(), $request->validated());
+        $address->postal_code_formatted = maskCep($address->postal_code);
 
         return [
-            'id' => $address->id,
-            'postal_code' => $address->postal_code,
+            'address' => $address,
             'complete_address' => $address->complete_address,
         ];
     }
