@@ -181,7 +181,8 @@ return [
         'discount_percent'   => 'Percentual de Desconto',
         'terms'              => 'Termos',
         'reference'          => 'Referencia',
-        'complement'         => 'Complemento'
+        'complement'         => 'Complemento',
+        'birth_date'         => 'Data de Nascimento',
     ],
 
 ];

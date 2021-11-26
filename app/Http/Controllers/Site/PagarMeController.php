@@ -9,7 +9,7 @@ use App\Payments\PagarMe\Order as PagarMeOrder;
 
 class PagarMeController extends Controller
 {
-    public function postBack(Request $request): void
+    public function postBack(Request $request)
     {
         try {
             logTransactionData();
