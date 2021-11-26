@@ -26,7 +26,7 @@ class Order extends PagarMe
     {
         $pagarMeOrder = json_decode($pagarMeOrderJson);
         if (empty($pagarMeOrder)) {
-            throw new Exception('Pedido inválido');
+            throw new Exception('Pedido inválido.');
         }
 
         return $pagarMeOrder;
@@ -36,7 +36,7 @@ class Order extends PagarMe
     {
         $signature = $_SERVER['HTTP_X_HUB_SIGNATURE'];
         if (empty($signature)) {
-            throw new Exception('Assinatura inválida.');
+            throw new Exception('validatePostBackSignature(): Assinatura inválida. Primeiro if().');
         }
 
         $requestBody = file_get_contents('php://input');
@@ -44,7 +44,7 @@ class Order extends PagarMe
         $pagarMe = new Client(config('app.pagar_me_api_token'));
         $isValidPostback = $pagarMe->postbacks()->validate($requestBody, $signature);
         if (!$isValidPostback) {
-            throw new Exception('Assinatura inválida.');
+            throw new Exception('validatePostBackSignature(): Assinatura inválida. Segundo if().');
         }
     }
 
@@ -52,13 +52,17 @@ class Order extends PagarMe
     {
         $this->validatePostBackSignature();
 
-        if (!$postBackResponse->status == 'success') {
+        if (!isset($postBackResponse->status) || !$postBackResponse->status == 'success') {
             throw new Exception('Erro no post-back: PagarMe.');
         }
 
         $order = UseLadameOrder::getFromPagarMeTransactionId($postBackResponse->transaction->id);
         if (!empty($order) && !empty($order->pagar_me_json)) {
             $pagarMeDecodedJson = json_decode($order->pagar_me_json);
+            if (empty($pagarMeDecodedJson)) {
+                throw new Exception('updateOrderStatus(): Não foi possível decodificar o JSON do $order->pagar_me_json.');
+            }
+
             $pagarMeDecodedJson->status = $postBackResponse->payload->current_status;
             $order->pagar_me_json = json_encode($pagarMeDecodedJson);
             $order->save();
