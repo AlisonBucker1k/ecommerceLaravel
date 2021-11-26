@@ -90,24 +90,27 @@ class CustomerController extends Controller
 
     public function update(Request $request)
     {
-        $customer = auth()->user();
         $request->validate([
             'name' => 'required',
             'last_name' => 'required',
             'birth_date' => 'required',
-            'password' => 'required_with:old_password|confirmed',
-            'old_password' => [
-                'required_with:password',
-                function ($attribute, $value, $fail) use ($customer) {
-                    if (!empty($value) && !Hash::check($value, $customer->password)) {
-                        $fail('Senha atual inválida.');
-                    }
-                },
-            ],
         ]);
 
+        $customer = auth()->user();
         DB::transaction(function() use ($request, $customer) {
             if (!empty($request->password)) {
+                $request->validate([
+                    'password' => 'confirmed',
+                    'old_password' => [
+                        'required_with',
+                        function ($attribute, $value, $fail) use ($customer) {
+                            if (!empty($value) && !Hash::check($value, $customer->password)) {
+                                $fail('Senha atual inválida.');
+                            }
+                        },
+                    ],
+                ]);
+
                 $customer->updatePassword($request);
             }
 

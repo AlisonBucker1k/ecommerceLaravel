@@ -55,7 +55,7 @@
                                                         <div class="col-lg-6">
                                                             <div class="single-input-item mb-3">
                                                                 <label for="cellphone" class="required mb-1">Celular</label>
-                                                                <input type="text" name="cellphone" class="cellphone" value="{{$customer->profile->celphone}}" id="cellphone" />
+                                                                <input type="text" name="cellphone" class="cellphone" value="{{$customer->profile->cellphone}}" id="cellphone" />
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
