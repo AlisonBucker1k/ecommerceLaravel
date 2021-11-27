@@ -14,9 +14,6 @@ class IndexController extends Controller
 {
     public function index()
     {
-        $order = Order::find(1);
-        Mail::send(new OrderStatusUpdate($order, $order->status, $order->customer->email));
-
         $limit = 16;
 
         $product = new Product();
