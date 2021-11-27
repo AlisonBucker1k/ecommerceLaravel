@@ -4,11 +4,8 @@ namespace App\Http\Controllers\Site;
 
 use App\Enums\HighLightedProduct;
 use App\Http\Controllers\Controller;
-use App\Mail\OrderStatusUpdate;
-use App\Order;
 use App\Product;
 use App\ProductVariation;
-use Illuminate\Support\Facades\Mail;
 
 class IndexController extends Controller
 {
