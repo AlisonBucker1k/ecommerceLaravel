@@ -11,7 +11,7 @@
 
     <center>
         <div style="margin:0 auto; width:100%; max-width:620px; background-color: #fff;-webkit-border-radius: 20px; -moz-border-radius: 20px; border-radius: 20px; box-shadow: 0px 0px 5px rgba(0,0,0,0.1)" >
-            <img src="{{ config('app.url') }}/assets/img/header.jpg" style="width:100%; max-width: 620px; border:0; margin-top:0; margin-bottom: 10px; -webkit-border-top-right-radius: 20px; -webkit-border-top-left-radius: 20px; -moz-border-radius-topright: 20px; -moz-border-radius-topleft: 20px; border-top-right-radius: 20px; border-top-left-radius: 20px;">
+            <img src="{{ config('app.url') }}/assets/img/header-email.png" style="width:100%; max-width: 620px; border:0; margin-top:0; margin-bottom: 10px; -webkit-border-top-right-radius: 20px; -webkit-border-top-left-radius: 20px; -moz-border-radius-topright: 20px; -moz-border-radius-topleft: 20px; border-top-right-radius: 20px; border-top-left-radius: 20px;">
             <div style="padding:20px; text-align:justify; color:#666; line-height:150%; font-family:'Roboto','Helvetica',Arial,sans-serif; font-size:13px;">
                 <!-- Content -->
                 <h2 style=" color: #222;">Você recebeu um contato via site!</h2>
