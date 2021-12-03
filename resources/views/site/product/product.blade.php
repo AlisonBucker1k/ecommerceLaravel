@@ -330,8 +330,8 @@
                                         <div class="product product-border-left" data-aos="fade-up" data-aos-delay="300">
                                             <div class="thumb">
                                                 <a href="{{ route('product.show', [$aleatoryProduct->slug]) }}" class="image">
-                                                    <img class="first-image" src="{{ getFullFtpUrl($variation->image) }}" alt="{{ $aleatoryProduct->name }}" />
-                                                    <img class="second-image" src="{{ getFullFtpUrl($variation->image) }}" alt="{{ $aleatoryProduct->name }}" />
+                                                    <img class="first-image" src="{{ getFullFtpUrl($variation->image ?? '') }}" alt="{{ $aleatoryProduct->name }}" />
+                                                    <img class="second-image" src="{{ getFullFtpUrl($variation->image ?? '') }}" alt="{{ $aleatoryProduct->name }}" />
                                                 </a>
                                             </div>
                                             <div class="content">

@@ -57,8 +57,8 @@
                                             <h4 class="sub-title"><a href="{{ route('product.show', [$product->slug]) }}">{{ $product->name }}</a></h4>
                                             <h5 class="title"><a href="{{ route('product.show', [$product->slug]) }}">{{ $product->name }}</a></h5>
                                             <span class="price">
-                                                <span class="new">{{ $variation->final_price_formated }}</span>
-                                                <span class="old">{{ $variation->value_formated }}</span>
+                                                <span class="new">{{ $variation->final_price_formated ?? '0,0' }}</span>
+                                                <span class="old">{{ $variation->value_formated ?? '0,0' }}</span>
                                             </span>
                                             <div class="shop-list-btn">
                                                 <a href="{{ route('product.show', [$product->slug]) }}" class="btn btn-sm btn-outline-dark btn-hover-primary">Ver mais</a>
@@ -144,8 +144,8 @@
                                             <div class="single-product-list product-hover mb-6">
                                                 <div class="thumb">
                                                     <a href="{{ route('product.show', [$aleatoryProduct->slug]) }}" class="image">
-                                                        <img class="first-image" src="{{ getFullFtpUrl($variation->image) }}" alt="{{ $aleatoryProduct->name }}" />
-                                                        <img class="second-image" src="{{ getFullFtpUrl($variation->image) }}" alt="{{ $aleatoryProduct->name }}" />
+                                                        <img class="first-image" src="{{ getFullFtpUrl($variation->image ?? '') }}" alt="{{ $aleatoryProduct->name }}" />
+                                                        <img class="second-image" src="{{ getFullFtpUrl($variation->image ?? '') }}" alt="{{ $aleatoryProduct->name }}" />
                                                     </a>
                                                 </div>
                                                 <div class="content">
@@ -155,8 +155,8 @@
                                                         </a>
                                                     </h5>
                                                     <span class="price">
-                                                        <span class="new">{{ $variation->final_price_formated }}</span>
-                                                        <span class="old">{{ $variation->value_formated }}</span>
+                                                        <span class="new">{{ $variation->final_price_formated ?? '0,0' }}</span>
+                                                        <span class="old">{{ $variation->value_formated ?? '0,0' }}</span>
                                                     </span>
                                                 </div>
                                             </div>
