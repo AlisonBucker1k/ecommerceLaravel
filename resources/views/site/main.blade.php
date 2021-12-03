@@ -409,9 +409,9 @@
                             <ul class="widget-list">
                                 <li><a href="{{route('about')}}">Sobre nós</a></li>
                                 {{-- <li><a href="about.html">Politicas de privacidade</a></li> --}}
-                                <li><a href="about.html">Termos de uso</a></li>
-                                <li><a href="about.html">Políticas de entrega</a></li>
-                                <li><a href="about.html">Políticas de troca</a></li>
+{{--                                <li><a href="about.html">Termos de uso</a></li>--}}
+{{--                                <li><a href="about.html">Políticas de entrega</a></li>--}}
+{{--                                <li><a href="about.html">Políticas de troca</a></li>--}}
                             </ul>
                         </div>
                     </div>
@@ -421,7 +421,7 @@
                             <ul class="widget-list">
                                 <li><a href="{{route('login')}}">Minha conta</a></li>
                                 <li><a href="{{ route('contact') }}">Canais de ajuda</a></li>
-                                <li><a href="contact.html">Termos de uso</a></li>
+{{--                                <li><a href="contact.html">Termos de uso</a></li>--}}
                             </ul>
                         </div>
                     </div>
