@@ -325,7 +325,7 @@
 
             let shippingFeeInCents = parseInt($('#shipping-value').text().replace(/\D/g, ''));
             if (typeof shippingFeeInCents == NaN) {
-                shippingFeeInCents = 0000;
+                shippingFeeInCents = parseInt('1,00');
             }
 
             let items = [];
