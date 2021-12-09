@@ -254,4 +254,6 @@ return [
     'pagar_me_api_token' => env('PAGAR_ME_API_TOKEN'),
     'pagar_me_api_encrypt' => env('PAGAR_ME_API_ENCRYPT'),
     'pagar_me_api_base_url' => env('PAGAR_ME_API_BASE_URL'),
+
+    'company_bill_expiration_days' => env('COMPANY_BILL_EXPIRATION_DAYS', 3),
 ];

@@ -320,9 +320,13 @@
             });
 
             let totalValueInCents = parseInt($('#total-value').text().replace(/\D/g, ''));
-            let shippingFeeInCents = parseInt($('#shipping-value').text().replace(/\D/g, ''));
             let selectedAddress = $('#address option:selected').data('address');
             let addressComplement = selectedAddress.complement ? selectedAddress.complement : '-';
+
+            let shippingFeeInCents = parseInt($('#shipping-value').text().replace(/\D/g, ''));
+            if (typeof shippingFeeInCents == NaN) {
+                shippingFeeInCents = 0000;
+            }
 
             let items = [];
             @foreach($cartProducts as $cartProduct)
@@ -345,7 +349,7 @@
                 paymentMethods: 'boleto,credit_card',
                 uiColor: '#1ea51c',
                 boletoDiscountPercentage: 0,
-                boletoExpirationDate: '{{ $billExpirationDate }}',
+                boleto_expiration_date: '{{ $billExpirationDate }}',
                 postbackUrl: '{{ route('pagar_me.post_back') }}',
                 customer: {
                     external_id: {{ $customer->id }},
