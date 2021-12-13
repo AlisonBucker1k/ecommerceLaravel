@@ -181,7 +181,6 @@
                                         }
                                     </script>
                                 @endpush
-
                             </div>
                         </div>
                     </div>
@@ -288,7 +287,7 @@
             }
 
             var checkout = new PagarMeCheckout.Checkout({
-                encryption_key: 'ek_test_82pi8ALVpEwDL9cdx71PZzSKF4Pnv0',
+                encryption_key: '{{ config('app.pagar_me_api_encrypt') }}',
                 success: (response) => {
                     let formData = new FormData();
                     formData.append('transaction_token', response.token);
@@ -316,13 +315,14 @@
                 },
                 error: (error) => {
                     console.log(error);
+                    alert('Erro no pagamento.');
                 },
             });
 
             let totalValueInCents = parseInt($('#total-value').text().replace(/\D/g, ''));
-            let shippingFeeInCents = parseInt($('#shipping-value').text().replace(/\D/g, ''));
             let selectedAddress = $('#address option:selected').data('address');
             let addressComplement = selectedAddress.complement ? selectedAddress.complement : '-';
+            let shippingFeeInCents = parseInt($('#shipping-value').text().replace(/\D/g, ''));
 
             let items = [];
             @foreach($cartProducts as $cartProduct)
@@ -345,7 +345,7 @@
                 paymentMethods: 'boleto,credit_card',
                 uiColor: '#1ea51c',
                 boletoDiscountPercentage: 0,
-                boletoExpirationDate: '{{ $billExpirationDate }}',
+                boleto_expiration_date: '{{ $billExpirationDate }}',
                 postbackUrl: '{{ route('pagar_me.post_back') }}',
                 customer: {
                     external_id: {{ $customer->id }},
@@ -503,45 +503,6 @@
                 alert(errors[field][0]);
             }
         }
-
-        {{--$('#form-add-address').submit(function(e) {--}}
-        {{--    e.preventDefault();--}}
-
-        {{--    let btn = $('#btn-add-address');--}}
-        {{--    btn.attr({'disabled': 'disabled'}).prepend(--}}
-        {{--        $('<span>').addClass('fa fa-fw fa-spin fa-spinner loading'), ' '--}}
-        {{--    );--}}
-
-        {{--    $.ajax({--}}
-        {{--        url: '{{ route('panel.address.store.json') }}',--}}
-        {{--        type: 'POST',--}}
-        {{--        dataType: 'json',--}}
-        {{--        data: $(this).serialize(),--}}
-        {{--        complete: function (data) {--}}
-        {{--            btn.removeAttr('disabled').children('.loading').remove();--}}
-        {{--        },--}}
-        {{--        success: function (data) {--}}
-        {{--            $('#address').append(--}}
-        {{--                $('<option>')--}}
-        {{--                    .val(data.id)--}}
-        {{--                    .text(data.complete_address)--}}
-        {{--                    .attr({'data-cep': data.postal_code})--}}
-        {{--                    .prop('selected', 'selected')--}}
-        {{--            );--}}
-
-        {{--            addressForm.classList.add('d-none');--}}
-        {{--            btnAddressForm.innerHTML = 'Novo endereço <i class="fa fa-caret-down"></i>';--}}
-
-        {{--            calculateShipping(data.postal_code);--}}
-        {{--            alert('Endereço criado com sucesso!');--}}
-        {{--        },--}}
-        {{--        error: function (data) {--}}
-        {{--            handleErrors(data)--}}
-        {{--        }--}}
-        {{--    });--}}
-
-        {{--    return false;--}}
-        {{--});--}}
 
         $(document).on('change', '.form-check-input', function () {
             let value = parseFloat($(this).attr('data-value'));

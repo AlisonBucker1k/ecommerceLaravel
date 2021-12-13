@@ -81,11 +81,9 @@ class CartController extends Controller
             return redirect()->route('cart')->withErrors('Adicione um produto no carrinho.');
         }
 
-        // TODO buscar dias para pagar boleto da API PagarMe? ou Fixo no .env?
-        //  $pagarMeBillExpirationDate = config('app.pagar_me_bill_expiration_date');
-        $pagarMeBillExpirationDate = '7';
+        $pagarMeBillExpirationDays = config('app.company_bill_expiration_days');
         $billExpirationDate = (new DateTime())
-            ->add(new DateInterval("P{$pagarMeBillExpirationDate}D"))
+            ->add(new DateInterval("P{$pagarMeBillExpirationDays}D"))
             ->format('d/m/Y');
 
         $data = [
