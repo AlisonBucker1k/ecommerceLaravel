@@ -46,8 +46,9 @@ class ForgotPasswordController extends Controller
 
     protected function sendResetLinkResponse(Request $request, $response)
     {
-        return redirect()->route('login')
-            ->withSuccess('Caso exista um cadastro com esse e-mail, enviaremos um e-mail para que você possa alterar a senha');
+        return redirect()
+            ->route('login')
+            ->withSuccess('Enviaremos um e-mail para que você possa alterar a senha.');
     }
 
     protected function sendResetLinkFailedResponse(Request $request, $response)
