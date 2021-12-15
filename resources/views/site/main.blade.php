@@ -45,6 +45,17 @@
         .wa-chat-box-poweredby{
             display: none;
         }
+        .btn-primary, .header-action-num{
+            background-color: #DDA69D;    
+        }
+        .price span.new {
+            color: #DDA69D;
+            font-weight: 600;
+            font-size: 15px;
+        }
+        i {
+            color: #DDA69D;
+        }
     </style>
 </head>
 <body>
