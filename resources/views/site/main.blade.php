@@ -163,7 +163,7 @@
                             <div class="header-actions">
 
                                 <!-- Search Header Action Button Start -->
-                                {{-- <a href="javascript:void(0)" class="header-action-btn header-action-btn-search"><i class="pe-7s-search"></i></a> --}}
+                                    <a href="javascript:void(0)" class="header-action-btn header-action-btn-search"><i class="pe-7s-search"></i></a>
                                 <!-- Search Header Action Button End -->
 
                                 <!-- User Account Header Action Button Start -->
