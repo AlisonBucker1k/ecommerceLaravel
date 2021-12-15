@@ -322,7 +322,7 @@
 
                 <!-- Offcanvas Search Form Start -->
                 <form class="offcanvas-search-form" action="#">
-                    <input type="text" placeholder="Search Here..." class="offcanvas-search-input">
+                    <input type="text" placeholder="O que você está procurando?" class="offcanvas-search-input">
                 </form>
                 <!-- Offcanvas Search Form End -->
 
