@@ -541,7 +541,7 @@
       "brandSubTitle":"Boutique de Lingerie",
       "brandImg":"https://images.useladame.com/img_whatsapp.jpg",
       "welcomeText":"Olá!\nComo podemos te ajudar?",
-      "messageText":"Você tem alguma duvida sobre a página {{page_title}} ?",
+      "messageText":"Você tem alguma duvida sobre a página atual ?",
       "backgroundColor":"#0a5f54",
       "ctaText":"Iniciar Chat",
       "borderRadius":"25",
