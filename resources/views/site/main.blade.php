@@ -56,6 +56,9 @@
         i {
             color: #DDA69D;
         }
+        .scroll-top:hover{
+            background-color: #DDA69D;
+        }
     </style>
 </head>
 <body>
