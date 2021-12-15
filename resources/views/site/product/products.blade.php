@@ -61,7 +61,7 @@
                                                 <span class="old">{{ $variation->value_formated ?? '0,0' }}</span>
                                             </span>
                                             <div class="shop-list-btn">
-                                                <a href="{{ route('product.show', [$product->slug]) }}" class="btn btn-sm btn-outline-dark btn-hover-primary">Ver mais</a>
+                                                <a href="{{ route('product.show', [$product->slug]) }}" class="btn btn-sm btn-outline-dark btn-hover-primary">Comprar</a>
                                             </div>
                                         </div>
                                     </div>
