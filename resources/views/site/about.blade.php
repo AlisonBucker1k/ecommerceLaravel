@@ -42,7 +42,11 @@
     </div>
     <!-- About Section End -->
 
-    <!-- Feature Section Start -->
+    
+@endsection
+
+
+<!-- Feature Section Start -->
     <div class="section about-feature-bg section-padding">
         <div class="container">
             <div class="row mb-n5">
@@ -137,4 +141,3 @@
         </div>
     </div>
     <!-- Service Section End -->
-@endsection
