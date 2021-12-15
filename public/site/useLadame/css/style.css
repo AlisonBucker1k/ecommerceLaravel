@@ -22333,3 +22333,7 @@ input[type="checkbox"]:checked + label:after {
 .faq_content_wrapper p {
   font-size: 14px;
 }
+
+.product-tab-nav .nav-item .nav-link:hover, .product-tab-nav .nav-item .nav-link.active {
+    color: #DDA69D;
+}
