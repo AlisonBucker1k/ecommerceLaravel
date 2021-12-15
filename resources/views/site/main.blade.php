@@ -519,4 +519,41 @@
     @stack('js')
 </body>
 
+<script>
+    var url = 'https://wati-integration-service.clare.ai/ShopifyWidget/shopifyWidget.js?62098';
+    var s = document.createElement('script');
+    s.type = 'text/javascript';
+    s.async = true;
+    s.src = url;
+    var options = {
+  "enabled":true,
+  "chatButtonSetting":{
+      "backgroundColor":"#4dc247",
+      "ctaText":"Fale Conosco!",
+      "borderRadius":"25",
+      "marginLeft":"0",
+      "marginBottom":"50",
+      "marginRight":"50",
+      "position":"right"
+  },
+  "brandSetting":{
+      "brandName":"Ladame",
+      "brandSubTitle":"Boutique de Lingerie",
+      "brandImg":"https://images.useladame.com/img_whatsapp.jpg",
+      "welcomeText":"Olá!\nComo podemos te ajudar?",
+      "messageText":"Você tem alguma duvida sobre a página {{page_title}} ?",
+      "backgroundColor":"#0a5f54",
+      "ctaText":"Iniciar Chat",
+      "borderRadius":"25",
+      "autoShow":false,
+      "phoneNumber":"5527999186210"
+  }
+};
+    s.onload = function() {
+        CreateWhatsappChatWidget(options);
+    };
+    var x = document.getElementsByTagName('script')[0];
+    x.parentNode.insertBefore(s, x);
+</script>
+
 </html>
