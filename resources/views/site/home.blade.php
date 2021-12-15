@@ -221,7 +221,7 @@
                                                             <span class="new">{{ $variation->final_price_formated }}</span>
                                                             <span class="old">{{ $variation->final_price_formated }}</span>
                                                         </span>
-                                                        <a href="{{ route('product.show', [$highlightedProduct->slug]) }}" class="btn btn-sm btn-outline-dark btn-hover-primary">Ver mais</a>
+                                                        <a href="{{ route('product.show', [$highlightedProduct->slug]) }}" class="btn btn-sm btn-outline-dark btn-hover-primary">Comprar</a>
                                                     </div>
                                                 </div>
 
@@ -268,7 +268,7 @@
                                                             <span class="new">{{ $productVariation->value_formated }}</span>
                                                             <span class="old">{{ $productVariation->final_price_formated }}</span>
                                                         </span>
-                                                        <a href="{{ route('product.show', [$productVariation->product->slug]) }}" class="btn btn-sm btn-outline-dark btn-hover-primary">Ver mais</a>
+                                                        <a href="{{ route('product.show', [$productVariation->product->slug]) }}" class="btn btn-sm btn-outline-dark btn-hover-primary">Comprar</a>
                                                     </div>
                                                 </div>
                                                 @if ($l === 1)
