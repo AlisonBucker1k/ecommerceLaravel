@@ -22336,4 +22336,5 @@ input[type="checkbox"]:checked + label:after {
 
 .product-tab-nav .nav-item .nav-link:hover, .product-tab-nav .nav-item .nav-link.active {
     color: #DDA69D;
+    border-color: green !important;
 }
