@@ -40,6 +40,12 @@
     <link rel="stylesheet" href="assets/css/plugins.min.css">
     <link rel="stylesheet" href="assets/css/style.min.css">
     -->
+    
+    <style>
+        .wa-chat-box-poweredby{
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <div class="header section">
