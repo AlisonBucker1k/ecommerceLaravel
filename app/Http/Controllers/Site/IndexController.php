@@ -31,4 +31,29 @@ class IndexController extends Controller
     {
         return view('site.about');
     }
+
+    public function terms()
+    {
+        return view('site.terms');
+    }
+
+    public function helpChannels()
+    {
+        return view('site.help_channels');
+    }
+
+    public function privacy()
+    {
+        return view('site.privacy');
+    }
+
+    public function shipping()
+    {
+        return view('site.shipping');
+    }
+
+    public function exchange()
+    {
+        return view('site.exchange');
+    }
 }

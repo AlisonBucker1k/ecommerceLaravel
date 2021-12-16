@@ -407,11 +407,11 @@
                         <div class="single-footer-widget">
                             <h2 class="widget-title">Informações</h2>
                             <ul class="widget-list">
-                                <li><a href="{{route('about')}}">Sobre nós</a></li>
-                                {{-- <li><a href="about.html">Politicas de privacidade</a></li> --}}
-{{--                                <li><a href="about.html">Termos de uso</a></li>--}}
-{{--                                <li><a href="about.html">Políticas de entrega</a></li>--}}
-{{--                                <li><a href="about.html">Políticas de troca</a></li>--}}
+                                <li><a href="{{ route('about') }}">Sobre nós</a></li>
+{{--                                 <li><a href="{{ route('privacy') }}">Privacidade</a></li>--}}
+                                <li><a href="{{ route('terms') }}">Termos de uso</a></li>
+                                <li><a href="{{ route('shipping') }}">Políticas de entrega</a></li>
+                                <li><a href="{{ route('exchange') }}">Políticas de troca</a></li>
                             </ul>
                         </div>
                     </div>
@@ -419,9 +419,8 @@
                         <div class="single-footer-widget aos-init aos-animate">
                             <h2 class="widget-title">Links Rápidos</h2>
                             <ul class="widget-list">
-                                <li><a href="{{route('login')}}">Minha conta</a></li>
-                                <li><a href="{{ route('contact') }}">Canais de ajuda</a></li>
-{{--                                <li><a href="contact.html">Termos de uso</a></li>--}}
+                                <li><a href="{{route('panel.profile')}}">Minha conta</a></li>
+                                <li><a href="{{ route('help_channels') }}">Canais de ajuda</a></li>
                             </ul>
                         </div>
                     </div>

@@ -14,6 +14,11 @@ Route::middleware('site.boot')->group(function() {
     Route::get('/', 'IndexController@index')->name('home');
     Route::get('/home', 'IndexController@index');
     Route::get('/sobre', 'IndexController@about')->name('about');
+    Route::get('/termos', 'IndexController@terms')->name('terms');
+    Route::get('/canais-ajuda', 'IndexController@helpChannels')->name('help_channels');
+    Route::get('/politicas/privacidade', 'IndexController@privacy')->name('privacy');
+    Route::get('/politicas/entrega', 'IndexController@shipping')->name('shipping');
+    Route::get('/politicas/troca', 'IndexController@exchange')->name('exchange');
 
     Route::get('/produtos/{category?}/{subcategory?}', 'ProductController@index')->name('products');
     Route::get('/produtos{product}/variations', 'ProductVariationController@variations')->name('product.variations');
