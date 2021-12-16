@@ -60,6 +60,11 @@ class Product extends Model
         return $this->hasOne('App\ProductImage')->where('main', ProductImageMain::YES);
     }
 
+    public function secondImage()
+    {
+        return $this->hasOne('App\ProductImage')->where('main', ProductImageMain::NO);
+    }
+
     public function variations()
     {
         return $this->hasMany('App\ProductVariation');

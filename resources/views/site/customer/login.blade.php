@@ -61,13 +61,6 @@
                         </div>
                         <form action="{{ route('customer.store')}}" id="frmSignUp" method="post" class="needs-validation">
                             @csrf
-                            @php
-                            use Illuminate\Support\Facades\Cookie;
-                            // TODO colocar isso no controller
-                            //Cookie::('redirectTo');
-                            Cookie::queue(Cookie::forget('myCookie'));
-                            Cookie::queue(Cookie::make('redirectTo', back()->getTargetUrl(), 525600));
-                            @endphp
                             <div class="single-input-item mb-3">
                                 <input type="text" placeholder="Nome" name="name" value="{{old('name')}}" required>
                             </div>

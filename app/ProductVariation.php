@@ -71,6 +71,11 @@ class ProductVariation extends Model
         return $this->getImage();
     }
 
+    public function getSecondImageAttribute()
+    {
+        return $this->getSecondImage();
+    }
+
     public function activeVariations()
     {
         return $this->where('status', ProductVariationStatus::ACTIVE)->get();
@@ -120,6 +125,23 @@ class ProductVariation extends Model
         if (empty($variationImage->file)) {
             $productImage = new ProductImage();
             $variationImage = $productImage->getMainImage($this->product_id);
+        }
+
+        if (!empty($variationImage->file)) {
+            $image = $variationImage->file;
+        }
+
+        return $image;
+    }
+
+    public function getSecondImage()
+    {
+        $image = '/assets/img/no-image.jpg';
+
+        $variationImage = $this->variationImage();
+        if (empty($variationImage->file)) {
+            $productImage = new ProductImage();
+            $variationImage = $productImage->getNotMainImage($this->product_id);
         }
 
         if (!empty($variationImage->file)) {

@@ -234,7 +234,6 @@
                                                 @endif
                                             @empty
                                                 <p>Nenhum produto disponível</p>
-                                                <p>Nenhum produto disponível</p>
                                             @endforelse
                                         </div>
                                     </div>

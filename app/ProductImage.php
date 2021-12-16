@@ -96,4 +96,12 @@ class ProductImage extends Model
             ->where('main', ProductImageMain::YES)
             ->first();
     }
+
+    public function getNotMainImage(int $productId)
+    {
+        return $this->query()
+            ->where('product_id', $productId)
+            ->where('main', ProductImageMain::NO)
+            ->first();
+    }
 }

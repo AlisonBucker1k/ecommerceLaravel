@@ -6,8 +6,8 @@
             @csrf
             <div class="thumb">
                 <a href="{{ route('product.show', [$product->slug]) }}" class="image">
-                    <img class="first-image" src="{{ getFullFtpUrl($variation->image) }}" alt="{{ $product->name }}" />
-                    <img class="second-image" src="{{ getFullFtpUrl($variation->image) }}" alt="{{ $product->name }}" />
+{{--                    <img class="first-image" src="{{ getFullFtpUrl($variation->image) }}" alt="{{ $product->name }}" />--}}
+{{--                    <img class="second-image" src="{{ getFullFtpUrl($variation->image) }}" alt="{{ $product->name }}" />--}}
                 </a>
             </div>
             <div class="content">
