@@ -9,10 +9,11 @@
     "license": "MIT",
     "require": {
         "php": "^7.4|^8.0",
+        "ext-json": "*",
         "aws/aws-sdk-php": "~3.0",
         "bensampo/laravel-enum": "^1.19",
         "canducci/zipcode": "^2.0",
-        "doctrine/dbal": "^3.1",
+        "doctrine/dbal": "^2.0",
         "fideloper/proxy": "^4.0",
         "flyingluscas/correios-php": "^2.3",
         "geekcom/validator-docs": "1.*",
@@ -22,8 +23,7 @@
         "league/flysystem-aws-s3-v3": "^1.0",
         "pagarme/pagarme-php": "^4.1",
         "rcrowe/twigbridge": "^0.9.8",
-        "verot/class.upload.php": "^2.0",
-        "ext-json": "*"
+        "verot/class.upload.php": "^2.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
