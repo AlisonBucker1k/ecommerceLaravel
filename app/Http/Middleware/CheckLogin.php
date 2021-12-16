@@ -10,7 +10,7 @@ class CheckLogin
     public function handle($request, Closure $next)
     {
         if (!auth()->check()) {
-            Cookie::queue(Cookie::make('redirectTo', route('cart'), 525600));
+            Cookie::queue(Cookie::make('redirectTo', route('cart.confirm'), 525600));
 
             return redirect()
                 ->route('login')
