@@ -49,8 +49,8 @@
                                     <div class="product-inner">
                                         <div class="thumb">
                                             <a href="{{ route('product.show', [$product->slug]) }}" class="image">
-                                                <img class="first-image" src="{{getFullFtpUrl($product->mainImage->file)}}" alt="{{ $product->name }}" />
-                                                <img class="second-image" src="{{getFullFtpUrl($product->mainImage->file)}}" alt="{{ $product->name }}" />
+                                                <img class="first-image" src="{{getFullFtpUrl($product->mainImage->file ?? '')}}" alt="{{ $product->name }}" />
+                                                <img class="second-image" src="{{getFullFtpUrl($product->secondImage->file ?? '')}}" alt="{{ $product->name }}" />
                                             </a>
                                         </div>
                                         <div class="content">
@@ -145,7 +145,7 @@
                                                 <div class="thumb">
                                                     <a href="{{ route('product.show', [$aleatoryProduct->slug]) }}" class="image">
                                                         <img class="first-image" src="{{ getFullFtpUrl($variation->image ?? '') }}" alt="{{ $aleatoryProduct->name }}" />
-                                                        <img class="second-image" src="{{ getFullFtpUrl($variation->image ?? '') }}" alt="{{ $aleatoryProduct->name }}" />
+                                                        <img class="second-image" src="{{ getFullFtpUrl($variation->second_image ?? '') }}" alt="{{ $aleatoryProduct->name }}" />
                                                     </a>
                                                 </div>
                                                 <div class="content">
